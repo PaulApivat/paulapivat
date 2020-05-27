@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "367775547",
+    "hash" : "0",
     "id" : "A105E89E",
     "lastKnownWriteTime" : 1590568238,
     "last_content_update" : 1590568238978,
     "path" : "~/Desktop/RCode/paulapivat/config.toml",
     "project_path" : "config.toml",
     "properties" : {
-        "cursorPosition" : "16,46",
-        "scrollLine" : "0"
+        "cursorPosition" : "31,38",
+        "scrollLine" : "27"
     },
     "read_only" : false,
     "read_only_alternatives" : [
