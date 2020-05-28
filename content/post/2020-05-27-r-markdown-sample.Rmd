@@ -50,4 +50,6 @@ fit
 | Content Cell  | Content Cell  |
 | Content Cell  | Content Cell  |
 
+# Add Image
 
+![sample-thai](/img/thai.png)
