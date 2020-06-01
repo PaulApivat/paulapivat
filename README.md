@@ -43,3 +43,26 @@ Academic Theme Documentation: https://sourcethemes.com/academic/docs/
 ## Fonts
 
 Google Font: family=Domine:wght@400;700
+
+# Homepage Widgets
+
+## Inactive
+active = false
+- demo
+- hero
+- featured
+- publications
+- experience
+- talks
+
+## Active
+active = true
+- about
+- accomplishment
+- posts
+- projects
+- gallery
+- tags
+- contact
+
+
