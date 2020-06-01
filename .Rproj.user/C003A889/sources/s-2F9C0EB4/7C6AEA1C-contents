@@ -5,24 +5,25 @@ bio: My research interests include distributed robotics, mobile computing and pr
   matter.
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
-    year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
+  - course: R Statistical Computing
+    institution: Self-Taught
+    year: 2020
+  - course: HTML, CSS, Javascript
+    institution: Self-Taught / Lambda School
+    year: 2019
+  - course: PhD in Social-Organizational Psychology
+    institution: Teachers College, Columbia University
+    year: 2014
 email: ""
 interests:
-- Artificial Intelligence
-- Computational Linguistics
-- Information Retrieval
+- Data Visualizations
+- Analytics and Statistics
+- Data Science
+- R programming
 organizations:
-- name: Stanford University
+- name: Adjunct | Thammasat University
   url: ""
-role: Professor of Artificial Intelligence
+role: Self-Employed | Getwyze
 social:
 - icon: envelope
   icon_pack: fas
@@ -43,6 +44,6 @@ user_groups:
 - Visitors
 ---
 
-Nelson Bighetti is a professor of artificial intelligence at the Stanford AI Lab. His research interests include distributed robotics, mobile computing and programmable matter. He leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+I help people and organizations make data-driven decisions. My services include data cleaning, data analysis and data visualization. Pre-services include understanding business and organizational OKRs.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+Organizational psychologist turned data scientists.
