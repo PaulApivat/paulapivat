@@ -1,12 +1,12 @@
 {
     "collab_server" : "",
     "contents" : "",
-    "created" : 1590636560349.000,
+    "created" : 1590978343413.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
     "hash" : "0",
-    "id" : "9148C69A",
+    "id" : "7453B283",
     "lastKnownWriteTime" : 1590568238,
     "last_content_update" : 1590568238,
     "path" : "~/Desktop/RCode/paulapivat/config.toml",
@@ -18,7 +18,7 @@
     "read_only" : false,
     "read_only_alternatives" : [
     ],
-    "relative_order" : 2,
+    "relative_order" : 7,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "toml"

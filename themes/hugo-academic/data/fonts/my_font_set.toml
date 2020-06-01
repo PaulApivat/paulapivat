@@ -1,0 +1,11 @@
+# Font style metadata
+name = "Domine"
+
+# Optional Google font URL
+google_fonts = "Domine:wght@400;700"
+
+# Font families
+heading_font = "Domine"
+body_font = "Domine"
+nav_font = "Domine"
+mono_font = "Domine"

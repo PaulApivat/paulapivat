@@ -1,0 +1,24 @@
+# Theme metadata
+name = "MyTheme_Alizarin"
+
+# Is theme light or dark?
+light = true
+
+# Primary
+primary = "#E32626"
+
+# Menu
+menu_primary = "#fff"
+menu_text = "#631111"
+menu_text_active = "#E32626"
+menu_title = "#171717"
+
+# Home sections
+home_section_odd = "rgb(255, 255, 255)"
+home_section_even = "rgb(247, 247, 247)"
+
+# Theme description: 
+# alizarin 
+# blood
+# dragon
+# red
