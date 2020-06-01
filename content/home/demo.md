@@ -58,6 +58,16 @@ You are here with certain **data needs**. Some of my services include:
 - Data Governance
 - Data Analytics Team Setup
 
+Your situation includes one or more of the following:
+
+- Unsure of what data to collect
+- Curious about digital transformation
+- Need adhoc reporting
+- Need dashboard
+- Want to tell a data-driven story
+- Want a nice looking visual
+- Need to present to management
+
 <!-- [**Project Demo** (Academic's actual site)](https://sourcethemes.com/academic/)  
 
 **Over 100,000 [Amazing Websites](https://sourcethemes.com/academic/#expo) have Already Been Built with Academic**

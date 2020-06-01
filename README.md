@@ -48,7 +48,6 @@ Google Font: family=Domine:wght@400;700
 
 ## Inactive
 active = false
-- demo
 - hero
 - featured
 - publications
@@ -57,6 +56,7 @@ active = false
 
 ## Active (weights, ordering)
 active = true
+- demo (15)
 - about (20)
 - projects (50)
 - posts (60)
