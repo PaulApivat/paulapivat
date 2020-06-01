@@ -55,14 +55,14 @@ active = false
 - experience
 - talks
 
-## Active
+## Active (weights, ordering)
 active = true
-- about
-- accomplishment
-- posts
-- projects
-- gallery
-- tags
-- contact
+- about (20)
+- projects (50)
+- posts (60)
+- accomplishment (65)
+- gallery (66)
+- tags (120)
+- contact (130)
 
 
