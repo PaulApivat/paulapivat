@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1590997257108.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "418330043",
+    "id" : "1DECC42A",
+    "lastKnownWriteTime" : 1590999735,
+    "last_content_update" : 1590999735963,
+    "path" : "~/Desktop/RCode/paulapivat/content/home/demo.md",
+    "project_path" : "content/home/demo.md",
+    "properties" : {
+        "cursorPosition" : "59,0",
+        "scrollLine" : "50"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "markdown"
+}
