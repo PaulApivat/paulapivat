@@ -4,7 +4,10 @@ authors:
 bio: My interests include data visualization, data analytics and data science.
 education:
   courses:
-  - course: R Statistical Computing / Business Data Science
+  - course: Business Data Science
+    institution: Business Data Science University
+    year: 2020
+  - course: R Statistical Computing / Data Visualization
     institution: Self-Taught
     year: 2020
   - course: HTML, CSS, Javascript
@@ -45,4 +48,4 @@ user_groups:
 
 I help people and organizations make data-driven decisions. My services include data cleaning, data analysis and data visualization. Pre-services include understanding business and organizational OKRs.
 
-Organizational psychologist turned data scientists.
+Organizational psychologist turned data scientist.
