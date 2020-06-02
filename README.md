@@ -65,4 +65,15 @@ active = true
 - tags (120)
 - contact (130)
 
+# Menu (weights)
+
+- Start Here ('#', 10)
+- About ('#about', 15)
+- Projects ('#projects', 20)
+- Posts ('#posts', 30)
+- News ('#accomplishments', 40)
+- Viz ('#gallery', 45)
+- Courses ('courses/', 50)
+- Contact ('#contact', 60)
+
 
