@@ -1,11 +1,10 @@
 ---
 authors:
 - admin
-bio: My research interests include distributed robotics, mobile computing and programmable
-  matter.
+bio: My interests include data visualization, data analytics and data science.
 education:
   courses:
-  - course: R Statistical Computing
+  - course: R Statistical Computing / Business Data Science
     institution: Self-Taught
     year: 2020
   - course: HTML, CSS, Javascript
@@ -30,13 +29,13 @@ social:
   link: '#contact'
 - icon: twitter
   icon_pack: fab
-  link: https://twitter.com/GeorgeCushen
+  link: https://twitter.com/paulapivat
 - icon: google-scholar
   icon_pack: ai
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
+  link: '#'
 - icon: github
   icon_pack: fab
-  link: https://github.com/gcushen
+  link: https://github.com/paulapivat
 superuser: true
 title: Paul Apivat Hanvongse
 user_groups:

@@ -25,12 +25,12 @@ subtitle = ""
   # color = "navy"
   
   # Background gradient.
-  # gradient_start = "DeepSkyBlue"
-  # gradient_end = "SkyBlue"
+   gradient_start = "#8F7474"
+   gradient_end = "#E32626"
   
   # Background image.
-  image = "headers/teal-wood.jpg"  # Name of image in `static/img/`.
-  image_darken = 0.3  # Darken the image? Range 0-1 where 0 is transparent and 1 is opaque.
+  # image = ""  # Name of image in `static/img/`.
+  image_darken = 0.9  # Darken the image? Range 0-1 where 0 is transparent and 1 is opaque.
   image_size = "cover"  #  Options are `cover` (default), `contain`, or `actual` size.
   image_position = "center"  # Options include `left`, `center` (default), or `right`.
   image_parallax = true  # Use a fun parallax-like fixed background effect? true/false
@@ -50,15 +50,7 @@ subtitle = ""
  css_class = ""
 +++
 
-You are here with certain **data needs**. Some of my services include:
-
-- Data Visualization
-- Data Cleaning
-- Data Analysis
-- Data Governance
-- Data Analytics Team Setup
-
-Your situation includes one or more of the following:
+You are experiencing one or more of the following **problems**:
 
 - Unsure of what data to collect
 - Curious about digital transformation
@@ -67,6 +59,19 @@ Your situation includes one or more of the following:
 - Want to tell a data-driven story
 - Want a nice looking visual
 - Need to present to management
+- Need to clean data set
+- Need to prepare data for analysis
+- Need to communicate data for wider audience
+
+You are here with certain **data needs**. I can help in the following areas:
+
+- Data Visualization
+- Data Cleaning
+- Data Analysis
+- Data Governance
+
+
+
 
 <!-- [**Project Demo** (Academic's actual site)](https://sourcethemes.com/academic/)  
 
