@@ -3,8 +3,8 @@
 Website and Portfolio
 
 # Quick Start
-navigate to correct directory (/RCode/paulapivat)
-blogdown::serve_site()
+- navigate to correct directory (/RCode/paulapivat)
+- blogdown::serve_site()
 
 # Setup
 
