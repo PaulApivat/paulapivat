@@ -9,7 +9,7 @@ links:
   icon_pack: fab
   name: Follow
   url: https://twitter.com/paulapivat
-slides: example
+slides: wpa
 summary: An example of using the in-built project page.
 tags:
 - Data Viz
