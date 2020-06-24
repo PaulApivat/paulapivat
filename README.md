@@ -2,6 +2,10 @@
 
 Website and Portfolio
 
+# Quick Start
+navigate to correct directory (/RCode/paulapivat)
+blogdown::serve_site()
+
 # Setup
 
 Alison Hill, 'Up & Running with blogdown'[https://alison.rbind.io/post/2017-06-12-up-and-running-with-blogdown/]
