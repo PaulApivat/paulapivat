@@ -8,18 +8,18 @@ Website and Portfolio
 
 # Setup
 
-Alison Hill, 'Up & Running with blogdown'[https://alison.rbind.io/post/2017-06-12-up-and-running-with-blogdown/]
+Alison Hill, ['Up & Running with blogdown'](https://alison.rbind.io/post/2017-06-12-up-and-running-with-blogdown/)
 
 # Netlify Deployment
 
-Resource: https://gohugo.io/hosting-and-deployment/hosting-on-netlify/
+[Resource](https://gohugo.io/hosting-and-deployment/hosting-on-netlify/)
 
 see netlify.toml
 add HUGO_VERSION = 'x.xx.x'
 
 # Customizing Acadmic Theme
 
-Academic Theme Documentation: https://sourcethemes.com/academic/docs/
+[Academic Theme Documentation](https://sourcethemes.com/academic/docs/)
 
 ## Theme Color
 
@@ -88,9 +88,13 @@ active = true
 - Copy TOML structure from dummy projects
 
 ## Add PDF slides for each Project 
-- Navigate to Folder: content/project/project_name
-- Create 'slides' folder
-- Drop PDF into slides foler
+- follow this [guide](https://www.themillerlab.io/post/pdf-to-jpeg/)
+
+- Navigate to Folder: content/slides
+- In the *slides* folder create a project-specific-folder
+- In that folder, create index.md (which controls content of slides)
+- Fill in index.md with slides (see guide)
+- Return to paulapivat/content/project/project-folder to change `slides` in TOML
 
 ## Add Project Filter Button / Tag on Front Page
 - Edit: paulapivat/content/home/projects.md
