@@ -80,4 +80,17 @@ active = true
 - Courses ('courses/', 50)
 - Contact ('#contact', 60)
 
+# Add Project(s)
 
+- Files: paulapivat/content/project/
+- Add new folder
+- Inside new folder, add index.md
+- Copy TOML structure from dummy projects
+
+## Add PDF slides for each Project 
+- Navigate to Folder: content/project/project_name
+- Create 'slides' folder
+- Drop PDF into slides foler
+
+## Add Project Filter Button / Tag on Front Page
+- Edit: paulapivat/content/home/projects.md
