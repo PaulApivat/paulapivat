@@ -16,7 +16,7 @@ tags:
 - People Analytics
 title: Wharton People Analytics Data Visualization Competition 2020
 url_code: ""
-url_pdf: "~/static/pdf/wpa_final_slides.pdf"
+url_pdf: ""
 url_slides: ""
 url_video: ""
 ---
