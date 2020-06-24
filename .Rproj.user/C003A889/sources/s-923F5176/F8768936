@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "447590492",
+    "hash" : "4198836485",
     "id" : "F8768936",
-    "lastKnownWriteTime" : 1593009231,
-    "last_content_update" : 1593009231,
+    "lastKnownWriteTime" : 1593012417,
+    "last_content_update" : 1593012417066,
     "path" : "~/Desktop/RCode/paulapivat/content/slides/wpa/index.md",
     "project_path" : "content/slides/wpa/index.md",
     "properties" : {
+        "cursorPosition" : "157,3",
+        "scrollLine" : "73"
     },
     "read_only" : false,
     "read_only_alternatives" : [
