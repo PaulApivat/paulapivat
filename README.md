@@ -86,6 +86,7 @@ active = true
 - Add new folder
 - Inside new folder, add index.md
 - Copy TOML structure from dummy projects
+- To add a main picture for each project page, save jpeg as `featured.jpeg` and drop it into the project folder.
 
 ## Add PDF slides for each Project 
 - follow this [guide](https://www.themillerlab.io/post/pdf-to-jpeg/)

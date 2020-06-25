@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Self-Employed | Getwyze">
+  <meta name="description" content="Using maps, sp and ggplot2 packages to render UTM data.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/tags/">
+  <link rel="alternate" hreflang="en-us" href="/post/utm/">
 
   
 
@@ -212,14 +212,12 @@
   
 
   
-  <link rel="alternate" href="/tags/index.xml" type="application/rss+xml" title="Paul Apivat">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/tags/">
+  <link rel="canonical" href="/post/utm/">
 
   
   
@@ -238,18 +236,63 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/tags/">
-  <meta property="og:title" content="Tags | Paul Apivat">
-  <meta property="og:description" content="Self-Employed | Getwyze"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/post/utm/">
+  <meta property="og:title" content="Turning UTM data into Longitude / Lattitude | Paul Apivat">
+  <meta property="og:description" content="Using maps, sp and ggplot2 packages to render UTM data."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    <meta property="og:updated_time" content="2020-07-25T21:13:14-05:00">
+    
+      <meta property="article:published_time" content="2020-06-25T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-06-25T00:00:00&#43;00:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/utm/"
+  },
+  "headline": "Turning UTM data into Longitude / Lattitude",
+  
+  "datePublished": "2020-06-25T00:00:00Z",
+  "dateModified": "2020-06-25T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Paul Apivat Hanvongse"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Paul Apivat",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Using maps, sp and ggplot2 packages to render UTM data."
+}
+</script>
+
+  
 
   
 
@@ -257,10 +300,13 @@
   
 
 
+  
 
 
 
-  <title>Tags | Paul Apivat</title>
+
+
+  <title>Turning UTM data into Longitude / Lattitude | Paul Apivat</title>
 
 </head>
 
@@ -587,154 +633,350 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>Turning UTM data into Longitude / Lattitude</h1>
+
+  
+  <p class="page-subtitle">Visualize UTM data in 10 mins 🌐</p>
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>Tags</h1>
+
+
+<div class="article-metadata">
 
   
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/author/paul-apivat-hanvongse/">Paul Apivat Hanvongse</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jun 25, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    0 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/r/">R</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/data-viz/" >Data Viz</a></h2>
-      <div class="article-style">
-        
-      </div>
+    <div class="article-style">
+      
     </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/r/" >R</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/people-analytics/" >People Analytics</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/source-themes/" >Source Themes</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/deep-learning/" >Deep Learning</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/demo/" >Demo</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/academic/" >Academic</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/%E5%BC%80%E6%BA%90/" >开源</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/plot/" >plot</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/tag/r-markdown/" >R Markdown</a></h2>
-      <div class="article-style">
-        
-      </div>
-    </div>
-  
 
+    
+
+
+
+
+
+<div class="article-tags">
   
-<nav>
-  <ul class="pagination justify-content-center">
+  <a class="badge badge-light" href="/tag/r/">R</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
     
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/utm/&amp;text=Turning%20UTM%20data%20into%20Longitude%20/%20Lattitude" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
     
-    <li class="page-item"><a class="page-link" href="/tags/page/2/">&raquo;</a></li>
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/utm/&amp;t=Turning%20UTM%20data%20into%20Longitude%20/%20Lattitude" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Turning%20UTM%20data%20into%20Longitude%20/%20Lattitude&amp;body=/post/utm/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/utm/&amp;title=Turning%20UTM%20data%20into%20Longitude%20/%20Lattitude" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Turning%20UTM%20data%20into%20Longitude%20/%20Lattitude%20/post/utm/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/utm/&amp;title=Turning%20UTM%20data%20into%20Longitude%20/%20Lattitude" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
     
   </ul>
-</nav>
-
-
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/paul-apivat-hanvongse/avatar_hu63a07477d78c9be41fad7b90b509fc17_91571_270x270_fill_q90_lanczos_center.jpg" alt="Paul Apivat Hanvongse">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="/">Paul Apivat Hanvongse</a></h5>
+        <h6 class="card-subtitle">Self-Employed | Getwyze</h6>
+        <p class="card-text">My interests include data visualization, data analytics and data science.</p>
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/paulapivat/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/paulapivat" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/post/2015-07-23-r-rmarkdown/">Hello R Markdown</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+
+  </div>
+</article>
 
       
 
