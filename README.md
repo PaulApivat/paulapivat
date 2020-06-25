@@ -104,3 +104,12 @@ active = true
 
 ## Add Project Filter Button / Tag on Front Page
 - Edit: paulapivat/content/home/projects.md
+
+## Add Blog Posts (Rmd file, without own folder)
+- path: /content/post/
+- Rmd file
+- NB: file name yyyy-mm-dd-slug **note** dates must be current or else it won't render 
+- NB: within YAML settings, make sure `slug` is unique or else it will over write another blog post
+
+
+## Add Blog Posts (with own folder)
