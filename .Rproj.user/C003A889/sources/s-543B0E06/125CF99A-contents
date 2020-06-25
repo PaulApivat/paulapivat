@@ -1,6 +1,6 @@
 ---
 date: "2020-06-24T00:00:00Z"
-external_link: "https://wpa.wharton.upenn.edu/2020-conference-competition-winners/#datavisualizationcompetitionwinner"
+external_link: ""
 image:
   caption: Insert Photo
   focal_point: Smart
