@@ -1,6 +1,6 @@
 ---
 date: "2020-06-24T00:00:00Z"
-external_link: ""
+external_link: "https://wpa.wharton.upenn.edu/2020-conference-competition-winners/#datavisualizationcompetitionwinner"
 image:
   caption: Insert Photo
   focal_point: Smart
@@ -21,4 +21,6 @@ url_slides: ""
 url_video: ""
 ---
 
-Lorem ipsum dolor sit amet,
+This Data Visualization competition was hosted by the Wharton People Analytics conference. They partnered with Doctors Without Borders, a medical humanitarian organization that delivers emergency aid to people affected by conflict, epidemics and natural disasters. Our task was to analyze data dating back to 2 decades on their global workforce comprising over 45,000 people to understand the career paths of Medical Coordinators (a top-level position within the organization).
+
+Very excited to have won 2nd place in this competition! See details [here](https://wpa.wharton.upenn.edu/2020-conference-competition-winners/#datavisualizationcompetitionwinner).
