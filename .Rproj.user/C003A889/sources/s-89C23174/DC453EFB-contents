@@ -1,13 +1,11 @@
 ---
-title: "utm_latlong"
+title: "Converting Universal Transverse Mercator (UTM) to lattitude/longitude data"
 author: "Paul Apivat Hanvongse"
-date: "6/25/2020"
-always_allow_html: yes
-output: 
-        html_document: default
-        pdf_document: default
-keep_tex: yes
+date: "2020-07-25T21:13:14-05:00"
+categories: ["R"]
+tags: ["R", "Data Viz"]
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -110,5 +108,3 @@ We can see a concentration of `utm` data points from `jobpost` were made in Bang
 THAI.map %>% ggplot() + geom_map(map = THAI.map, aes(x=long, y=lat, map_id = region), fill='white', color='black') + geom_point(data = thai.map2, aes(x=long, y=lat, color="red", alpha = .9))
 
 ```
-
-
