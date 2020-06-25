@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.">
+  <meta name="description" content="Convert UTM to lat/long">
 
   
-  <link rel="alternate" hreflang="en-us" href="/post/2015-07-23-r-rmarkdown/">
+  <link rel="alternate" hreflang="en-us" href="/post/r-markdown-utm/">
 
   
 
@@ -217,7 +217,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/post/2015-07-23-r-rmarkdown/">
+  <link rel="canonical" href="/post/r-markdown-utm/">
 
   
   
@@ -236,15 +236,15 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/post/2015-07-23-r-rmarkdown/">
-  <meta property="og:title" content="Hello R Markdown | Paul Apivat">
-  <meta property="og:description" content="R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/post/r-markdown-utm/">
+  <meta property="og:title" content="Converting Universal Transverse Mercator (UTM) to lattitude/longitude data | Paul Apivat">
+  <meta property="og:description" content="Convert UTM to lat/long"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2015-07-23T21:13:14-05:00">
+      <meta property="article:published_time" content="2020-07-25T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2015-07-23T21:13:14-05:00">
+    <meta property="article:modified_time" content="2020-07-25T20:24:12&#43;07:00">
   
 
   
@@ -268,12 +268,12 @@
   "@type": "BlogPosting",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "/post/2015-07-23-r-rmarkdown/"
+    "@id": "/post/r-markdown-utm/"
   },
-  "headline": "Hello R Markdown",
+  "headline": "Converting Universal Transverse Mercator (UTM) to lattitude/longitude data",
   
-  "datePublished": "2015-07-23T21:13:14-05:00",
-  "dateModified": "2015-07-23T21:13:14-05:00",
+  "datePublished": "2020-07-25T00:00:00Z",
+  "dateModified": "2020-07-25T20:24:12+07:00",
   
   "author": {
     "@type": "Person",
@@ -288,7 +288,7 @@
       "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown."
+  "description": "Convert UTM to lat/long"
 }
 </script>
 
@@ -306,7 +306,7 @@
 
 
 
-  <title>Hello R Markdown | Paul Apivat</title>
+  <title>Converting Universal Transverse Mercator (UTM) to lattitude/longitude data | Paul Apivat</title>
 
 </head>
 
@@ -654,8 +654,10 @@
   
   
 <div class="article-container pt-3">
-  <h1>Hello R Markdown</h1>
+  <h1>Converting Universal Transverse Mercator (UTM) to lattitude/longitude data</h1>
 
+  
+  <p class="page-subtitle">Visualizing Spatial Data</p>
   
 
   
@@ -672,8 +674,10 @@
     
     
       
+          Last updated on
+      
     
-    Jul 23, 2015
+    Jul 25, 2020
   </span>
   
 
@@ -682,7 +686,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    1 min read
+    8 min read
   </span>
   
 
@@ -725,44 +729,168 @@
       
 
 
-<div id="r-markdown" class="section level1">
-<h1>R Markdown</h1>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-fit &lt;- lm(dist ~ speed, data = cars)
-fit
-## 
-## Call:
-## lm(formula = dist ~ speed, data = cars)
-## 
-## Coefficients:
-## (Intercept)        speed  
-##     -17.579        3.932</code></pre>
+<div id="packages-and-libraries" class="section level2">
+<h2>Packages and Libraries</h2>
+<pre class="r"><code>library(maps)
+library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.1     ✓ purrr   0.3.3
+## ✓ tibble  3.0.1     ✓ dplyr   0.8.5
+## ✓ tidyr   1.0.0     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.4.0</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## x purrr::map()    masks maps::map()</code></pre>
+<pre class="r"><code>library(sp)
+library(rmarkdown)</code></pre>
+<pre class="r"><code>library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)</code></pre>
 </div>
-<div id="including-plots" class="section level1">
-<h1>Including Plots</h1>
-<p>You can also embed plots. See Figure <a href="#fig:pie">1</a> for example:</p>
-<pre class="r"><code>par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c(&#39;Sky&#39;, &#39;Sunny side of pyramid&#39;, &#39;Shady side of pyramid&#39;),
-  col = c(&#39;#0292D8&#39;, &#39;#F7EA39&#39;, &#39;#C4B632&#39;),
-  init.angle = -50, border = NA
-)</code></pre>
-<div class="figure"><span id="fig:pie"></span>
-<img src="/post/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png" alt="A fancy pie chart." width="672" />
-<p class="caption">
-Figure 1: A fancy pie chart.
-</p>
+<div id="world-and-thai-maps" class="section level2">
+<h2>World and Thai Maps</h2>
+<p>First, we’ll use <code>map_data</code> function from <code>ggplot2</code> to turn any map from the <code>maps</code> package into a data frame. This provides longitude and lattitude data. Then, we’ll filter for Thailand to get Thai longtitude and lattitude data.</p>
+<pre class="r"><code>world.map &lt;- map_data(&quot;world&quot;)
+head(world.map)</code></pre>
+<pre><code>##        long      lat group order region subregion
+## 1 -69.89912 12.45200     1     1  Aruba      &lt;NA&gt;
+## 2 -69.89571 12.42300     1     2  Aruba      &lt;NA&gt;
+## 3 -69.94219 12.43853     1     3  Aruba      &lt;NA&gt;
+## 4 -70.00415 12.50049     1     4  Aruba      &lt;NA&gt;
+## 5 -70.06612 12.54697     1     5  Aruba      &lt;NA&gt;
+## 6 -70.05088 12.59707     1     6  Aruba      &lt;NA&gt;</code></pre>
+<pre class="r"><code>THAI.map &lt;- world.map %&gt;% filter(region == &quot;Thailand&quot;)
+head(THAI.map)</code></pre>
+<pre><code>##       long      lat group order   region   subregion
+## 1 99.66309 6.521924  1404 87912 Thailand Ko Tarutao 
+## 2 99.64404 6.516113  1404 87913 Thailand Ko Tarutao 
+## 3 99.60664 6.596827  1404 87914 Thailand Ko Tarutao 
+## 4 99.65401 6.714111  1404 87915 Thailand Ko Tarutao 
+## 5 99.70136 6.570557  1404 87916 Thailand Ko Tarutao 
+## 6 99.66309 6.521924  1404 87917 Thailand Ko Tarutao</code></pre>
 </div>
+<div id="longitude-and-lattitude-value-ranges" class="section level2">
+<h2>Longitude and Lattitude Value Ranges</h2>
+<p>Before converting UTM to longitude/lattitude data, we should know the range of both Longitudes and Lattitudes for Thailand.</p>
+<pre class="r"><code>summary(THAI.map$long)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   97.37   99.08  100.26  100.71  102.27  105.64</code></pre>
+<pre class="r"><code>summary(THAI.map$lat)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   5.637   9.084  13.213  13.249  17.820  20.424</code></pre>
+</div>
+<div id="jobpost-data-frame" class="section level2">
+<h2>Jobpost Data Frame</h2>
+<p>Our objective is to visualize utm_x and utm_y in the <code>jobpost</code> data frame by turning them into lattitude and longitude data first. The <code>jobpost</code> data frame is retrieved from PostgreSQL.</p>
+<p>Preparation includes writing it to CSV before loading into Rmarkdown.</p>
+<pre class="r"><code>jobpost &lt;- read.csv(&quot;jobpost.csv&quot;)
+glimpse(jobpost)</code></pre>
+<pre><code>## Rows: 50
+## Columns: 25
+## $ X                 &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, …
+## $ jobpost_id        &lt;int&gt; 54, 66, 33, 34, 35, 36, 28, 32, 30, 55, 67, 68, 37,…
+## $ job_name          &lt;fct&gt; &quot;Facebook Marketing&quot;, &quot;แอดมิน&quot;, &quot;Accountant&quot;, &quot;แคชเ…
+## $ job_qty           &lt;int&gt; 3, 1, 1, 2, 2, 5, 3, 1, 5, 1, 22, 10, 1, 1, 2, 2, 1…
+## $ age_min           &lt;int&gt; 22, 25, 29, 20, 20, 19, 28, 28, 20, 25, 30, 21, 18,…
+## $ age_max           &lt;int&gt; 26, 32, 35, 35, 35, 40, 120, 40, 40, 45, 45, 30, 50…
+## $ study_field       &lt;fct&gt; &quot;-&quot;, &quot;แฟชั่น&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;จัดการผักผ…
+## $ job_qualification &lt;fct&gt; &quot;อ่าน เขียน ภาษาอังกฤษ ได้ดี&quot;, &quot;ตอบคำถาม ภาษาอังกฤษ…
+## $ min_salary        &lt;int&gt; 30000, 12000, 20000, 13000, 10000, 15000, 15000, 12…
+## $ job_description   &lt;fct&gt; &quot;ทำการตลาดทางช่องทาง facebook&quot;, &quot;แอดมินดูแล เพจ เสื…
+## $ manychat_id       &lt;dbl&gt; 3.961592e+15, 2.984969e+15, 2.941175e+15, 3.416291e…
+## $ job_sex           &lt;int&gt; 3, 3, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 1, 3, …
+## $ study_level       &lt;int&gt; 5, 5, 5, 0, 2, 2, 3, 4, 4, 5, 5, 4, 0, 2, 2, 5, 5, …
+## $ work_exp          &lt;int&gt; 1, 0, 3, 1, 0, 0, 0, 3, 0, 3, 3, 0, 0, 1, 1, 3, 6, …
+## $ created           &lt;fct&gt; 2020-06-07 09:00:36, 2020-06-14 23:12:35, 2020-05-2…
+## $ updated           &lt;fct&gt; 2020-06-08 09:05:23, 2020-06-14 23:12:35, 2020-05-2…
+## $ confirmed         &lt;fct&gt; 2020-06-07 09:00:36, 2020-06-14 23:12:35, 2020-05-2…
+## $ batch             &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…
+## $ location          &lt;fct&gt; บางนา, รามอินทรา 65, พระรามเก้า ซอย 60, ห้าง ริเวอร…
+## $ utm_x             &lt;dbl&gt; 674486.5, 678167.2, 676504.5, 661251.7, 714943.7, 6…
+## $ utm_y             &lt;dbl&gt; 1511131, 1532008, 1519745, 1515611, 1477934, 152128…
+## $ utm_zone_number   &lt;int&gt; 47, 47, 47, 47, 47, 47, 48, 47, 47, 47, 35, 48, 47,…
+## $ utm_zone_letter   &lt;fct&gt; P, P, P, P, P, P, Q, P, P, P, L, P, P, P, P, P, P, …
+## $ job_type          &lt;int&gt; NA, NA, 0, 0, 0, 0, 0, 0, 0, NA, NA, NA, 0, 0, 0, 0…
+## $ online            &lt;lgl&gt; NA, NA, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, F…</code></pre>
+</div>
+<div id="subset-data-frame-called-utm" class="section level2">
+<h2>Subset Data Frame called UTM</h2>
+<p>We’ll select only <code>utm_x</code> and <code>utm_y</code> columns from <code>jobpost</code> because we’re interested in these two columns.</p>
+<pre class="r"><code>utm &lt;- data.frame(jobpost$utm_x, jobpost$utm_y)
+str(utm)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    50 obs. of  2 variables:
+##  $ jobpost.utm_x: num  674486 678167 676504 661252 714944 ...
+##  $ jobpost.utm_y: num  1511131 1532008 1519745 1515611 1477934 ...</code></pre>
+</div>
+<div id="handle-missing-values-and-outliers" class="section level2">
+<h2>Handle Missing Values and Outliers</h2>
+<p>Row 50 in <code>jobpost</code> and also <code>utm</code> is missing so we’ll delete that. Then we’ll also delete row 11 because it’s location is Zambia, Africa and its longitude and lattitude numbers are very different from Thailand - which will <em>distort</em> the map.</p>
+<pre class="r"><code>utm &lt;- utm[-50, ]
+utm &lt;- utm[-11, ]
+jobpost &lt;- jobpost[-50, ]
+jobpost &lt;- jobpost[-11, ]
+str(utm)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    48 obs. of  2 variables:
+##  $ jobpost.utm_x: num  674486 678167 676504 661252 714944 ...
+##  $ jobpost.utm_y: num  1511131 1532008 1519745 1515611 1477934 ...</code></pre>
+<pre class="r"><code>str(jobpost)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    48 obs. of  25 variables:
+##  $ X                : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ jobpost_id       : int  54 66 33 34 35 36 28 32 30 55 ...
+##  $ job_name         : Factor w/ 48 levels &quot;.Net Developer&quot;,..: 6 48 2 21 19 39 11 35 4 42 ...
+##  $ job_qty          : int  3 1 1 2 2 5 3 1 5 1 ...
+##  $ age_min          : int  22 25 29 20 20 19 28 28 20 25 ...
+##  $ age_max          : int  26 32 35 35 35 40 120 40 40 45 ...
+##  $ study_field      : Factor w/ 19 levels &quot;-&quot;,&quot;Food science&quot;,..: 1 12 1 1 1 1 1 6 1 5 ...
+##  $ job_qualification: Factor w/ 41 levels &quot;-&quot;,&quot;- มีใบขับขี่รถยนต์\n- ผ่านการเกณฑ์ทหาร&quot;,..: 41 16 9 38 37 32 33 30 15 23 ...
+##  $ min_salary       : int  30000 12000 20000 13000 10000 15000 15000 12000 11500 25000 ...
+##  $ job_description  : Factor w/ 50 levels &quot;- Develops, modifies application software according to specifications and requirements.\n- Develops application&quot;| __truncated__,..: 30 50 27 4 16 14 15 23 7 47 ...
+##  $ manychat_id      : num  3.96e+15 2.98e+15 2.94e+15 3.42e+15 3.00e+15 ...
+##  $ job_sex          : int  3 3 2 2 3 3 3 3 3 3 ...
+##  $ study_level      : int  5 5 5 0 2 2 3 4 4 5 ...
+##  $ work_exp         : int  1 0 3 1 0 0 0 3 0 3 ...
+##  $ created          : Factor w/ 26 levels &quot;2020-05-29 14:21:22&quot;,..: 12 24 1 1 1 1 1 1 1 13 ...
+##  $ updated          : Factor w/ 33 levels &quot;2020-05-29 14:21:22&quot;,..: 19 30 1 7 1 8 1 1 6 22 ...
+##  $ confirmed        : Factor w/ 26 levels &quot;2020-05-29 14:21:22&quot;,..: 12 24 1 1 1 1 1 1 1 13 ...
+##  $ batch            : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+##  $ location         : Factor w/ 50 levels &quot;112/3 หมู่ 7 ต.บางโฉลง อ.บางพลี จ.สมุทรปราการ 10540&quot;,..: 25 35 29 47 30 9 38 11 49 39 ...
+##  $ utm_x            : num  674486 678167 676504 661252 714944 ...
+##  $ utm_y            : num  1511131 1532008 1519745 1515611 1477934 ...
+##  $ utm_zone_number  : int  47 47 47 47 47 47 48 47 47 47 ...
+##  $ utm_zone_letter  : Factor w/ 4 levels &quot;L&quot;,&quot;N&quot;,&quot;P&quot;,&quot;Q&quot;: 3 3 3 3 3 3 4 3 3 3 ...
+##  $ job_type         : int  NA NA 0 0 0 0 0 0 0 NA ...
+##  $ online           : logi  NA NA FALSE FALSE FALSE FALSE ...</code></pre>
+</div>
+<div id="conversion-of-utm-into-latlong" class="section level2">
+<h2>Conversion of UTM into Lat/Long</h2>
+<p>After some research, we find out that Thailand’s UTM zone is 47N. The stack overflow source I used to find the conversion code is <a href="https://stackoverflow.com/questions/30018098/how-to-convert-utm-coordinates-to-lat-and-long-in-r/30018607">here</a>.</p>
+<p>We’ll create two SpatialPoints object classes. Then transform them into a data frame containing lat and long data.</p>
+<p>Remember to load <code>sp</code> library for this operation.</p>
+<pre class="r"><code>sputm &lt;- SpatialPoints(utm, proj4string = CRS(&quot;+proj=utm +zone=47N +datum=WGS84&quot;))
+spgeo &lt;- spTransform(sputm, CRS(&quot;+proj=longlat +datum=WGS84&quot;))
+
+thai.map2 &lt;- data.frame(Location = jobpost$location, lat = spgeo$jobpost.utm_y, 
+    long = spgeo$jobpost.utm_x)
+
+head(thai.map2)</code></pre>
+<pre><code>##                                      Location      lat     long
+## 1                                       บางนา 13.66385 100.6132
+## 2                                 รามอินทรา 65 13.85233 100.6486
+## 3                            พระรามเก้า ซอย 60 13.74159 100.6324
+## 4 ห้าง ริเวอร์ไซด์ พลาซ่า เจริญนคร ชั้น 1 ใน้ บันไดเลื่อน 13.70512 100.4912
+## 5                                    เมืองชลบุรี 13.36114 100.9847
+## 6                                      กรุงเทพ 13.75633 100.5018</code></pre>
+</div>
+<div id="visualize-with-ggplot2" class="section level2">
+<h2>Visualize with GGPLOT2</h2>
+<p>Here we’ll visualize the <code>THAI.map</code> we created previously and overlay the new Lat/Long data points (from UTM).</p>
+<p>We can see a concentration of <code>utm</code> data points from <code>jobpost</code> were made in Bangkok and the greater Bangkok areas with some jobs also posted outside Bangkok.</p>
+<pre class="r"><code>THAI.map %&gt;% ggplot() + geom_map(map = THAI.map, aes(x = long, 
+    y = lat, map_id = region), fill = &quot;white&quot;, color = &quot;black&quot;) + 
+    geom_point(data = thai.map2, aes(x = long, y = lat, color = &quot;red&quot;, 
+        alpha = 0.9))</code></pre>
+<pre><code>## Warning: Ignoring unknown aesthetics: x, y</code></pre>
+<p><img src="/post/2020-07-25-r-markdown-utm_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 
     </div>
@@ -775,11 +903,9 @@ Figure 1: A fancy pie chart.
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="/tag/plot/">plot</a>
+  <a class="badge badge-light" href="/tag/data-viz/">Data Viz</a>
   
-  <a class="badge badge-light" href="/tag/r-markdown/">R Markdown</a>
-  
-  <a class="badge badge-light" href="/tag/regression/">regression</a>
+  <a class="badge badge-light" href="/tag/r/">R</a>
   
 </div>
 
@@ -796,7 +922,7 @@ Figure 1: A fancy pie chart.
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=/post/2015-07-23-r-rmarkdown/&amp;text=Hello%20R%20Markdown" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/post/r-markdown-utm/&amp;text=Converting%20Universal%20Transverse%20Mercator%20%28UTM%29%20to%20lattitude/longitude%20data" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -809,7 +935,7 @@ Figure 1: A fancy pie chart.
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=/post/2015-07-23-r-rmarkdown/&amp;t=Hello%20R%20Markdown" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/post/r-markdown-utm/&amp;t=Converting%20Universal%20Transverse%20Mercator%20%28UTM%29%20to%20lattitude/longitude%20data" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -822,7 +948,7 @@ Figure 1: A fancy pie chart.
       
       
       <li>
-        <a href="mailto:?subject=Hello%20R%20Markdown&amp;body=/post/2015-07-23-r-rmarkdown/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Converting%20Universal%20Transverse%20Mercator%20%28UTM%29%20to%20lattitude/longitude%20data&amp;body=/post/r-markdown-utm/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -835,7 +961,7 @@ Figure 1: A fancy pie chart.
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=/post/2015-07-23-r-rmarkdown/&amp;title=Hello%20R%20Markdown" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/post/r-markdown-utm/&amp;title=Converting%20Universal%20Transverse%20Mercator%20%28UTM%29%20to%20lattitude/longitude%20data" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -848,7 +974,7 @@ Figure 1: A fancy pie chart.
       
       
       <li>
-        <a href="whatsapp://send?text=Hello%20R%20Markdown%20/post/2015-07-23-r-rmarkdown/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="whatsapp://send?text=Converting%20Universal%20Transverse%20Mercator%20%28UTM%29%20to%20lattitude/longitude%20data%20/post/r-markdown-utm/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -861,7 +987,7 @@ Figure 1: A fancy pie chart.
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=/post/2015-07-23-r-rmarkdown/&amp;title=Hello%20R%20Markdown" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/post/r-markdown-utm/&amp;title=Converting%20Universal%20Transverse%20Mercator%20%28UTM%29%20to%20lattitude/longitude%20data" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -998,7 +1124,11 @@ Figure 1: A fancy pie chart.
     <h3>Related</h3>
     <ul>
       
-      <li><a href="/post/r-markdown-utm/">Converting Universal Transverse Mercator (UTM) to lattitude/longitude data</a></li>
+      <li><a href="/slides/wpa/">Data Visualization Competition 2020 - Wharton People Analytics Conf</a></li>
+      
+      <li><a href="/project/wharton-people-analytics/">Wharton People Analytics Data Visualization Competition 2020</a></li>
+      
+      <li><a href="/post/2015-07-23-r-rmarkdown/">Hello R Markdown</a></li>
       
     </ul>
   </div>

@@ -1,9 +1,20 @@
 ---
 title: "Converting Universal Transverse Mercator (UTM) to lattitude/longitude data"
 author: "Paul Apivat Hanvongse"
-date: "2020-07-25T21:13:14-05:00"
+date: "2020-07-25"
+slug: r-markdown-utm
 categories: ["R"]
 tags: ["R", "Data Viz"]
+subtitle: "Visualizing Spatial Data"
+summary: "Convert UTM to lat/long"
+authors: []
+lastmod: '2020-07-25T20:24:12+07:00'
+featured: no
+image:
+    caption: ''
+    focal_point: ''
+    preview_only: no
+projects: []
 ---
 
 
