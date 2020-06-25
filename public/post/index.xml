@@ -187,6 +187,20 @@ head(thai.map2)&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
+      <title>Test Test</title>
+      <link>/post/r-markdown-sample/</link>
+      <pubDate>Wed, 24 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/post/r-markdown-sample/</guid>
+      <description>
+
+
+&lt;div id=&#34;test-test&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Test test&lt;/h1&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Markdown Example Post</title>
       <link>/post/example-post/</link>
       <pubDate>Wed, 27 May 2020 00:00:00 +0000</pubDate>

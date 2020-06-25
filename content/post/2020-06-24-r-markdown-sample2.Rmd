@@ -1,0 +1,19 @@
+---
+title: Test Test
+author: Paul Apivat
+date: '2020-06-24'
+slug: r-markdown-sample
+categories: []
+tags: []
+subtitle: 'Testing Deployment'
+summary: 'Code snippets'
+authors: []
+lastmod: '2020-06-24T20:24:12+07:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+# Test test
