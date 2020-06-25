@@ -26,6 +26,10 @@ subtitle = ""
     tag = "*"
   
   [[content.filter_button]]
+    name = "Data Viz"
+    tag = "Data Viz"
+  
+  [[content.filter_button]]
     name = "Deep Learning"
     tag = "Deep Learning"
   
@@ -33,9 +37,7 @@ subtitle = ""
     name = "Other"
     tag = "Demo"
     
-  [[content.filter_button]]
-    name = "Data Viz"
-    tag = "Data Viz"
+  
 
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.

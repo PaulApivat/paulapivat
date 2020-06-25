@@ -1,0 +1,505 @@
+---
+title: "WPA_DataVizCompetition"
+author: "Paul Apivat Hanvongse"
+date: "2/24/2020"
+always_allow_html: yes
+output:
+  pdf_document: default
+  html_document: default
+keep_tex: yes
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Packages and Libraries
+
+```{r setup, echo=TRUE}
+# Software
+# RStudio version: 1.2.5033
+# R version 3.6.2 (2019-12-12) -- "Dark and Stormy Night”
+
+setwd("/Users/paulapivat/Desktop")
+load(file = "finalsession.RData")
+
+# load libraries
+library(tidyverse)
+library(reshape2)
+library(waffle)
+library(patchwork)
+library(moderndive)
+library(networkD3)
+library(rmarkdown)
+library(tinytex)
+
+```
+
+
+```{r}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```
+
+
+## Executive Summary
+
+This report seeks to address the issue of **shortages** and **gaps** in Medical Coordinator (MedCo) positions in the field by understanding their irregular and complicated career paths. 
+
+**Shortage** is defined as people stopping after *just one* MedCo assignment, while **gaps** are those who take breaks between MedCo assignments to do something else before returning to MedCo.
+
+To understand **shortages** we sought to examine the difference between those who did **one** versus **multiple** MedCo assignments. We found that those who did multiple MedCo assignments do *nearly twice* as many assignments, in total. They took *slightly longer* to work their way up to the first MedCo assignment and once they reach MedCo status, their assignment tended to be *shorter* than those who only completed just **one** MedCo.
+
+We found that it matters *when* people go on their first MedCo assignment. For people who went on a MedCo assignment as their *first* assignment, most of the time, they stop after **one** MedCo. This was especially true for *first departures*.
+
+How we define success matters. Conventional thinking suggests that someone who ascends to MedCo *quickly* were successful, but the data says taking *longer* to work up to MedCo is fine. There should not be a rush to get to MedCo, particularly if it's someone's first assignment and first departure. 
+
+To understand **gaps** we looked at people who did *multiple* MedCo and segmented them into those who did **consecutive** MedCo assignments and those who took breaks between MedCo assignments (**non-consecutive**) to do something else. We found that those who took breaks between assignment also did nearly *twice* as many MedCo assignments, nearly *twice* as many total assignments in their careers, and took *slightly longer* to work up to their first MedCo. 
+
+It turns out **gaps** are a good thing. 
+
+Recommendations around preparation, defining success and supporting MedCo career paths are provided. 
+
+
+## Data Manipulations
+
+First we'll load the data into one data frame.
+
+```{r, echo=TRUE}
+# load data, save to df
+df <- read.csv("/Users/paulapivat/Desktop/WPA_DataViz/DataVizCompetition2020/MSF_OCP_departures.csv")
+
+```
+Next we'll do several manipulations that will set up various data frames for subsequent plotting. 
+
+We wanted to filter from the main data frame that contained the total population of assignments (N = 37893) to just MedCo assignments (n = 946), the unique staff_id's that completed *at least one* MedCo assignment (n = 462), but most importantly, we wanted to get a sense for the entire history of those 462 individuals by exploring **both** MedCo and non-MedCo pools in their career paths. 
+
+This meant accounting for *all assignments* for the 462 individuals who did at least one MedCo (n = 3569).
+
+Moreover, the analyses for this report required the creation of **new variables** namely: 
+
+1. Number of MedCo assigments per staff_id (`num_medco`)
+2. Assignment Number of First MedCo (`assign_num_first_medco`)
+3. Assignment Number of Last MedCo (`assign_num_last_medco`)
+4. Total number of assignments per staff_id (`total_num_assign`)
+5. Whether the person did consecutive or non-consecutive MedCo assignments (`consecutive`)
+6. Length of all assignments, including MedCo (`diff_date`)
+
+This would allow us to better understand **shortages**, **gaps** and the complicated career paths of Medical Coordinators.
+
+```{r, echo=TRUE}
+# all manipulations here
+
+# filter for all MedCo assignments (n = 946)
+df_medco <- df %>% filter(pool=="MEDCO")
+
+# create data frame containing number of MedCo assignments for all staff_id
+multiple_medco <- df_medco %>% group_by(staff_id) %>% tally(sort = TRUE)
+df_medco_join <- df_medco %>% inner_join(multiple_medco, by = "staff_id")
+
+# create vector for assign_num_first_medco
+
+# create vectorfor assgin_num_last_medco
+
+# create vector for total number of assignments
+df_join <- df %>% inner_join(multiple_medco, by = "staff_id")
+total_number_assignment <- df_join %>% group_by(staff_id) %>% tally(sort = TRUE)
+
+# create df_join_data
+all_assign_medco <- assign_first_medco %>% inner_join(y, by = "staff_id")
+all_assignment_join <- all_assign_medco %>% inner_join(total_number_assignment, by = "staff_id")
+
+all_assignment_join2 <- all_assignment_join %>% select(staff_id, assign_num_first_medco, assign_num_last_medco, n)
+
+df_join_data <- left_join(df_join, all_assignment_join2, by = "staff_id")
+
+# create 'a' data frame
+#a <- df_join_data
+#a[,'consecutive'] <- NA
+#a$consecutive <- if_else(a$assign_num_last_medco - a$assign_num_first_medco == (a$num_medco-1), 'consecutive', NULL)
+
+# create 'b' data frame by taking unique staff_id from 'a' (for "Consecutive" MedCo)
+b <- distinct(a, staff_id, .keep_all = TRUE)
+
+# create 'c' data frame (for "Non-consecutive" MedCo)
+c <- b[is.na(b$consecutive),]     
+```
+
+## Introduction
+
+**Note**: This memo accompanies and compliments a PDF presentation and should be interpreted with the presentation in mind. 
+
+The Medical Coordinator (MedCo) role is crucial at Medecins Sans Frontieres (MSF) / Doctors Without Borders. They make major medical decisions in the field, setting the tone on the medical side. This role requires operational saavy and medical expertise. As alluded to in the Participant Handbook, there's been problems of **shortages** and **gaps** in MedCo position. 
+
+In this memo, we'll cover how the data was manipulated, analyzed and visualized. Then, we'll outline key analyses, findings and recommendations to address these problems.
+
+## People and Assignments
+
+There have been **946 MedCo** assignments since 1996. 
+
+```{r, echo=TRUE}
+
+# Assignments (MedCo)
+plot <- ggplot(data = temp, mapping = aes(x=reorder(pool,n), y=n, fill = if_else(temp$pool=="MEDCO", "#e9222a", "#0d0d0d"))) + geom_bar(stat = "identity") + coord_flip() + geom_text(aes(label = n), vjust = 1.0, hjust = -0.5, color = "black") + theme(legend.position = "none") + labs(y = "Number of Assignments", x = "Pools", title = "Total Assignments in each Pool") + scale_fill_manual(values = c("#6c6c6c", "#e9222a")) + theme(panel.background = element_blank())
+
+plot
+```
+
+ Moreover, **462 People** who have completed at least one MedCo assignment.
+ 
+```{r, echo=TRUE}
+ 
+ # People (MedCo)
+ plot2 <- ggplot(data = temp4, mapping = aes(x=reorder(pool, value), y=value, fill=variable)) + geom_bar(stat = "identity", position = "dodge") + labs(x="Pool", y = "Numbers", title = "Assignments and People", fill = "Variables") + scale_fill_manual(labels=c("Number of Assignments", "Number of People"), values = c("#6c6c6c", "#e9222a")) + theme(panel.background = element_blank())
+ 
+ plot2
+```
+ 
+## Problem
+ 
+ We want to understand how people move between assignments on their way to becoming a MedCo. We'll do that by first defining **shortage** and **gaps** in the MedCo position. 
+ 
+ We define **shortage** as when someone does only *one* MedCo assignment and then stops. The MedCo is a prestigious position that requires a lot of operational skills, as well as a medical background. Few people possess these unique combination of skills and, even fewer are able to deploy their skills in high risk environments (e.g., conflict zones) over extended periods of time.
+ 
+ We assume the role requires substantial commitment and preparation and the organization would encourage *multiple* assignments once someone has reached the status of MedCo. 
+ 
+ So first we want to get a sense of the number of people who did **one** MedCo assignment versus those who did **more than one**. We can see below that 262 people did **one** MedCo assignment and 98 people did two, 34 people did three and so on. 
+ 
+```{r, echo=TRUE}
+ 
+ plot3 <- ggplot(data = num_medco_by_people, mapping = aes(x=num_medco, y=num_of_people, fill=num_medco_factor)) + geom_col() + geom_text(aes(label = num_of_people), vjust = -1.0) + scale_fill_manual(values = c("#e9222a", "#6c6c6c")) + labs(x = "Number of Medco Assignments", y = "Number of People", fill = "MedCo Assignments") + theme(panel.background = element_blank())
+ 
+ plot3
+```
+ 
+ We can also add up all the people who completed **more than one** MedCo assignment (n = 200).
+ 
+```{r, echo=TRUE}
+ 
+plot4 <- ggplot(data = num_medco_by_people2, mapping = aes(x=num_medco, y=num_of_people, fill=num_medco_factor)) + geom_col() + scale_fill_manual(values = c("#e9222a", "#6c6c6c")) + labs(x = "One vs More than one", y = "Number of People", fill = "MedCo Assignments") + theme(panel.background = element_blank())
+ 
+plot4
+```
+
+## Shortage: One-Timer vs Multi-Timers
+
+To understand the **shortage** in Medical Cooridnators, we'll want to see if there are differences between those who did **one** vs **more than one** MedCo. We'll look at differences in the **average number of assignments** *before* someone felt ready. We'll look at **total number of assignments**, including non-MedCo pools to get a sense for their career totality. Then we'll consider the **length of MedCo assignments**. 
+
+Looking at these variables could give us insight into how we might *decrease* one-timers and *increase* multi-timers. 
+
+The below chart compares the two groups in terms of assignments needed to be "ready" for MedCo. Multi-timers (those who do more than one MedCo assignments), take just *slightly* longer. The distributions are generated from `rnorm()` which uses **actual** means and standard deviations to simulate random variate under a normal distribution.
+
+```{r, echo=TRUE, warning=FALSE}
+
+plot7 <- ggplot(data = overlap2_df, mapping = aes(x=assign_num_first_medco, fill=type)) + geom_histogram(alpha = .8, binwidth = .5, position = "identity") + theme_classic() + scale_fill_manual(labels=c("One", "More than one"), values = c("#e9222a", "#6c6c6c")) + xlim(0,15) + ylim(0,15) + labs(x = "Average Position of First Medco Assignments", y = "Number of People", title = "Difference in Average Position of First Medco", fill = "Number of MedCo")
+
+plot7
+```
+
+We also find that multi-timers go on about **twice** as many assignments throughout their career as one-timers. Throughout the life-cycle of their careers, multi-timers appear to be more prolific. 
+
+```{r, echo=TRUE, warning=FALSE}
+
+plot7a <- ggplot(data = overlap2_df_a, mapping = aes(x=total_num_assign, fill=type)) + geom_histogram(alpha = .8, binwidth = 1, position = "identity") + theme_classic() + scale_fill_manual(labels=c("One", "More than one"), values = c("#e9222a", "#6c6c6c")) + xlim(0,30) + ylim(0,30) + labs(x = "Average Number of Assignments", y = "Number of People", title = "Difference in Average Number of Assignments", fill = "Number of MedCo")
+
+plot7a
+
+# calculating means
+
+# one-timer
+# b %>% filter(num_medco==1) %>% summarize(avg_num_assignment = mean(total_num_assign), sd = sd(total_num_assign))
+
+# multi-timer
+# b %>% filter(num_medco > 1) %>% summarize(avg_num_assignment = mean(total_num_assign), sd = sd(total_num_assign))
+
+# t-test
+t.test(total_num_assign ~ type, data = overlap2_df_a)
+```
+ 
+Interestingly, multi-timers also appeared to have shorter MedCo assignments. It's unclear *why* this is the case.
+
+```{r, echo=TRUE, warning=FALSE}
+
+plot7b <- ggplot(data = overlap2_df_b, mapping = aes(x=diff_date, fill=type)) + geom_histogram(alpha = .8, binwidth = 25, position = "identity") + theme_classic() + scale_fill_manual(labels=c("One", "More than one"), values = c("#e9222a", "#6c6c6c")) + xlim(0,1000) + ylim(0,40) + labs(x = "Length of MedCo Assignments", y = "Number of People", title = "Difference in Average Length of MedCo Assignments", fill = "Number of MedCo")
+
+plot7b
+```
+
+### Recap
+
+We want to encourage people to do *more than one* MedCo assignments. The data suggests multi-timers go onto do more assignments, *in total*. The tend to do on *shorter* MedCo assignments and they take *slightly* longer to work their way up to the first MedCo assignment. 
+
+## Does Timing Matter?
+
+We created a data frame containing people whose *first* assignment was also a MedCo and grouped them by the total number of **MedCo** assignments and **departure status**. There were 93 people whose first assignment was a MedCo assignment; 66 people (71%) stopped after just one MedCo assignment. Only 17 people went onto do a second MedCo assignment, showing a significant drop-off.
+
+Moreover, we finding this trend to be especially true for **first departures**.
+
+```{r, echo=TRUE, warning=FALSE}
+# create a93 data frame from 'a'
+a %>% filter(assignment_number==1) %>% filter(pool=="MEDCO") %>% group_by(num_medco, first_departure) %>% tally(sort = TRUE) -> a93
+
+# reverse factor-level of a93x 
+a93x <- a93
+a93x$first_departure <- factor(a93x$first_departure, levels = rev(levels(a93x$first_departure)))
+
+# plot using a93x data frame
+plot12 <- ggplot(data = a93x, mapping = aes(x=num_medco, y=n, fill=first_departure)) + geom_col() + labs(x="Number of Medco", y = "Number of People", title = "93 people whose first assignment was Medco", fill = "Departure Status") + scale_fill_manual(values = c("black", "#6c6c6c", "#e9222a")) + scale_x_discrete(limits=c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")) + theme(panel.background = element_blank())
+
+plot12
+```
+
+Next, we want to look at a couple things. 
+
+First, whether there's a relationship between **Number of Assignments** and **Number of MedCo Assignments**. It's expected that there is a relationship because a MedCo counts towards total assignments. 
+
+Second, if there is a relationship, whether it differs depending on **departure status**. 
+
+```{r, echo=TRUE, warning=FALSE}
+# create b_mod
+b_mod <- b %>% select(staff_id, num_medco, assign_num_first_medco, first_departure)
+
+# plot
+plot11b <- ggplot(data = b_mod, mapping = aes(x=num_medco, y=assign_num_first_medco, color = first_departure)) + geom_point(size = 5, alpha = .5) + geom_smooth(method = lm, se = FALSE) + labs(x = "Number of MedCo Assignments", y = "Position of First MedCo Assignment", color = "Departure Status") + scale_color_manual(values = c("#EE0000", "#FF9393", "#000000")) + theme_classic()
+
+plot11b
+
+# correlation between num_medco and assign_num_first_medco by departure status
+b_mod %>% filter(first_departure=="First departure") %>% get_correlation(formula = num_medco ~ assign_num_first_medco)
+
+b_mod %>% filter(first_departure=="First departure, relevant experience") %>% get_correlation(formula = num_medco ~ assign_num_first_medco)
+
+b_mod %>% filter(first_departure=="Not first departure") %>% get_correlation(formula = num_medco ~ assign_num_first_medco)
+```
+
+### Recap
+
+Time does matter. *When* someone goes on their *first* MedCo assignment could impact their decision to go on subsequent MedCo assignments. The data suggests MedCo assignments should be reserved for those who are **not** on their first assignments. 
+
+This is especially true for people on their **first departure**. 
+
+How success is defined matters.
+
+Conventional thinking has it that if someone ascended to MedCo after just a few assignments, they were “successful”.
+
+The data suggests that taking *longer* to get ready for the first MedCo assignment is fine, and perhaps should be encouraged. 
+
+## Gaps: Consecutive vs Non-consecutive
+
+Another concern are gaps in employment history among MedCos. We can define a gap (or a break) in MedCo assignment as someone who completed a MedCo assignment, then went onto do another pool before later returning to MedCo.
+
+Presumably, MSF would rather have people who reach MedCo status to sustain their position by doing **consecutive** MedCo assignments. 
+
+We examine if there are any differences between those who do **consecutive** MedCo versus **non-consecutive** MedCo (i.e., those who took breaks between MedCo assignments).
+
+First we segment the population of people who did at least one MedCo (n = 462) into three groups: one-timers (n = 262), consecutive (n = 88) and non-consecutive (n = 112) (the latter two comprise multi-timers).
+
+```{r, echo=TRUE, warning=FALSE}
+# plot
+plot5 <- waffle(parts2, rows = 8, size = 1, colors = c("#000000", "#EE0000", "#FF9393"), legend_pos = "bottom")
+
+plot5
+```
+
+The below chart examines the difference in *total number of MedCo assignments* between **consecutive** vs **non-consecutive**. We find that people who took a break between MedCo assignment had done almost twice as many MedCo assignments. The distributions are generated from `rnorm()` which uses **actual** means and standard deviations to simulate random variate under a normal distribution.
+
+```{r, echo=TRUE, warning=FALSE}
+# starting point are data frames 'b' and 'c'
+
+# create overlap_df data frame
+consecutive_set <- data.frame(type = "consecutive", num_medco = rnorm(n=88, mean = 2.488636, sd = 0.8840128))
+
+non_consecutive_set <- data.frame(type = "non-consecutive", num_medco = rnorm(n=112, mean = 4.151786, sd = 2.428101))
+
+overlap_df <- rbind(consecutive_set, non_consecutive_set)
+
+# plot
+plot6 <- ggplot(overlap_df, aes(x=num_medco, fill=type)) + geom_histogram(alpha = .8, binwidth = .5, position = "identity") + theme_classic() + scale_fill_manual(labels=c("Consecutive", "Non-Consecutive (Gap)"), values = c("#EE0000", "#000000")) + labs(x = "Number of Medco Assignments", y = "Number of People", title = "Differences in Number of MedCo Assignments", fill = "MedCo Assignments") + xlim(0,15)
+
+plot6
+
+# calculating average number of MedCo assignments
+
+# consecutive
+b %>% filter(consecutive=="consecutive") %>% filter(num_medco > 1) %>% summarize(avg_num_medco_assignment = mean(num_medco), sd = sd(num_medco))
+
+# non-consecutive
+c %>% summarize(avg_num_medco_assignment = mean(num_medco), sd = sd(num_medco))
+
+# t-test
+t.test(num_medco ~ type, data = overlap_df)
+```
+
+Next, we explore if the pattern extends to *total assignments* over the span of careers. The patterns continues. People who took more breaks (non-consecutive), did more over the entirety of their careers.
+
+```{r, echo=TRUE, warning=FALSE}
+# starting point are data frames 'b' and 'c'
+
+# create overlap_df_b data frame
+consecutive_set_b <- data.frame(type = "consecutive", total_num_assign = rnorm(n=88, mean = 6.579545, sd = 3.737728))
+non_consecutive_set_b <- data.frame(type = "non-consecutive", total_num_assign = rnorm(n=112, mean = 13.41964, sd = 7.352928))
+overlap_df_b <- rbind(consecutive_set_b, non_consecutive_set_b)
+
+# plot
+plot6b <- ggplot(data = overlap_df_b, mapping = aes(x=total_num_assign, fill=type)) + geom_histogram(alpha = .8, binwidth = 1, position = "identity") + theme_classic() + scale_fill_manual(labels=c("Consecutive", "Non-Consecutive (Gap)"), values = c("#EE0000", "#000000")) + xlim(0,30) + labs(x = "Number of Assignments", y = "Number of People", title = "Differences in Number of (Total) Assignments", fill = "MedCo Pattern")
+
+plot6b
+
+# calculating average number of assignments
+
+# consecutive
+b %>% filter(consecutive=="consecutive") %>% filter(num_medco > 1) %>% summarize(avg_num_assignment = mean(total_num_assign), sd = sd(total_num_assign))
+
+# non-consecutive
+c %>% summarize(avg_num_assignment = mean(total_num_assign), sd = sd(total_num_assign))
+
+# t-test
+t.test(total_num_assign ~ type, data = overlap_df_b)
+```
+
+Finally, we want to see whether there were differences between groups on how many assignments they needed to be ready for MedCo. It turns out, people who took breaks between MedCo (non-consecutive), took a bit longer to work up to their first MedCo assignments. 
+
+```{r, echo=TRUE, warning=FALSE}
+
+# create overlap_df_a
+consecutive_set_a <- data.frame(type = "consecutive", assign_num_first_medco = rnorm(n=88, mean = 4, sd = 2.95561))
+
+non_consecutive_set_a <- data.frame(type = "non-consecutive", assign_num_first_medco = rnorm(n=112, mean = 5.598214, sd = 4.462981))
+
+overlap_df_a <- rbind(consecutive_set_a, non_consecutive_set_a)
+
+# plot
+plot6a <- ggplot(data = overlap_df_a, mapping = aes(x=assign_num_first_medco, fill=type)) + geom_histogram(alpha = .8, binwidth = .5, position = "identity") + theme_classic() + scale_fill_manual(labels=c("Consecutive", "Non-Consecutive (Gap)"), values = c("#EE0000", "#000000")) + xlim(0,17) + ylim(0,17) + labs(x = "Assignment Number of first MedCo", y = "Number of People", title = "When did people do their first MedCo assignment?", fill = "MedCo Pattern")
+
+plot6a
+
+# calculating average number of assignments
+
+# consecutive
+b %>% filter(consecutive=="consecutive") %>% filter(num_medco > 1) %>% summarize(avg_position_first_medco = mean(assign_num_first_medco), sd = sd(assign_num_first_medco))
+
+# non-consecutive
+c %>% summarize(avg_position_first_medco = mean(assign_num_first_medco), sd = sd(assign_num_first_medco))
+
+# t-test
+t.test(assign_num_first_medco ~ type, data = overlap_df_a)
+```
+
+### Recap
+
+We find that people who took breaks between MedCo assignments did **more MedCo** assignments as well as **more assignments** in general, even if it took them a bit longer to get to their first MedCo assignment. 
+
+Perhaps **gaps** are a *good* thing.
+
+Interestingly, the generally positive relationship between **number of MedCo assignments** and **number of total assignments** is *stronger* for people who took breaks between MedCo assignments (non-consecutive).
+
+```{r, echo=TRUE, warning=FALSE}
+# create b_cor data frame
+b_cor <- b %>% select(staff_id, num_medco, total_num_assign, consecutive)
+
+# plot
+plot11a <- ggplot(data = b_cor, mapping = aes(x=num_medco, y=total_num_assign, color = consecutive)) + geom_point(size = 5, alpha = .5) + geom_smooth(method = lm, se = FALSE) + labs(x = "Number of Medco Assignments", y = "Number of Total Assignments", color = "MedCo Pattern") + scale_color_manual(values = c("#EE0000", "#000000")) + theme_classic()
+
+plot11a
+```
+
+## What do people do before MedCo?
+
+In an effort to understand the **irregular** and **complicated** career paths MedCos follow, we want to understand what they do *before* their first MedCo assignment. Because, on average, people's first MedCo landed on their fifth assignment, we'll examine all those whose first MedCo *coincided* with their fifth assignment and explore what they did in assignments 1-to-4.
+
+```{r, echo=TRUE, warning=FALSE}
+# create before_medco_df_b
+a %>% filter(assign_num_first_medco==5) %>% filter(assignment_number < 5) %>% count(assignment_number, pool) -> before_medco_df_b
+
+# filter out 'unknown'
+before_medco_df_b <- before_medco_df_b %>% filter(pool != "Unknown")
+
+# plot
+plot8b <- ggplot(before_medco_df_b, aes(fill=pool, y=n, x=assignment_number)) + geom_bar(position = "fill", stat = "identity") + scale_fill_manual(values = c("#FFE5E5", "#FF9393", "#EE0000", "#F5F5F5", "#DCDCDC", "#C0C0C0", "#8B8989", "#000000")) + labs(x = "Assignment Number", y = "Percentage", title = "Pools represented in first four assignments before first MedCo", fill = "Pools") + theme_classic()
+
+plot8b
+```
+
+The two most popular pools people do before entering their first MedCo assignment are: Medical doctors other than GAS pool members (**MD**) and **Project Coordinator**. 
+
+Next, we'll explore *why* these two roles are such appealing precursors to the first MedCo assignment.
+
+```{r}
+# Because the following diagrams require HTML, please reference the actual Visualization document (PDF) for details.
+```
+### MD
+
+First, because MedCos require a medical background, the **MD** pool is a natural starting place. Some prefer medical work and will continue in the MD role for multiple assignments before transitioning to MedCo. In addition, the MD pool provides the most **career optionality**. There were **12 career paths** that played out for people occupying the MD role
+
+For those medical doctors who wish to improve their operational skills, a crucial requirement for MedCo, they may transition from the MD role into several other positions, notably: **Project Coordinator** and **MTL** two roles that provide operational experience. 
+
+```{r, echo=TRUE, warning=FALSE}
+
+my_color_md <- 'd3.scaleOrdinal() .domain(["md_type", "pc_type", "mtl_type", "nonmed_type", "deputy_type", "every_type", "my_unique_group"]) .range(["#EE0000", "#DCDCDC", "#DCDCDC", "#DCDCDC", "#DCDCDC", "#DCDCDC", "#8B8989"])'
+
+sankeyNetwork(Links = links6, Nodes = nodes6, Source = "IDsource", Target = "IDtarget", Value = "value", NodeID = "name", colourScale = my_color_md, LinkGroup = "group", NodeGroup = "group")
+```
+
+### Project Coordinator
+
+The Project Coordinator role provides the *second* most **career optionality**, providing **8 career paths** for people occupying this pool. In particular, this career path seems to be appealing for Medical people who want to gain operational skills. 
+
+The data indicates this role is the go-to role for Nurses, MTL, GAS and MD.
+
+```{r, echo=TRUE, warning=FALSE}
+
+my_color_pc <- 'd3.scaleOrdinal() .domain(["md_type", "pc_type", "mtl_type", "nonmed_type", "deputy_type", "every_type", "my_unique_group"]) .range(["#DCDCDC", "#000000", "#DCDCDC", "#DCDCDC", "#DCDCDC", "#DCDCDC", "#8B8989"])'
+
+sankeyNetwork(Links = links6, Nodes = nodes6, Source = "IDsource", Target = "IDtarget", Value = "value", NodeID = "name", colourScale = my_color_pc, LinkGroup = "group", NodeGroup = "group")
+```
+
+### MTL
+
+Aside from MD and Project Coordinator, we want to understand other career paths for people who made it to their firt MedCo. 
+
+The **MTL** pool provides *just as much* **career optionality** as the Project Coordinator role, providing **8 career paths** for people working toward their first MedCo. 
+
+One could make the argument that the MTL provides an *even better* bridge towards MedCo because it requires coordinating at the project level and even reports directly to the MedCo. Strategically, this should give MTLs a proximate and realistic view of what the demands of the MedCo roles are. And yet, it is underrated compared to the Project Coordinator role (there have only been **713** MTL assignments to **3646** Project Coordinator assignments since 1996).
+
+```{r, echo=TRUE, warning=FALSE}
+
+my_color_mtl <- 'd3.scaleOrdinal() .domain(["md_type", "pc_type", "mtl_type", "nonmed_type", "deputy_type", "every_type", "my_unique_group"]) .range(["#DCDCDC", "#DCDCDC", "#800000", "#DCDCDC", "#DCDCDC", "#DCDCDC", "#8B8989"])'
+
+sankeyNetwork(Links = links6, Nodes = nodes6, Source = "IDsource", Target = "IDtarget", Value = "value", NodeID = "name", colourScale = my_color_mtl, LinkGroup = "group", NodeGroup = "group")
+```
+
+### Other Career Paths
+
+Relative to MTL, fewer Nurses and GAS personnel move into MedCo. GAS people have **more optionality** as they had transition to MD and Project Coordinator roles, while Nurses had only chosen between Project Coordinator and Nurse. 
+
+```{r, echo=TRUE, warning=FALSE}
+my_color_every <- 'd3.scaleOrdinal() .domain(["md_type", "pc_type", "mtl_type", "nonmed_type", "deputy_type", "every_type", "my_unique_group"]) .range(["#DCDCDC", "#DCDCDC", "#DCDCDC", "#DCDCDC", "#DCDCDC", "#FF9393", "#8B8989"])'
+
+sankeyNetwork(Links = links6, Nodes = nodes6, Source = "IDsource", Target = "IDtarget", Value = "value", NodeID = "name", colourScale = my_color_every, LinkGroup = "group", NodeGroup = "group")
+```
+
+It should be noted that the **Deputy MedCo** role is potentially overlooked. They assist the MedCo and are position to understand the demands of the role and yet there have only been **170** Deputy MedCo assignments to **946** MedCo assignments, which is ironic because the former assists the latter (see first Plot) 
+
+Finally, the Non-Medical pool had the highest number of assignments over the last 20+ years by a large margin (N = 14033) and yet are under-represented in the paths toward MedCo. 
+
+```{r, echo=TRUE, warning=FALSE}
+my_color_2a <- 'd3.scaleOrdinal() .domain(["md_type", "pc_type", "mtl_type", "nonmed_type", "deputy_type", "every_type", "my_unique_group"]) .range(["#EE0000", "#000000", "#800000", "#00FF00", "#00BFFF", "#FF9393", "#8B8989"])'
+
+sankeyNetwork(Links = links6, Nodes = nodes6, Source = "IDsource", Target = "IDtarget", Value = "value", NodeID = "name", colourScale = my_color_2a, LinkGroup = "group", NodeGroup = "group")
+```
+
+## Recommendation
+
+First, encourage people to take the necessary preparation before starting their *first* MedCo. In the three groups we examined, **one-timers**, **consecutive** and **non-consecutive** (the latter two are **multi-timers**), non-consecutives took the *longest* to work their way up to their first MedCo, yet they would go on to do *more* MedCo assignments and *more* assignments throughout their careers. The definition of success should not be about speed, but taking the time to be fully prepared. 
+
+Second, it appears that the **most common** path towards MedCo is via the *MD* role. Moreover, these Medical Doctors understand that gaining **Project Coordinator** experience is important. To encourage more people entering MedCo, MSF should support lesser known career paths such as **MTL**, **Nurses** and **GAS**. An argument can be made that going from medical roles to Project Coordinator roles increases **career optionality**, opening up a wider range of paths towards MedCo.
+
+It may be worth examining why there is a tendency to overlook **Non-medical** paths given the volume of non-medical assignments in the data set. Furthermore, people should be encouraged to take **Deputy MedCo** assignments earlier on in their career as this gives them the best **realistic job preview** of what the MedCo role entails. It may be worthwhile to conduct a **job analysis** for the Deputy MedCo role to see if the position can be elevated in terms of responsibility and visibility. The aim should be to have *as many*, if not more, Deputy MedCo assignments as MedCo assignments. 
+
+Third, once people are *in* the MedCo role, it would be worth while to encourage people to **take a break from MedCo** once they've completed an assignment. Given the demands of the role, taking time to *pause, reflect and replenish* could help the individual do *more* MedCo assignments moving forward. In fact, it would be worth while setting up mechanisms for **feedback** and **coaching** around the MedCo role, particularly if it's their first MedCo, so people feel supported to take on additional MedCo assignments.
+
+The importance of the **first** MedCo assignment should be emphasized. It is a particularly sensitive time as many drop-out after one assignment. MSF should set up systems to prevent *first assignments* and *first departures* from being MedCo.
+
+The MSF could create structures to allow for **job rotation** to other pools after doing MedCo before circling back. 
+
+Finally, we found that **multi-timers** tended to have shorter MedCo assignments. Although it is unclear why this is the case, future analysis could examine whether MedCos become more *efficient* as their experience grows. This could pave the way for experienced MedCos to mentor new MedCos allowing for **knowledge transfer**. 

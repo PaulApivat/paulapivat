@@ -91,10 +91,15 @@ active = true
 - follow this [guide](https://www.themillerlab.io/post/pdf-to-jpeg/)
 
 - Navigate to Folder: content/slides
-- In the *slides* folder create a project-specific-folder
+- In the *slides* folder create a project-specific-folder (i.e., wpa)
 - In that folder, create index.md (which controls content of slides)
-- Fill in index.md with slides (see guide)
-- Return to paulapivat/content/project/project-folder to change `slides` in TOML
+- Convert PDF to jpeg using `pdftools` package
+- pdf_convert("your_pdf.pdf", format = "jpeg", pages = NULL, filenames = NULL, dpi = 300, opw = "", upw = "", verbose = TRUE)
+- dpi is jpeg resolution
+- Fill in index.md with slides (see [guide](https://www.themillerlab.io/post/pdf-to-jpeg/))
+
+- Return to paulapivat/content/project/project-folder/index.md to change `slides` value in TOML
+- NOTE: both files are in the `content` folder, one in `slides` directory another in `project` directory they talk to each other although they reside in different directories.
 
 ## Add Project Filter Button / Tag on Front Page
 - Edit: paulapivat/content/home/projects.md
