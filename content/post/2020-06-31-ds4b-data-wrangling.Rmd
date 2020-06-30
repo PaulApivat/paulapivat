@@ -1,0 +1,240 @@
+---
+title: Data Wrangling Foundations
+author: Paul Apivat Hanvongse
+date: "2020-06-30"
+slug: ds4b-data-wrangling
+categories: []
+tags: []
+subtitle: "DS4B 101 Week 2"
+summary: "Cover data wrangling foundations in dplyr"
+authors: []
+lastmod: '2020-06-30T20:24:12+07:00'
+featured: no
+image:
+    caption: ''
+    focal_point: ''
+    preview_only: no
+projects: []
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Data Wrangling
+
+I've had experiencing using several of the functions in this portion of [#DS4B 101](https://university.business-science.io/p/ds4b-101-r-business-analysis-r/), like `select()`, `filter()`, `distinct()`, `group_by()`, `summarize()` and so on, but this course is making me realize i've only skimmed the surface of `dplyr`.
+
+Recommended for anyone learning R who wants to level-up.
+
+## Select & Arrange
+
+I've used the `select` function before, but I haven't **used** it, really. 
+
+I had previously selected by column name, never by numeric vector; and I had never used select_helpers (`starts_with`, `contains`, `matches`, `num_range`). I had never re-arranged columns using `select()`. `Select_if()` also comes in handy as well. Knowing data types allow for efficient selection (integer vs double). 
+
+I've used arrange() and desc(), so I don't go into too much detail here. 
+
+```{r USArrests, echo=TRUE, results='hide'}
+library(tidyverse)
+
+# select first three columns using numeric vector
+USArrests %>%
+    select(1:3)
+
+# re-arrange columns using select; place UrbanPop first
+USArrests %>%
+    select(UrbanPop, everything())
+
+# select if integer 
+USArrests %>%
+    select_if(is.integer)
+
+USArrests %>%
+    select_if(~ !is.double(.))
+
+# select if double
+USArrests %>%
+    select_if(is.double)
+
+USArrests %>%
+    select_if(~ !is.integer(.))
+
+# swithing to IRIS dataframe
+# select helpers: starts_with, contains
+iris %>%
+    select(starts_with("petal"))
+
+iris %>%
+    select(contains("length")) %>% 
+    head()
+
+# using pull() instead of select() to pull out contents of a column
+iris %>%
+    pull(Sepal.Width) %>%
+    head()
+
+iris %>% 
+    select_if(is.factor) %>%
+    head()
+
+# arrange Species in descending order by Petal.Length
+iris %>%
+    select(Petal.Length, Species) %>%
+    arrange(desc(Petal.Length))
+
+```
+
+
+## Slice: Highlighting a Distinction between Base and Tidyverse
+
+Using `slice()` to grab portions of rows is another function I had not used prior. I might have used base R to grab specific rows. But looking back all my Base R operations were **one-offs**. Below is an example, I may use Base-R to grab the first five rows of a dataframe. If I wanted to sort by a particular column, then grab the first give rows, it turns into two operations. First sorting by column, decreasing and assigning to 'x', then grabing first five rows of 'x'. 
+
+With dplyr, particularly patterns taught in the class, you can more seamlessly arrange, in descending order by a particular column (Solar.R), then slice the first five rows. 
+
+
+```{r, echo=TRUE, results='hide'}
+# tidyverse to grab first five rows with slice(), but this allows pre-arranging it first. 
+airquality %>%
+    arrange(desc(Solar.R)) %>%
+    slice(1:5)
+
+# base R to grab first five rows
+airquality[1:5,]
+
+
+# base R to first sort by Solar.R, then assign to variable 'x', then grab first five values
+x <- sort(airquality$Solar.R, decreasing = TRUE)
+x[1:5]
+
+# fastest way to grab Solar.R
+sort(airquality$Solar.R, decreasing = TRUE)[1:5]
+
+```
+
+
+## Spread and Gather
+
+Here demonstrating `gather()` and `spread()` using the built-in `iris` dataset. The 
+
+```{r, echo=TRUE, results='hide'}
+
+# gather (before spread)
+iris %>% 
+    # create unique ID for each row
+    mutate(ID=row_number(Species)) %>%
+    # put ID in first column
+    select(ID, everything()) %>%
+    # use values from columns 2-5 as value
+    gather(key = Measure_Type, value = Values,2:5) %>%
+    # can spread by either Measure_Type or Species
+    spread(key = Species, value = Values)
+
+
+```
+
+## Filter and Mutate with nested pipes
+
+Using both `airquality` and `USArrests` to demonstrate various data wrangling operations involving filter and mutate with nested pipes. I can't believe I've only filtered one column at a time.
+
+```{r, echo=TRUE, results='hide'}
+
+# filter airquality for beginning and end of the month
+airquality %>%
+    filter(Day < 5 | Day > 25)
+
+airquality %>%
+    filter(Temp < 71 & Temp > 64)
+
+# Filter states that start with a certain alphabet
+USArrests
+
+# convert row name to column
+USArrest_rownames <- tibble::rownames_to_column(USArrests, "States")
+
+
+# Descriptive statistics of Violence_Type by all States that start with "New"
+USArrest_rownames %>%
+    select(States, UrbanPop, everything()) %>%
+    filter(States %>% 
+               str_detect("New")) %>%
+    # good to define which columns will be gather() in new column
+    gather(`Murder`, `Assault`, `Rape`, key = "Violence_Type", value = "cases" ) %>%
+    group_by(Violence_Type) %>%
+    summarize(
+        avg = mean(cases),
+        min = min(cases),
+        max = max(cases)
+    ) %>%
+    ungroup() %>%
+    mutate(avg = round(avg,1))
+
+
+# Filter by states starting with "A" and murder higher than 10
+USArrest_rownames %>%
+    filter(Murder > 10, 
+           States %>% str_detect("A"))
+
+# filter for all states beginning with "New"
+USArrest_rownames %>%
+    filter(States %>% str_detect("New")) %>%
+    arrange(desc(Assault))
+
+USArrest_rownames %>%
+    filter(Murder > 5, 
+           States %>% str_detect("M")) %>%
+    arrange(desc(Murder))
+    
+
+```
+
+## Handling Missing Values: Replace NA
+
+`summarize_all()` and `replace_na()` are a joy to use for handling missing values. 
+
+```{r, echo=TRUE, results='hide'}
+
+# Quickly get number of "missing values" for all columns
+airquality %>%
+    summarize_all(~sum(is.na(.)))
+
+# Get proportion of missing values for each column
+airquality %>%
+    summarize_all(~ sum(is.na(.)) / length(.))
+
+# Quickly replace missing values in columns Ozone and Solar.R with '0'
+airquality %>%
+    replace_na(list(Ozone = 0, Solar.R = 0))
+
+```
+
+## Chaining Multiple Pipes
+
+The coding patterns covered in this course is my biggest take-away thus far. 
+
+Previously, I had not used *longer* patterns of piping to explore data. Much of my code involved maybe 2-3 pipes, saving a new dataframe, then continuing to explore. Here i'm piping seven operations without creating a new dataframe and it allows for more efficient exploration, without having to save extra data frames.
+
+Making me re-think my approach to data wrangling. 
+
+```{r iris, echo=TRUE, results='hide'}
+# Chaining multiple pipes to more efficiently explore data
+iris %>%
+    group_by(Species) %>%
+    summarize(
+        count = n(),
+        mean = mean(Petal.Length),
+        median = median(Petal.Length),
+        sd = sd(Petal.Length),
+        min = min(Petal.Length),
+        max = max(Petal.Length)
+    ) %>%
+    ungroup() %>%
+    mutate(Range = max - min) %>%
+    rename(
+        `Standard Deviation` = sd,
+        `Average` = mean,
+        `Mininum` = min, 
+        `Maximum` = max
+    ) %>%
+    arrange(desc(Average))
+
+```

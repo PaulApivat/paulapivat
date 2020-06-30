@@ -77,6 +77,205 @@
     </item>
     
     <item>
+      <title>Data Wrangling Foundations</title>
+      <link>/post/ds4b-data-wrangling/</link>
+      <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/post/ds4b-data-wrangling/</guid>
+      <description>
+
+
+&lt;div id=&#34;data-wrangling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data Wrangling&lt;/h2&gt;
+&lt;p&gt;I’ve had experiencing using several of the functions in this portion of &lt;a href=&#34;https://university.business-science.io/p/ds4b-101-r-business-analysis-r/&#34;&gt;#DS4B 101&lt;/a&gt;, like &lt;code&gt;select()&lt;/code&gt;, &lt;code&gt;filter()&lt;/code&gt;, &lt;code&gt;distinct()&lt;/code&gt;, &lt;code&gt;group_by()&lt;/code&gt;, &lt;code&gt;summarize()&lt;/code&gt; and so on, but this course is making me realize i’ve only skimmed the surface of &lt;code&gt;dplyr&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Recommended for anyone learning R who wants to level-up.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;select-arrange&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Select &amp;amp; Arrange&lt;/h2&gt;
+&lt;p&gt;I’ve used the &lt;code&gt;select&lt;/code&gt; function before, but I haven’t &lt;strong&gt;used&lt;/strong&gt; it, really.&lt;/p&gt;
+&lt;p&gt;I had previously selected by column name, never by numeric vector; and I had never used select_helpers (&lt;code&gt;starts_with&lt;/code&gt;, &lt;code&gt;contains&lt;/code&gt;, &lt;code&gt;matches&lt;/code&gt;, &lt;code&gt;num_range&lt;/code&gt;). I had never re-arranged columns using &lt;code&gt;select()&lt;/code&gt;. &lt;code&gt;Select_if()&lt;/code&gt; also comes in handy as well. Knowing data types allow for efficient selection (integer vs double).&lt;/p&gt;
+&lt;p&gt;I’ve used arrange() and desc(), so I don’t go into too much detail here.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## ── Attaching packages ──────────────────────────────────────────────── tidyverse 1.3.0 ──&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## ✓ ggplot2 3.3.1     ✓ purrr   0.3.3
+## ✓ tibble  3.0.1     ✓ dplyr   0.8.5
+## ✓ tidyr   1.0.0     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.4.0&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## ── Conflicts ─────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# select first three columns using numeric vector
+USArrests %&amp;gt;%
+    select(1:3)
+
+# re-arrange columns using select; place UrbanPop first
+USArrests %&amp;gt;%
+    select(UrbanPop, everything())
+
+# select if integer 
+USArrests %&amp;gt;%
+    select_if(is.integer)
+
+USArrests %&amp;gt;%
+    select_if(~ !is.double(.))
+
+# select if double
+USArrests %&amp;gt;%
+    select_if(is.double)
+
+USArrests %&amp;gt;%
+    select_if(~ !is.integer(.))
+
+# swithing to IRIS dataframe
+# select helpers: starts_with, contains
+iris %&amp;gt;%
+    select(starts_with(&amp;quot;petal&amp;quot;))
+
+iris %&amp;gt;%
+    select(contains(&amp;quot;length&amp;quot;)) %&amp;gt;% 
+    head()
+
+# using pull() instead of select() to pull out contents of a column
+iris %&amp;gt;%
+    pull(Sepal.Width) %&amp;gt;%
+    head()
+
+iris %&amp;gt;% 
+    select_if(is.factor) %&amp;gt;%
+    head()
+
+# arrange Species in descending order by Petal.Length
+iris %&amp;gt;%
+    select(Petal.Length, Species) %&amp;gt;%
+    arrange(desc(Petal.Length))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;slice-highlighting-a-distinction-between-base-and-tidyverse&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Slice: Highlighting a Distinction between Base and Tidyverse&lt;/h2&gt;
+&lt;p&gt;Using &lt;code&gt;slice()&lt;/code&gt; to grab portions of rows is another function I had not used prior. I might have used base R to grab specific rows. But looking back all my Base R operations were &lt;strong&gt;one-offs&lt;/strong&gt;. Below is an example, I may use Base-R to grab the first five rows of a dataframe. If I wanted to sort by a particular column, then grab the first give rows, it turns into two operations. First sorting by column, decreasing and assigning to ‘x’, then grabing first five rows of ‘x’.&lt;/p&gt;
+&lt;p&gt;With dplyr, particularly patterns taught in the class, you can more seamlessly arrange, in descending order by a particular column (Solar.R), then slice the first five rows.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# tidyverse to grab first five rows with slice(), but this allows pre-arranging it first. 
+airquality %&amp;gt;%
+    arrange(desc(Solar.R)) %&amp;gt;%
+    slice(1:5)
+
+# base R to grab first five rows
+airquality[1:5,]
+
+
+# base R to first sort by Solar.R, then assign to variable &amp;#39;x&amp;#39;, then grab first five values
+x &amp;lt;- sort(airquality$Solar.R, decreasing = TRUE)
+x[1:5]
+
+# fastest way to grab Solar.R
+sort(airquality$Solar.R, decreasing = TRUE)[1:5]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;spread-and-gather&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Spread and Gather&lt;/h2&gt;
+&lt;p&gt;Here demonstrating &lt;code&gt;gather()&lt;/code&gt; and &lt;code&gt;spread()&lt;/code&gt; using the built-in &lt;code&gt;iris&lt;/code&gt; dataset. The&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# gather (before spread)
+iris %&amp;gt;% 
+    # create unique ID for each row
+    mutate(ID=row_number(Species)) %&amp;gt;%
+    # put ID in first column
+    select(ID, everything()) %&amp;gt;%
+    # use values from columns 2-5 as value
+    gather(key = Measure_Type, value = Values,2:5) %&amp;gt;%
+    # can spread by either Measure_Type or Species
+    spread(key = Species, value = Values)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;filter-and-mutate-with-nested-pipes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Filter and Mutate with nested pipes&lt;/h2&gt;
+&lt;p&gt;Using both &lt;code&gt;airquality&lt;/code&gt; and &lt;code&gt;USArrests&lt;/code&gt; to demonstrate various data wrangling operations involving filter and mutate with nested pipes. I can’t believe I’ve only filtered one column at a time.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# filter airquality for beginning and end of the month
+airquality %&amp;gt;%
+    filter(Day &amp;lt; 5 | Day &amp;gt; 25)
+
+airquality %&amp;gt;%
+    filter(Temp &amp;lt; 71 &amp;amp; Temp &amp;gt; 64)
+
+# Filter states that start with a certain alphabet
+USArrests
+
+# convert row name to column
+USArrest_rownames &amp;lt;- tibble::rownames_to_column(USArrests, &amp;quot;States&amp;quot;)
+
+
+# Descriptive statistics of Violence_Type by all States that start with &amp;quot;New&amp;quot;
+USArrest_rownames %&amp;gt;%
+    select(States, UrbanPop, everything()) %&amp;gt;%
+    filter(States %&amp;gt;% 
+               str_detect(&amp;quot;New&amp;quot;)) %&amp;gt;%
+    # good to define which columns will be gather() in new column
+    gather(`Murder`, `Assault`, `Rape`, key = &amp;quot;Violence_Type&amp;quot;, value = &amp;quot;cases&amp;quot; ) %&amp;gt;%
+    group_by(Violence_Type) %&amp;gt;%
+    summarize(
+        avg = mean(cases),
+        min = min(cases),
+        max = max(cases)
+    ) %&amp;gt;%
+    ungroup() %&amp;gt;%
+    mutate(avg = round(avg,1))
+
+
+# Filter by states starting with &amp;quot;A&amp;quot; and murder higher than 10
+USArrest_rownames %&amp;gt;%
+    filter(Murder &amp;gt; 10, 
+           States %&amp;gt;% str_detect(&amp;quot;A&amp;quot;))
+
+# filter for all states beginning with &amp;quot;New&amp;quot;
+USArrest_rownames %&amp;gt;%
+    filter(States %&amp;gt;% str_detect(&amp;quot;New&amp;quot;)) %&amp;gt;%
+    arrange(desc(Assault))
+
+USArrest_rownames %&amp;gt;%
+    filter(Murder &amp;gt; 5, 
+           States %&amp;gt;% str_detect(&amp;quot;M&amp;quot;)) %&amp;gt;%
+    arrange(desc(Murder))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;handling-missing-values-replace-na&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Handling Missing Values: Replace NA&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;summarize_all()&lt;/code&gt; and &lt;code&gt;replace_na()&lt;/code&gt; are a joy to use for handling missing values.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Quickly get number of &amp;quot;missing values&amp;quot; for all columns
+airquality %&amp;gt;%
+    summarize_all(~sum(is.na(.)))
+
+# Get proportion of missing values for each column
+airquality %&amp;gt;%
+    summarize_all(~ sum(is.na(.)) / length(.))
+
+# Quickly replace missing values in columns Ozone and Solar.R with &amp;#39;0&amp;#39;
+airquality %&amp;gt;%
+    replace_na(list(Ozone = 0, Solar.R = 0))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;chaining-multiple-pipes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Chaining Multiple Pipes&lt;/h2&gt;
+&lt;p&gt;The coding patterns covered in this course is my biggest take-away thus far.&lt;/p&gt;
+&lt;p&gt;Previously, I had not used &lt;em&gt;longer&lt;/em&gt; patterns of piping to explore data. Much of my code involved maybe 2-3 pipes, saving a new dataframe, then continuing to explore. Here i’m piping seven operations without creating a new dataframe and it allows for more efficient exploration, without having to save extra data frames.&lt;/p&gt;
+&lt;p&gt;Making me re-think my approach to data wrangling.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Chaining multiple pipes to more efficiently explore data
+iris %&amp;gt;%
+    group_by(Species) %&amp;gt;%
+    summarize(
+        count = n(),
+        mean = mean(Petal.Length),
+        median = median(Petal.Length),
+        sd = sd(Petal.Length),
+        min = min(Petal.Length),
+        max = max(Petal.Length)
+    ) %&amp;gt;%
+    ungroup() %&amp;gt;%
+    mutate(Range = max - min) %&amp;gt;%
+    rename(
+        `Standard Deviation` = sd,
+        `Average` = mean,
+        `Mininum` = min, 
+        `Maximum` = max
+    ) %&amp;gt;%
+    arrange(desc(Average))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Converting Universal Transverse Mercator (UTM) to lattitude/longitude data</title>
       <link>/post/r-markdown-utm/</link>
       <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>

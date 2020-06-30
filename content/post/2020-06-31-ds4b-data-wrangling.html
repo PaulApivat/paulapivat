@@ -1,0 +1,209 @@
+---
+title: Data Wrangling Foundations
+author: Paul Apivat Hanvongse
+date: "2020-06-30"
+slug: ds4b-data-wrangling
+categories: []
+tags: []
+subtitle: "DS4B 101 Week 2"
+summary: "Cover data wrangling foundations in dplyr"
+authors: []
+lastmod: '2020-06-30T20:24:12+07:00'
+featured: no
+image:
+    caption: ''
+    focal_point: ''
+    preview_only: no
+projects: []
+---
+
+
+
+<div id="data-wrangling" class="section level2">
+<h2>Data Wrangling</h2>
+<p>I’ve had experiencing using several of the functions in this portion of <a href="https://university.business-science.io/p/ds4b-101-r-business-analysis-r/">#DS4B 101</a>, like <code>select()</code>, <code>filter()</code>, <code>distinct()</code>, <code>group_by()</code>, <code>summarize()</code> and so on, but this course is making me realize i’ve only skimmed the surface of <code>dplyr</code>.</p>
+<p>Recommended for anyone learning R who wants to level-up.</p>
+</div>
+<div id="select-arrange" class="section level2">
+<h2>Select &amp; Arrange</h2>
+<p>I’ve used the <code>select</code> function before, but I haven’t <strong>used</strong> it, really.</p>
+<p>I had previously selected by column name, never by numeric vector; and I had never used select_helpers (<code>starts_with</code>, <code>contains</code>, <code>matches</code>, <code>num_range</code>). I had never re-arranged columns using <code>select()</code>. <code>Select_if()</code> also comes in handy as well. Knowing data types allow for efficient selection (integer vs double).</p>
+<p>I’ve used arrange() and desc(), so I don’t go into too much detail here.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.1     ✓ purrr   0.3.3
+## ✓ tibble  3.0.1     ✓ dplyr   0.8.5
+## ✓ tidyr   1.0.0     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.4.0</code></pre>
+<pre><code>## ── Conflicts ─────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code># select first three columns using numeric vector
+USArrests %&gt;%
+    select(1:3)
+
+# re-arrange columns using select; place UrbanPop first
+USArrests %&gt;%
+    select(UrbanPop, everything())
+
+# select if integer 
+USArrests %&gt;%
+    select_if(is.integer)
+
+USArrests %&gt;%
+    select_if(~ !is.double(.))
+
+# select if double
+USArrests %&gt;%
+    select_if(is.double)
+
+USArrests %&gt;%
+    select_if(~ !is.integer(.))
+
+# swithing to IRIS dataframe
+# select helpers: starts_with, contains
+iris %&gt;%
+    select(starts_with(&quot;petal&quot;))
+
+iris %&gt;%
+    select(contains(&quot;length&quot;)) %&gt;% 
+    head()
+
+# using pull() instead of select() to pull out contents of a column
+iris %&gt;%
+    pull(Sepal.Width) %&gt;%
+    head()
+
+iris %&gt;% 
+    select_if(is.factor) %&gt;%
+    head()
+
+# arrange Species in descending order by Petal.Length
+iris %&gt;%
+    select(Petal.Length, Species) %&gt;%
+    arrange(desc(Petal.Length))</code></pre>
+</div>
+<div id="slice-highlighting-a-distinction-between-base-and-tidyverse" class="section level2">
+<h2>Slice: Highlighting a Distinction between Base and Tidyverse</h2>
+<p>Using <code>slice()</code> to grab portions of rows is another function I had not used prior. I might have used base R to grab specific rows. But looking back all my Base R operations were <strong>one-offs</strong>. Below is an example, I may use Base-R to grab the first five rows of a dataframe. If I wanted to sort by a particular column, then grab the first give rows, it turns into two operations. First sorting by column, decreasing and assigning to ‘x’, then grabing first five rows of ‘x’.</p>
+<p>With dplyr, particularly patterns taught in the class, you can more seamlessly arrange, in descending order by a particular column (Solar.R), then slice the first five rows.</p>
+<pre class="r"><code># tidyverse to grab first five rows with slice(), but this allows pre-arranging it first. 
+airquality %&gt;%
+    arrange(desc(Solar.R)) %&gt;%
+    slice(1:5)
+
+# base R to grab first five rows
+airquality[1:5,]
+
+
+# base R to first sort by Solar.R, then assign to variable &#39;x&#39;, then grab first five values
+x &lt;- sort(airquality$Solar.R, decreasing = TRUE)
+x[1:5]
+
+# fastest way to grab Solar.R
+sort(airquality$Solar.R, decreasing = TRUE)[1:5]</code></pre>
+</div>
+<div id="spread-and-gather" class="section level2">
+<h2>Spread and Gather</h2>
+<p>Here demonstrating <code>gather()</code> and <code>spread()</code> using the built-in <code>iris</code> dataset. The</p>
+<pre class="r"><code># gather (before spread)
+iris %&gt;% 
+    # create unique ID for each row
+    mutate(ID=row_number(Species)) %&gt;%
+    # put ID in first column
+    select(ID, everything()) %&gt;%
+    # use values from columns 2-5 as value
+    gather(key = Measure_Type, value = Values,2:5) %&gt;%
+    # can spread by either Measure_Type or Species
+    spread(key = Species, value = Values)</code></pre>
+</div>
+<div id="filter-and-mutate-with-nested-pipes" class="section level2">
+<h2>Filter and Mutate with nested pipes</h2>
+<p>Using both <code>airquality</code> and <code>USArrests</code> to demonstrate various data wrangling operations involving filter and mutate with nested pipes. I can’t believe I’ve only filtered one column at a time.</p>
+<pre class="r"><code># filter airquality for beginning and end of the month
+airquality %&gt;%
+    filter(Day &lt; 5 | Day &gt; 25)
+
+airquality %&gt;%
+    filter(Temp &lt; 71 &amp; Temp &gt; 64)
+
+# Filter states that start with a certain alphabet
+USArrests
+
+# convert row name to column
+USArrest_rownames &lt;- tibble::rownames_to_column(USArrests, &quot;States&quot;)
+
+
+# Descriptive statistics of Violence_Type by all States that start with &quot;New&quot;
+USArrest_rownames %&gt;%
+    select(States, UrbanPop, everything()) %&gt;%
+    filter(States %&gt;% 
+               str_detect(&quot;New&quot;)) %&gt;%
+    # good to define which columns will be gather() in new column
+    gather(`Murder`, `Assault`, `Rape`, key = &quot;Violence_Type&quot;, value = &quot;cases&quot; ) %&gt;%
+    group_by(Violence_Type) %&gt;%
+    summarize(
+        avg = mean(cases),
+        min = min(cases),
+        max = max(cases)
+    ) %&gt;%
+    ungroup() %&gt;%
+    mutate(avg = round(avg,1))
+
+
+# Filter by states starting with &quot;A&quot; and murder higher than 10
+USArrest_rownames %&gt;%
+    filter(Murder &gt; 10, 
+           States %&gt;% str_detect(&quot;A&quot;))
+
+# filter for all states beginning with &quot;New&quot;
+USArrest_rownames %&gt;%
+    filter(States %&gt;% str_detect(&quot;New&quot;)) %&gt;%
+    arrange(desc(Assault))
+
+USArrest_rownames %&gt;%
+    filter(Murder &gt; 5, 
+           States %&gt;% str_detect(&quot;M&quot;)) %&gt;%
+    arrange(desc(Murder))</code></pre>
+</div>
+<div id="handling-missing-values-replace-na" class="section level2">
+<h2>Handling Missing Values: Replace NA</h2>
+<p><code>summarize_all()</code> and <code>replace_na()</code> are a joy to use for handling missing values.</p>
+<pre class="r"><code># Quickly get number of &quot;missing values&quot; for all columns
+airquality %&gt;%
+    summarize_all(~sum(is.na(.)))
+
+# Get proportion of missing values for each column
+airquality %&gt;%
+    summarize_all(~ sum(is.na(.)) / length(.))
+
+# Quickly replace missing values in columns Ozone and Solar.R with &#39;0&#39;
+airquality %&gt;%
+    replace_na(list(Ozone = 0, Solar.R = 0))</code></pre>
+</div>
+<div id="chaining-multiple-pipes" class="section level2">
+<h2>Chaining Multiple Pipes</h2>
+<p>The coding patterns covered in this course is my biggest take-away thus far.</p>
+<p>Previously, I had not used <em>longer</em> patterns of piping to explore data. Much of my code involved maybe 2-3 pipes, saving a new dataframe, then continuing to explore. Here i’m piping seven operations without creating a new dataframe and it allows for more efficient exploration, without having to save extra data frames.</p>
+<p>Making me re-think my approach to data wrangling.</p>
+<pre class="r"><code># Chaining multiple pipes to more efficiently explore data
+iris %&gt;%
+    group_by(Species) %&gt;%
+    summarize(
+        count = n(),
+        mean = mean(Petal.Length),
+        median = median(Petal.Length),
+        sd = sd(Petal.Length),
+        min = min(Petal.Length),
+        max = max(Petal.Length)
+    ) %&gt;%
+    ungroup() %&gt;%
+    mutate(Range = max - min) %&gt;%
+    rename(
+        `Standard Deviation` = sd,
+        `Average` = mean,
+        `Mininum` = min, 
+        `Maximum` = max
+    ) %&gt;%
+    arrange(desc(Average))</code></pre>
+</div>
