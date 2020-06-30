@@ -80,6 +80,9 @@ active = true
 - Courses ('courses/', 50)
 - Contact ('#contact', 60)
 
+# Edit About Section
+- path: paulapivat/content/authors/admin/_index.md
+
 # Add Project(s)
 
 - Files: paulapivat/content/project/

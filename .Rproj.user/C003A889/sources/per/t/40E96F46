@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1593074697605.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3275618581",
+    "id" : "40E96F46",
+    "lastKnownWriteTime" : 1593075732,
+    "last_content_update" : 1593075732330,
+    "path" : "~/Desktop/RCode/textmining/saku/email_verify/email_verify.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "21,0",
+        "scrollLine" : "2"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

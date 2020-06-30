@@ -4,8 +4,8 @@ authors:
 bio: My interests include data visualization, data analytics and data science.
 education:
   courses:
-  - course: Business Data Science
-    institution: Business Data Science University
+  - course: Advanced Data Science (R)
+    institution: Business Science University
     year: 2020
   - course: R Statistical Computing / Data Visualization
     institution: Self-Taught
