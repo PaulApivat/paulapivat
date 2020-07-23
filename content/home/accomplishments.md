@@ -29,14 +29,14 @@ date_format = "Jan 2006"
   description = ""
 
 [[item]]
-  organization = "edX"
-  organization_url = "https://www.edx.org"
-  title = "Blockchain Fundamentals"
-  url = "https://www.edx.org/professional-certificate/uc-berkeleyx-blockchain-fundamentals"
-  certificate_url = "https://www.edx.org"
+  organization = "Coursera"
+  organization_url = "https://www.coursera.org"
+  title = "R Programming"
+  url = "https://www.coursera.org/learn/r-programming"
+  certificate_url = "https://www.coursera.org/account/accomplishments/verify/U2G52DSA28MV"
   date_start = "2018-03-01"
   date_end = ""
-  description = "Formulated informed blockchain models, hypotheses, and use cases."
+  description = "Programming in R and using it for effective data analysis"
   
 [[item]]
   organization = "DataCamp"
