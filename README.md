@@ -110,6 +110,7 @@ active = true
 
 ## Add Project Filter Button / Tag on Front Page
 - Edit: paulapivat/content/home/projects.md
+- Note must change tags section on each individual project to match
 
 ## Add Blog Posts (Rmd file, without own folder)
 - path: /content/post/
