@@ -39,13 +39,13 @@ date_format = "Jan 2006"
   description = "Programming in R and using it for effective data analysis"
   
 [[item]]
-  organization = "DataCamp"
-  organization_url = "https://www.datacamp.com"
-  title = "Object-Oriented Programming in R: S3 and R6 Course"
-  url = ""
-  certificate_url = "https://www.datacamp.com"
-  date_start = "2017-07-01"
-  date_end = "2017-12-21"
-  description = ""
+  organization = "Wharton People Analytics Conference"
+  organization_url = "https://wpa.wharton.upenn.edu/"
+  title = "Data Visualization Competition 2020"
+  url = "https://wpa.wharton.upenn.edu/2020-conference-competition-winners/"
+  certificate_url = "https://wpa.wharton.upenn.edu/2020-conference-competition-winners/#datavisualizationcompetitionwinner"
+  date_start = "2020-02-01"
+  date_end = "2020-05-01"
+  description = "Data Visualization Competition 2nd Place Winner"
 
 +++
