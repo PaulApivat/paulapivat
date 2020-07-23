@@ -116,3 +116,7 @@ active = true
 
 
 ## Add Blog Posts (with own folder)
+
+## Edit Accomplishments section
+- path: paulapivat/content/home/accomplishments.md
+
