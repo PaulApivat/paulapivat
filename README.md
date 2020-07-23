@@ -83,6 +83,9 @@ active = true
 # Edit About Section
 - path: paulapivat/content/authors/admin/_index.md
 
+# Edit Menu
+- path: paulapivat/config/_default/menus.toml
+
 # Add Project(s)
 
 - Files: paulapivat/content/project/
