@@ -120,6 +120,9 @@ active = true
 
 ## Add Blog Posts (with own folder)
 
+## Edit Blog Section
+- add external link to [Getwyze.com](http://getwyze.com/)
+
 ## Edit Accomplishments section
 - path: paulapivat/content/home/accomplishments.md
 
