@@ -120,3 +120,5 @@ active = true
 ## Edit Accomplishments section
 - path: paulapivat/content/home/accomplishments.md
 
+## Edit Gallery
+- path: paulapivat/content/home/gallery/gallery
