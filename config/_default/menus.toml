@@ -20,7 +20,7 @@
 
 [[main]]
   name = "Posts"
-  url = "http://getwyze.com/"
+  url = "#posts"
   weight = 30
 
 [[main]]
