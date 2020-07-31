@@ -77,6 +77,216 @@
     </item>
     
     <item>
+      <title>Introducing Custom Functions into the Workflow</title>
+      <link>/post/custom-functions/</link>
+      <pubDate>Thu, 30 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>/post/custom-functions/</guid>
+      <description>
+
+
+&lt;div id=&#34;context&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Context&lt;/h2&gt;
+&lt;p&gt;In web development, functions are everywhere and are written to get even the smallest tasks done like allowing users to click on a button or controlling where and how a pop-up modal appears. In data analysis, you can go without using functions as long as you’re working on small scale projects and do not need to share your code with others.&lt;/p&gt;
+&lt;p&gt;Moreover, they can make your life a lot easier if you want to avoid copying and pasting your code in a bunch of different places (it also makes your code less error prone and easier to update).&lt;/p&gt;
+&lt;p&gt;Functions may require a &lt;strong&gt;slight&lt;/strong&gt; perspective shift for those who aren’t familiar. In this post, I want to share how I &lt;strong&gt;snuck&lt;/strong&gt; functions into my workflow for a specific project.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;slipping-custom-functions-into-the-workflow&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Slipping Custom Functions into the Workflow&lt;/h2&gt;
+&lt;p&gt;The most intuitive way, in my opinion, to introduce functions is to take a certain data pre-processing sequence and &lt;strong&gt;turn it into a function&lt;/strong&gt;. Below, I have a newly created dataframe called &lt;code&gt;net_sales_year_month&lt;/code&gt; that is a dataframe with three columns (net_sales, Year, Month).&lt;/p&gt;
+&lt;p&gt;Suppose my objective is to add a &lt;code&gt;Day&lt;/code&gt; and &lt;code&gt;month_year&lt;/code&gt; column, that combines Year, Month and Day (yyyy-mm-dd) into a &lt;code&gt;date&lt;/code&gt; type. The pre-processing task would be to take &lt;code&gt;net_sales_year_month&lt;/code&gt; and use the mutate function to create some new columns.&lt;/p&gt;
+&lt;p&gt;This is fine and well if you’re doing this &lt;strong&gt;one time&lt;/strong&gt;, but what if you need to repeat this operation on multiple columns?&lt;/p&gt;
+&lt;p&gt;That’s where a &lt;strong&gt;custom function&lt;/strong&gt; comes in.&lt;/p&gt;
+&lt;p&gt;For example, the function below called &lt;code&gt;create_ymd_function&lt;/code&gt; simply &lt;strong&gt;replaces&lt;/strong&gt; &lt;code&gt;net_sales_year_month&lt;/code&gt; with a generic &lt;code&gt;data&lt;/code&gt;, serving as the function parameter. Now &lt;em&gt;any&lt;/em&gt; dataframe can be used as a parameter for the &lt;code&gt;create_ymd_function&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Note the BEFORE and AFTER sections below - they have the same output, but one is a more general function that can be used with other data frames.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Selecting columns to work with (net_sales)
+net_sales_year_month &amp;lt;- retail_sales2 %&amp;gt;%
+    select(`Net Sales`, Year, Month) %&amp;gt;%
+    rename(net_sales = `Net Sales`)
+
+# BEFORE
+net_sales_year_month %&amp;gt;%
+        mutate(
+            Day = 1,
+            month_year = paste(Year, Month, Day),
+            month_year = month_year %&amp;gt;% ymd(),
+            month = month(month_year)
+        )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 36 x 6
+##    net_sales  Year Month       Day month_year month
+##        &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt;
+##  1     8284.  2017 January       1 2017-01-01     1
+##  2     6388.  2017 February      1 2017-02-01     2
+##  3     4589.  2017 March         1 2017-03-01     3
+##  4     8533.  2017 April         1 2017-04-01     4
+##  5     6237.  2017 May           1 2017-05-01     5
+##  6     9370.  2017 June          1 2017-06-01     6
+##  7     5959.  2017 July          1 2017-07-01     7
+##  8     7740.  2017 August        1 2017-08-01     8
+##  9     6732.  2017 September     1 2017-09-01     9
+## 10     5327   2017 October       1 2017-10-01    10
+## # … with 26 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# AFTER
+
+# Function takes in dataframe to add columns for further analysis
+create_ymd_function &amp;lt;- function(data) {
+    data %&amp;gt;%
+        mutate(
+            Day = 1,
+            month_year = paste(Year, Month, Day),
+            month_year = month_year %&amp;gt;% ymd(),
+            month = month(month_year)
+        )
+}
+
+create_ymd_function(net_sales_year_month)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 36 x 6
+##    net_sales  Year Month       Day month_year month
+##        &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt;
+##  1     8284.  2017 January       1 2017-01-01     1
+##  2     6388.  2017 February      1 2017-02-01     2
+##  3     4589.  2017 March         1 2017-03-01     3
+##  4     8533.  2017 April         1 2017-04-01     4
+##  5     6237.  2017 May           1 2017-05-01     5
+##  6     9370.  2017 June          1 2017-06-01     6
+##  7     5959.  2017 July          1 2017-07-01     7
+##  8     7740.  2017 August        1 2017-08-01     8
+##  9     6732.  2017 September     1 2017-09-01     9
+## 10     5327   2017 October       1 2017-10-01    10
+## # … with 26 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;net_sales_year_month_2 &amp;lt;- create_ymd_function(net_sales_year_month)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;generalizing-functions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Generalizing Functions&lt;/h2&gt;
+&lt;p&gt;Here’s another example of moving from specific to &lt;em&gt;general&lt;/em&gt; functions.&lt;/p&gt;
+&lt;p&gt;With the &lt;code&gt;create_line_chart&lt;/code&gt; function, i’m taking in a dataframe, piping into &lt;code&gt;ggplot&lt;/code&gt; and visualizing a simple line graph with &lt;code&gt;geom_line&lt;/code&gt;. You’ll note it is specific because it requires the dataframe to have a column named &lt;code&gt;net_sales&lt;/code&gt; in order to work.&lt;/p&gt;
+&lt;p&gt;But what if I wanted to repeat this operation with &lt;code&gt;total_orders&lt;/code&gt; or &lt;code&gt;total_sales&lt;/code&gt; or some other metric?&lt;/p&gt;
+&lt;p&gt;Right below, I create a more &lt;em&gt;general&lt;/em&gt; function, &lt;code&gt;create_line_chart_general&lt;/code&gt; that takes in &lt;em&gt;any&lt;/em&gt; dataset and two columns as the function parameter.&lt;/p&gt;
+&lt;p&gt;This makes the function much more re-usable. However, it also introduces some &lt;code&gt;R&lt;/code&gt;-specific commands like &lt;code&gt;enquo()&lt;/code&gt; and &lt;code&gt;!!&lt;/code&gt; to &lt;em&gt;quote&lt;/em&gt; and &lt;em&gt;unquote&lt;/em&gt; parameters for use in the function. We are entering &lt;code&gt;lazy evaluation&lt;/code&gt; territory, which I’ll save for another post!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# BEFORE: 
+
+# This function only works for net_sales
+# It&amp;#39;s easy to just slip &amp;#39;data&amp;#39; as an argument
+# But the aesthetic mapping is done only one a specific column
+create_line_chart &amp;lt;- function(data){
+    data %&amp;gt;%
+    ggplot(aes(x = month_year, y = net_sales)) +
+    geom_line()   
+}
+
+# AFTER: 
+
+# This is a more generalizable function using enquo() and &amp;#39;!!&amp;#39;
+# note columns as function parameters
+
+create_line_chart_general &amp;lt;- function(dataset, col_name_1, col_name_2){
+    col_name_1 &amp;lt;- enquo(col_name_1)
+    col_name_2 &amp;lt;- enquo(col_name_2)
+    dataset %&amp;gt;%
+        ggplot(aes(x = !!(col_name_1), y = !!(col_name_2))) +
+        geom_line()   
+}
+
+# Call the function with data and necessary parameters
+create_line_chart_general(net_sales_year_month_2, month_year, net_sales)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-30-custom-function_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;more-generalized-function&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;More Generalized Function&lt;/h2&gt;
+&lt;p&gt;This next function is slightly more complicated as it involves creating several more columns. But it can still be generalized using the tools discussed above.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;create_bpc_columns_general &amp;lt;- function(dataset, col_name){
+    col_name &amp;lt;- enquo(col_name)
+    bpc_data &amp;lt;- dataset %&amp;gt;%
+        mutate(
+            avg_orders = mean(!!(col_name)),
+            # calculate lagging difference
+            moving_range = diff(as.zoo(!!(col_name)), na.pad=TRUE),
+            # get absolute value
+            moving_range = abs(moving_range),
+            # change NA to 0
+            moving_range = ifelse(row_number()==1, 0, moving_range),
+            avg_moving_range = mean(moving_range),
+            lnpl = avg_orders - (2.66*avg_moving_range),
+            lower_25 = avg_orders - (1.33*avg_moving_range),
+            upper_25 = avg_orders + (1.33*avg_moving_range),
+            unpl = avg_orders + (2.66*avg_moving_range)
+        )
+    
+    return(bpc_data)
+}
+
+create_bpc_columns_general(net_sales_year_month_2, net_sales)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 36 x 13
+##    net_sales  Year Month   Day month_year month avg_orders moving_range
+##        &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;
+##  1     8284.  2017 Janu…     1 2017-01-01     1      9058.           0 
+##  2     6388.  2017 Febr…     1 2017-02-01     2      9058.        1896.
+##  3     4589.  2017 March     1 2017-03-01     3      9058.        1798.
+##  4     8533.  2017 April     1 2017-04-01     4      9058.        3944.
+##  5     6237.  2017 May       1 2017-05-01     5      9058.        2295.
+##  6     9370.  2017 June      1 2017-06-01     6      9058.        3132.
+##  7     5959.  2017 July      1 2017-07-01     7      9058.        3410.
+##  8     7740.  2017 Augu…     1 2017-08-01     8      9058.        1781.
+##  9     6732.  2017 Sept…     1 2017-09-01     9      9058.        1008.
+## 10     5327   2017 Octo…     1 2017-10-01    10      9058.        1405.
+## # … with 26 more rows, and 5 more variables: avg_moving_range &amp;lt;dbl&amp;gt;,
+## #   lnpl &amp;lt;dbl&amp;gt;, lower_25 &amp;lt;dbl&amp;gt;, upper_25 &amp;lt;dbl&amp;gt;, unpl &amp;lt;dbl&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;net_sales_bpc_data &amp;lt;- create_bpc_columns_general(net_sales_year_month_2, net_sales)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;generalized-functions-for-visualization&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Generalized Functions for Visualization&lt;/h2&gt;
+&lt;p&gt;This was the trickiest to convert into a general function and I’m still on the fence as to whether this is generalizable. In one sense, it &lt;em&gt;is&lt;/em&gt; generalizable as I tested this &lt;code&gt;create_bpc_visualization_general&lt;/code&gt; function on another column aside from &lt;code&gt;net_sales&lt;/code&gt;, but it did require that I &lt;em&gt;know&lt;/em&gt; that other columns in the dataset are: &lt;code&gt;avg_orders&lt;/code&gt;, &lt;code&gt;unpl&lt;/code&gt;, &lt;code&gt;lnpl&lt;/code&gt;, &lt;code&gt;upper_25&lt;/code&gt; and &lt;code&gt;lower_25&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I have more exploring to do around quoting and unquoting &lt;code&gt;enquo()&lt;/code&gt;, &lt;code&gt;quos()&lt;/code&gt; for various &lt;code&gt;ggplot&lt;/code&gt; geometries like &lt;code&gt;geom_hline&lt;/code&gt;. Will report back with another post once I get those details down.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;create_bpc_visualization_general &amp;lt;- function(dataset, col_x, col_y, col_avg, col_unpl, col_lnpl, col_upper_25, col_lower_25){
+    col_x &amp;lt;- enquo(col_x) # month_year
+    col_y &amp;lt;- enquo(col_y) # net_sales
+    
+    col_avg &amp;lt;- dataset$avg_orders
+    col_unpl &amp;lt;- dataset$unpl
+    col_lnpl &amp;lt;- dataset$lnpl
+    col_upper_25 &amp;lt;- dataset$upper_25
+    col_lower_25 &amp;lt;- dataset$lower_25
+    
+    dataset %&amp;gt;%
+        ggplot(aes(x = !!(col_x), y = !!(col_y))) +
+        geom_line() +
+        geom_hline(yintercept = col_avg, color = &amp;#39;green&amp;#39;) +
+        geom_hline(yintercept = col_unpl, color = &amp;#39;red&amp;#39;, linetype = &amp;#39;dashed&amp;#39;) +
+        geom_hline(yintercept = col_lnpl, color = &amp;#39;red&amp;#39;, linetype = &amp;#39;dashed&amp;#39;) +
+        geom_hline(yintercept = col_upper_25, color = &amp;#39;orange&amp;#39;) +
+        geom_hline(yintercept = col_lower_25, color = &amp;#39;orange&amp;#39;) +
+        
+        # break x-axis into quarters
+        scale_x_date(breaks = &amp;#39;3 month&amp;#39;) +
+        # note: place before theme()
+        theme_minimal() +
+        theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+        labs(
+            title = glue(&amp;#39;{names(dataset[,1])}: Business Process Chart&amp;#39;),
+            subtitle = &amp;quot;2017 - 2019&amp;quot;,
+            x = &amp;quot;&amp;quot;,
+            y = glue(&amp;#39;{names(dataset[,1])}&amp;#39;),
+            caption = &amp;quot;----&amp;quot;
+        ) +
+        annotate(&amp;quot;text&amp;quot;, x = as.Date(&amp;quot;2017-02-01&amp;quot;), y = col_unpl, color = &amp;#39;red&amp;#39;, label = &amp;quot;UNLP&amp;quot;) +
+        annotate(&amp;quot;text&amp;quot;, x = as.Date(&amp;quot;2017-02-01&amp;quot;), y = col_lnpl, color = &amp;#39;red&amp;#39;, label = &amp;quot;LNLP&amp;quot;) +
+        annotate(&amp;quot;text&amp;quot;, x = as.Date(&amp;quot;2017-02-01&amp;quot;), y = col_upper_25, color = &amp;#39;orange&amp;#39;, label = &amp;quot;Upper 25%&amp;quot;) +
+        annotate(&amp;quot;text&amp;quot;, x = as.Date(&amp;quot;2017-02-01&amp;quot;), y = col_avg, color = &amp;#39;green&amp;#39;, label = &amp;quot;Avg = 97&amp;quot;)
+    
+}
+
+create_bpc_visualization_general(net_sales_bpc_data, month_year, net_sales, avg_orders, unpl, lnpl, upper_25, lower_25)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-30-custom-function_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;summary&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;It’s possible to do a fair amount of data analysis without using functions, but &lt;strong&gt;functions&lt;/strong&gt; help you avoid endless copying and pasting and make your code less error prone.&lt;/p&gt;
+&lt;p&gt;There are many different types functions you could use. In this post, I share functions that take columns of data as arguments. These types of functions are well-suited for streamlining your data pre-processing and visualization tasks.&lt;/p&gt;
+&lt;p&gt;Shout out to &lt;a href=&#34;https://twitter.com/brodriguesco&#34;&gt;Bruno Rodrigues&lt;/a&gt; for writing &lt;a href=&#34;https://b-rodrigues.github.io/modern_R/&#34;&gt;&lt;strong&gt;Modern R with the Tidyverse&lt;/strong&gt;&lt;/a&gt; which has helped me get my head around writing custom functions.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Data Wrangling Foundations</title>
       <link>/post/ds4b-data-wrangling/</link>
       <pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate>
