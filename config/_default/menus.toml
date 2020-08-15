@@ -39,6 +39,11 @@
   weight = 50
 
 [[main]]
+  name = "Technical Notes"
+  url = "technical_notes/"
+  weight = 51
+  
+[[main]]
   name = "Contact"
   url = "#contact"
   weight = 60

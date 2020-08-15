@@ -131,3 +131,10 @@ active = true
 
 ## Edit Gallery
 - path: paulapivat/content/home/gallery/gallery
+
+## Add Technical Notes 
+- add in navigation menu: config/_default/menus.toml
+- add [[main]], name, url, weight (below Courses tab)
+- add content/technical_notes (match technical_notes/ url); same level as courses
+- add example folder
+- add _index.md, inside example folder
