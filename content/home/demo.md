@@ -50,20 +50,14 @@ subtitle = ""
  css_class = ""
 +++
 
-You are experiencing one or more of the following **problems**:
+Are you experiencing one or more of the following **problems ?**
 
 - Unsure of what data to collect
-- Curious about digital transformation
-- Need adhoc reporting
-- Need dashboard
 - Want to tell a data-driven story
-- Want a nice looking visual
-- Need to present to management
-- Need to clean data set
-- Need to prepare data for analysis
-- Need to communicate data for wider audience
+- Need to present data through visualization
 
-You are here with certain **data needs**. I can help in the following areas:
+
+I can **help** with the following:
 
 - Data Visualization
 - Data Cleaning

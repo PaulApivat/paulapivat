@@ -80,6 +80,9 @@ active = true
 - Courses ('courses/', 50)
 - Contact ('#contact', 60)
 
+# Edit Start Here section
+- path: paulapivat/content/home/demo.md
+
 # Edit About Section
 - path: paulapivat/content/authors/admin/_index.md
 
