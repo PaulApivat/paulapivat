@@ -8,7 +8,7 @@ menu:
     name: Technical Notes Overview
     weight: 1
 summary: Learn how to use Academic's docs layout for publishing technical notes and tutorials.
-title: Overview
+title: Technical Notes Overview
 toc: true
 type: docs
 weight: 1
