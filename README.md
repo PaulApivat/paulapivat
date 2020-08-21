@@ -141,10 +141,20 @@ active = true
 - add content/technical_notes (match technical_notes/ url); same level as courses
 - add content/technical_notes/example_tech (folder; distinct from content/courses/example)
 
-- add _index.md, *outside* example folder (path: content/technical_notes/)
+- path content/technical_notes/example_tech/_index.md 
+- change yaml: menu: example_tech: (previously *just* example)
+
+- add _index.md, *outside* example_tech folder (path: content/technical_notes/)
 - change yaml title: technical_notes
 
-- add _index.md, *inside* example folder (path: content/technical_notes/example/)
+- add _index.md, *inside* example_tech folder (path: content/technical_notes/example/)
 - change yaml title: Technical Notes Overview
+- change yaml menu: example_tech: (previously *just* example)
+
+- path content/technical_notes/example_tech/technical_notes1.md
+- change yaml menu: example_tech: (note: links to _index.md which also has yaml menu: example_tech: )
+
+- path content/technical_notes/example_tech/technical_notes2.md
+- change yaml menu: example_tech: (note: links to _index.md which also has yaml menu: example_tech: )
 
 
