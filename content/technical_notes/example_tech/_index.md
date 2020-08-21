@@ -4,7 +4,7 @@ draft: false
 lastmod: "2018-09-09T00:00:00Z"
 linktitle: Technical Note Example 
 menu:
-  example:
+  example_tech:
     name: Technical Notes Overview
     weight: 1
 summary: Learn how to use Academic's docs layout for publishing technical notes and tutorials.

@@ -139,5 +139,12 @@ active = true
 - add in navigation menu: config/_default/menus.toml
 - add [[main]], name, url, weight (below Courses tab)
 - add content/technical_notes (match technical_notes/ url); same level as courses
-- add example folder
-- add _index.md, inside example folder
+- add content/technical_notes/example_tech (folder; distinct from content/courses/example)
+
+- add _index.md, *outside* example folder (path: content/technical_notes/)
+- change yaml title: technical_notes
+
+- add _index.md, *inside* example folder (path: content/technical_notes/example/)
+- change yaml title: Technical Notes Overview
+
+
