@@ -27,11 +27,12 @@
   
     
   
-  <meta name="description" content="In this tutorial, I&rsquo;ll share my top 10 tips for getting started with Academic:
-Technical Tip 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat.">
+  <meta name="description" content="Here are some more tips for making your work reproducible:
+Using set.seed() Example of reproducibility in fitting ML models using set.seed()
+#First Line set.seed(1234) #Second Line model_05_rand_forest_ranger &lt;- rand_forest( mode = &quot;regression&quot;, mtry = 4, trees = 1000, min_n = 10 ) %&gt;% set_engine(&quot;ranger&quot;, splitrule = &quot;extratrees&quot;, importance = &quot;impurity&quot;) %&gt;% fit(price ~ .">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/technical_notes1/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/technical_notes3/">
 
   
 
@@ -218,7 +219,7 @@ Technical Tip 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/technical_notes1/">
+  <link rel="canonical" href="/technical_notes/example_tech/technical_notes3/">
 
   
   
@@ -237,10 +238,11 @@ Technical Tip 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/technical_notes1/">
-  <meta property="og:title" content="Technical Notes Page 1 | Paul Apivat">
-  <meta property="og:description" content="In this tutorial, I&rsquo;ll share my top 10 tips for getting started with Academic:
-Technical Tip 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/technical_notes3/">
+  <meta property="og:title" content="Make your work reproducible | Paul Apivat">
+  <meta property="og:description" content="Here are some more tips for making your work reproducible:
+Using set.seed() Example of reproducibility in fitting ML models using set.seed()
+#First Line set.seed(1234) #Second Line model_05_rand_forest_ranger &lt;- rand_forest( mode = &quot;regression&quot;, mtry = 4, trees = 1000, min_n = 10 ) %&gt;% set_engine(&quot;ranger&quot;, splitrule = &quot;extratrees&quot;, importance = &quot;impurity&quot;) %&gt;% fit(price ~ ."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
@@ -265,7 +267,7 @@ Technical Tip 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
 
 
 
-  <title>Technical Notes Page 1 | Paul Apivat</title>
+  <title>Make your work reproducible | Paul Apivat</title>
 
 </head>
 
@@ -663,7 +665,7 @@ Technical Tip 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
     <a class="docs-toc-link" href="/technical_notes/example_tech/technical_notes1/">Example Topic</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/technical_notes1/">Tips 1-2</a>
       </li>
       
@@ -680,7 +682,7 @@ Technical Tip 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
     <a class="docs-toc-link" href="/technical_notes/example_tech/technical_notes3/">Reproducibility</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/technical_notes3/">Rstats Tip</a>
       </li>
       
@@ -702,8 +704,8 @@ Technical Tip 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#technical-tip-1">Technical Tip 1</a></li>
-    <li><a href="#technical-tip-2">Technical Tip 2</a></li>
+    <li><a href="#using-setseed">Using set.seed()</a></li>
+    <li><a href="#technical-tip-4">Technical Tip 4</a></li>
   </ul>
 </nav>
 
@@ -716,17 +718,26 @@ Technical Tip 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Technical Notes Page 1</h1>
+          <h1>Make your work reproducible</h1>
 
           <div class="article-style">
-            <p>In this tutorial, I&rsquo;ll share my top 10 tips for getting started with Academic:</p>
-<h2 id="technical-tip-1">Technical Tip 1</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar tempor diam. Quisque risus orci, mollis id ante sit amet, gravida egestas nisl. Sed ac tempus magna. Proin in dui enim. Donec condimentum, sem id dapibus fringilla, tellus enim condimentum arcu, nec volutpat est felis vel metus. Vestibulum sit amet erat at nulla eleifend gravida.</p>
-<p>Nullam vel molestie justo. Curabitur vitae efficitur leo. In hac habitasse platea dictumst. Sed pulvinar mauris dui, eget varius purus congue ac. Nulla euismod, lorem vel elementum dapibus, nunc justo porta mi, sed tempus est est vel tellus. Nam et enim eleifend, laoreet sem sit amet, elementum sem. Morbi ut leo congue, maximus velit ut, finibus arcu. In et libero cursus, rutrum risus non, molestie leo. Nullam congue quam et volutpat malesuada. Sed risus tortor, pulvinar et dictum nec, sodales non mi. Phasellus lacinia commodo laoreet. Nam mollis, erat in feugiat consectetur, purus eros egestas tellus, in auctor urna odio at nibh. Mauris imperdiet nisi ac magna convallis, at rhoncus ligula cursus.</p>
-<p>Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.</p>
-<p>Suspendisse a tincidunt lacus. Curabitur at urna sagittis, dictum ante sit amet, euismod magna. Sed rutrum massa id tortor commodo, vitae elementum turpis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean purus turpis, venenatis a ullamcorper nec, tincidunt et massa. Integer posuere quam rutrum arcu vehicula imperdiet. Mauris ullamcorper quam vitae purus congue, quis euismod magna eleifend. Vestibulum semper vel augue eget tincidunt. Fusce eget justo sodales, dapibus odio eu, ultrices lorem. Duis condimentum lorem id eros commodo, in facilisis mauris scelerisque. Morbi sed auctor leo. Nullam volutpat a lacus quis pharetra. Nulla congue rutrum magna a ornare.</p>
-<p>Aliquam in turpis accumsan, malesuada nibh ut, hendrerit justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque sed erat nec justo posuere suscipit. Donec ut efficitur arcu, in malesuada neque. Nunc dignissim nisl massa, id vulputate nunc pretium nec. Quisque eget urna in risus suscipit ultricies. Pellentesque odio odio, tincidunt in eleifend sed, posuere a diam. Nam gravida nisl convallis semper elementum. Morbi vitae felis faucibus, vulputate orci placerat, aliquet nisi. Aliquam erat volutpat. Maecenas sagittis pulvinar purus, sed porta quam laoreet at.</p>
-<h2 id="technical-tip-2">Technical Tip 2</h2>
+            <p>Here are some more tips for making your work reproducible:</p>
+<h2 id="using-setseed">Using set.seed()</h2>
+<p>Example of reproducibility in fitting ML models using set.seed()</p>
+<pre><code>#First Line
+set.seed(1234)   
+
+#Second Line
+model_05_rand_forest_ranger &lt;- rand_forest(
+    mode = &quot;regression&quot;, mtry = 4, trees = 1000, min_n = 10
+    ) %&gt;%
+    set_engine(&quot;ranger&quot;, splitrule = &quot;extratrees&quot;, importance = &quot;impurity&quot;) %&gt;%
+    fit(price ~ ., data = train_tbl %&gt;% select(-id, -model, -model_tier))
+
+#Third Line
+model_05_rand_forest_ranger %&gt;% calc_metrics(test_tbl)
+</code></pre>
+<h2 id="technical-tip-4">Technical Tip 4</h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar tempor diam. Quisque risus orci, mollis id ante sit amet, gravida egestas nisl. Sed ac tempus magna. Proin in dui enim. Donec condimentum, sem id dapibus fringilla, tellus enim condimentum arcu, nec volutpat est felis vel metus. Vestibulum sit amet erat at nulla eleifend gravida.</p>
 <p>Nullam vel molestie justo. Curabitur vitae efficitur leo. In hac habitasse platea dictumst. Sed pulvinar mauris dui, eget varius purus congue ac. Nulla euismod, lorem vel elementum dapibus, nunc justo porta mi, sed tempus est est vel tellus. Nam et enim eleifend, laoreet sem sit amet, elementum sem. Morbi ut leo congue, maximus velit ut, finibus arcu. In et libero cursus, rutrum risus non, molestie leo. Nullam congue quam et volutpat malesuada. Sed risus tortor, pulvinar et dictum nec, sodales non mi. Phasellus lacinia commodo laoreet. Nam mollis, erat in feugiat consectetur, purus eros egestas tellus, in auctor urna odio at nibh. Mauris imperdiet nisi ac magna convallis, at rhoncus ligula cursus.</p>
 <p>Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.</p>
@@ -747,8 +758,15 @@ Technical Tip 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
   
   
   <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/technical_notes3/" rel="prev">Make your work reproducible</a>
+    <a href="/technical_notes/example_tech/technical_notes2/" rel="prev">Technical Notes Page 2</a>
   </div>
   
 </div>
@@ -770,7 +788,7 @@ Technical Tip 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/technical_notes1.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/technical_notes3.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

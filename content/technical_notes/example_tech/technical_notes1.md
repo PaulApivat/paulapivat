@@ -4,7 +4,7 @@ draft: false
 linktitle: Tips 1-2
 menu:
   example_tech:
-    parent: Example Topic
+    parent: Example Topic 
     weight: 1
 title: Technical Notes Page 1
 toc: true
