@@ -139,6 +139,9 @@ active = true
 - add in navigation menu: config/_default/menus.toml
 - add [[main]], name, url, weight (below Courses tab)
 - add content/technical_notes (match technical_notes/ url); same level as courses
+
+### Separate Technical Notes from Courses
+
 - add content/technical_notes/example_tech (folder; distinct from content/courses/example)
 
 - path content/technical_notes/example_tech/_index.md 
