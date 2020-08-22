@@ -56,9 +56,9 @@
     
     <item>
       <title>Make your work reproducible</title>
-      <link>/technical_notes/example_tech/technical_notes3/</link>
+      <link>/technical_notes/example_tech/rstats_tip1/</link>
       <pubDate>Sun, 05 May 2019 00:00:00 +0100</pubDate>
-      <guid>/technical_notes/example_tech/technical_notes3/</guid>
+      <guid>/technical_notes/example_tech/rstats_tip1/</guid>
       <description>&lt;p&gt;Here are some more tips for making your work reproducible:&lt;/p&gt;
 &lt;h2 id=&#34;using-setseed&#34;&gt;Using set.seed()&lt;/h2&gt;
 &lt;p&gt;Example of reproducibility in fitting ML models using set.seed()&lt;/p&gt;
