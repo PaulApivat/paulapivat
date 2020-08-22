@@ -160,4 +160,9 @@ active = true
 - path content/technical_notes/example_tech/technical_notes2.md
 - change yaml menu: example_tech: (note: links to _index.md which also has yaml menu: example_tech: )
 
+### Adding a new technical note
 
+- path: content/technical_notes/example_tech/file_name_of_new_technical_note.md
+- pay attention to actual file name (e.g., file_name_of_new_technical_note.md)
+- change yaml linktitle: (will appear on side menu)
+- change yaml menu: parent: Topic Heading (will appear on side menu)
