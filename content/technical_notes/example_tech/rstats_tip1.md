@@ -12,7 +12,7 @@ type: docs
 weight: 2
 ---
 
-Here are some more tips for making your work reproducible:
+Understanding reproducibility and the `set.seed()` function in `R` is best achieved through generating various random numbers. Here are some more tips for making your work reproducible:
 
 ## Using set.seed()
 
@@ -34,14 +34,58 @@ model_05_rand_forest_ranger %>% calc_metrics(test_tbl)
 ```
 
 
-## Technical Tip 4
+## Random Numbers
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar tempor diam. Quisque risus orci, mollis id ante sit amet, gravida egestas nisl. Sed ac tempus magna. Proin in dui enim. Donec condimentum, sem id dapibus fringilla, tellus enim condimentum arcu, nec volutpat est felis vel metus. Vestibulum sit amet erat at nulla eleifend gravida.
+Here are several ways to get random numbers. These examples are informed by the `R Cookbook`, see [here](http://www.cookbook-r.com/Numbers/Generating_random_numbers/#:~:text=For%20uniformly%20distributed%20(flat)%20random,is%20from%200%20to%201.&text=To%20generate%20numbers%20from%20a,the%20standard%20deviation%20is%201.)
 
-Nullam vel molestie justo. Curabitur vitae efficitur leo. In hac habitasse platea dictumst. Sed pulvinar mauris dui, eget varius purus congue ac. Nulla euismod, lorem vel elementum dapibus, nunc justo porta mi, sed tempus est est vel tellus. Nam et enim eleifend, laoreet sem sit amet, elementum sem. Morbi ut leo congue, maximus velit ut, finibus arcu. In et libero cursus, rutrum risus non, molestie leo. Nullam congue quam et volutpat malesuada. Sed risus tortor, pulvinar et dictum nec, sodales non mi. Phasellus lacinia commodo laoreet. Nam mollis, erat in feugiat consectetur, purus eros egestas tellus, in auctor urna odio at nibh. Mauris imperdiet nisi ac magna convallis, at rhoncus ligula cursus.
+```
+# get one random number using runif() from base-R, stats package
+# default 0 to 1
+runif(1)
 
-Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.
+# get two random numbers
+runif(2)
 
-Suspendisse a tincidunt lacus. Curabitur at urna sagittis, dictum ante sit amet, euismod magna. Sed rutrum massa id tortor commodo, vitae elementum turpis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean purus turpis, venenatis a ullamcorper nec, tincidunt et massa. Integer posuere quam rutrum arcu vehicula imperdiet. Mauris ullamcorper quam vitae purus congue, quis euismod magna eleifend. Vestibulum semper vel augue eget tincidunt. Fusce eget justo sodales, dapibus odio eu, ultrices lorem. Duis condimentum lorem id eros commodo, in facilisis mauris scelerisque. Morbi sed auctor leo. Nullam volutpat a lacus quis pharetra. Nulla congue rutrum magna a ornare.
+# get a vector of three random numbers
+# increase range beyond the default, -10 to 110
+runif(3, min = -10, max = 110)
 
-Aliquam in turpis accumsan, malesuada nibh ut, hendrerit justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque sed erat nec justo posuere suscipit. Donec ut efficitur arcu, in malesuada neque. Nunc dignissim nisl massa, id vulputate nunc pretium nec. Quisque eget urna in risus suscipit ultricies. Pellentesque odio odio, tincidunt in eleifend sed, posuere a diam. Nam gravida nisl convallis semper elementum. Morbi vitae felis faucibus, vulputate orci placerat, aliquet nisi. Aliquam erat volutpat. Maecenas sagittis pulvinar purus, sed porta quam laoreet at.
+# ensure three random numbers do *not* have decimals
+# use floor() function to round down
+floor(runif(3, min = -10, max = 110))
+
+# sample() function does the same thing - using just one function
+# replace parameter: should sampling be with or without replacement?
+sample(-10:110, 3, replace = TRUE)
+
+# Reproducibility
+# use set.seed() before any of the aforementioned random number generators
+
+set.seed(123)
+sample(-10:110, 3, replace = FALSE)
+```
+
+## Random Numbers from a Normal Distribution
+
+
+```
+# Get five random numbers from a normal distribution
+# Here the default is mean = 0, standard deviation = 1.
+rnorm(5)
+
+# Change mean and standard deviation away from default
+rnorm(5, mean = 66, sd = 12)
+
+# Ensure reproducibility with set.seed()
+set.seed(123)
+rnorm(5, mean = 66, sd = 12)
+
+# Ensure normal distribution by setting sufficiently large number with rnorm()
+# Ensure reproducibility
+# Plot a histogram
+
+set.seed(123)
+x <- rnorm(500, mean = 66, sd = 12)
+hist(x)
+```
+
