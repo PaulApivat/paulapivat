@@ -55,6 +55,33 @@
     </item>
     
     <item>
+      <title>Use the spread() function</title>
+      <link>/technical_notes/example_tech/rstats_tip2/</link>
+      <pubDate>Tue, 25 Aug 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_tip2/</guid>
+      <description>&lt;p&gt;One principle of &lt;code&gt;tidy&lt;/code&gt; data is to change from wide to long; and conversely, long to wide.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a concrete example:&lt;/p&gt;
+&lt;h2 id=&#34;using-spread&#34;&gt;Using spread()&lt;/h2&gt;
+&lt;p&gt;The first part of the below pre-processing steps include subsetting the original data frame (data) by selecting two countries for comparison (Morocco and Qatar) on specific variables such as: &lt;code&gt;GeoAreaName&lt;/code&gt;, &lt;code&gt;TimePeriod&lt;/code&gt;, &lt;code&gt;Sex&lt;/code&gt;, &lt;code&gt;Type of skill&lt;/code&gt; and &lt;code&gt;Value&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Then employing &lt;code&gt;group_by&lt;/code&gt; to ensure all rows are unique. The next line is key as it addresses an error that each row must be marked by a unique id key.&lt;/p&gt;
+&lt;p&gt;Finally, the &lt;code&gt;spread()&lt;/code&gt; function allows us to see each countries&amp;rsquo; relative performance on various 
+&lt;a href=&#34;http://tcg.uis.unesco.org/4-4-1-proportion-of-youth-and-adults-with-information-and-communications-technology-ict-skills-by-type-of-skill/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ICT skills&lt;/a&gt;. Please consult meta-data for more details.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;data %&amp;gt;%
+    filter(GeoAreaName==&amp;quot;Morocco&amp;quot; | GeoAreaName==&amp;quot;Qatar&amp;quot;) %&amp;gt;% 
+    select(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&amp;gt;%
+    group_by(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&amp;gt;%
+	
+    # Error: Each row of output must be identified by a unique combination of keys.
+    # rowid_to_column() address this error
+	
+    tibble::rowid_to_column() %&amp;gt;%
+    spread(key = `Type of skill`, value = Value)
+
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Make your work reproducible</title>
       <link>/technical_notes/example_tech/rstats_tip1/</link>
       <pubDate>Sun, 05 May 2019 00:00:00 +0100</pubDate>
