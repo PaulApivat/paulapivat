@@ -55,6 +55,29 @@
     </item>
     
     <item>
+      <title>Using the pivot_wider() function</title>
+      <link>/technical_notes/example_tech/rstats_tip3/</link>
+      <pubDate>Wed, 26 Aug 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_tip3/</guid>
+      <description>&lt;p&gt;With 
+&lt;a href=&#34;https://www.tidyverse.org/blog/2019/09/tidyr-1-0-0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;tidyr 1.0.0&lt;/a&gt;, there are several enhancements, one of which are &lt;code&gt;pivot_wider()&lt;/code&gt; and &lt;code&gt;pivot_longer()&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;using-pivot_wider&#34;&gt;Using pivot_wider()&lt;/h2&gt;
+&lt;p&gt;In another 
+&lt;a href=&#34;https://paulapivat.com/technical_notes/example_tech/rstats_tip2/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;post&lt;/a&gt;, the &lt;code&gt;spread()&lt;/code&gt; function was introduced as a way to observe the &amp;ldquo;tidy&amp;rdquo; principle of data formatting for analysis.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;pivot_wider()&lt;/code&gt; function is an updated of &lt;code&gt;spread()&lt;/code&gt; and is much more intuitive. Here&amp;rsquo;s how it works:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# PIVOT_WIDER - even better than Spread
+
+data %&amp;gt;%
+    filter(GeoAreaName==&amp;quot;Morocco&amp;quot; | GeoAreaName==&amp;quot;Qatar&amp;quot;) %&amp;gt;% 
+    select(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&amp;gt;%
+    group_by(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&amp;gt;%
+    pivot_wider(names_from = `Type of skill`, values_from = Value) 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In this data set, &lt;code&gt;Type of skill&lt;/code&gt; represents, broadly speaking, ICT Skills broken down into eight categories in this column. By using &lt;code&gt;pivot_wider()&lt;/code&gt; each sub-category of ICT Skills gets it&amp;rsquo;s &lt;strong&gt;own&lt;/strong&gt; column, thus making the overall data frame &lt;em&gt;wider&lt;/em&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Use the spread() function</title>
       <link>/technical_notes/example_tech/rstats_tip2/</link>
       <pubDate>Tue, 25 Aug 2020 00:00:00 +0100</pubDate>
