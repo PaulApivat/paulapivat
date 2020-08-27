@@ -27,11 +27,11 @@
   
     
   
-  <meta name="description" content="Here are some more tips for getting started with Academic:
-Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum.">
+  <meta name="description" content="Calculating Percentiles When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?
+Here the example are countries&rsquo; average percentages of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, Indicator 4.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/technical_notes2/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip4/">
 
   
 
@@ -218,7 +218,7 @@ Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/technical_notes2/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip4/">
 
   
   
@@ -237,16 +237,16 @@ Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/technical_notes2/">
-  <meta property="og:title" content="Technical Notes Page 2 | Paul Apivat">
-  <meta property="og:description" content="Here are some more tips for getting started with Academic:
-Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip4/">
+  <meta property="og:title" content="Calculating 25th, 50th and 75th Percentile of Column Values | Paul Apivat">
+  <meta property="og:description" content="Calculating Percentiles When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?
+Here the example are countries&rsquo; average percentages of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, Indicator 4."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2019-05-05T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2020-08-27T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2019-05-05T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-08-27T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +265,7 @@ Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
 
 
 
-  <title>Technical Notes Page 2 | Paul Apivat</title>
+  <title>Calculating 25th, 50th and 75th Percentile of Column Values | Paul Apivat</title>
 
 </head>
 
@@ -667,7 +667,7 @@ Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
         <a href="/technical_notes/example_tech/technical_notes1/">Tips 1-2</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/technical_notes2/">Tips 3-4</a>
       </li>
       
@@ -680,7 +680,7 @@ Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
     <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_tip4/">Rstats Tip</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/rstats_tip4/">Calculating Percentiles</a>
       </li>
       
@@ -714,8 +714,7 @@ Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#technical-tip-3">Technical Tip 3</a></li>
-    <li><a href="#technical-tip-4">Technical Tip 4</a></li>
+    <li><a href="#calculating-percentiles">Calculating Percentiles</a></li>
   </ul>
 </nav>
 
@@ -728,22 +727,49 @@ Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Technical Notes Page 2</h1>
+          <h1>Calculating 25th, 50th and 75th Percentile of Column Values</h1>
 
           <div class="article-style">
-            <p>Here are some more tips for getting started with Academic:</p>
-<h2 id="technical-tip-3">Technical Tip 3</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar tempor diam. Quisque risus orci, mollis id ante sit amet, gravida egestas nisl. Sed ac tempus magna. Proin in dui enim. Donec condimentum, sem id dapibus fringilla, tellus enim condimentum arcu, nec volutpat est felis vel metus. Vestibulum sit amet erat at nulla eleifend gravida.</p>
-<p>Nullam vel molestie justo. Curabitur vitae efficitur leo. In hac habitasse platea dictumst. Sed pulvinar mauris dui, eget varius purus congue ac. Nulla euismod, lorem vel elementum dapibus, nunc justo porta mi, sed tempus est est vel tellus. Nam et enim eleifend, laoreet sem sit amet, elementum sem. Morbi ut leo congue, maximus velit ut, finibus arcu. In et libero cursus, rutrum risus non, molestie leo. Nullam congue quam et volutpat malesuada. Sed risus tortor, pulvinar et dictum nec, sodales non mi. Phasellus lacinia commodo laoreet. Nam mollis, erat in feugiat consectetur, purus eros egestas tellus, in auctor urna odio at nibh. Mauris imperdiet nisi ac magna convallis, at rhoncus ligula cursus.</p>
-<p>Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.</p>
-<p>Suspendisse a tincidunt lacus. Curabitur at urna sagittis, dictum ante sit amet, euismod magna. Sed rutrum massa id tortor commodo, vitae elementum turpis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean purus turpis, venenatis a ullamcorper nec, tincidunt et massa. Integer posuere quam rutrum arcu vehicula imperdiet. Mauris ullamcorper quam vitae purus congue, quis euismod magna eleifend. Vestibulum semper vel augue eget tincidunt. Fusce eget justo sodales, dapibus odio eu, ultrices lorem. Duis condimentum lorem id eros commodo, in facilisis mauris scelerisque. Morbi sed auctor leo. Nullam volutpat a lacus quis pharetra. Nulla congue rutrum magna a ornare.</p>
-<p>Aliquam in turpis accumsan, malesuada nibh ut, hendrerit justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque sed erat nec justo posuere suscipit. Donec ut efficitur arcu, in malesuada neque. Nunc dignissim nisl massa, id vulputate nunc pretium nec. Quisque eget urna in risus suscipit ultricies. Pellentesque odio odio, tincidunt in eleifend sed, posuere a diam. Nam gravida nisl convallis semper elementum. Morbi vitae felis faucibus, vulputate orci placerat, aliquet nisi. Aliquam erat volutpat. Maecenas sagittis pulvinar purus, sed porta quam laoreet at.</p>
-<h2 id="technical-tip-4">Technical Tip 4</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar tempor diam. Quisque risus orci, mollis id ante sit amet, gravida egestas nisl. Sed ac tempus magna. Proin in dui enim. Donec condimentum, sem id dapibus fringilla, tellus enim condimentum arcu, nec volutpat est felis vel metus. Vestibulum sit amet erat at nulla eleifend gravida.</p>
-<p>Nullam vel molestie justo. Curabitur vitae efficitur leo. In hac habitasse platea dictumst. Sed pulvinar mauris dui, eget varius purus congue ac. Nulla euismod, lorem vel elementum dapibus, nunc justo porta mi, sed tempus est est vel tellus. Nam et enim eleifend, laoreet sem sit amet, elementum sem. Morbi ut leo congue, maximus velit ut, finibus arcu. In et libero cursus, rutrum risus non, molestie leo. Nullam congue quam et volutpat malesuada. Sed risus tortor, pulvinar et dictum nec, sodales non mi. Phasellus lacinia commodo laoreet. Nam mollis, erat in feugiat consectetur, purus eros egestas tellus, in auctor urna odio at nibh. Mauris imperdiet nisi ac magna convallis, at rhoncus ligula cursus.</p>
-<p>Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.</p>
-<p>Suspendisse a tincidunt lacus. Curabitur at urna sagittis, dictum ante sit amet, euismod magna. Sed rutrum massa id tortor commodo, vitae elementum turpis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean purus turpis, venenatis a ullamcorper nec, tincidunt et massa. Integer posuere quam rutrum arcu vehicula imperdiet. Mauris ullamcorper quam vitae purus congue, quis euismod magna eleifend. Vestibulum semper vel augue eget tincidunt. Fusce eget justo sodales, dapibus odio eu, ultrices lorem. Duis condimentum lorem id eros commodo, in facilisis mauris scelerisque. Morbi sed auctor leo. Nullam volutpat a lacus quis pharetra. Nulla congue rutrum magna a ornare.</p>
-<p>Aliquam in turpis accumsan, malesuada nibh ut, hendrerit justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque sed erat nec justo posuere suscipit. Donec ut efficitur arcu, in malesuada neque. Nunc dignissim nisl massa, id vulputate nunc pretium nec. Quisque eget urna in risus suscipit ultricies. Pellentesque odio odio, tincidunt in eleifend sed, posuere a diam. Nam gravida nisl convallis semper elementum. Morbi vitae felis faucibus, vulputate orci placerat, aliquet nisi. Aliquam erat volutpat. Maecenas sagittis pulvinar purus, sed porta quam laoreet at.</p>
+            <h2 id="calculating-percentiles">Calculating Percentiles</h2>
+<p>When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?</p>
+<p>Here the example are countries&rsquo; <em>average percentages</em> of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, 
+<a href="https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&#43;4.4.1" target="_blank" rel="noopener">Indicator 4.4.1</a>.</p>
+<p>There are two methods. First, manually calculating values for the 25th, 50th and 75th percentile with the <code>quantile()</code> function.</p>
+<pre><code># Country mean_values at 25th, 50th and 75th percentile 
+
+data %&gt;%
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
+    rename(type_of_skill = `Type of skill`) %&gt;%
+    mutate(Value = as.numeric(Value)) %&gt;%
+    group_by(GeoAreaName) %&gt;%
+    summarize(
+        mean_value = mean(Value)
+    ) %&gt;%
+    mutate(
+        min_mean = min(mean_value),
+        iqr_25_percentile = quantile(mean_value, probs = c(0.25)),
+        iqr_50_percentile = quantile(mean_value, probs = c(0.50)),
+        iqr_75_percentile = quantile(mean_value, probs = c(0.75)),
+        max_mean = max(mean_value)
+    ) %&gt;%
+    arrange(desc(mean_value)) 
+</code></pre>
+<p>The second approach is to use the <code>ntile()</code> function:</p>
+<pre><code># Creating bins using ntile()
+
+data %&gt;%
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
+    rename(type_of_skill = `Type of skill`) %&gt;%
+    mutate(Value = as.numeric(Value)) %&gt;%
+    group_by(GeoAreaName) %&gt;%
+    summarize(
+        mean_value = mean(Value)
+    ) %&gt;%
+    mutate(
+        mean_value_binned = ntile(mean_value, 4)
+    ) %&gt;%
+    arrange(desc(mean_value))
+</code></pre>
 
           </div>
 
@@ -760,9 +786,15 @@ Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_tip1/" rel="next">Make your work reproducible</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/technical_notes/example_tech/rstats_tip3/" rel="prev">Using the pivot_wider() function</a>
+  </div>
   
 </div>
 
@@ -771,7 +803,7 @@ Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
         </div>
 
         <div class="body-footer">
-          <p>Last updated on May 5, 2019</p>
+          <p>Last updated on Aug 27, 2020</p>
 
           
 
@@ -783,7 +815,7 @@ Technical Tip 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis po
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/technical_notes2.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip4.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
