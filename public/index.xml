@@ -63,7 +63,7 @@
 &lt;p&gt;When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?&lt;/p&gt;
 &lt;p&gt;Here the example are countries&amp;rsquo; &lt;em&gt;average percentages&lt;/em&gt; of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, 
 &lt;a href=&#34;https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&amp;#43;4.4.1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Indicator 4.4.1&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;There are two methods. First, manually calculating values for the 25th, 50th and 75th percentile with the &lt;code&gt;quantile()&lt;/code&gt; function.&lt;/p&gt;
+&lt;p&gt;There are three methods. First, manually calculating values for the 25th, 50th and 75th percentile with the &lt;code&gt;quantile()&lt;/code&gt; function.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# Country mean_values at 25th, 50th and 75th percentile 
 
 data %&amp;gt;%
@@ -98,6 +98,32 @@ data %&amp;gt;%
         mean_value_binned = ntile(mean_value, 4)
     ) %&amp;gt;%
     arrange(desc(mean_value))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The third approach uses the &lt;code&gt;purrr&lt;/code&gt; package and the &lt;code&gt;partial&lt;/code&gt; function that can be used with &lt;code&gt;dplyr&#39;s&lt;/code&gt; &lt;code&gt;summarize_at()&lt;/code&gt; function. Check out the 
+&lt;a href=&#34;https://tbradley1013.github.io/2018/10/01/calculating-quantiles-for-groups-with-dplyr-summarize-and-purrr-partial/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+## Using purrr
+library(purrr)
+    
+p &amp;lt;- c(0.25, 0.50, 0.75)
+
+p_names &amp;lt;- map_chr(p, ~paste0(.x*100, &amp;quot;%&amp;quot;))
+
+p_funs &amp;lt;- map(p, ~partial(quantile, probs = .x, na.rm = TRUE)) %&amp;gt;%
+    set_names(nm = p_names)
+
+p_funs
+
+data %&amp;gt;%
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&amp;gt;%
+    rename(type_of_skill = `Type of skill`) %&amp;gt;%
+    mutate(Value = as.numeric(Value)) %&amp;gt;%
+    group_by(GeoAreaName) %&amp;gt;%
+    summarize(
+        mean_value = mean(Value)
+    ) %&amp;gt;%
+    summarize_at(vars(mean_value), funs(!!!p_funs))
+
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>

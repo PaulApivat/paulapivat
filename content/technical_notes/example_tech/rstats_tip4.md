@@ -18,7 +18,7 @@ When we have a list of values in a column, how can we determine which values are
 
 Here the example are countries' *average percentages* of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, [Indicator 4.4.1](https://unstats.un.org/wiki/display/SDGeHandbook/Indicator+4.4.1). 
 
-There are two methods. First, manually calculating values for the 25th, 50th and 75th percentile with the `quantile()` function. 
+There are three methods. First, manually calculating values for the 25th, 50th and 75th percentile with the `quantile()` function. 
 
 ```
 # Country mean_values at 25th, 50th and 75th percentile 
@@ -58,4 +58,32 @@ data %>%
         mean_value_binned = ntile(mean_value, 4)
     ) %>%
     arrange(desc(mean_value))
+```
+
+The third approach uses the `purrr` package and the `partial` function that can be used with `dplyr's` `summarize_at()` function. Check out the [source](https://tbradley1013.github.io/2018/10/01/calculating-quantiles-for-groups-with-dplyr-summarize-and-purrr-partial/)
+
+```
+
+## Using purrr
+library(purrr)
+    
+p <- c(0.25, 0.50, 0.75)
+
+p_names <- map_chr(p, ~paste0(.x*100, "%"))
+
+p_funs <- map(p, ~partial(quantile, probs = .x, na.rm = TRUE)) %>%
+    set_names(nm = p_names)
+
+p_funs
+
+data %>%
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %>%
+    rename(type_of_skill = `Type of skill`) %>%
+    mutate(Value = as.numeric(Value)) %>%
+    group_by(GeoAreaName) %>%
+    summarize(
+        mean_value = mean(Value)
+    ) %>%
+    summarize_at(vars(mean_value), funs(!!!p_funs))
+
 ```

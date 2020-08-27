@@ -734,7 +734,7 @@ Here the example are countries&rsquo; average percentages of the population with
 <p>When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?</p>
 <p>Here the example are countries&rsquo; <em>average percentages</em> of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, 
 <a href="https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&#43;4.4.1" target="_blank" rel="noopener">Indicator 4.4.1</a>.</p>
-<p>There are two methods. First, manually calculating values for the 25th, 50th and 75th percentile with the <code>quantile()</code> function.</p>
+<p>There are three methods. First, manually calculating values for the 25th, 50th and 75th percentile with the <code>quantile()</code> function.</p>
 <pre><code># Country mean_values at 25th, 50th and 75th percentile 
 
 data %&gt;%
@@ -769,6 +769,32 @@ data %&gt;%
         mean_value_binned = ntile(mean_value, 4)
     ) %&gt;%
     arrange(desc(mean_value))
+</code></pre>
+<p>The third approach uses the <code>purrr</code> package and the <code>partial</code> function that can be used with <code>dplyr's</code> <code>summarize_at()</code> function. Check out the 
+<a href="https://tbradley1013.github.io/2018/10/01/calculating-quantiles-for-groups-with-dplyr-summarize-and-purrr-partial/" target="_blank" rel="noopener">source</a></p>
+<pre><code>
+## Using purrr
+library(purrr)
+    
+p &lt;- c(0.25, 0.50, 0.75)
+
+p_names &lt;- map_chr(p, ~paste0(.x*100, &quot;%&quot;))
+
+p_funs &lt;- map(p, ~partial(quantile, probs = .x, na.rm = TRUE)) %&gt;%
+    set_names(nm = p_names)
+
+p_funs
+
+data %&gt;%
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
+    rename(type_of_skill = `Type of skill`) %&gt;%
+    mutate(Value = as.numeric(Value)) %&gt;%
+    group_by(GeoAreaName) %&gt;%
+    summarize(
+        mean_value = mean(Value)
+    ) %&gt;%
+    summarize_at(vars(mean_value), funs(!!!p_funs))
+
 </code></pre>
 
           </div>
