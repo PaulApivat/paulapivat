@@ -27,11 +27,11 @@
   
     
   
-  <meta name="description" content="Calculating Percentiles When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?
-Here the example are countries&rsquo; average percentages of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, Indicator 4.">
+  <meta name="description" content="Data Wrangling: Does Order matter? In short, yes, it matters. But when and where?
+Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations&rsquo; Statistics Division for Sustainable Development Goals (SDG) Indicators (Goal 4, Target 4.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip4/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip5/">
 
   
 
@@ -218,7 +218,7 @@ Here the example are countries&rsquo; average percentages of the population with
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip4/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip5/">
 
   
   
@@ -237,10 +237,10 @@ Here the example are countries&rsquo; average percentages of the population with
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip4/">
-  <meta property="og:title" content="Calculating 25th, 50th and 75th Percentile of Column Values | Paul Apivat">
-  <meta property="og:description" content="Calculating Percentiles When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?
-Here the example are countries&rsquo; average percentages of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, Indicator 4."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip5/">
+  <meta property="og:title" content="Does order of operation matter among dplyr functions? | Paul Apivat">
+  <meta property="og:description" content="Data Wrangling: Does Order matter? In short, yes, it matters. But when and where?
+Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations&rsquo; Statistics Division for Sustainable Development Goals (SDG) Indicators (Goal 4, Target 4."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
@@ -265,7 +265,7 @@ Here the example are countries&rsquo; average percentages of the population with
 
 
 
-  <title>Calculating 25th, 50th and 75th Percentile of Column Values | Paul Apivat</title>
+  <title>Does order of operation matter among dplyr functions? | Paul Apivat</title>
 
 </head>
 
@@ -680,11 +680,11 @@ Here the example are countries&rsquo; average percentages of the population with
     <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_tip4/">Rstats Tip</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_tip4/">Calculating Percentiles</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/rstats_tip5/">Order of Dplyr Functions</a>
       </li>
       
@@ -718,7 +718,7 @@ Here the example are countries&rsquo; average percentages of the population with
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#calculating-percentiles">Calculating Percentiles</a></li>
+    <li><a href="#data-wrangling-does-order-matter">Data Wrangling: Does Order matter?</a></li>
   </ul>
 </nav>
 
@@ -731,73 +731,115 @@ Here the example are countries&rsquo; average percentages of the population with
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Calculating 25th, 50th and 75th Percentile of Column Values</h1>
+          <h1>Does order of operation matter among dplyr functions?</h1>
 
           <div class="article-style">
-            <h2 id="calculating-percentiles">Calculating Percentiles</h2>
-<p>When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?</p>
-<p>Here the example are countries&rsquo; <em>average percentages</em> of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, 
+            <h2 id="data-wrangling-does-order-matter">Data Wrangling: Does Order matter?</h2>
+<p>In short, yes, it matters. But when and where?</p>
+<p>Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations&rsquo; Statistics Division for 
+<a href="https://unstats.un.org/sdgs/indicators/database/" target="_blank" rel="noopener">Sustainable Development Goals</a> (SDG) Indicators (Goal 4, Target 4.4).</p>
+<p>See also UN Statistics Wiki on 
 <a href="https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&#43;4.4.1" target="_blank" rel="noopener">Indicator 4.4.1</a>.</p>
-<p>There are three methods. First, manually calculating values for the 25th, 50th and 75th percentile with the <code>quantile()</code> function.</p>
-<pre><code># Country mean_values at 25th, 50th and 75th percentile 
+<pre><code># Example chain of functions to determine proportion of Thailand's population to have certain ICT skills in 2018
 
 data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
     rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(Value = as.numeric(Value)) %&gt;%
-    group_by(GeoAreaName) %&gt;%
-    summarize(
-        mean_value = mean(Value)
-    ) %&gt;%
     mutate(
-        min_mean = min(mean_value),
-        iqr_25_percentile = quantile(mean_value, probs = c(0.25)),
-        iqr_50_percentile = quantile(mean_value, probs = c(0.50)),
-        iqr_75_percentile = quantile(mean_value, probs = c(0.75)),
-        max_mean = max(mean_value)
+        Value = as.double(Value)
     ) %&gt;%
-    arrange(desc(mean_value)) 
-</code></pre>
-<p>The second approach is to use the <code>ntile()</code> function:</p>
-<pre><code># Creating bins using ntile()
-
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(Value = as.numeric(Value)) %&gt;%
-    group_by(GeoAreaName) %&gt;%
+    filter(GeoAreaName == 'Thailand') %&gt;% 
+    filter(TimePeriod == 2018) %&gt;% 
+    group_by(type_of_skill) %&gt;%
     summarize(
-        mean_value = mean(Value)
+        mean_value = mean(Value),
+        median_value = median(Value)
     ) %&gt;%
-    mutate(
-        mean_value_binned = ntile(mean_value, 4)
-    ) %&gt;%
+    ungroup() %&gt;%
     arrange(desc(mean_value))
 </code></pre>
-<p>The third approach uses the <code>purrr</code> package and the <code>partial</code> function that can be used with <code>dplyr's</code> <code>summarize_at()</code> function. Check out the 
-<a href="https://tbradley1013.github.io/2018/10/01/calculating-quantiles-for-groups-with-dplyr-summarize-and-purrr-partial/" target="_blank" rel="noopener">source</a></p>
-<pre><code>
-## Using purrr
-library(purrr)
+<p>Here, the <code>filter</code> functions are moved up to be before <code>rename</code> and <code>mutate</code>. The ordering here does <strong>not</strong> matter.</p>
+<pre><code>data %&gt;%
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
     
-p &lt;- c(0.25, 0.50, 0.75)
+    # putting filter before rename, mutate is fine
+    filter(GeoAreaName == 'Thailand') %&gt;% 
+    filter(TimePeriod == 2018) %&gt;% 
+    
+    rename(type_of_skill = `Type of skill`) %&gt;%
+    mutate(
+        Value = as.double(Value)
+    ) %&gt;%
+    group_by(type_of_skill) %&gt;%
+    summarize(
+        mean_value = mean(Value),
+        median_value = median(Value)
+    ) %&gt;%
+    ungroup() %&gt;%
+    arrange(desc(mean_value))
+</code></pre>
+<p>Furthermore, we could even experiment with the <code>filter</code> function being before or after <code>select</code>. Here, ordering also does <strong>not</strong> matter.</p>
+<pre><code>data %&gt;%
+    filter(GeoAreaName == 'Thailand') %&gt;% 
+    filter(TimePeriod == 2018) %&gt;% 
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
+    rename(type_of_skill = `Type of skill`) %&gt;%
+    mutate(
+        Value = as.double(Value)
+    ) %&gt;%
+    group_by(type_of_skill) %&gt;%
+    summarize(
+        mean_value = mean(Value),
+        median_value = median(Value)
+    ) %&gt;%
+    ungroup() %&gt;%
+    arrange(desc(mean_value))
 
-p_names &lt;- map_chr(p, ~paste0(.x*100, &quot;%&quot;))
-
-p_funs &lt;- map(p, ~partial(quantile, probs = .x, na.rm = TRUE)) %&gt;%
-    set_names(nm = p_names)
-
-p_funs
+</code></pre>
+<p>Here is there order <strong>does</strong> matter. When we try to move the two <code>filter</code> functions below <code>group_by</code>, <code>summarize</code> and <code>ungroup</code>, the filtering does <em>not</em> work. By the time we get to <code>filter(GeoAreaName == 'Thailand')</code> in this example, GeoAreaName has been removed because we did <em>not</em> <code>group_by</code> <code>GeoAreaName</code>, so we get an error.</p>
+<pre><code># Running this code, we'll get the ERROR: Problem with `filter()` input `..1`. x object 'GeoAreaName' not found ℹ Input `..1` is 
+# `GeoAreaName == &quot;Thailand&quot;`.
 
 data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
+    relocate(Sex, Value, GeoAreaName) %&gt;%
     rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(Value = as.numeric(Value)) %&gt;%
-    group_by(GeoAreaName) %&gt;%
-    summarize(
-        mean_value = mean(Value)
+    mutate(
+        Value = as.double(Value)
     ) %&gt;%
-    summarize_at(vars(mean_value), funs(!!!p_funs))
+    # filter was previously here
+    group_by(type_of_skill) %&gt;%
+    summarize(
+        mean_value = mean(Value),
+        median_value = median(Value)
+    ) %&gt;%
+    ungroup() %&gt;%
+    # moving filter down below group_by &amp; summarize() does not work
+    filter(GeoAreaName == 'Thailand') %&gt;% 
+    filter(TimePeriod == 2018) %&gt;% 
+    arrange(desc(mean_value))
+</code></pre>
+<p>Finally, if we want to use <code>filter</code> on the <em>results</em> of the <code>mutate</code> function, we see that order <strong>does</strong> matter. By the time we get to the final <code>filter(Value &lt; 10)</code>, the <code>Value</code> variable is no longer available to us because we did not <code>group_by</code> and <code>summarize</code> by Value (instead we created <code>mean_value</code> and <code>median_value</code>).</p>
+<pre><code>
+data %&gt;%
+    filter(GeoAreaName == 'Thailand') %&gt;% 
+    filter(TimePeriod == 2018) %&gt;% 
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
+    rename(type_of_skill = `Type of skill`) %&gt;%
+    mutate(
+        Value = as.double(Value)
+    ) %&gt;%
+    # filtering for Values less than 10 does work here
+    filter(Value &lt; 10) %&gt;%
+    group_by(type_of_skill) %&gt;%
+    summarize(
+        mean_value = mean(Value),
+        median_value = median(Value)
+    ) %&gt;%
+    ungroup() %&gt;%
+    arrange(desc(mean_value)) %&gt;%
+    # filter for Values less than 10 does not work down here
+    filter(Value &lt; 10)
 
 </code></pre>
 
@@ -816,14 +858,14 @@ data %&gt;%
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
+    <a href="/technical_notes/example_tech/rstats_tip4/" rel="next">Calculating 25th, 50th and 75th Percentile of Column Values</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip5/" rel="prev">Does order of operation matter among dplyr functions?</a>
+    <a href="/technical_notes/example_tech/rstats_tip3/" rel="prev">Using the pivot_wider() function</a>
   </div>
   
 </div>
@@ -845,7 +887,7 @@ data %&gt;%
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip4.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip5.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

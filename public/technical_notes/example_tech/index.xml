@@ -108,6 +108,122 @@ data %&amp;gt;%
     </item>
     
     <item>
+      <title>Does order of operation matter among dplyr functions?</title>
+      <link>/technical_notes/example_tech/rstats_tip5/</link>
+      <pubDate>Thu, 27 Aug 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_tip5/</guid>
+      <description>&lt;h2 id=&#34;data-wrangling-does-order-matter&#34;&gt;Data Wrangling: Does Order matter?&lt;/h2&gt;
+&lt;p&gt;In short, yes, it matters. But when and where?&lt;/p&gt;
+&lt;p&gt;Below are examples to highlight when function order matters and when it doesn&amp;rsquo;t. The source for the raw data used in this illustration are from the United Nations&amp;rsquo; Statistics Division for 
+&lt;a href=&#34;https://unstats.un.org/sdgs/indicators/database/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Sustainable Development Goals&lt;/a&gt; (SDG) Indicators (Goal 4, Target 4.4).&lt;/p&gt;
+&lt;p&gt;See also UN Statistics Wiki on 
+&lt;a href=&#34;https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&amp;#43;4.4.1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Indicator 4.4.1&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Example chain of functions to determine proportion of Thailand&#39;s population to have certain ICT skills in 2018
+
+data %&amp;gt;%
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&amp;gt;%
+    rename(type_of_skill = `Type of skill`) %&amp;gt;%
+    mutate(
+        Value = as.double(Value)
+    ) %&amp;gt;%
+    filter(GeoAreaName == &#39;Thailand&#39;) %&amp;gt;% 
+    filter(TimePeriod == 2018) %&amp;gt;% 
+    group_by(type_of_skill) %&amp;gt;%
+    summarize(
+        mean_value = mean(Value),
+        median_value = median(Value)
+    ) %&amp;gt;%
+    ungroup() %&amp;gt;%
+    arrange(desc(mean_value))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here, the &lt;code&gt;filter&lt;/code&gt; functions are moved up to be before &lt;code&gt;rename&lt;/code&gt; and &lt;code&gt;mutate&lt;/code&gt;. The ordering here does &lt;strong&gt;not&lt;/strong&gt; matter.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;data %&amp;gt;%
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&amp;gt;%
+    
+    # putting filter before rename, mutate is fine
+    filter(GeoAreaName == &#39;Thailand&#39;) %&amp;gt;% 
+    filter(TimePeriod == 2018) %&amp;gt;% 
+    
+    rename(type_of_skill = `Type of skill`) %&amp;gt;%
+    mutate(
+        Value = as.double(Value)
+    ) %&amp;gt;%
+    group_by(type_of_skill) %&amp;gt;%
+    summarize(
+        mean_value = mean(Value),
+        median_value = median(Value)
+    ) %&amp;gt;%
+    ungroup() %&amp;gt;%
+    arrange(desc(mean_value))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Furthermore, we could even experiment with the &lt;code&gt;filter&lt;/code&gt; function being before or after &lt;code&gt;select&lt;/code&gt;. Here, ordering also does &lt;strong&gt;not&lt;/strong&gt; matter.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;data %&amp;gt;%
+    filter(GeoAreaName == &#39;Thailand&#39;) %&amp;gt;% 
+    filter(TimePeriod == 2018) %&amp;gt;% 
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&amp;gt;%
+    rename(type_of_skill = `Type of skill`) %&amp;gt;%
+    mutate(
+        Value = as.double(Value)
+    ) %&amp;gt;%
+    group_by(type_of_skill) %&amp;gt;%
+    summarize(
+        mean_value = mean(Value),
+        median_value = median(Value)
+    ) %&amp;gt;%
+    ungroup() %&amp;gt;%
+    arrange(desc(mean_value))
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here is there order &lt;strong&gt;does&lt;/strong&gt; matter. When we try to move the two &lt;code&gt;filter&lt;/code&gt; functions below &lt;code&gt;group_by&lt;/code&gt;, &lt;code&gt;summarize&lt;/code&gt; and &lt;code&gt;ungroup&lt;/code&gt;, the filtering does &lt;em&gt;not&lt;/em&gt; work. By the time we get to &lt;code&gt;filter(GeoAreaName == &#39;Thailand&#39;)&lt;/code&gt; in this example, GeoAreaName has been removed because we did &lt;em&gt;not&lt;/em&gt; &lt;code&gt;group_by&lt;/code&gt; &lt;code&gt;GeoAreaName&lt;/code&gt;, so we get an error.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Running this code, we&#39;ll get the ERROR: Problem with `filter()` input `..1`. x object &#39;GeoAreaName&#39; not found ℹ Input `..1` is 
+# `GeoAreaName == &amp;quot;Thailand&amp;quot;`.
+
+data %&amp;gt;%
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&amp;gt;%
+    relocate(Sex, Value, GeoAreaName) %&amp;gt;%
+    rename(type_of_skill = `Type of skill`) %&amp;gt;%
+    mutate(
+        Value = as.double(Value)
+    ) %&amp;gt;%
+    # filter was previously here
+    group_by(type_of_skill) %&amp;gt;%
+    summarize(
+        mean_value = mean(Value),
+        median_value = median(Value)
+    ) %&amp;gt;%
+    ungroup() %&amp;gt;%
+    # moving filter down below group_by &amp;amp; summarize() does not work
+    filter(GeoAreaName == &#39;Thailand&#39;) %&amp;gt;% 
+    filter(TimePeriod == 2018) %&amp;gt;% 
+    arrange(desc(mean_value))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, if we want to use &lt;code&gt;filter&lt;/code&gt; on the &lt;em&gt;results&lt;/em&gt; of the &lt;code&gt;mutate&lt;/code&gt; function, we see that order &lt;strong&gt;does&lt;/strong&gt; matter. By the time we get to the final &lt;code&gt;filter(Value &amp;lt; 10)&lt;/code&gt;, the &lt;code&gt;Value&lt;/code&gt; variable is no longer available to us because we did not &lt;code&gt;group_by&lt;/code&gt; and &lt;code&gt;summarize&lt;/code&gt; by Value (instead we created &lt;code&gt;mean_value&lt;/code&gt; and &lt;code&gt;median_value&lt;/code&gt;).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+data %&amp;gt;%
+    filter(GeoAreaName == &#39;Thailand&#39;) %&amp;gt;% 
+    filter(TimePeriod == 2018) %&amp;gt;% 
+    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&amp;gt;%
+    rename(type_of_skill = `Type of skill`) %&amp;gt;%
+    mutate(
+        Value = as.double(Value)
+    ) %&amp;gt;%
+    # filtering for Values less than 10 does work here
+    filter(Value &amp;lt; 10) %&amp;gt;%
+    group_by(type_of_skill) %&amp;gt;%
+    summarize(
+        mean_value = mean(Value),
+        median_value = median(Value)
+    ) %&amp;gt;%
+    ungroup() %&amp;gt;%
+    arrange(desc(mean_value)) %&amp;gt;%
+    # filter for Values less than 10 does not work down here
+    filter(Value &amp;lt; 10)
+
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Using the pivot_wider() function</title>
       <link>/technical_notes/example_tech/rstats_tip3/</link>
       <pubDate>Wed, 26 Aug 2020 00:00:00 +0100</pubDate>
