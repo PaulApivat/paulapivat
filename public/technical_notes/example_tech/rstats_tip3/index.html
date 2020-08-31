@@ -719,6 +719,7 @@ Using pivot_wider() In another post, the spread() function was introduced as a w
       <nav id="TableOfContents">
   <ul>
     <li><a href="#using-pivot_wider">Using pivot_wider()</a></li>
+    <li><a href="#using-pivot_longer">Using pivot_longer()</a></li>
   </ul>
 </nav>
 
@@ -749,6 +750,20 @@ data %&gt;%
     pivot_wider(names_from = `Type of skill`, values_from = Value) 
 </code></pre>
 <p>In this data set, <code>Type of skill</code> represents, broadly speaking, ICT Skills broken down into eight categories in this column. By using <code>pivot_wider()</code> each sub-category of ICT Skills gets it&rsquo;s <strong>own</strong> column, thus making the overall data frame <em>wider</em>.</p>
+<h2 id="using-pivot_longer">Using pivot_longer()</h2>
+<p>Conversely, there&rsquo;s also <code>pivot_longer</code> for the opposite effect. This next code chunk is part of my attempt for 
+<a href="https://github.com/rfordatascience/tidytuesday" target="_blank" rel="noopener">TidyTuesday</a> (&lsquo;Extinct Plants&rsquo; for the week of 2020-08-18)</p>
+<p>The <code>cols</code> parameter determines the range of columns to be changed from wide to long. The <code>names_to</code> parameter sets the new column name and <code>values_to</code> indicates the value of the new columns.</p>
+<pre><code># PIVOT_LONGER - better than Gather
+
+plants %&gt;%
+    select(binomial_name, threat_AA:action_NA) %&gt;%
+    pivot_longer(cols = threat_AA:action_NA, names_to = &quot;action&quot;, values_to = &quot;count&quot;) %&gt;%
+    ggplot(aes(x = binomial_name, y = action, fill = count)) +
+    geom_tile() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+</code></pre>
 
           </div>
 

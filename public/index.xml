@@ -264,6 +264,20 @@ data %&amp;gt;%
     pivot_wider(names_from = `Type of skill`, values_from = Value) 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In this data set, &lt;code&gt;Type of skill&lt;/code&gt; represents, broadly speaking, ICT Skills broken down into eight categories in this column. By using &lt;code&gt;pivot_wider()&lt;/code&gt; each sub-category of ICT Skills gets it&amp;rsquo;s &lt;strong&gt;own&lt;/strong&gt; column, thus making the overall data frame &lt;em&gt;wider&lt;/em&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;using-pivot_longer&#34;&gt;Using pivot_longer()&lt;/h2&gt;
+&lt;p&gt;Conversely, there&amp;rsquo;s also &lt;code&gt;pivot_longer&lt;/code&gt; for the opposite effect. This next code chunk is part of my attempt for 
+&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TidyTuesday&lt;/a&gt; (&amp;lsquo;Extinct Plants&amp;rsquo; for the week of 2020-08-18)&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;cols&lt;/code&gt; parameter determines the range of columns to be changed from wide to long. The &lt;code&gt;names_to&lt;/code&gt; parameter sets the new column name and &lt;code&gt;values_to&lt;/code&gt; indicates the value of the new columns.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# PIVOT_LONGER - better than Gather
+
+plants %&amp;gt;%
+    select(binomial_name, threat_AA:action_NA) %&amp;gt;%
+    pivot_longer(cols = threat_AA:action_NA, names_to = &amp;quot;action&amp;quot;, values_to = &amp;quot;count&amp;quot;) %&amp;gt;%
+    ggplot(aes(x = binomial_name, y = action, fill = count)) +
+    geom_tile() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
