@@ -27,11 +27,11 @@
   
     
   
-  <meta name="description" content="Data Wrangling: Does Order matter? In short, yes, it matters. But when and where?
-Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations&rsquo; Statistics Division for Sustainable Development Goals (SDG) Indicators (Goal 4, Target 4.">
+  <meta name="description" content="Nested and Hierarchical Data When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.
+In this technical note, I&rsquo;ll outline how to create a dendrogram.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip5/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/data_viz_tip1/">
 
   
 
@@ -218,7 +218,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip5/">
+  <link rel="canonical" href="/technical_notes/example_tech/data_viz_tip1/">
 
   
   
@@ -237,10 +237,10 @@ Below are examples to highlight when function order matters and when it doesn&rs
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip5/">
-  <meta property="og:title" content="Does order of operation matter among dplyr functions? | Paul Apivat">
-  <meta property="og:description" content="Data Wrangling: Does Order matter? In short, yes, it matters. But when and where?
-Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations&rsquo; Statistics Division for Sustainable Development Goals (SDG) Indicators (Goal 4, Target 4."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/data_viz_tip1/">
+  <meta property="og:title" content="Creating a dendrogram with R and ggraph | Paul Apivat">
+  <meta property="og:description" content="Nested and Hierarchical Data When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.
+In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
@@ -265,7 +265,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
 
 
 
-  <title>Does order of operation matter among dplyr functions? | Paul Apivat</title>
+  <title>Creating a dendrogram with R and ggraph | Paul Apivat</title>
 
 </head>
 
@@ -663,7 +663,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
     <a class="docs-toc-link" href="/technical_notes/example_tech/data_viz_tip1/">Data Viz Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/data_viz_tip1/">Visualize Dendrograms</a>
       </li>
       
@@ -697,7 +697,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
         <a href="/technical_notes/example_tech/rstats_tip4/">Calculating Percentiles</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_tip5/">Order of Dplyr Functions</a>
       </li>
       
@@ -731,7 +731,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#data-wrangling-does-order-matter">Data Wrangling: Does Order matter?</a></li>
+    <li><a href="#nested-and-hierarchical-data">Nested and Hierarchical Data</a></li>
   </ul>
 </nav>
 
@@ -744,117 +744,97 @@ Below are examples to highlight when function order matters and when it doesn&rs
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Does order of operation matter among dplyr functions?</h1>
+          <h1>Creating a dendrogram with R and ggraph</h1>
 
           <div class="article-style">
-            <h2 id="data-wrangling-does-order-matter">Data Wrangling: Does Order matter?</h2>
-<p>In short, yes, it matters. But when and where?</p>
-<p>Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations&rsquo; Statistics Division for 
-<a href="https://unstats.un.org/sdgs/indicators/database/" target="_blank" rel="noopener">Sustainable Development Goals</a> (SDG) Indicators (Goal 4, Target 4.4).</p>
-<p>See also UN Statistics Wiki on 
-<a href="https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&#43;4.4.1" target="_blank" rel="noopener">Indicator 4.4.1</a>.</p>
-<pre><code># Example chain of functions to determine proportion of Thailand's population to have certain ICT skills in 2018
-
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    arrange(desc(mean_value))
+            <h2 id="nested-and-hierarchical-data">Nested and Hierarchical Data</h2>
+<p>When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.</p>
+<p>In this technical note, I&rsquo;ll outline how to create a dendrogram.</p>
+<p>The data used is from the 
+<a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-08-18/readme.md" target="_blank" rel="noopener">Extinct Plants</a> data set from 
+<a href="https://github.com/rfordatascience/tidytuesday" target="_blank" rel="noopener">TidyTuesday</a>.</p>
+<p>Here&rsquo;s the breakdown:</p>
+<ol>
+<li>Load Packages and Libraries</li>
+</ol>
+<pre><code>install.packages(&quot;ggraph&quot;)
+install.packages(&quot;igraph&quot;)
+library(ggraph)
+library(igraph)
 </code></pre>
-<p>Here, the <code>filter</code> functions are moved up to be before <code>rename</code> and <code>mutate</code>. The ordering here does <strong>not</strong> matter.</p>
-<pre><code>data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    
-    # putting filter before rename, mutate is fine
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    
-    rename(type_of_skill = `Type of skill`) %&gt;%
+<ol start="2">
+<li>Create a data frame with three levels</li>
+</ol>
+<p>Taking the <code>plants</code> data frame, I do some wrangling to get the desired columns.</p>
+<pre><code>plants_data &lt;- plants %&gt;%
+    select(group, binomial_name) %&gt;%
+    group_by(group) %&gt;%
+    arrange(group) %&gt;% 
     mutate(
-        Value = as.double(Value)
+        level1 = 'center',
+        level2 = group,
+        level3 = binomial_name
     ) %&gt;%
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
+    # important to ungroup here
     ungroup() %&gt;%
-    arrange(desc(mean_value))
-</code></pre>
-<p>Furthermore, we could even experiment with the <code>filter</code> function being before or after <code>select</code>. Here, ordering also does <strong>not</strong> matter.</p>
-<pre><code>data %&gt;%
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    arrange(desc(mean_value))
+    select(level1:level3) 
 
 </code></pre>
-<p>Here is there order <strong>does</strong> matter. When we try to move the two <code>filter</code> functions below <code>group_by</code>, <code>summarize</code> and <code>ungroup</code>, the filtering does <em>not</em> work. By the time we get to <code>filter(GeoAreaName == 'Thailand')</code> in this example, GeoAreaName has been removed because we did <em>not</em> <code>group_by</code> <code>GeoAreaName</code>, so we get an error.</p>
-<pre><code># Running this code, we'll get the ERROR: Problem with `filter()` input `..1`. x object 'GeoAreaName' not found ℹ Input `..1` is 
-# `GeoAreaName == &quot;Thailand&quot;`.
+<ol start="3">
+<li>Create an edge list</li>
+</ol>
+<pre><code># transform it to an edge list
+plants_edges_level1_2 &lt;- plants_data %&gt;% 
+    select(level1, level2) %&gt;% 
+    unique %&gt;% 
+    rename(from=level1, to=level2)
 
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    relocate(Sex, Value, GeoAreaName) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    # filter was previously here
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    # moving filter down below group_by &amp; summarize() does not work
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    arrange(desc(mean_value))
+plants_edges_level2_3 &lt;- plants_data %&gt;% 
+    select(level2, level3) %&gt;% 
+    unique %&gt;% 
+    rename(from=level2, to=level3)
+
+plants_edge_list=rbind(plants_edges_level1_2, plants_edges_level2_3)
 </code></pre>
-<p>Finally, if we want to use <code>filter</code> on the <em>results</em> of the <code>mutate</code> function, we see that order <strong>does</strong> matter. By the time we get to the final <code>filter(Value &lt; 10)</code>, the <code>Value</code> variable is no longer available to us because we did not <code>group_by</code> and <code>summarize</code> by Value (instead we created <code>mean_value</code> and <code>median_value</code>).</p>
-<pre><code>
-data %&gt;%
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    # filtering for Values less than 10 does work here
-    filter(Value &lt; 10) %&gt;%
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    arrange(desc(mean_value)) %&gt;%
-    # filter for Values less than 10 does not work down here
-    filter(Value &lt; 10)
+<ol start="4">
+<li>Plot a basic chart</li>
+</ol>
+<p>Because I have many observations, I&rsquo;m optiing to use a &ldquo;circular&rdquo; dendrogram.</p>
+<pre><code># plot plant dendogram
+plantgraph &lt;- graph_from_data_frame(plants_edge_list)
+
+ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
+    geom_edge_diagonal() +
+    geom_node_point() +
+    theme_void()
+</code></pre>
+<ol start="5">
+<li>Add text to the end of the edges</li>
+</ol>
+<pre><code># add text &amp; color(leaf)
+ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
+    geom_edge_diagonal() +
+    geom_node_text(aes(label = name, filter=leaf), hjust = 1, size = 1) +
+    geom_node_point()
+</code></pre>
+<p>NOTE: The breakdown of plant groupings are listed below. We can see the Flowering Plants <em>disproportionately</em> out number other groups like Ferns &amp; Allies, Cycad, Mosses, Algae and Conifer.</p>
+<p>When visualizing, we&rsquo;re better off separating Flowering Plants from the other groups.</p>
+<pre><code>plants %&gt;%
+    group_by(group) %&gt;%
+    tally(sort = TRUE)
+
+# A tibble: 6 x 2
+  group                n
+  &lt;chr&gt;            &lt;int&gt;
+1 Flowering Plant    471
+2 Ferns and Allies    13
+3 Cycad                8
+4 Mosses               4
+5 Algae                3
+6 Conifer              1
 
 </code></pre>
+<p>Here&rsquo;s a sample picture of the plants <img src="./png/data_viz_tip1_pic1.png" alt="dendrogram"></p>
 
           </div>
 
@@ -871,14 +851,14 @@ data %&gt;%
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_tip4/" rel="next">Calculating 25th, 50th and 75th Percentile of Column Values</a>
+    <a href="/technical_notes/example_tech/rstats_tip5/" rel="next">Does order of operation matter among dplyr functions?</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/data_viz_tip1/" rel="prev">Creating a dendrogram with R and ggraph</a>
+    <a href="/technical_notes/example_tech/rstats_tip3/" rel="prev">Using the pivot_wider() function</a>
   </div>
   
 </div>
@@ -900,7 +880,7 @@ data %&gt;%
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip5.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/data_viz_tip1.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

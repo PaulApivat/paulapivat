@@ -245,6 +245,102 @@ data %&amp;gt;%
     </item>
     
     <item>
+      <title>Creating a dendrogram with R and ggraph</title>
+      <link>/technical_notes/example_tech/data_viz_tip1/</link>
+      <pubDate>Thu, 27 Aug 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/data_viz_tip1/</guid>
+      <description>&lt;h2 id=&#34;nested-and-hierarchical-data&#34;&gt;Nested and Hierarchical Data&lt;/h2&gt;
+&lt;p&gt;When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.&lt;/p&gt;
+&lt;p&gt;In this technical note, I&amp;rsquo;ll outline how to create a dendrogram.&lt;/p&gt;
+&lt;p&gt;The data used is from the 
+&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-08-18/readme.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Extinct Plants&lt;/a&gt; data set from 
+&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TidyTuesday&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the breakdown:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Load Packages and Libraries&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;install.packages(&amp;quot;ggraph&amp;quot;)
+install.packages(&amp;quot;igraph&amp;quot;)
+library(ggraph)
+library(igraph)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Create a data frame with three levels&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Taking the &lt;code&gt;plants&lt;/code&gt; data frame, I do some wrangling to get the desired columns.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;plants_data &amp;lt;- plants %&amp;gt;%
+    select(group, binomial_name) %&amp;gt;%
+    group_by(group) %&amp;gt;%
+    arrange(group) %&amp;gt;% 
+    mutate(
+        level1 = &#39;center&#39;,
+        level2 = group,
+        level3 = binomial_name
+    ) %&amp;gt;%
+    # important to ungroup here
+    ungroup() %&amp;gt;%
+    select(level1:level3) 
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Create an edge list&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;# transform it to an edge list
+plants_edges_level1_2 &amp;lt;- plants_data %&amp;gt;% 
+    select(level1, level2) %&amp;gt;% 
+    unique %&amp;gt;% 
+    rename(from=level1, to=level2)
+
+plants_edges_level2_3 &amp;lt;- plants_data %&amp;gt;% 
+    select(level2, level3) %&amp;gt;% 
+    unique %&amp;gt;% 
+    rename(from=level2, to=level3)
+
+plants_edge_list=rbind(plants_edges_level1_2, plants_edges_level2_3)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Plot a basic chart&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Because I have many observations, I&amp;rsquo;m optiing to use a &amp;ldquo;circular&amp;rdquo; dendrogram.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# plot plant dendogram
+plantgraph &amp;lt;- graph_from_data_frame(plants_edge_list)
+
+ggraph(plantgraph, layout = &amp;quot;dendrogram&amp;quot;, circular = TRUE) +
+    geom_edge_diagonal() +
+    geom_node_point() +
+    theme_void()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Add text to the end of the edges&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;# add text &amp;amp; color(leaf)
+ggraph(plantgraph, layout = &amp;quot;dendrogram&amp;quot;, circular = TRUE) +
+    geom_edge_diagonal() +
+    geom_node_text(aes(label = name, filter=leaf), hjust = 1, size = 1) +
+    geom_node_point()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;NOTE: The breakdown of plant groupings are listed below. We can see the Flowering Plants &lt;em&gt;disproportionately&lt;/em&gt; out number other groups like Ferns &amp;amp; Allies, Cycad, Mosses, Algae and Conifer.&lt;/p&gt;
+&lt;p&gt;When visualizing, we&amp;rsquo;re better off separating Flowering Plants from the other groups.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;plants %&amp;gt;%
+    group_by(group) %&amp;gt;%
+    tally(sort = TRUE)
+
+# A tibble: 6 x 2
+  group                n
+  &amp;lt;chr&amp;gt;            &amp;lt;int&amp;gt;
+1 Flowering Plant    471
+2 Ferns and Allies    13
+3 Cycad                8
+4 Mosses               4
+5 Algae                3
+6 Conifer              1
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s a sample picture of the plants &lt;img src=&#34;./png/data_viz_tip1_pic1.png&#34; alt=&#34;dendrogram&#34;&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Using the pivot_wider() function</title>
       <link>/technical_notes/example_tech/rstats_tip3/</link>
       <pubDate>Wed, 26 Aug 2020 00:00:00 +0100</pubDate>
