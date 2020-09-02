@@ -34,6 +34,61 @@
     </item>
     
     <item>
+      <title>Visualize Scatterplots with Marginal Distribution using ggExtra</title>
+      <link>/technical_notes/example_tech/data_viz_tip2/</link>
+      <pubDate>Wed, 02 Sep 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/data_viz_tip2/</guid>
+      <description>&lt;h2 id=&#34;marginal-distribution-with-ggplot2-and-ggextra&#34;&gt;Marginal Distribution with ggplot2 and ggExtra&lt;/h2&gt;
+&lt;p&gt;The data in this example is from the UN 
+&lt;a href=&#34;https://unstats.un.org/sdgs/indicators/database/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Statistics Division&lt;/a&gt; Sustainable Development Goal, Indicator 4.4.1.&lt;/p&gt;
+&lt;p&gt;Also check out the 
+&lt;a href=&#34;https://www.r-graph-gallery.com/277-marginal-histogram-for-ggplot2.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;r-graph-gallery.com&lt;/a&gt; for inspiration.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the breakdown:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Load Packages and Libraries&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The key here is the &lt;code&gt;ggExtra&lt;/code&gt; package.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;install.packages(&#39;ggExtra&#39;)
+library(ggExtra)
+library(tidyverse)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Create a basic scatter plot&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The key here is using &lt;code&gt;pivot_wider&lt;/code&gt; to give all &lt;code&gt;Type of skill&lt;/code&gt; their own columns. We&amp;rsquo;ll then pick out specific columns (i.e., COPA, EMAIL, PCPR) to summarize, then plot on the x- and y- axes.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Basic Scatter Plot (color cluster by Gender)
+p &amp;lt;- data %&amp;gt;%
+    select(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&amp;gt;%
+    group_by(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&amp;gt;%
+    pivot_wider(names_from = `Type of skill`, values_from = Value) %&amp;gt;%
+    mutate(
+        COPA = as.numeric(COPA),
+        EMAIL = as.numeric(EMAIL),
+        PCPR = as.numeric(PCPR)
+    ) %&amp;gt;%
+    # Group by GeoAreaName, across TimePeriod, Sex
+    group_by(GeoAreaName, Sex) %&amp;gt;%
+    summarize(
+        avg_COPA = mean(COPA, na.rm = TRUE),
+        avg_EMAIL = mean(EMAIL, na.rm = TRUE),
+        avg_PCPR = mean(PCPR, na.rm = TRUE)
+    ) %&amp;gt;%
+    ungroup() %&amp;gt;%
+    ggplot(aes(x = avg_PCPR, y = avg_EMAIL, color = Sex)) + 
+    geom_point()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Use &lt;code&gt;ggMarginal()&lt;/code&gt; to create the marginal distribution along the side of the scatter plots. This is a function from the &lt;code&gt;ggExtra&lt;/code&gt; package.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;# Scatter Plot with Marginal Distribution
+ggMarginal(p, type = &#39;histogram&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This particular chart is especially useful to highlight different distributions.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Calculating 25th, 50th and 75th Percentile of Column Values</title>
       <link>/technical_notes/example_tech/rstats_tip4/</link>
       <pubDate>Thu, 27 Aug 2020 00:00:00 +0100</pubDate>

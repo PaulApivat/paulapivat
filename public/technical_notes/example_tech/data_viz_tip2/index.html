@@ -27,11 +27,12 @@
   
     
   
-  <meta name="description" content="Nested and Hierarchical Data When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.
-In this technical note, I&rsquo;ll outline how to create a dendrogram.">
+  <meta name="description" content="Marginal Distribution with ggplot2 and ggExtra The data in this example is from the UN Statistics Division Sustainable Development Goal, Indicator 4.4.1.
+Also check out the r-graph-gallery.com for inspiration.
+Here&rsquo;s the breakdown:">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/data_viz_tip1/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/data_viz_tip2/">
 
   
 
@@ -218,7 +219,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram.">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/data_viz_tip1/">
+  <link rel="canonical" href="/technical_notes/example_tech/data_viz_tip2/">
 
   
   
@@ -237,16 +238,17 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram.">
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/data_viz_tip1/">
-  <meta property="og:title" content="Creating a dendrogram with R and ggraph | Paul Apivat">
-  <meta property="og:description" content="Nested and Hierarchical Data When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.
-In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/data_viz_tip2/">
+  <meta property="og:title" content="Visualize Scatterplots with Marginal Distribution using ggExtra | Paul Apivat">
+  <meta property="og:description" content="Marginal Distribution with ggplot2 and ggExtra The data in this example is from the UN Statistics Division Sustainable Development Goal, Indicator 4.4.1.
+Also check out the r-graph-gallery.com for inspiration.
+Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-08-27T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2020-09-02T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-08-27T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-09-02T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +267,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
 
 
 
-  <title>Creating a dendrogram with R and ggraph | Paul Apivat</title>
+  <title>Visualize Scatterplots with Marginal Distribution using ggExtra | Paul Apivat</title>
 
 </head>
 
@@ -663,11 +665,11 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
     <a class="docs-toc-link" href="/technical_notes/example_tech/data_viz_tip2/">Data Viz Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/data_viz_tip2/">Scatterplots &amp; Marginal Distribution</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/data_viz_tip1/">Visualize Dendrograms</a>
       </li>
       
@@ -735,7 +737,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#nested-and-hierarchical-data">Nested and Hierarchical Data</a></li>
+    <li><a href="#marginal-distribution-with-ggplot2-and-ggextra">Marginal Distribution with ggplot2 and ggExtra</a></li>
   </ul>
 </nav>
 
@@ -748,99 +750,56 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Creating a dendrogram with R and ggraph</h1>
+          <h1>Visualize Scatterplots with Marginal Distribution using ggExtra</h1>
 
           <div class="article-style">
-            <h2 id="nested-and-hierarchical-data">Nested and Hierarchical Data</h2>
-<p>When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.</p>
-<p>In this technical note, I&rsquo;ll outline how to create a dendrogram.</p>
-<p>The data used is from the 
-<a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-08-18/readme.md" target="_blank" rel="noopener">Extinct Plants</a> data set from 
-<a href="https://github.com/rfordatascience/tidytuesday" target="_blank" rel="noopener">TidyTuesday</a>.</p>
+            <h2 id="marginal-distribution-with-ggplot2-and-ggextra">Marginal Distribution with ggplot2 and ggExtra</h2>
+<p>The data in this example is from the UN 
+<a href="https://unstats.un.org/sdgs/indicators/database/" target="_blank" rel="noopener">Statistics Division</a> Sustainable Development Goal, Indicator 4.4.1.</p>
+<p>Also check out the 
+<a href="https://www.r-graph-gallery.com/277-marginal-histogram-for-ggplot2.html" target="_blank" rel="noopener">r-graph-gallery.com</a> for inspiration.</p>
 <p>Here&rsquo;s the breakdown:</p>
 <ol>
 <li>Load Packages and Libraries</li>
 </ol>
-<pre><code>install.packages(&quot;ggraph&quot;)
-install.packages(&quot;igraph&quot;)
-library(ggraph)
-library(igraph)
+<p>The key here is the <code>ggExtra</code> package.</p>
+<pre><code>install.packages('ggExtra')
+library(ggExtra)
+library(tidyverse)
+
 </code></pre>
 <ol start="2">
-<li>Create a data frame with three levels</li>
+<li>Create a basic scatter plot</li>
 </ol>
-<p>Taking the <code>plants</code> data frame, I do some wrangling to get the desired columns.</p>
-<pre><code>plants_data &lt;- plants %&gt;%
-    select(group, binomial_name) %&gt;%
-    group_by(group) %&gt;%
-    arrange(group) %&gt;% 
+<p>The key here is using <code>pivot_wider</code> to give all <code>Type of skill</code> their own columns. We&rsquo;ll then pick out specific columns (i.e., COPA, EMAIL, PCPR) to summarize, then plot on the x- and y- axes.</p>
+<pre><code># Basic Scatter Plot (color cluster by Gender)
+p &lt;- data %&gt;%
+    select(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
+    group_by(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
+    pivot_wider(names_from = `Type of skill`, values_from = Value) %&gt;%
     mutate(
-        level1 = 'center',
-        level2 = group,
-        level3 = binomial_name
+        COPA = as.numeric(COPA),
+        EMAIL = as.numeric(EMAIL),
+        PCPR = as.numeric(PCPR)
     ) %&gt;%
-    # important to ungroup here
+    # Group by GeoAreaName, across TimePeriod, Sex
+    group_by(GeoAreaName, Sex) %&gt;%
+    summarize(
+        avg_COPA = mean(COPA, na.rm = TRUE),
+        avg_EMAIL = mean(EMAIL, na.rm = TRUE),
+        avg_PCPR = mean(PCPR, na.rm = TRUE)
+    ) %&gt;%
     ungroup() %&gt;%
-    select(level1:level3) 
-
+    ggplot(aes(x = avg_PCPR, y = avg_EMAIL, color = Sex)) + 
+    geom_point()
 </code></pre>
 <ol start="3">
-<li>Create an edge list</li>
+<li>Use <code>ggMarginal()</code> to create the marginal distribution along the side of the scatter plots. This is a function from the <code>ggExtra</code> package.</li>
 </ol>
-<pre><code># transform it to an edge list
-plants_edges_level1_2 &lt;- plants_data %&gt;% 
-    select(level1, level2) %&gt;% 
-    unique %&gt;% 
-    rename(from=level1, to=level2)
-
-plants_edges_level2_3 &lt;- plants_data %&gt;% 
-    select(level2, level3) %&gt;% 
-    unique %&gt;% 
-    rename(from=level2, to=level3)
-
-plants_edge_list=rbind(plants_edges_level1_2, plants_edges_level2_3)
+<pre><code># Scatter Plot with Marginal Distribution
+ggMarginal(p, type = 'histogram')
 </code></pre>
-<ol start="4">
-<li>Plot a basic chart</li>
-</ol>
-<p>Because I have many observations, I&rsquo;m optiing to use a &ldquo;circular&rdquo; dendrogram.</p>
-<pre><code># plot plant dendogram
-plantgraph &lt;- graph_from_data_frame(plants_edge_list)
-
-ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
-    geom_edge_diagonal() +
-    geom_node_point() +
-    theme_void()
-</code></pre>
-<ol start="5">
-<li>Add text to the end of the edges</li>
-</ol>
-<pre><code># add text &amp; color(leaf)
-ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
-    geom_edge_diagonal() +
-    geom_node_text(aes(label = name, filter=leaf), hjust = 1, size = 1) +
-    geom_node_point()
-</code></pre>
-<p>NOTE: The breakdown of plant groupings are listed below. We can see the Flowering Plants <em>disproportionately</em> out number other groups like Ferns &amp; Allies, Cycad, Mosses, Algae and Conifer.</p>
-<p>When visualizing, we&rsquo;re better off separating Flowering Plants from the other groups.</p>
-<pre><code>plants %&gt;%
-    group_by(group) %&gt;%
-    tally(sort = TRUE)
-
-# A tibble: 6 x 2
-  group                n
-  &lt;chr&gt;            &lt;int&gt;
-1 Flowering Plant    471
-2 Ferns and Allies    13
-3 Cycad                8
-4 Mosses               4
-5 Algae                3
-6 Conifer              1
-
-</code></pre>
-<p>Here&rsquo;s a sample picture of the plants</p>
-<p><img src="./png/data_viz_tip1_pic1.png" alt="dendrogram"></p>
-<p><img src="./data_viz_tip1_pic1.png" alt="png"></p>
+<p>This particular chart is especially useful to highlight different distributions.</p>
 
           </div>
 
@@ -857,14 +816,14 @@ ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_tip5/" rel="next">Does order of operation matter among dplyr functions?</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip3/" rel="prev">Using the pivot_wider() function</a>
+    <a href="/technical_notes/example_tech/rstats_tip4/" rel="prev">Calculating 25th, 50th and 75th Percentile of Column Values</a>
   </div>
   
 </div>
@@ -874,7 +833,7 @@ ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Aug 27, 2020</p>
+          <p>Last updated on Sep 2, 2020</p>
 
           
 
@@ -886,7 +845,7 @@ ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/data_viz_tip1.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/data_viz_tip2.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
