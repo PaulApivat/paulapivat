@@ -336,7 +336,9 @@ ggraph(plantgraph, layout = &amp;quot;dendrogram&amp;quot;, circular = TRUE) +
 6 Conifer              1
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here&amp;rsquo;s a sample picture of the plants &lt;img src=&#34;./png/data_viz_tip1_pic1.png&#34; alt=&#34;dendrogram&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a sample picture of the plants&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./png/data_viz_tip1_pic1.png&#34; alt=&#34;dendrogram&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./data_viz_tip1_pic1.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 </description>
     </item>
     

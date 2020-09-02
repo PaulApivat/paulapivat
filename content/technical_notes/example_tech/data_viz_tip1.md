@@ -111,4 +111,9 @@ plants %>%
 
 ```
 
-Here's a sample picture of the plants ![dendrogram](./png/data_viz_tip1_pic1.png)
+Here's a sample picture of the plants
+
+![dendrogram](./png/data_viz_tip1_pic1.png)
+
+![png](./data_viz_tip1_pic1.png)
+
