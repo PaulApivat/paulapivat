@@ -394,6 +394,40 @@ ggraph(plantgraph, layout = &amp;quot;dendrogram&amp;quot;, circular = TRUE) +
 &lt;p&gt;Here&amp;rsquo;s a sample picture of the plants&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./png/data_viz_tip1_pic1.png&#34; alt=&#34;dendrogram&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./data_viz_tip1_pic1.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure id=&#34;figure-dendrogram&#34;&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;./data_viz_tip1_pic1.png&#34; data-caption=&#34;Dendrogram.&#34;&gt;
+
+
+  &lt;img src=&#34;./data_viz_tip1_pic1.png&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Dendrogram.
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
 </description>
     </item>
     
@@ -594,6 +628,19 @@ hist(x)
 &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;shortcodes&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Further talk details can easily be added to this page using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>A collection of weird pretty plots</title>
+      <link>/post/ggplot_art/</link>
+      <pubDate>Thu, 03 Sep 2020 00:00:00 +0000</pubDate>
+      <guid>/post/ggplot_art/</guid>
+      <description>&lt;h2 id=&#34;tidytuesday-2020-08-18-week-34&#34;&gt;TidyTuesday 2020-08-18 (week 34)&lt;/h2&gt;
+&lt;p&gt;In the process of exploring dendrograms, I create jheri curls :)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./plant_dendogram_mess.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Another plot with less hair:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./dendrogram_plant.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 </description>
     </item>
     

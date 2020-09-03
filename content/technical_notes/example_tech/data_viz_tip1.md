@@ -117,3 +117,5 @@ Here's a sample picture of the plants
 
 ![png](./data_viz_tip1_pic1.png)
 
+{{< figure src="./data_viz_tip1_pic1.png" title="Dendrogram.">}}
+

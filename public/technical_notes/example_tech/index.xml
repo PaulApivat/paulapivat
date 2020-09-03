@@ -373,6 +373,40 @@ ggraph(plantgraph, layout = &amp;quot;dendrogram&amp;quot;, circular = TRUE) +
 &lt;p&gt;Here&amp;rsquo;s a sample picture of the plants&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./png/data_viz_tip1_pic1.png&#34; alt=&#34;dendrogram&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./data_viz_tip1_pic1.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure id=&#34;figure-dendrogram&#34;&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;./data_viz_tip1_pic1.png&#34; data-caption=&#34;Dendrogram.&#34;&gt;
+
+
+  &lt;img src=&#34;./data_viz_tip1_pic1.png&#34; alt=&#34;&#34;  &gt;
+&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Dendrogram.
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
 </description>
     </item>
     

@@ -5,12 +5,25 @@
     <link>/post/</link>
       <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Thu, 30 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Thu, 03 Sep 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>/post/</link>
     </image>
+    
+    <item>
+      <title>A collection of weird pretty plots</title>
+      <link>/post/ggplot_art/</link>
+      <pubDate>Thu, 03 Sep 2020 00:00:00 +0000</pubDate>
+      <guid>/post/ggplot_art/</guid>
+      <description>&lt;h2 id=&#34;tidytuesday-2020-08-18-week-34&#34;&gt;TidyTuesday 2020-08-18 (week 34)&lt;/h2&gt;
+&lt;p&gt;In the process of exploring dendrograms, I create jheri curls :)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./plant_dendogram_mess.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Another plot with less hair:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./dendrogram_plant.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Introducing Custom Functions into the Workflow</title>
