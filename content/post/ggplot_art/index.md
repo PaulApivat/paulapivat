@@ -26,4 +26,6 @@ Another plot with less hair:
 
 ![png](./dendrogram_plant.png)
 
+I call this Disco Fire:
 
+![png](./disco_fire.png)
