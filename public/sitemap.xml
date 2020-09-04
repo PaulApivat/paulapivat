@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/technical_notes/example_tech/python_tip1/</loc>
+    <lastmod>2020-09-04T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/courses/example/example1/</loc>
     <lastmod>2019-05-05T00:00:00+01:00</lastmod>
   </url>
@@ -83,6 +88,11 @@
   </url>
   
   <url>
+    <loc>/technical_notes/</loc>
+    <lastmod>2020-09-04T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/ggplot_art/</loc>
     <lastmod>2020-09-03T00:00:00+00:00</lastmod>
   </url>
@@ -100,11 +110,6 @@
   <url>
     <loc>/post/</loc>
     <lastmod>2020-09-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/technical_notes/</loc>
-    <lastmod>2020-09-02T00:00:00+01:00</lastmod>
   </url>
   
   <url>

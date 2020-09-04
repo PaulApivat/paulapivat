@@ -13,6 +13,41 @@
     </image>
     
     <item>
+      <title>Python Setup Options</title>
+      <link>/technical_notes/example_tech/python_tip1/</link>
+      <pubDate>Fri, 04 Sep 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_tip1/</guid>
+      <description>&lt;h2 id=&#34;setting-up-python-for-r-users&#34;&gt;Setting up Python for R Users&lt;/h2&gt;
+&lt;p&gt;I&amp;rsquo;ve recently started #66DaysOfData and will be using this opportunity to make some headway into the world of Python. It&amp;rsquo;s reputation for having a complex, at times frustrating, setup process precedes itself and is probably warranted. That said, here are some tips to minimize that.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s my current OS environment. Mac users will have an older version of Python that comes with the computer, you can type &lt;code&gt;python --version&lt;/code&gt; into your terminal to find out. Here&amp;rsquo;s mine:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;macOS Catalina version 10.15.5
+Python 2.7.16
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;python-2-vs-python-3&#34;&gt;Python 2 vs Python 3&lt;/h1&gt;
+&lt;p&gt;There appears to be general consensus for anyone starting out in Python that you&amp;rsquo;ll want Python 3. There&amp;rsquo;s no debate here. Just get Python 3. I found the easiest way to go to Python Release for Mac OS X, which as of this writing is Python 3.8.5 and use the 
+&lt;a href=&#34;https://www.python.org/downloads/release/python-385/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;macOS 64-bit installer&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Once installed, you&amp;rsquo;ll want to check.&lt;/p&gt;
+&lt;p&gt;Instead of &lt;code&gt;python --version&lt;/code&gt;, which checks Python 2, you&amp;rsquo;ll use &lt;code&gt;python3 --version&lt;/code&gt;. This implies that Python 3 isn&amp;rsquo;t merely a &amp;ldquo;newer&amp;rdquo; version of Python, but that they are completely different categories.&lt;/p&gt;
+&lt;h1 id=&#34;anaconda&#34;&gt;Anaconda&lt;/h1&gt;
+&lt;p&gt;While this isn&amp;rsquo;t my first choice of development environment, it is the first option that allowed me to get coding in Python the fastest.&lt;/p&gt;
+&lt;p&gt;You&amp;rsquo;ll download the 
+&lt;a href=&#34;https://www.anaconda.com/products/individual&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Individual Edition&lt;/a&gt; of the Anaconda, open-source platform. You&amp;rsquo;ll download the application for your desktop and you&amp;rsquo;ll find &lt;code&gt;Anaconda-Navigator&lt;/code&gt; in your list of applications (or where ever you chose to place your newly installed application).&lt;/p&gt;
+&lt;p&gt;NOTE: Shortly after installing and using, the Desktop version of Anaconda froze and I had a difficult time even &amp;ldquo;Force Quitting&amp;rdquo; it, so my preferred method of launching Anaconda Navigator is to open the mac terminal and type in the command &lt;code&gt;anaconda-navigator&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The navigator supports &lt;code&gt;Jupyter Notebooks&lt;/code&gt;, &lt;code&gt;PyCharm&lt;/code&gt; and even &lt;code&gt;RStudio&lt;/code&gt; among other environments.&lt;/p&gt;
+&lt;p&gt;I will be using &lt;code&gt;Jupyter Notebooks&lt;/code&gt; while I get acclimated to Python, but ultimately i&amp;rsquo;m looking for interoperability with #Rstats.&lt;/p&gt;
+&lt;h1 id=&#34;reticulate&#34;&gt;Reticulate&lt;/h1&gt;
+&lt;p&gt;This is an &lt;code&gt;R package&lt;/code&gt; that allows you to run &lt;code&gt;Python&lt;/code&gt; code in &lt;code&gt;R&lt;/code&gt; environments. The feature I am looking forward to using is the &lt;code&gt;R Markdown&lt;/code&gt; document that allows me to run chunks of python code.&lt;/p&gt;
+&lt;p&gt;Work-in-Progress: TBD&lt;/p&gt;
+&lt;h1 id=&#34;vscode&#34;&gt;VSCode&lt;/h1&gt;
+&lt;p&gt;This is another popular IDE with widely used Python Extension.&lt;/p&gt;
+&lt;p&gt;Work-in-Progress: TBD&lt;/p&gt;
+&lt;h1 id=&#34;pycharm&#34;&gt;PyCharm&lt;/h1&gt;
+&lt;p&gt;I&amp;rsquo;ve heard this IDE most closely resembles RStudio in ease of use.&lt;/p&gt;
+&lt;p&gt;Work-in-Progress: TBD&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Technical Notes Page 1</title>
       <link>/technical_notes/example_tech/technical_notes1/</link>
       <pubDate>Sun, 05 May 2019 00:00:00 +0100</pubDate>
