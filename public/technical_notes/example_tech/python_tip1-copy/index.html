@@ -27,11 +27,10 @@
   
     
   
-  <meta name="description" content="Calculating Percentiles When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?
-Here the example are countries&rsquo; average percentages of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, Indicator 4.">
+  <meta name="description" content="Setting up Python for R Users I&rsquo;ve recently started #66DaysOfData and will be using this opportunity to make some headway into the world of Python. It&rsquo;s reputation for having a complex, at times frustrating, setup process precedes itself and is probably warranted.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip4/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_tip1-copy/">
 
   
 
@@ -218,7 +217,7 @@ Here the example are countries&rsquo; average percentages of the population with
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip4/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_tip1-copy/">
 
   
   
@@ -237,16 +236,15 @@ Here the example are countries&rsquo; average percentages of the population with
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip4/">
-  <meta property="og:title" content="Calculating 25th, 50th and 75th Percentile of Column Values | Paul Apivat">
-  <meta property="og:description" content="Calculating Percentiles When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?
-Here the example are countries&rsquo; average percentages of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, Indicator 4."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_tip1-copy/">
+  <meta property="og:title" content="Python Setup Options | Paul Apivat">
+  <meta property="og:description" content="Setting up Python for R Users I&rsquo;ve recently started #66DaysOfData and will be using this opportunity to make some headway into the world of Python. It&rsquo;s reputation for having a complex, at times frustrating, setup process precedes itself and is probably warranted."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-08-27T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2020-09-04T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-08-27T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-09-04T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +263,7 @@ Here the example are countries&rsquo; average percentages of the population with
 
 
 
-  <title>Calculating 25th, 50th and 75th Percentile of Column Values | Paul Apivat</title>
+  <title>Python Setup Options | Paul Apivat</title>
 
 </head>
 
@@ -694,24 +692,11 @@ Here the example are countries&rsquo; average percentages of the population with
   </div>
   
   <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/google_cloud_tip1/">Google Cloud Tips</a>
+    <a class="docs-toc-link" href="/technical_notes/example_tech/python_tip1-copy/">Python Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li >
-        <a href="/technical_notes/example_tech/google_cloud_tip1/">Connect BigQuery to Data Studio</a>
-      </li>
-      
-    </ul>
-    
-
-  </div>
-  
-  <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/python_tip1/">Python Tips</a>
-    <ul class="nav docs-sidenav">
-      
-      <li >
-        <a href="/technical_notes/example_tech/python_tip1/">Python Setup</a>
+      <li class="active">
+        <a href="/technical_notes/example_tech/python_tip1-copy/">Python Setup</a>
       </li>
       
     </ul>
@@ -723,7 +708,7 @@ Here the example are countries&rsquo; average percentages of the population with
     <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_tip4/">Rstats Tip</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_tip4/">Calculating Percentiles</a>
       </li>
       
@@ -761,7 +746,7 @@ Here the example are countries&rsquo; average percentages of the population with
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#calculating-percentiles">Calculating Percentiles</a></li>
+    <li><a href="#setting-up-python-for-r-users">Setting up Python for R Users</a></li>
   </ul>
 </nav>
 
@@ -774,75 +759,36 @@ Here the example are countries&rsquo; average percentages of the population with
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Calculating 25th, 50th and 75th Percentile of Column Values</h1>
+          <h1>Python Setup Options</h1>
 
           <div class="article-style">
-            <h2 id="calculating-percentiles">Calculating Percentiles</h2>
-<p>When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?</p>
-<p>Here the example are countries&rsquo; <em>average percentages</em> of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, 
-<a href="https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&#43;4.4.1" target="_blank" rel="noopener">Indicator 4.4.1</a>.</p>
-<p>There are three methods. First, manually calculating values for the 25th, 50th and 75th percentile with the <code>quantile()</code> function.</p>
-<pre><code># Country mean_values at 25th, 50th and 75th percentile 
-
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(Value = as.numeric(Value)) %&gt;%
-    group_by(GeoAreaName) %&gt;%
-    summarize(
-        mean_value = mean(Value)
-    ) %&gt;%
-    mutate(
-        min_mean = min(mean_value),
-        iqr_25_percentile = quantile(mean_value, probs = c(0.25)),
-        iqr_50_percentile = quantile(mean_value, probs = c(0.50)),
-        iqr_75_percentile = quantile(mean_value, probs = c(0.75)),
-        max_mean = max(mean_value)
-    ) %&gt;%
-    arrange(desc(mean_value)) 
+            <h2 id="setting-up-python-for-r-users">Setting up Python for R Users</h2>
+<p>I&rsquo;ve recently started #66DaysOfData and will be using this opportunity to make some headway into the world of Python. It&rsquo;s reputation for having a complex, at times frustrating, setup process precedes itself and is probably warranted. That said, here are some tips to minimize that.</p>
+<p>Here&rsquo;s my current OS environment. Mac users will have an older version of Python that comes with the computer, you can type <code>python --version</code> into your terminal to find out. Here&rsquo;s mine:</p>
+<pre><code>macOS Catalina version 10.15.5
+Python 2.7.16
 </code></pre>
-<p>The second approach is to use the <code>ntile()</code> function:</p>
-<pre><code># Creating bins using ntile()
-
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(Value = as.numeric(Value)) %&gt;%
-    group_by(GeoAreaName) %&gt;%
-    summarize(
-        mean_value = mean(Value)
-    ) %&gt;%
-    mutate(
-        mean_value_binned = ntile(mean_value, 4)
-    ) %&gt;%
-    arrange(desc(mean_value))
-</code></pre>
-<p>The third approach uses the <code>purrr</code> package and the <code>partial</code> function that can be used with <code>dplyr's</code> <code>summarize_at()</code> function. Check out the 
-<a href="https://tbradley1013.github.io/2018/10/01/calculating-quantiles-for-groups-with-dplyr-summarize-and-purrr-partial/" target="_blank" rel="noopener">source</a></p>
-<pre><code>
-## Using purrr
-library(purrr)
-    
-p &lt;- c(0.25, 0.50, 0.75)
-
-p_names &lt;- map_chr(p, ~paste0(.x*100, &quot;%&quot;))
-
-p_funs &lt;- map(p, ~partial(quantile, probs = .x, na.rm = TRUE)) %&gt;%
-    set_names(nm = p_names)
-
-p_funs
-
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(Value = as.numeric(Value)) %&gt;%
-    group_by(GeoAreaName) %&gt;%
-    summarize(
-        mean_value = mean(Value)
-    ) %&gt;%
-    summarize_at(vars(mean_value), funs(!!!p_funs))
-
-</code></pre>
+<h1 id="python-2-vs-python-3">Python 2 vs Python 3</h1>
+<p>There appears to be general consensus for anyone starting out in Python that you&rsquo;ll want Python 3. There&rsquo;s no debate here. Just get Python 3. I found the easiest way to go to Python Release for Mac OS X, which as of this writing is Python 3.8.5 and use the 
+<a href="https://www.python.org/downloads/release/python-385/" target="_blank" rel="noopener">macOS 64-bit installer</a>.</p>
+<p>Once installed, you&rsquo;ll want to check.</p>
+<p>Instead of <code>python --version</code>, which checks Python 2, you&rsquo;ll use <code>python3 --version</code>. This implies that Python 3 isn&rsquo;t merely a &ldquo;newer&rdquo; version of Python, but that they are completely different categories.</p>
+<h1 id="anaconda">Anaconda</h1>
+<p>While this isn&rsquo;t my first choice of development environment, it is the first option that allowed me to get coding in Python the fastest.</p>
+<p>You&rsquo;ll download the 
+<a href="https://www.anaconda.com/products/individual" target="_blank" rel="noopener">Individual Edition</a> of the Anaconda, open-source platform. You&rsquo;ll download the application for your desktop and you&rsquo;ll find <code>Anaconda-Navigator</code> in your list of applications (or where ever you chose to place your newly installed application).</p>
+<p>NOTE: Shortly after installing and using, the Desktop version of Anaconda froze and I had a difficult time even &ldquo;Force Quitting&rdquo; it, so my preferred method of launching Anaconda Navigator is to open the mac terminal and type in the command <code>anaconda-navigator</code>.</p>
+<p>The navigator supports <code>Jupyter Notebooks</code>, <code>PyCharm</code> and even <code>RStudio</code> among other environments.</p>
+<p>I will be using <code>Jupyter Notebooks</code> while I get acclimated to Python, but ultimately i&rsquo;m looking for interoperability with #Rstats.</p>
+<h1 id="reticulate">Reticulate</h1>
+<p>This is an <code>R package</code> that allows you to run <code>Python</code> code in <code>R</code> environments. The feature I am looking forward to using is the <code>R Markdown</code> document that allows me to run chunks of python code.</p>
+<p>Work-in-Progress: TBD</p>
+<h1 id="vscode">VSCode</h1>
+<p>This is another popular IDE with widely used Python Extension.</p>
+<p>Work-in-Progress: TBD</p>
+<h1 id="pycharm">PyCharm</h1>
+<p>I&rsquo;ve heard this IDE most closely resembles RStudio in ease of use.</p>
+<p>Work-in-Progress: TBD</p>
 
           </div>
 
@@ -858,15 +804,8 @@ data %&gt;%
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/data_viz_tip2/" rel="next">Visualize Scatterplots with Marginal Distribution using ggExtra</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip5/" rel="prev">Does order of operation matter among dplyr functions?</a>
+    <a href="/technical_notes/example_tech/python_tip1/" rel="prev">Python Setup Options</a>
   </div>
   
 </div>
@@ -876,7 +815,7 @@ data %&gt;%
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Aug 27, 2020</p>
+          <p>Last updated on Sep 4, 2020</p>
 
           
 
@@ -888,7 +827,7 @@ data %&gt;%
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip4.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_tip1%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

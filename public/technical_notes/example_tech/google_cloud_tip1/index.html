@@ -27,11 +27,11 @@
   
     
   
-  <meta name="description" content="Calculating Percentiles When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?
-Here the example are countries&rsquo; average percentages of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, Indicator 4.">
+  <meta name="description" content="Steps for Connecting BigQuery to Data Studio This note outlines the basic steps required to generate charts in Google Data Studio, specifically pulling data from BigQuery.
+BigQuery  The starting point is to generate a query in BigQuery Once a query is created, click Save Results In the pop-up window, a prompt: &ldquo;choose where to save the results data from the query&rdquo;, save result as BigQuery Table Set project name (i.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip4/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/google_cloud_tip1/">
 
   
 
@@ -218,7 +218,7 @@ Here the example are countries&rsquo; average percentages of the population with
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip4/">
+  <link rel="canonical" href="/technical_notes/example_tech/google_cloud_tip1/">
 
   
   
@@ -237,16 +237,16 @@ Here the example are countries&rsquo; average percentages of the population with
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip4/">
-  <meta property="og:title" content="Calculating 25th, 50th and 75th Percentile of Column Values | Paul Apivat">
-  <meta property="og:description" content="Calculating Percentiles When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?
-Here the example are countries&rsquo; average percentages of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, Indicator 4."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/google_cloud_tip1/">
+  <meta property="og:title" content="Connecting BigQuery to Google Data Studio [Basic Setup] | Paul Apivat">
+  <meta property="og:description" content="Steps for Connecting BigQuery to Data Studio This note outlines the basic steps required to generate charts in Google Data Studio, specifically pulling data from BigQuery.
+BigQuery  The starting point is to generate a query in BigQuery Once a query is created, click Save Results In the pop-up window, a prompt: &ldquo;choose where to save the results data from the query&rdquo;, save result as BigQuery Table Set project name (i."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-08-27T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2020-09-05T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-08-27T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-09-05T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +265,7 @@ Here the example are countries&rsquo; average percentages of the population with
 
 
 
-  <title>Calculating 25th, 50th and 75th Percentile of Column Values | Paul Apivat</title>
+  <title>Connecting BigQuery to Google Data Studio [Basic Setup] | Paul Apivat</title>
 
 </head>
 
@@ -697,7 +697,7 @@ Here the example are countries&rsquo; average percentages of the population with
     <a class="docs-toc-link" href="/technical_notes/example_tech/google_cloud_tip1/">Google Cloud Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/google_cloud_tip1/">Connect BigQuery to Data Studio</a>
       </li>
       
@@ -723,7 +723,7 @@ Here the example are countries&rsquo; average percentages of the population with
     <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_tip4/">Rstats Tip</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_tip4/">Calculating Percentiles</a>
       </li>
       
@@ -761,7 +761,7 @@ Here the example are countries&rsquo; average percentages of the population with
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#calculating-percentiles">Calculating Percentiles</a></li>
+    <li><a href="#steps-for-connecting-bigquery-to-data-studio">Steps for Connecting BigQuery to Data Studio</a></li>
   </ul>
 </nav>
 
@@ -774,75 +774,30 @@ Here the example are countries&rsquo; average percentages of the population with
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Calculating 25th, 50th and 75th Percentile of Column Values</h1>
+          <h1>Connecting BigQuery to Google Data Studio [Basic Setup]</h1>
 
           <div class="article-style">
-            <h2 id="calculating-percentiles">Calculating Percentiles</h2>
-<p>When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?</p>
-<p>Here the example are countries&rsquo; <em>average percentages</em> of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, 
-<a href="https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&#43;4.4.1" target="_blank" rel="noopener">Indicator 4.4.1</a>.</p>
-<p>There are three methods. First, manually calculating values for the 25th, 50th and 75th percentile with the <code>quantile()</code> function.</p>
-<pre><code># Country mean_values at 25th, 50th and 75th percentile 
-
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(Value = as.numeric(Value)) %&gt;%
-    group_by(GeoAreaName) %&gt;%
-    summarize(
-        mean_value = mean(Value)
-    ) %&gt;%
-    mutate(
-        min_mean = min(mean_value),
-        iqr_25_percentile = quantile(mean_value, probs = c(0.25)),
-        iqr_50_percentile = quantile(mean_value, probs = c(0.50)),
-        iqr_75_percentile = quantile(mean_value, probs = c(0.75)),
-        max_mean = max(mean_value)
-    ) %&gt;%
-    arrange(desc(mean_value)) 
-</code></pre>
-<p>The second approach is to use the <code>ntile()</code> function:</p>
-<pre><code># Creating bins using ntile()
-
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(Value = as.numeric(Value)) %&gt;%
-    group_by(GeoAreaName) %&gt;%
-    summarize(
-        mean_value = mean(Value)
-    ) %&gt;%
-    mutate(
-        mean_value_binned = ntile(mean_value, 4)
-    ) %&gt;%
-    arrange(desc(mean_value))
-</code></pre>
-<p>The third approach uses the <code>purrr</code> package and the <code>partial</code> function that can be used with <code>dplyr's</code> <code>summarize_at()</code> function. Check out the 
-<a href="https://tbradley1013.github.io/2018/10/01/calculating-quantiles-for-groups-with-dplyr-summarize-and-purrr-partial/" target="_blank" rel="noopener">source</a></p>
-<pre><code>
-## Using purrr
-library(purrr)
-    
-p &lt;- c(0.25, 0.50, 0.75)
-
-p_names &lt;- map_chr(p, ~paste0(.x*100, &quot;%&quot;))
-
-p_funs &lt;- map(p, ~partial(quantile, probs = .x, na.rm = TRUE)) %&gt;%
-    set_names(nm = p_names)
-
-p_funs
-
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod, Units) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(Value = as.numeric(Value)) %&gt;%
-    group_by(GeoAreaName) %&gt;%
-    summarize(
-        mean_value = mean(Value)
-    ) %&gt;%
-    summarize_at(vars(mean_value), funs(!!!p_funs))
-
-</code></pre>
+            <h2 id="steps-for-connecting-bigquery-to-data-studio">Steps for Connecting BigQuery to Data Studio</h2>
+<p>This note outlines the basic steps required to generate charts in Google Data Studio, specifically pulling data from BigQuery.</p>
+<h1 id="bigquery">BigQuery</h1>
+<ol>
+<li>The starting point is to generate a query in BigQuery</li>
+<li>Once a query is created, click <strong>Save Results</strong></li>
+<li>In the pop-up window, a prompt: &ldquo;choose where to save the results data from the query&rdquo;, save result as BigQuery Table</li>
+<li>Set project name (i.e., jobsbot)</li>
+<li>Set dataset name (i.e., internalmongo)</li>
+<li>Create table name, for the specific query (i.e., jobfieldname_ranking)</li>
+</ol>
+<h1 id="google-data-studio">Google Data Studio</h1>
+<ol start="7">
+<li>Click Add Data</li>
+<li>Find BigQuery in Google Connectors</li>
+<li>Locate saved query table (see above) (i.e., My Projects &gt; jobsbot (project) &gt; internalmongo (dataset) &gt; jobfieldname_ranking (table/specific query))</li>
+<li>Click Add</li>
+<li>Select &lsquo;Add a Chart&rsquo; (note: could be Table or Chart style)</li>
+<li>Optional: copy/paste Table to create a companion Chart for table</li>
+<li>Select Table; in Data Menu, select Metric, &lsquo;Add Metric&rsquo; to swap out generic default Report Count (for more informative data generated from the query)</li>
+</ol>
 
           </div>
 
@@ -858,15 +813,8 @@ data %&gt;%
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/data_viz_tip2/" rel="next">Visualize Scatterplots with Marginal Distribution using ggExtra</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip5/" rel="prev">Does order of operation matter among dplyr functions?</a>
+    <a href="/technical_notes/example_tech/python_tip1/" rel="prev">Python Setup Options</a>
   </div>
   
 </div>
@@ -876,7 +824,7 @@ data %&gt;%
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Aug 27, 2020</p>
+          <p>Last updated on Sep 5, 2020</p>
 
           
 
@@ -888,7 +836,7 @@ data %&gt;%
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip4.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/google_cloud_tip1.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
