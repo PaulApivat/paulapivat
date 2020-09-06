@@ -60,3 +60,9 @@ Work-in-Progress: TBD
 I've heard this IDE most closely resembles RStudio in ease of use.
 
 Work-in-Progress: TBD
+
+# Spyder
+
+This appears to be close approximation of the functionality in RStudio. 
+
+Work-in-Progress: TBD
