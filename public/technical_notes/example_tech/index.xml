@@ -13,6 +13,32 @@
     </image>
     
     <item>
+      <title>Random Numbers &amp; Reproducibility in Python</title>
+      <link>/technical_notes/example_tech/python_reproducibility/</link>
+      <pubDate>Thu, 10 Sep 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_reproducibility/</guid>
+      <description>&lt;h2 id=&#34;random-numbers-with-numpy&#34;&gt;Random Numbers with Numpy&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Numpy&lt;/code&gt; has a sub-module called &lt;code&gt;random&lt;/code&gt;. Technically both are of the &amp;lsquo;module&amp;rsquo; class. &lt;code&gt;numpy.random&lt;/code&gt; contains other methods like: &lt;code&gt;seed&lt;/code&gt;, &lt;code&gt;set_state&lt;/code&gt;, &lt;code&gt;standard_t&lt;/code&gt; etc.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Submodules
+
+import numpy
+
+print(&amp;quot;numpy.random is a&amp;quot;, type(numpy.random))
+print(&amp;quot;numpy is a&amp;quot;, type(numpy))
+print(&amp;quot;it contains names such as...&amp;quot;, dir(numpy.random)[-15:])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;reproducibility&#34;&gt;Reproducibility&lt;/h2&gt;
+&lt;p&gt;When using &lt;code&gt;numpy.random&lt;/code&gt;, you can ensure reproducibility by accessing &lt;code&gt;numpy.random.seed(30)&lt;/code&gt;, which mirrors #Rstats&amp;rsquo; &lt;code&gt;set.seed(30)&lt;/code&gt; behavior.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import random
+
+numpy.random.seed(30)
+rolls = numpy.random.randint(low=1, high=6, size=10)
+rolls
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Connecting BigQuery to Google Data Studio [Basic Setup]</title>
       <link>/technical_notes/example_tech/google_cloud_tip1/</link>
       <pubDate>Sat, 05 Sep 2020 00:00:00 +0100</pubDate>

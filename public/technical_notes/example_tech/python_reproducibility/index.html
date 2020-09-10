@@ -27,12 +27,11 @@
   
     
   
-  <meta name="description" content="Marginal Distribution with ggplot2 and ggExtra The data in this example is from the UN Statistics Division Sustainable Development Goal, Indicator 4.4.1.
-Also check out the r-graph-gallery.com for inspiration.
-Here&rsquo;s the breakdown:">
+  <meta name="description" content="Random Numbers with Numpy Numpy has a sub-module called random. Technically both are of the &lsquo;module&rsquo; class. numpy.random contains other methods like: seed, set_state, standard_t etc.
+# Submodules import numpy print(&quot;numpy.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/data_viz_tip2/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_reproducibility/">
 
   
 
@@ -219,7 +218,7 @@ Here&rsquo;s the breakdown:">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/data_viz_tip2/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_reproducibility/">
 
   
   
@@ -238,17 +237,16 @@ Here&rsquo;s the breakdown:">
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/data_viz_tip2/">
-  <meta property="og:title" content="Visualize Scatterplots with Marginal Distribution using ggExtra | Paul Apivat">
-  <meta property="og:description" content="Marginal Distribution with ggplot2 and ggExtra The data in this example is from the UN Statistics Division Sustainable Development Goal, Indicator 4.4.1.
-Also check out the r-graph-gallery.com for inspiration.
-Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_reproducibility/">
+  <meta property="og:title" content="Random Numbers &amp; Reproducibility in Python | Paul Apivat">
+  <meta property="og:description" content="Random Numbers with Numpy Numpy has a sub-module called random. Technically both are of the &lsquo;module&rsquo; class. numpy.random contains other methods like: seed, set_state, standard_t etc.
+# Submodules import numpy print(&quot;numpy."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-09-02T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2020-09-10T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-09-02T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-09-10T00:00:00&#43;01:00">
   
 
   
@@ -267,7 +265,7 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
 
 
 
-  <title>Visualize Scatterplots with Marginal Distribution using ggExtra | Paul Apivat</title>
+  <title>Random Numbers &amp; Reproducibility in Python | Paul Apivat</title>
 
 </head>
 
@@ -665,7 +663,7 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
     <a class="docs-toc-link" href="/technical_notes/example_tech/data_viz_tip2/">Data Viz Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/data_viz_tip2/">Scatterplots &amp; Marginal Distribution</a>
       </li>
       
@@ -716,7 +714,7 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
         <a href="/technical_notes/example_tech/python_tip1/">Python Setup</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/python_reproducibility/">Reproducibility in Python</a>
       </li>
       
@@ -767,7 +765,8 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#marginal-distribution-with-ggplot2-and-ggextra">Marginal Distribution with ggplot2 and ggExtra</a></li>
+    <li><a href="#random-numbers-with-numpy">Random Numbers with Numpy</a></li>
+    <li><a href="#reproducibility">Reproducibility</a></li>
   </ul>
 </nav>
 
@@ -780,56 +779,27 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Visualize Scatterplots with Marginal Distribution using ggExtra</h1>
+          <h1>Random Numbers &amp; Reproducibility in Python</h1>
 
           <div class="article-style">
-            <h2 id="marginal-distribution-with-ggplot2-and-ggextra">Marginal Distribution with ggplot2 and ggExtra</h2>
-<p>The data in this example is from the UN 
-<a href="https://unstats.un.org/sdgs/indicators/database/" target="_blank" rel="noopener">Statistics Division</a> Sustainable Development Goal, Indicator 4.4.1.</p>
-<p>Also check out the 
-<a href="https://www.r-graph-gallery.com/277-marginal-histogram-for-ggplot2.html" target="_blank" rel="noopener">r-graph-gallery.com</a> for inspiration.</p>
-<p>Here&rsquo;s the breakdown:</p>
-<ol>
-<li>Load Packages and Libraries</li>
-</ol>
-<p>The key here is the <code>ggExtra</code> package.</p>
-<pre><code>install.packages('ggExtra')
-library(ggExtra)
-library(tidyverse)
+            <h2 id="random-numbers-with-numpy">Random Numbers with Numpy</h2>
+<p><code>Numpy</code> has a sub-module called <code>random</code>. Technically both are of the &lsquo;module&rsquo; class. <code>numpy.random</code> contains other methods like: <code>seed</code>, <code>set_state</code>, <code>standard_t</code> etc.</p>
+<pre><code># Submodules
 
+import numpy
+
+print(&quot;numpy.random is a&quot;, type(numpy.random))
+print(&quot;numpy is a&quot;, type(numpy))
+print(&quot;it contains names such as...&quot;, dir(numpy.random)[-15:])
 </code></pre>
-<ol start="2">
-<li>Create a basic scatter plot</li>
-</ol>
-<p>The key here is using <code>pivot_wider</code> to give all <code>Type of skill</code> their own columns. We&rsquo;ll then pick out specific columns (i.e., COPA, EMAIL, PCPR) to summarize, then plot on the x- and y- axes.</p>
-<pre><code># Basic Scatter Plot (color cluster by Gender)
-p &lt;- data %&gt;%
-    select(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
-    group_by(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
-    pivot_wider(names_from = `Type of skill`, values_from = Value) %&gt;%
-    mutate(
-        COPA = as.numeric(COPA),
-        EMAIL = as.numeric(EMAIL),
-        PCPR = as.numeric(PCPR)
-    ) %&gt;%
-    # Group by GeoAreaName, across TimePeriod, Sex
-    group_by(GeoAreaName, Sex) %&gt;%
-    summarize(
-        avg_COPA = mean(COPA, na.rm = TRUE),
-        avg_EMAIL = mean(EMAIL, na.rm = TRUE),
-        avg_PCPR = mean(PCPR, na.rm = TRUE)
-    ) %&gt;%
-    ungroup() %&gt;%
-    ggplot(aes(x = avg_PCPR, y = avg_EMAIL, color = Sex)) + 
-    geom_point()
+<h2 id="reproducibility">Reproducibility</h2>
+<p>When using <code>numpy.random</code>, you can ensure reproducibility by accessing <code>numpy.random.seed(30)</code>, which mirrors #Rstats&rsquo; <code>set.seed(30)</code> behavior.</p>
+<pre><code>import random
+
+numpy.random.seed(30)
+rolls = numpy.random.randint(low=1, high=6, size=10)
+rolls
 </code></pre>
-<ol start="3">
-<li>Use <code>ggMarginal()</code> to create the marginal distribution along the side of the scatter plots. This is a function from the <code>ggExtra</code> package.</li>
-</ol>
-<pre><code># Scatter Plot with Marginal Distribution
-ggMarginal(p, type = 'histogram')
-</code></pre>
-<p>This particular chart is especially useful to highlight different distributions.</p>
 
           </div>
 
@@ -845,15 +815,8 @@ ggMarginal(p, type = 'histogram')
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip4/" rel="prev">Calculating 25th, 50th and 75th Percentile of Column Values</a>
+    <a href="/technical_notes/example_tech/google_cloud_tip1/" rel="prev">Connecting BigQuery to Google Data Studio [Basic Setup]</a>
   </div>
   
 </div>
@@ -863,7 +826,7 @@ ggMarginal(p, type = 'histogram')
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Sep 2, 2020</p>
+          <p>Last updated on Sep 10, 2020</p>
 
           
 
@@ -875,7 +838,7 @@ ggMarginal(p, type = 'histogram')
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/data_viz_tip2.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_reproducibility.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
