@@ -738,6 +738,82 @@ hist(x)
 &lt;p&gt;&lt;img src=&#34;./ds_canon.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Although Data Science has a long history, it&amp;rsquo;s considered a relatively young field.&lt;/p&gt;
 &lt;p&gt;This space will be used to document recommended reading for new entrants:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Downey, Allen (2016) There is only one test. 
+&lt;a href=&#34;http://allendowney.blogspot.com/2016/06/there-is-still-only-one-test.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Wickham, Hadley (2014) Tidy Data. The Journal of Statistical Software, vol 59. 
+&lt;a href=&#34;https://vita.had.co.nz/papers/tidy-data.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;original&lt;/a&gt;, 
+&lt;a href=&#34;https://tidyr.tidyverse.org/articles/tidy-data.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;update&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;James, G., Witten, D., Hastie, T. &amp;amp; Tibshirani, R. (2014) An Introduction to Statistical Learning with Applications in R. 
+&lt;a href=&#34;http://faculty.marshall.usc.edu/gareth-james/ISL/index.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Shmueli, G. (2010) To explain or to predict? Statistical Science, 25(3), 289-310. 
+&lt;a href=&#34;https://projecteuclid.org/euclid.ss/1294167961&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Hernan, M.A., Hsu, J. &amp;amp; Healy, B. (2019) A second chance to get causal inference right: A classification of Data Science tasks. Chance, vol 32(1). 
+&lt;a href=&#34;https://amstat.tandfonline.com/doi/full/10.1080/09332480.2019.1579578&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Gelman, A., Pasarica, C. &amp;amp; Dodhia, R. (2002) Let&amp;rsquo;s practice what we preach: Turning tables into graphs. The American Statistician, vol 56(2). 
+&lt;a href=&#34;https://www.tandfonline.com/doi/abs/10.1198/000313002317572790&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Scott Formann-Roe (June, 2012) Understanding the Bias-Variance Tradeoff. 
+&lt;a href=&#34;http://scott.fortmann-roe.com/docs/BiasVariance.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Donoho, D (2017) 50 Years of Data Science. Journal of Computational and Graphical Statistics, vol 26(4). 
+&lt;a href=&#34;https://www.tandfonline.com/doi/full/10.1080/10618600.2017.1384734&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Wilson, G., Bryan, J., Cranston, K., Kitzes, J., Nederbragt, L. &amp;amp; Teal, T.K. (2017) Good enough practices in scientific computing. Plos Computational Biology. 
+&lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Kevin Markham (2019) 100 pandas tricks to save you time and energy. 
+&lt;a href=&#34;https://www.dataschool.io/python-pandas-tips-and-tricks/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Chris Albon&amp;rsquo;s code snippets. 
+&lt;a href=&#34;https://chrisalbon.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Howard, J. &amp;amp; Gugger, S. (Aug 4, 2020) Deep Learning for Coders with fastai and PyTorch: AI Applications without a PhD 1st Ed. 
+&lt;a href=&#34;https://course.fast.ai/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Brandon Rohrer (Jan, 2020) End-to-End Machine Learning: Complete Course Catalog. 
+&lt;a href=&#34;https://end-to-end-machine-learning.teachable.com/p/complete-course-library-full-end-to-end-machine-learning-catalog&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;; 
+&lt;a href=&#34;https://e2eml.school/blog.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;second source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;John Rauser (Dec, 2016) How Humans See Data 
+&lt;a href=&#34;https://www.youtube.com/watch?v=fSgEeI2Xpdc&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;youtube&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Broman, K.W. &amp;amp; Woo, K.H. (2018) Data Organization in Spreadsheets. The American Statistician, vol 72(1). 
+&lt;a href=&#34;https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sculley, D., Holt, G., Golovin, D., Davydov, E., Phillips, T., Ebner, D., Chaudhary, V., &amp;amp; Young, M. (2014) Machine Learning: The High Interest Credit Card of Technical Debt. 
+&lt;a href=&#34;https://research.google/pubs/pub43146/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;3Blue1Brown for Linear Algebra 
+&lt;a href=&#34;https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;youtube&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Jenny Bryan. Stat 545: Data Wrangling, Exploration and Analysis with R. 
+&lt;a href=&#34;https://stat545.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 </description>
     </item>
     
