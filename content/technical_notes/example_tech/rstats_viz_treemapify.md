@@ -22,11 +22,13 @@ Here's an example Treemap I created to visualize the dominant emotions displayed
 
 Other visualizations I created for the Friends project can also be found [here](https://github.com/PaulApivat/tidytuesday/tree/master/2020/friends).
 
-Below, we can see that `geom_treemap`, `geom_treemap_subgroup_border` and `geom_treemap_subgroup_text` are layers in the ggplot2 system and works seamlessly with other staples like `scale_fill_manual`, `theme`, and `labs` within the ggplot2 package. 
+Below, we can see that `geom_treemap`, `geom_treemap_subgroup_border` and `geom_treemap_subgroup_text` are layers that works seamlessly with other layers like `scale_fill_manual`, `theme`, and `labs` that are staples of the ggplot2 package. 
 
 Bottom line, it's easier to customize treemaps from the `treemapify` package than the `treemap` package. 
 
 ```
+library(treemapify)
+
 ggplot(friends_emo_tree, aes(area = n, label = speaker, subgroup = emotion)) +
     geom_treemap(aes(fill = emotion, alpha = n)) +
     geom_treemap_subgroup_border(color = 'white') +
