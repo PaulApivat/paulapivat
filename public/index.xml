@@ -13,6 +13,64 @@
     </image>
     
     <item>
+      <title>Creating and Looping through DataFrames</title>
+      <link>/technical_notes/example_tech/python_tip2/</link>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_tip2/</guid>
+      <description>&lt;h2 id=&#34;creating-and-looping-through-list-of-tuples&#34;&gt;Creating and Looping through List of Tuples&lt;/h2&gt;
+&lt;p&gt;If you come to Python from R, it&amp;rsquo;s not immediately obvious how Lists, Dictionaries, Tuples, Series, then Loops help you do the things you can do in R.&lt;/p&gt;
+&lt;p&gt;You can begin to connect the dots when you see that Lists of Tuples are the building blocks of DataFrames - available in both languages to handle tidy (tabular) data.&lt;/p&gt;
+&lt;h1 id=&#34;lists&#34;&gt;Lists&lt;/h1&gt;
+&lt;p&gt;Lists are ordered and mutable collection of data. Below are lists of strings and integers.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;name_list = [&#39;paul&#39;, &#39;apivat&#39;, &#39;marvin&#39;, &#39;pim&#39;, &#39;milin&#39;]
+int_list = [3,4,5,2,5,6,7,5]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;tuples&#34;&gt;Tuples&lt;/h1&gt;
+&lt;p&gt;Tuples, also collections, are ordered and immutable. But more related to the handling of data, tuples can be converted to DataFrames (using the Pandas library). Below, the List of Tuples (data) is converted into a DataFrame.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import pandas as pd
+
+data = [
+    (&#39;r1&#39;, &#39;c1&#39;, 11, 11),
+    (&#39;r1&#39;, &#39;c2&#39;, 12, 12),
+    (&#39;r2&#39;, &#39;c1&#39;, 21, 21),
+    (&#39;r2&#39;, &#39;c2&#39;, 22, 22)
+]
+
+df = pd.DataFrame(data, columns=[&#39;R_Number&#39;, &#39;C_Number&#39;, &#39;Avg&#39;, &#39;Std&#39;])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;loops&#34;&gt;Loops&lt;/h1&gt;
+&lt;p&gt;You can loop through lists of strings and integers.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;int_list = [3,4,5,2,5,6,7,5]
+
+for num in int_list:
+    print(num)
+    
+name_list = [&#39;paul&#39;, &#39;apivat&#39;, &#39;marvin&#39;, &#39;pim&#39;, &#39;milin&#39;]
+
+for name in name_list:
+    print(name)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;looping-through-list-of-tuples-dataframe&#34;&gt;Looping through List of Tuples (DataFrame)&lt;/h1&gt;
+&lt;p&gt;Just like you can loop through &lt;em&gt;any&lt;/em&gt; collection, you can loop through a list of tuples - which means you can loop through DataFrames.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Looping through column names
+df = pd.DataFrame(data, columns=[&#39;R_Number&#39;, &#39;C_Number&#39;, &#39;Avg&#39;, &#39;Std&#39;])
+
+for col_names in df:
+    print(col_names)
+    
+# Looping through a specific column
+for items in df[&#39;R_Number&#39;]:
+    print(items)
+    
+# Looping through a specific row
+for items in df.iloc[1]:
+    print(items)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That&amp;rsquo;s the basic connection between python fundamental data structures and for-loop operations and data science.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Random Numbers &amp; Reproducibility in Python</title>
       <link>/technical_notes/example_tech/python_reproducibility/</link>
       <pubDate>Thu, 10 Sep 2020 00:00:00 +0100</pubDate>
@@ -144,6 +202,67 @@ Python 2.7.16
 &lt;p&gt;Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.&lt;/p&gt;
 &lt;p&gt;Suspendisse a tincidunt lacus. Curabitur at urna sagittis, dictum ante sit amet, euismod magna. Sed rutrum massa id tortor commodo, vitae elementum turpis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean purus turpis, venenatis a ullamcorper nec, tincidunt et massa. Integer posuere quam rutrum arcu vehicula imperdiet. Mauris ullamcorper quam vitae purus congue, quis euismod magna eleifend. Vestibulum semper vel augue eget tincidunt. Fusce eget justo sodales, dapibus odio eu, ultrices lorem. Duis condimentum lorem id eros commodo, in facilisis mauris scelerisque. Morbi sed auctor leo. Nullam volutpat a lacus quis pharetra. Nulla congue rutrum magna a ornare.&lt;/p&gt;
 &lt;p&gt;Aliquam in turpis accumsan, malesuada nibh ut, hendrerit justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque sed erat nec justo posuere suscipit. Donec ut efficitur arcu, in malesuada neque. Nunc dignissim nisl massa, id vulputate nunc pretium nec. Quisque eget urna in risus suscipit ultricies. Pellentesque odio odio, tincidunt in eleifend sed, posuere a diam. Nam gravida nisl convallis semper elementum. Morbi vitae felis faucibus, vulputate orci placerat, aliquet nisi. Aliquam erat volutpat. Maecenas sagittis pulvinar purus, sed porta quam laoreet at.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Decimals to Integers</title>
+      <link>/technical_notes/example_tech/rstats_viz_scale_x/</link>
+      <pubDate>Tue, 15 Sep 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_viz_scale_x/</guid>
+      <description>&lt;h2 id=&#34;changing-the-x-axis-from-decimals-to-integers&#34;&gt;Changing the x-axis from decimals to integers&lt;/h2&gt;
+&lt;p&gt;When creating plots in &lt;code&gt;ggplot2&lt;/code&gt; you&amp;rsquo;ll often want to customize the x-axis so that values appear on a certain interval. In the example below, I wanted to change the intervals from 0.25, 0.50, 0.75 to 1,2,3,4 and so on. In this specific instance, I wanted &lt;em&gt;each&lt;/em&gt; season of the show Friends to have its down tick on the x-axis (note: the show had ten seasons).&lt;/p&gt;
+&lt;p&gt;This operation changes the x-axis ticks from having decimals to being integers.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;library(ggplot)
+
+ggplot(total_data, aes(x = season, y = episode, fill=imdb_rating)) +
+    geom_tile() +
+    scale_fill_gradient(low = &#39;#FFF580&#39;, high = &#39;#FF4238&#39;) +
+    
+    ## the seq() function defines the start and end numbers
+    ## &#39;by =&#39; indicates the desired interval
+    scale_x_continuous(breaks = seq(1,10, by = 1)) + 
+    
+    theme_classic()
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>GGPlot Flavored Treemaps</title>
+      <link>/technical_notes/example_tech/rstats_viz_treemapify/</link>
+      <pubDate>Tue, 15 Sep 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_viz_treemapify/</guid>
+      <description>&lt;h2 id=&#34;treemapify&#34;&gt;Treemapify&lt;/h2&gt;
+&lt;p&gt;There are several options for visualizing treemaps in R. This note focuses on  
+&lt;a href=&#34;https://cran.r-project.org/web/packages/treemapify/vignettes/introduction-to-treemapify.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Treemapify&lt;/a&gt;, a package maintained by 
+&lt;a href=&#34;https://github.com/wilkox&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;David Wilkins&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I favor this approach over the &lt;code&gt;treemap&lt;/code&gt; package because it is compatible with &lt;code&gt;ggplot2&lt;/code&gt; and allows users to access its&amp;rsquo; functionality.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s an example Treemap I created to visualize the dominant emotions displayed for the iconic 90&amp;rsquo;s sitcom, Friends. You can find out more about the 
+&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-08/readme.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Friends dataset here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Other visualizations I created for the Friends project can also be found 
+&lt;a href=&#34;https://github.com/PaulApivat/tidytuesday/tree/master/2020/friends&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Below, we can see that &lt;code&gt;geom_treemap&lt;/code&gt;, &lt;code&gt;geom_treemap_subgroup_border&lt;/code&gt; and &lt;code&gt;geom_treemap_subgroup_text&lt;/code&gt; are layers that works seamlessly with other layers like &lt;code&gt;scale_fill_manual&lt;/code&gt;, &lt;code&gt;theme&lt;/code&gt;, and &lt;code&gt;labs&lt;/code&gt; that are staples of the ggplot2 package.&lt;/p&gt;
+&lt;p&gt;Bottom line, it&amp;rsquo;s easier to customize treemaps from the &lt;code&gt;treemapify&lt;/code&gt; package than the &lt;code&gt;treemap&lt;/code&gt; package.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;library(treemapify)
+
+ggplot(friends_emo_tree, aes(area = n, label = speaker, subgroup = emotion)) +
+    geom_treemap(aes(fill = emotion, alpha = n)) +
+    geom_treemap_subgroup_border(color = &#39;white&#39;) +
+    geom_treemap_subgroup_text(place = &#39;bottom&#39;, grow = T, alpha = 0.3, color = &#39;black&#39;,
+                               min.size = 0) +
+    geom_treemap_text(color = &#39;white&#39;, fontface = &#39;italic&#39;, place = &#39;centre&#39;, reflow = T) +
+    scale_fill_manual(values = c(&#39;#FF4238&#39;, &#39;#FFDC00&#39;, &#39;#42A2D6&#39;, &#39;#9A0006&#39;, &#39;#FFF580&#39;, &#39;#00009E&#39;)) +
+    theme(
+        plot.background = element_rect(fill = &#39;#36454F&#39;),
+        legend.position = &#39;none&#39;,
+        title = element_text(colour = &#39;white&#39;, family = &#39;Friends&#39;)
+    ) +
+    labs(
+        title = &#39;The One with the Dominant Emotions&#39;,
+        caption = &#39;Viz: @paulapivat | Data: #TidyTuesday&#39;
+    )
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     

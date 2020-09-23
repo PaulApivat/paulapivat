@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/technical_notes/example_tech/python_tip2/</loc>
+    <lastmod>2020-09-23T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/technical_notes/example_tech/python_reproducibility/</loc>
     <lastmod>2020-09-10T00:00:00+01:00</lastmod>
   </url>
@@ -35,6 +40,16 @@
   <url>
     <loc>/technical_notes/example_tech/</loc>
     <lastmod>2018-09-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/technical_notes/example_tech/rstats_viz_scale_x/</loc>
+    <lastmod>2020-09-15T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/technical_notes/example_tech/rstats_viz_treemapify/</loc>
+    <lastmod>2020-09-15T00:00:00+01:00</lastmod>
   </url>
   
   <url>
@@ -98,6 +113,11 @@
   </url>
   
   <url>
+    <loc>/technical_notes/</loc>
+    <lastmod>2020-09-23T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/authors/</loc>
     <lastmod>2020-09-10T00:00:00+00:00</lastmod>
   </url>
@@ -115,11 +135,6 @@
   <url>
     <loc>/post/</loc>
     <lastmod>2020-09-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/technical_notes/</loc>
-    <lastmod>2020-09-10T00:00:00+01:00</lastmod>
   </url>
   
   <url>

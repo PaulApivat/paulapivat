@@ -27,11 +27,10 @@
   
     
   
-  <meta name="description" content="Nested and Hierarchical Data When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.
-In this technical note, I&rsquo;ll outline how to create a dendrogram.">
+  <meta name="description" content="Creating and Looping through List of Tuples If you come to Python from R, it&rsquo;s not immediately obvious how Lists, Dictionaries, Tuples, Series, then Loops help you do the things you can do in R.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/data_viz_tip1/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_tip2/">
 
   
 
@@ -218,7 +217,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram.">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/data_viz_tip1/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_tip2/">
 
   
   
@@ -237,16 +236,15 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram.">
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/data_viz_tip1/">
-  <meta property="og:title" content="Creating a dendrogram with R and ggraph | Paul Apivat">
-  <meta property="og:description" content="Nested and Hierarchical Data When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.
-In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_tip2/">
+  <meta property="og:title" content="Creating and Looping through DataFrames | Paul Apivat">
+  <meta property="og:description" content="Creating and Looping through List of Tuples If you come to Python from R, it&rsquo;s not immediately obvious how Lists, Dictionaries, Tuples, Series, then Loops help you do the things you can do in R."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-08-27T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2020-09-23T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-08-27T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-09-23T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +263,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
 
 
 
-  <title>Creating a dendrogram with R and ggraph | Paul Apivat</title>
+  <title>Creating and Looping through DataFrames | Paul Apivat</title>
 
 </head>
 
@@ -675,7 +673,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
         <a href="/technical_notes/example_tech/rstats_viz_treemapify/">Treemaps</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/data_viz_tip1/">Visualize Dendrograms</a>
       </li>
       
@@ -718,7 +716,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
     <a class="docs-toc-link" href="/technical_notes/example_tech/python_tip2/">Python Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/python_tip2/">Creating and Looping through DataFrames</a>
       </li>
       
@@ -777,7 +775,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#nested-and-hierarchical-data">Nested and Hierarchical Data</a></li>
+    <li><a href="#creating-and-looping-through-list-of-tuples">Creating and Looping through List of Tuples</a></li>
   </ul>
 </nav>
 
@@ -790,133 +788,59 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Creating a dendrogram with R and ggraph</h1>
+          <h1>Creating and Looping through DataFrames</h1>
 
           <div class="article-style">
-            <h2 id="nested-and-hierarchical-data">Nested and Hierarchical Data</h2>
-<p>When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.</p>
-<p>In this technical note, I&rsquo;ll outline how to create a dendrogram.</p>
-<p>The data used is from the 
-<a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-08-18/readme.md" target="_blank" rel="noopener">Extinct Plants</a> data set from 
-<a href="https://github.com/rfordatascience/tidytuesday" target="_blank" rel="noopener">TidyTuesday</a>.</p>
-<p>Here&rsquo;s the breakdown:</p>
-<ol>
-<li>Load Packages and Libraries</li>
-</ol>
-<pre><code>install.packages(&quot;ggraph&quot;)
-install.packages(&quot;igraph&quot;)
-library(ggraph)
-library(igraph)
+            <h2 id="creating-and-looping-through-list-of-tuples">Creating and Looping through List of Tuples</h2>
+<p>If you come to Python from R, it&rsquo;s not immediately obvious how Lists, Dictionaries, Tuples, Series, then Loops help you do the things you can do in R.</p>
+<p>You can begin to connect the dots when you see that Lists of Tuples are the building blocks of DataFrames - available in both languages to handle tidy (tabular) data.</p>
+<h1 id="lists">Lists</h1>
+<p>Lists are ordered and mutable collection of data. Below are lists of strings and integers.</p>
+<pre><code>name_list = ['paul', 'apivat', 'marvin', 'pim', 'milin']
+int_list = [3,4,5,2,5,6,7,5]
 </code></pre>
-<ol start="2">
-<li>Create a data frame with three levels</li>
-</ol>
-<p>Taking the <code>plants</code> data frame, I do some wrangling to get the desired columns.</p>
-<pre><code>plants_data &lt;- plants %&gt;%
-    select(group, binomial_name) %&gt;%
-    group_by(group) %&gt;%
-    arrange(group) %&gt;% 
-    mutate(
-        level1 = 'center',
-        level2 = group,
-        level3 = binomial_name
-    ) %&gt;%
-    # important to ungroup here
-    ungroup() %&gt;%
-    select(level1:level3) 
+<h1 id="tuples">Tuples</h1>
+<p>Tuples, also collections, are ordered and immutable. But more related to the handling of data, tuples can be converted to DataFrames (using the Pandas library). Below, the List of Tuples (data) is converted into a DataFrame.</p>
+<pre><code>import pandas as pd
 
+data = [
+    ('r1', 'c1', 11, 11),
+    ('r1', 'c2', 12, 12),
+    ('r2', 'c1', 21, 21),
+    ('r2', 'c2', 22, 22)
+]
+
+df = pd.DataFrame(data, columns=['R_Number', 'C_Number', 'Avg', 'Std'])
 </code></pre>
-<ol start="3">
-<li>Create an edge list</li>
-</ol>
-<pre><code># transform it to an edge list
-plants_edges_level1_2 &lt;- plants_data %&gt;% 
-    select(level1, level2) %&gt;% 
-    unique %&gt;% 
-    rename(from=level1, to=level2)
+<h1 id="loops">Loops</h1>
+<p>You can loop through lists of strings and integers.</p>
+<pre><code>int_list = [3,4,5,2,5,6,7,5]
 
-plants_edges_level2_3 &lt;- plants_data %&gt;% 
-    select(level2, level3) %&gt;% 
-    unique %&gt;% 
-    rename(from=level2, to=level3)
+for num in int_list:
+    print(num)
+    
+name_list = ['paul', 'apivat', 'marvin', 'pim', 'milin']
 
-plants_edge_list=rbind(plants_edges_level1_2, plants_edges_level2_3)
+for name in name_list:
+    print(name)
 </code></pre>
-<ol start="4">
-<li>Plot a basic chart</li>
-</ol>
-<p>Because I have many observations, I&rsquo;m optiing to use a &ldquo;circular&rdquo; dendrogram.</p>
-<pre><code># plot plant dendogram
-plantgraph &lt;- graph_from_data_frame(plants_edge_list)
+<h1 id="looping-through-list-of-tuples-dataframe">Looping through List of Tuples (DataFrame)</h1>
+<p>Just like you can loop through <em>any</em> collection, you can loop through a list of tuples - which means you can loop through DataFrames.</p>
+<pre><code># Looping through column names
+df = pd.DataFrame(data, columns=['R_Number', 'C_Number', 'Avg', 'Std'])
 
-ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
-    geom_edge_diagonal() +
-    geom_node_point() +
-    theme_void()
+for col_names in df:
+    print(col_names)
+    
+# Looping through a specific column
+for items in df['R_Number']:
+    print(items)
+    
+# Looping through a specific row
+for items in df.iloc[1]:
+    print(items)
 </code></pre>
-<ol start="5">
-<li>Add text to the end of the edges</li>
-</ol>
-<pre><code># add text &amp; color(leaf)
-ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
-    geom_edge_diagonal() +
-    geom_node_text(aes(label = name, filter=leaf), hjust = 1, size = 1) +
-    geom_node_point()
-</code></pre>
-<p>NOTE: The breakdown of plant groupings are listed below. We can see the Flowering Plants <em>disproportionately</em> out number other groups like Ferns &amp; Allies, Cycad, Mosses, Algae and Conifer.</p>
-<p>When visualizing, we&rsquo;re better off separating Flowering Plants from the other groups.</p>
-<pre><code>plants %&gt;%
-    group_by(group) %&gt;%
-    tally(sort = TRUE)
-
-# A tibble: 6 x 2
-  group                n
-  &lt;chr&gt;            &lt;int&gt;
-1 Flowering Plant    471
-2 Ferns and Allies    13
-3 Cycad                8
-4 Mosses               4
-5 Algae                3
-6 Conifer              1
-
-</code></pre>
-<p>Here&rsquo;s a sample picture of the plants</p>
-<p><img src="./png/data_viz_tip1_pic1.png" alt="dendrogram"></p>
-<p><img src="./data_viz_tip1_pic1.png" alt="png"></p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure id="figure-dendrogram">
-
-
-  <a data-fancybox="" href="./data_viz_tip1_pic1.png" data-caption="Dendrogram.">
-
-
-  <img src="./data_viz_tip1_pic1.png" alt=""  >
-</a>
-
-
-  
-  
-  <figcaption>
-    Dendrogram.
-  </figcaption>
-
-
-</figure>
-
+<p>That&rsquo;s the basic connection between python fundamental data structures and for-loop operations and data science.</p>
 
           </div>
 
@@ -932,15 +856,8 @@ ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_tip5/" rel="next">Does order of operation matter among dplyr functions?</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip3/" rel="prev">Using the pivot_wider() function</a>
+    <a href="/technical_notes/example_tech/python_reproducibility/" rel="prev">Random Numbers &amp; Reproducibility in Python</a>
   </div>
   
 </div>
@@ -950,7 +867,7 @@ ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Aug 27, 2020</p>
+          <p>Last updated on Sep 23, 2020</p>
 
           
 
@@ -962,7 +879,7 @@ ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/data_viz_tip1.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_tip2.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
