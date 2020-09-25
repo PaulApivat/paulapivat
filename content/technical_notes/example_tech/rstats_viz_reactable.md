@@ -20,7 +20,7 @@ The data for this note comes from [TidyTuesday 2020-09-22, "Himalayan Climbers"]
 
 This note assumes that data has been wrangled and in `tibble` form, ready to be styled into a table.
 
-# Sample Tibble
+## Sample Tibble
 
 Here, I've saved my tibble of 20 rows and 3 columns in `df`.
 
@@ -53,7 +53,7 @@ Here, I've saved my tibble of 20 rows and 3 columns in `df`.
 
 ```
 
-# Load Libraries
+## Load Libraries
 ```
 library(tidyverse)
 library(reactable)
@@ -61,7 +61,7 @@ library(htmltools)
 
 ```
 
-# Basic Table
+## Basic Table
 
 The amazing thing is, with just this one line, you have a barebones table with **pagination** (with 20 rows, it shows 10 at a time; this can be adjusted) and  **sorting** for both columns. 
 
@@ -71,7 +71,7 @@ You can check out the rest of the repo [here](https://github.com/PaulApivat/tidy
 reactable(df)
 ```
 
-# Adding Bar Charts for Each Row
+## Adding Bar Charts for Each Row
 
 Of course, bare bones is not much to look at, so adding bar charts is essential for visually communicating quantities and percentages. However, you'll need to use the `htmltools` package to begin adding `div` to your chart. 
 
