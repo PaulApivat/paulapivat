@@ -22,7 +22,7 @@ In this post, we'll create a minimal API endpoint that allows users to make requ
 
 We have two endpoints, one basic "hello world" and the other calculate the area (i.e., width x height).
 
-This is saved in `App.py`. Then command to run this file is `python3 App.py`. The last line ensures the API is running locally on `localhost:5000`. 
+This is saved in `App.py`. The command to run this file is `$ python3 App.py`. The last line ensures the API is running locally on `localhost:5000`. 
 
 ```
 from flask import Flask, request
@@ -49,12 +49,12 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
 ```
 
-You can just run `localhost:5000` and get `Helloworld` or make a request to get the **area**, for example: `http://localhost:5000/area?w=20&h=33`.
+You can just run `localhost:5000` and get `Helloworld` or make a request to get the **area**, for example: `http://localhost:5000/area?w=20&h=33` (this yeilds 660)
 
 
 ## Training a Logistic Regression classification model
 
-After setting up some demo API endpoints, it's time to create a basic machine learning model. We'll create a logistic regression model to classify flowers from the **Iris** dataset. This will be created in **one** `jupyter notebook`. 
+After setting up some API endpoints, it's time to create a basic machine learning model. We'll create a logistic regression model to classify flowers from the **Iris** dataset. This will be created in *one* `jupyter notebook`. 
 
 We'll load all required libraries.
 ```
@@ -67,7 +67,7 @@ import numpy as np
 import pandas as pd
 ```
 
-Then, we'll load the Iris dataset that comes with scikit learn `sklearn`.
+Then, we'll load the Iris dataset that comes with scikit learn, `sklearn`.
 
 ```
 iris = load_iris()
@@ -96,7 +96,7 @@ model = LogisticRegression()
 model.fit(X_train, y_train)
 ```
 
-Then, we'll use the model to predict on the validation data (note: in a real project a distinction is made between `validation` and `testing` sets, but we'll blur that distinction for this demo). You can also test the model to make a prediction on a single observation.
+Then, we'll use the model to predict on the validation data (*note*: in a real project a distinction is made between `validation` and `testing` sets, but we'll blur that distinction for this demo). You can also test the model to make a prediction on a single observation.
 
 It's also a good idea to get the `accuracy_score()`, although it may not be ideal for classification models. 
 
@@ -114,15 +114,15 @@ model.predict([[5.1, 3.5, 1.4, 0.2]])
 
 ```
 
-Finally, we need to use `joblib` to save an `iris.model` to our directory, this be used to connect to the API. 
+Finally, we need to use `joblib` to save an `iris.model` to our directory, this will be used to connect to the API. 
 
 ```
 joblib.dump(model, 'iris.model')
 ```
 
-## Creating an API endpoint for the Logistic Regression
+## Creating an API endpoint for the Logistic Regression model
 
-Back in the `App.py` file, we'll *add* this section to create an endpoint, the `predict_species()` function that loads the `iris.model`, then sends a Post request of the four parameter values from `iris['data']`. The `predict_species` function will then return one of three flower species.
+Back in the `App.py` file, we'll *add* this section to create an endpoint, the `predict_species()` function that loads the `iris.model`, then sends a Post request of the four parameter values from `iris['data']`. The `predict_species()` function will then return one of three flower species.
 
 ```
 @app.route('/iris', methods=['POST'])
