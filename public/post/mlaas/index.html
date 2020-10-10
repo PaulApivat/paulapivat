@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    2 min read
+    3 min read
   </span>
   
 
@@ -757,7 +757,7 @@
   <div class="article-container">
 
     <div class="article-style">
-      <h2 id="creating-api-endpoints-in-python-with-flask">Creating API endpoints in Python with Flask</h2>
+      <h2 id="preparing-api-endpoints-in-python-with-flask">Preparing API endpoints in Python with Flask</h2>
 <p>In this post, we&rsquo;ll create a minimal API endpoint that allows users to make request to calculate the area of a rectangle. The following code sets up an API endpoint locally. We&rsquo;ll import <code>Flask</code>, a lightweight web application framework and <code>CORS</code> (cross-origin resource sharing) which allows for various HTTP requests.</p>
 <p>We have two endpoints, one basic &ldquo;hello world&rdquo; and the other calculate the area (i.e., width x height).</p>
 <p>This is saved in <code>App.py</code>. Then command to run this file is <code>python3 App.py</code>. The last line ensures the API is running locally on <code>localhost:5000</code>.</p>
@@ -784,10 +784,76 @@ def area():
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
 </code></pre>
-<p>You can just run <code>localhost:5000</code> and get <code>Helloworld</code> or make a request to get the <strong>area</strong>, <code>http://localhost:5000/area?w=20&amp;h=33</code>.</p>
-<h2 id="training-a-logistic-regression-classification-model">Training a Logistic Regression Classification model</h2>
-<p>After setting up some demo API endpoints, it&rsquo;s time to create a basic Machine Learning Model. We&rsquo;ll create a Logistic Regression model to classify flowers from the <strong>Iris</strong> dataset. This will be created in a <code>jupyter notebook</code>.</p>
+<p>You can just run <code>localhost:5000</code> and get <code>Helloworld</code> or make a request to get the <strong>area</strong>, for example: <code>http://localhost:5000/area?w=20&amp;h=33</code>.</p>
+<h2 id="training-a-logistic-regression-classification-model">Training a Logistic Regression classification model</h2>
+<p>After setting up some demo API endpoints, it&rsquo;s time to create a basic machine learning model. We&rsquo;ll create a logistic regression model to classify flowers from the <strong>Iris</strong> dataset. This will be created in <strong>one</strong> <code>jupyter notebook</code>.</p>
+<p>We&rsquo;ll load all required libraries.</p>
+<pre><code>from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+import joblib
+import numpy as np
+import pandas as pd
+</code></pre>
+<p>Then, we&rsquo;ll load the Iris dataset that comes with scikit learn <code>sklearn</code>.</p>
+<pre><code>iris = load_iris()
+
+# assign two variables at once
+X, y = iris['data'], iris['target']
+</code></pre>
+<p>We&rsquo;ll reshape the data using <code>numpy</code>, then split the data into training and validation sets.</p>
+<pre><code># reshape data for logistic regression
+dataset = np.hstack((X, y.reshape(-1,1)))
+np.random.shuffle(dataset)
+
+# split data into training, validation sets
+X_train, X_test, y_train, y_test = train_test_split(dataset[:, :4],
+                                                    dataset[:, 4],
+                                                    test_size=0.2)
+</code></pre>
+<p>We&rsquo;ll then fit a logistic regression model by fitting the training set to the validation set.</p>
+<pre><code>model = LogisticRegression()
+model.fit(X_train, y_train)
+</code></pre>
+<p>Then, we&rsquo;ll use the model to predict on the validation data (note: in a real project a distinction is made between <code>validation</code> and <code>testing</code> sets, but we&rsquo;ll blur that distinction for this demo). You can also test the model to make a prediction on a single observation.</p>
+<p>It&rsquo;s also a good idea to get the <code>accuracy_score()</code>, although it may not be ideal for classification models.</p>
+<pre><code># make a prediction
+y_pred = model.predict(X_test)
+
+# get accuracy score
+accuracy_score(y_test, y_pred)
+
+# make prediction on single Iris obervation
+model.predict([[5.1, 3.5, 1.4, 0.2]])
+
+</code></pre>
+<p>Finally, we need to use <code>joblib</code> to save an <code>iris.model</code> to our directory, this be used to connect to the API.</p>
+<pre><code>joblib.dump(model, 'iris.model')
+</code></pre>
+<h2 id="creating-an-api-endpoint-for-the-logistic-regression">Creating an API endpoint for the Logistic Regression</h2>
+<p>Back in the <code>App.py</code> file, we&rsquo;ll <em>add</em> this section to create an endpoint, the <code>predict_species()</code> function that loads the <code>iris.model</code>, then sends a Post request of the four parameter values from <code>iris['data']</code>. The <code>predict_species</code> function will then return one of three flower species.</p>
+<pre><code>@app.route('/iris', methods=['POST'])
+@cross_origin()
+def predict_species():
+    model = joblib.load('iris.model')  #needs to be the correct path
+    req = request.values['param']
+    inputs = np.array(req.split(','), dtype=np.float32).reshape(1,-1)
+    predict_target = model.predict(inputs)
+    if predict_target == 0:
+        return 'Setosa'
+    elif predict_target == 1:
+        return 'Versicolor'
+    else:
+        return 'Virginica'
+
+</code></pre>
 <h2 id="testing-the-api-endpoint-on-postman">Testing the API endpoint on Postman</h2>
+<p>Finally, we&rsquo;ll use 
+<a href="https://www.postman.com/" target="_blank" rel="noopener">Postman</a>, a platform for API development. We will <strong>post</strong> four parameters (i.e., sepal length, sepal width, petal length and petal width) to the API endpoint and expect to receive a name back, either Setosa, Versicolor or Virginica.
+In Postman, we&rsquo;ll create a new collection and a new request:</p>
+<p><img src="./postman.png" alt="png"></p>
+<p>The next step from here is to go beyond localhost and deploy the model. We&rsquo;ll explore that in another post.</p>
 
     </div>
 
