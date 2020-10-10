@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Self-Employed | Getwyze">
+  <meta name="description" content="Connecting models to an API">
 
   
-  <link rel="alternate" hreflang="en-us" href="/post/">
+  <link rel="alternate" hreflang="en-us" href="/post/mlaas/">
 
   
 
@@ -212,14 +212,12 @@
   
 
   
-  <link rel="alternate" href="/post/index.xml" type="application/rss+xml" title="Paul Apivat">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/post/">
+  <link rel="canonical" href="/post/mlaas/">
 
   
   
@@ -238,18 +236,63 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/post/">
-  <meta property="og:title" content="Posts | Paul Apivat">
-  <meta property="og:description" content="Self-Employed | Getwyze"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/post/mlaas/">
+  <meta property="og:title" content="Machine learning as a service | Paul Apivat">
+  <meta property="og:description" content="Connecting models to an API"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    <meta property="og:updated_time" content="2020-10-10T00:00:00&#43;00:00">
+    
+      <meta property="article:published_time" content="2020-10-10T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-10-10T00:00:00&#43;00:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/mlaas/"
+  },
+  "headline": "Machine learning as a service",
+  
+  "datePublished": "2020-10-10T00:00:00Z",
+  "dateModified": "2020-10-10T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Paul Apivat Hanvongse"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Paul Apivat",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Connecting models to an API"
+}
+</script>
+
+  
 
   
 
@@ -257,10 +300,13 @@
   
 
 
+  
 
 
 
-  <title>Posts | Paul Apivat</title>
+
+
+  <title>Machine learning as a service | Paul Apivat</title>
 
 </head>
 
@@ -614,78 +660,35 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>Machine learning as a service</h1>
+
+  
+  <p class="page-subtitle">Creating an API endpoint for your model</p>
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>Posts</h1>
-
-  
-
-  
-</div>
-
-
-
-<div class="universal-wrapper">
-
-  
-
-  
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/mlaas/" >Machine learning as a service</a>
-    </h3>
-
-    
-    <div class="article-style">
-      Connecting models to an API
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
 
 
 <div class="article-metadata">
@@ -731,565 +734,155 @@
 
 </div>
 
-      
-    </div>
-
     
 
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 </div>
 
-    
-  
-    
-      
 
 
+  <div class="article-container">
 
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/data_science_canon/" >Essential Readings in Data Science</a>
-    </h3>
-
-    
     <div class="article-style">
-      What is Data Science canon?
+      <h2 id="creating-api-endpoints-in-python-with-flask">Creating API endpoints in Python with Flask</h2>
+<p>In this post, we&rsquo;ll create a minimal API endpoint that allows users to make request to calculate the area of a rectangle. The following code sets up an API endpoint locally. We&rsquo;ll import <code>Flask</code>, a lightweight web application framework and <code>CORS</code> (cross-origin resource sharing) which allows for various HTTP requests.</p>
+<p>We have two endpoints, one basic &ldquo;hello world&rdquo; and the other calculate the area (i.e., width x height).</p>
+<p>This is saved in <code>App.py</code>. Then command to run this file is <code>python3 App.py</code>. The last line ensures the API is running locally on <code>localhost:5000</code>.</p>
+<pre><code>from flask import Flask, request
+from flask_cors import CORS, cross_origin
+import joblib
+import numpy as np 
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route('/')
+def helloworld():
+    return 'Helloworld'
+
+# Example request: http://localhost:5000/area?w=50&amp;h=3
+@app.route('/area', methods=['GET'])
+@cross_origin()
+def area():
+    w = float(request.values['w'])
+    h = float(request.values['h'])
+    return str(w * h)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
+</code></pre>
+<p>You can just run <code>localhost:5000</code> and get <code>Helloworld</code> or make a request to get the <strong>area</strong>, <code>http://localhost:5000/area?w=20&amp;h=33</code>.</p>
+<h2 id="training-a-logistic-regression-classification-model">Training a Logistic Regression Classification model</h2>
+<p>After setting up some demo API endpoints, it&rsquo;s time to create a basic Machine Learning Model. We&rsquo;ll create a Logistic Regression model to classify flowers from the <strong>Iris</strong> dataset. This will be created in a <code>jupyter notebook</code>.</p>
+<h2 id="testing-the-api-endpoint-on-postman">Testing the API endpoint on Postman</h2>
+
     </div>
+
     
 
-    <div class="stream-meta article-metadata">
 
+
+
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
       
-
+      
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/author/paul-apivat-hanvongse/">Paul Apivat Hanvongse</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/mlaas/&amp;text=Machine%20learning%20as%20a%20service" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
     
       
-    
-    Sep 10, 2020
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/ggplot_art/" >A collection of weird pretty plots</a>
-    </h3>
-
-    
-    <div class="article-style">
-      TidyTuesday Outtakes
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/author/paul-apivat-hanvongse/">Paul Apivat Hanvongse</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/mlaas/&amp;t=Machine%20learning%20as%20a%20service" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
     
       
-    
-    Sep 3, 2020
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 min read
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-
-</div>
-
       
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/custom-functions/" >Introducing Custom Functions into the Workflow</a>
-    </h3>
-
-    
-    <div class="article-style">
-      Writing custom functions to automate data manipulation and visualization tasks
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Machine%20learning%20as%20a%20service&amp;body=/post/mlaas/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
     
       
-          Last updated on
       
-    
-    Jun 25, 2020
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    7 min read
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/ds4b-data-wrangling/" >Data Wrangling Foundations</a>
-    </h3>
-
-    
-    <div class="article-style">
-      Cover data wrangling foundations in dplyr
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/mlaas/&amp;title=Machine%20learning%20as%20a%20service" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
     
       
-          Last updated on
       
-    
-    Jun 30, 2020
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    5 min read
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/r-markdown-utm/" >Converting Universal Transverse Mercator (UTM) to lattitude/longitude data</a>
-    </h3>
-
-    
-    <div class="article-style">
-      Convert UTM to lat/long
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Machine%20learning%20as%20a%20service%20/post/mlaas/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
     
       
-          Last updated on
       
-    
-    Jun 25, 2020
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    8 min read
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/writing-technical-content/" >Writing technical content in Academic</a>
-    </h3>
-
-    
-    <div class="article-style">
-      Academic is designed to give technical content creators a seamless experience. You can focus on the content and Academic handles the rest.
-Highlight your code snippets, take notes on math classes, and draw diagrams from textual representation.
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
       
         
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
       
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/mlaas/&amp;title=Machine%20learning%20as%20a%20service" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
     
-    Jul 12, 2019
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 min read
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-
+  </ul>
 </div>
 
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-    
-    <a href="/post/writing-technical-content/" >
-      <img src="/post/writing-technical-content/featured_huc72159e0fc0d14b85f60d34436a630f0_266353_150x0_resize_q90_lanczos.jpg" alt="Writing technical content in Academic">
-    </a>
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
 
 
 
@@ -1302,293 +895,127 @@ Highlight your code snippets, take notes on math classes, and draw diagrams from
 
 
   
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/jupyter/" >Display Jupyter Notebooks with Academic</a>
-    </h3>
-
     
-    <div class="article-style">
-      Learn how to blog in Academic using Jupyter notebooks
-    </div>
     
 
-    <div class="stream-meta article-metadata">
 
+
+
+
+  
+    
+    
+    
       
-
+    
+    
+    
+    <div class="media author-card content-widget-hr">
       
         
+        <img class="avatar mr-3 avatar-circle" src="/author/paul-apivat-hanvongse/avatar_hu63a07477d78c9be41fad7b90b509fc17_91571_270x270_fill_q90_lanczos_center.jpg" alt="Paul Apivat Hanvongse">
+      
 
-
-<div class="article-metadata">
-
+      <div class="media-body">
+        <h5 class="card-title"><a href="/">Paul Apivat Hanvongse</a></h5>
+        <h6 class="card-subtitle">Self-Employed | Getwyze</h6>
+        <p class="card-text">My interests include data visualization, data analytics and data science.</p>
+        <ul class="network-icon" aria-hidden="true">
   
-  
-  
-  
-  <div>
     
-
-  
-  <span><a href="/author/paul-apivat-hanvongse/">Paul Apivat Hanvongse</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
     
     
       
-          Last updated on
+    
+    
+    
+    
+    
       
     
-    Sep 5, 2019
-  </span>
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
   
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-
-</div>
-
+    
+    
+    
       
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/paulapivat/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/paulapivat" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
     </div>
+  
 
-    
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
 
   </div>
-  <div class="ml-3">
-    
-    
-    
-    <a href="/post/jupyter/" >
-      <img src="/post/jupyter/featured_hub1daa031c2af6888ff37bd93eb033a1a_71549_150x0_resize_lanczos_2.png" alt="Display Jupyter Notebooks with Academic">
-    </a>
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/getting-started/" >Academic: the website builder for Hugo</a>
-    </h3>
-
-    
-    <div class="article-style">
-      Create a beautifully simple website in under 10 minutes.
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-  
-  
-  <div>
-    
-
-  
-  <span><a href="/author/paul-apivat-hanvongse/">Paul Apivat Hanvongse</a></span>, <span><a href="/author/%E5%90%B3%E6%81%A9%E9%81%94/">吳恩達</a></span>
-  </div>
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-          Last updated on
-      
-    
-    Apr 17, 2019
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 min read
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/category/demo/">Demo</a>, <a href="/category/%E6%95%99%E7%A8%8B/">教程</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-    
-    <a href="/post/getting-started/" >
-      <img src="/post/getting-started/featured_hub9ee31969f44a6711206a2baf9f065b4_241861_150x0_resize_q90_lanczos.jpg" alt="Academic: the website builder for Hugo">
-    </a>
-    
-  </div>
-</div>
-
-    
-  
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<div class="media stream-item">
-  <div class="media-body">
-
-    <h3 class="article-title mb-0 mt-0">
-      <a href="/post/2015-07-23-r-rmarkdown/" >Hello R Markdown</a>
-    </h3>
-
-    
-    <div class="article-style">
-      R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.
-    </div>
-    
-
-    <div class="stream-meta article-metadata">
-
-      
-
-      
-        
-
-
-<div class="article-metadata">
-
-  
-  
-
-  
-  <span class="article-date">
-    
-    
-      
-    
-    Jul 23, 2015
-  </span>
-  
-
-  
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 min read
-  </span>
-  
-
-  
-  
-  
-
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fas fa-folder mr-1"></i><a href="/category/r/">R</a></span>
-  
-
-</div>
-
-      
-    </div>
-
-    
-
-  </div>
-  <div class="ml-3">
-    
-    
-  </div>
-</div>
-
-    
-  
-
-  
-
-
-</div>
+</article>
 
       
 

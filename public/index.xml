@@ -958,6 +958,45 @@ hist(x)
     </item>
     
     <item>
+      <title>Machine learning as a service</title>
+      <link>/post/mlaas/</link>
+      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>/post/mlaas/</guid>
+      <description>&lt;h2 id=&#34;creating-api-endpoints-in-python-with-flask&#34;&gt;Creating API endpoints in Python with Flask&lt;/h2&gt;
+&lt;p&gt;In this post, we&amp;rsquo;ll create a minimal API endpoint that allows users to make request to calculate the area of a rectangle. The following code sets up an API endpoint locally. We&amp;rsquo;ll import &lt;code&gt;Flask&lt;/code&gt;, a lightweight web application framework and &lt;code&gt;CORS&lt;/code&gt; (cross-origin resource sharing) which allows for various HTTP requests.&lt;/p&gt;
+&lt;p&gt;We have two endpoints, one basic &amp;ldquo;hello world&amp;rdquo; and the other calculate the area (i.e., width x height).&lt;/p&gt;
+&lt;p&gt;This is saved in &lt;code&gt;App.py&lt;/code&gt;. Then command to run this file is &lt;code&gt;python3 App.py&lt;/code&gt;. The last line ensures the API is running locally on &lt;code&gt;localhost:5000&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from flask import Flask, request
+from flask_cors import CORS, cross_origin
+import joblib
+import numpy as np 
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route(&#39;/&#39;)
+def helloworld():
+    return &#39;Helloworld&#39;
+
+# Example request: http://localhost:5000/area?w=50&amp;amp;h=3
+@app.route(&#39;/area&#39;, methods=[&#39;GET&#39;])
+@cross_origin()
+def area():
+    w = float(request.values[&#39;w&#39;])
+    h = float(request.values[&#39;h&#39;])
+    return str(w * h)
+
+if __name__ == &#39;__main__&#39;:
+    app.run(host=&#39;0.0.0.0&#39;, port=5000, debug=True)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can just run &lt;code&gt;localhost:5000&lt;/code&gt; and get &lt;code&gt;Helloworld&lt;/code&gt; or make a request to get the &lt;strong&gt;area&lt;/strong&gt;, &lt;code&gt;http://localhost:5000/area?w=20&amp;amp;h=33&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;training-a-logistic-regression-classification-model&#34;&gt;Training a Logistic Regression Classification model&lt;/h2&gt;
+&lt;p&gt;After setting up some demo API endpoints, it&amp;rsquo;s time to create a basic Machine Learning Model. We&amp;rsquo;ll create a Logistic Regression model to classify flowers from the &lt;strong&gt;Iris&lt;/strong&gt; dataset. This will be created in a &lt;code&gt;jupyter notebook&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;testing-the-api-endpoint-on-postman&#34;&gt;Testing the API endpoint on Postman&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Essential Readings in Data Science</title>
       <link>/post/data_science_canon/</link>
       <pubDate>Thu, 10 Sep 2020 00:00:00 +0000</pubDate>
