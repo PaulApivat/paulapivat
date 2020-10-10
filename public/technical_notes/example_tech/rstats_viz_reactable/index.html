@@ -27,11 +27,10 @@
   
     
   
-  <meta name="description" content="Understanding reproducibility and the set.seed() function in R is best achieved through generating various random numbers. Here are some more tips for making your work reproducible:
-Using set.seed() Example of reproducibility in fitting ML models using set.">
+  <meta name="description" content="Setting up a barebones table with {reactable} There are several packages to style your tables. This note will help you get setup with a basic table using the reactable package. With just a few lines of code, you can have a table with pagination and column sorting.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip1/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_viz_reactable/">
 
   
 
@@ -218,7 +217,7 @@ Using set.seed() Example of reproducibility in fitting ML models using set.">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip1/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_viz_reactable/">
 
   
   
@@ -237,16 +236,15 @@ Using set.seed() Example of reproducibility in fitting ML models using set.">
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip1/">
-  <meta property="og:title" content="Make your work reproducible | Paul Apivat">
-  <meta property="og:description" content="Understanding reproducibility and the set.seed() function in R is best achieved through generating various random numbers. Here are some more tips for making your work reproducible:
-Using set.seed() Example of reproducibility in fitting ML models using set."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_viz_reactable/">
+  <meta property="og:title" content="Styling tables with reactable | Paul Apivat">
+  <meta property="og:description" content="Setting up a barebones table with {reactable} There are several packages to style your tables. This note will help you get setup with a basic table using the reactable package. With just a few lines of code, you can have a table with pagination and column sorting."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2019-05-05T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2020-09-25T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2019-05-05T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-09-25T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +263,7 @@ Using set.seed() Example of reproducibility in fitting ML models using set."><me
 
 
 
-  <title>Make your work reproducible | Paul Apivat</title>
+  <title>Styling tables with reactable | Paul Apivat</title>
 
 </head>
 
@@ -663,7 +661,7 @@ Using set.seed() Example of reproducibility in fitting ML models using set."><me
     <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_viz_reactable/">Data Viz Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/rstats_viz_reactable/">reactable</a>
       </li>
       
@@ -751,7 +749,7 @@ Using set.seed() Example of reproducibility in fitting ML models using set."><me
         <a href="/technical_notes/example_tech/rstats_tip5/">Order of Dplyr Functions</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_tip1/">Reproducibility</a>
       </li>
       
@@ -781,9 +779,11 @@ Using set.seed() Example of reproducibility in fitting ML models using set."><me
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#using-setseed">Using set.seed()</a></li>
-    <li><a href="#random-numbers">Random Numbers</a></li>
-    <li><a href="#random-numbers-from-a-normal-distribution">Random Numbers from a Normal Distribution</a></li>
+    <li><a href="#setting-up-a-barebones-table-with-reactable">Setting up a barebones table with {reactable}</a></li>
+    <li><a href="#sample-tibble">Sample Tibble</a></li>
+    <li><a href="#load-libraries">Load Libraries</a></li>
+    <li><a href="#basic-table">Basic Table</a></li>
+    <li><a href="#adding-bar-charts-for-each-row">Adding Bar Charts for Each Row</a></li>
   </ul>
 </nav>
 
@@ -796,72 +796,114 @@ Using set.seed() Example of reproducibility in fitting ML models using set."><me
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Make your work reproducible</h1>
+          <h1>Styling tables with reactable</h1>
 
           <div class="article-style">
-            <p>Understanding reproducibility and the <code>set.seed()</code> function in <code>R</code> is best achieved through generating various random numbers. Here are some more tips for making your work reproducible:</p>
-<h2 id="using-setseed">Using set.seed()</h2>
-<p>Example of reproducibility in fitting ML models using set.seed()</p>
-<pre><code>#First Line
-set.seed(1234)   
+            <h2 id="setting-up-a-barebones-table-with-reactable">Setting up a barebones table with {reactable}</h2>
+<p>There are several <code>packages</code> to style your tables. This note will help you get setup with a basic table using the <code>reactable</code> package. With just a few lines of code, you can have a table with pagination and column sorting.</p>
+<p>The data for this note comes from 
+<a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-22/readme.md" target="_blank" rel="noopener">TidyTuesday 2020-09-22, &ldquo;Himalayan Climbers&rdquo;</a>.</p>
+<p>This note assumes that data has been wrangled and in <code>tibble</code> form, ready to be styled into a table.</p>
+<h2 id="sample-tibble">Sample Tibble</h2>
+<p>Here, I&rsquo;ve saved my tibble of 20 rows and 3 columns in <code>df</code>.</p>
+<pre><code>&gt; df
 
-#Second Line
-model_05_rand_forest_ranger &lt;- rand_forest(
-    mode = &quot;regression&quot;, mtry = 4, trees = 1000, min_n = 10
-    ) %&gt;%
-    set_engine(&quot;ranger&quot;, splitrule = &quot;extratrees&quot;, importance = &quot;impurity&quot;) %&gt;%
-    fit(price ~ ., data = train_tbl %&gt;% select(-id, -model, -model_tier))
+# A tibble: 20 x 3
+   peak            attempts fail_rate
+   &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Everest            21813     0.54 
+ 2 Cho Oyu             8890     0.570
+ 3 Ama Dablam          8406     0.479
+ 4 Manaslu             4593     0.621
+ 5 Dhaulagiri I        2592     0.789
+ 6 Makalu              2405     0.764
+ 7 Lhotse              2379     0.638
+ 8 Baruntse            2190     0.708
+ 9 Pumori              1780     0.706
+10 Annapurna I         1669     0.821
+11 Kangchenjunga       1385     0.682
+12 Himlung Himal       1308     0.573
+13 Annapurna IV         812     0.845
+14 Putha Hiunchuli      738     0.599
+15 Tilicho              670     0.781
+16 Tukuche              462     0.753
+17 Jannu                339     0.782
+18 Langtang Lirung      338     0.84 
+19 Makalu II            322     0.758
+20 Nuptse               303     0.934
 
-#Third Line
-model_05_rand_forest_ranger %&gt;% calc_metrics(test_tbl)
 </code></pre>
-<h2 id="random-numbers">Random Numbers</h2>
-<p>Here are several ways to get random numbers. These examples are informed by the <code>R Cookbook</code>, see 
-<a href="http://www.cookbook-r.com/Numbers/Generating_random_numbers/#:~:text=For%20uniformly%20distributed%20%28flat%29%20random,is%20from%200%20to%201.&amp;text=To%20generate%20numbers%20from%20a,the%20standard%20deviation%20is%201." target="_blank" rel="noopener">here</a></p>
-<pre><code># get one random number using runif() from base-R, stats package
-# default 0 to 1
-runif(1)
+<h2 id="load-libraries">Load Libraries</h2>
+<pre><code>library(tidyverse)
+library(reactable)
+library(htmltools)
 
-# get two random numbers
-runif(2)
-
-# get a vector of three random numbers
-# increase range beyond the default, -10 to 110
-runif(3, min = -10, max = 110)
-
-# ensure three random numbers do *not* have decimals
-# use floor() function to round down
-floor(runif(3, min = -10, max = 110))
-
-# sample() function does the same thing - using just one function
-# replace parameter: should sampling be with or without replacement?
-sample(-10:110, 3, replace = TRUE)
-
-# Reproducibility
-# use set.seed() before any of the aforementioned random number generators
-
-set.seed(123)
-sample(-10:110, 3, replace = FALSE)
 </code></pre>
-<h2 id="random-numbers-from-a-normal-distribution">Random Numbers from a Normal Distribution</h2>
-<pre><code># Get five random numbers from a normal distribution
-# Here the default is mean = 0, standard deviation = 1.
-rnorm(5)
+<h2 id="basic-table">Basic Table</h2>
+<p>The amazing thing is, with just this one line, you have a barebones table with <strong>pagination</strong> (with 20 rows, it shows 10 at a time; this can be adjusted) and  <strong>sorting</strong> for both columns.</p>
+<p>You can check out the rest of the repo 
+<a href="https://github.com/PaulApivat/tidytuesday/blob/master/2020/himalaya/exploratory.R" target="_blank" rel="noopener">here</a></p>
+<pre><code>reactable(df)
+</code></pre>
+<h2 id="adding-bar-charts-for-each-row">Adding Bar Charts for Each Row</h2>
+<p>Of course, bare bones is not much to look at, so adding bar charts is essential for visually communicating quantities and percentages. However, you&rsquo;ll need to use the <code>htmltools</code> package to begin adding <code>div</code> to your chart.</p>
+<pre><code># Bar Charts can be added with a function 
 
-# Change mean and standard deviation away from default
-rnorm(5, mean = 66, sd = 12)
+bar_chart &lt;- function(label, width = &quot;100%&quot;, height = &quot;14px&quot;, fill = &quot;#00bfc4&quot;, background = NULL){
+    bar &lt;- div(style = list(background = fill, width = width, height = height))
+    chart &lt;- div(style = list(flexGrow = 1, marginLeft = &quot;6px&quot;, background = background), bar)
+    div(style = list(display = &quot;flex&quot;, alignItems = &quot;center&quot;), label, chart)
+}
 
-# Ensure reproducibility with set.seed()
-set.seed(123)
-rnorm(5, mean = 66, sd = 12)
 
-# Ensure normal distribution by setting sufficiently large number with rnorm()
-# Ensure reproducibility
-# Plot a histogram
+# The bar_chart function is then inserted into the numeric columns
 
-set.seed(123)
-x &lt;- rnorm(500, mean = 66, sd = 12)
-hist(x)
+reactable(
+    df,
+    defaultSorted = &quot;attempts&quot;,
+    columns = list(
+        peak = colDef(
+            name = &quot;Peaks&quot;
+        ),
+        attempts = colDef(
+            name = &quot;Attempts (#)&quot;,
+            defaultSortOrder = &quot;desc&quot;,
+            #format = colFormat(separators = TRUE),
+            
+            # Render Bar charts using a custom cell render function
+            cell = function(value){
+                width &lt;- paste0(value * 100 / max(df$attempts), &quot;%&quot;)
+                # Add thousands separators
+                value &lt;- format(value, big.mark = &quot;,&quot;)
+                # Fix each label using the width of the widest number (incl. thousands separators)
+                value &lt;- format(value, width = 9, justify = 'right')
+                bar_chart(value, width = width, fill = &quot;#3fc1c9&quot;)
+            },
+            # And left-align the columns
+            align = &quot;left&quot;,
+            # Use the operating system's default monospace font, and
+            # preserve the white space to prevent it from being collapsed by default
+            style = list(fontFamily = &quot;monospace&quot;, whiteSpace = &quot;pre&quot;)
+        ),
+        fail_rate = colDef(
+            name = &quot;Fail (%)&quot;,
+            defaultSortOrder = &quot;desc&quot;,
+            #format = colFormat(percent = TRUE, digits = 1)
+            
+            # Render Bar charts using a custom cell render function
+            cell = function(value){
+                # Format as percentage with 1 decimal place
+                value &lt;- paste0(format(value * 100, nsmall = 1), &quot;%&quot;)
+                # Fix width here to align single and double-digit percentages
+                value &lt;- format(value, width = 5, justify = &quot;right&quot;)
+                bar_chart(value, width = value, fill = &quot;#fc5185&quot;, background = &quot;#e1e1e1&quot;)
+            },
+            # And left-align the columns
+            align = &quot;left&quot;,
+            style = list(fontFamily = &quot;monospace&quot;, whiteSpace = &quot;pre&quot;)
+        )
+    )
+)
 </code></pre>
 
           </div>
@@ -879,14 +921,14 @@ hist(x)
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_tip2/" rel="next">Use the spread() function</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/technical_notes2/" rel="prev">Technical Notes Page 2</a>
+    <a href="/technical_notes/example_tech/rstats_viz_scale_x/" rel="prev">Decimals to Integers</a>
   </div>
   
 </div>
@@ -896,7 +938,7 @@ hist(x)
         </div>
 
         <div class="body-footer">
-          <p>Last updated on May 5, 2019</p>
+          <p>Last updated on Sep 25, 2020</p>
 
           
 
@@ -908,7 +950,7 @@ hist(x)
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip1.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_viz_reactable.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
