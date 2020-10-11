@@ -206,6 +206,57 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Reading and manipulating nested data</title>
+      <link>/technical_notes/example_tech/rstats_unnest/</link>
+      <pubDate>Sun, 11 Oct 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_unnest/</guid>
+      <description>&lt;h2 id=&#34;ways-of-handling-nested-data&#34;&gt;Ways of handling nested data&lt;/h2&gt;
+&lt;p&gt;Recently, I downloaded JSON data from BigQuery and had to make sense of the data. This starts with getting the data into tabular form.&lt;/p&gt;
+&lt;p&gt;Here are the libraries I used:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;library(jsonlite)
+library(tidyverse)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;First, read in JSON data. Once read in, we check its class type to see that its a list. We&amp;rsquo;ll want to get it into a data frame.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# read data out into Large list (321 elements, 2.4 Mb)
+# each row is *another* list
+
+funnel &amp;lt;- lapply(readLines(&amp;quot;bq-mixpanel-funnel.json&amp;quot;), fromJSON)
+
+# &amp;quot;list&amp;quot; class
+class(funnel)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After searching online, three approaches continually resurfaced.&lt;/p&gt;
+&lt;p&gt;First, using &lt;code&gt;unlist()&lt;/code&gt; and converting into &lt;code&gt;matrix()&lt;/code&gt; before wrapping &lt;em&gt;that&lt;/em&gt; in a &lt;code&gt;data.frame()&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Approach 1: convert to matrix, array
+
+unlist_funnel &amp;lt;- matrix(unlist(funnel), byrow = TRUE, ncol = length(funnel[[1]]))
+rownames(unlist_funnel) &amp;lt;- names(funnel)
+as.data.frame(unlist_funnel) %&amp;gt;% view()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;These next approaches get us closer (&lt;strong&gt;note&lt;/strong&gt;: I know from interacting with the data in BigQuery that there &lt;em&gt;should&lt;/em&gt; be 321 rows):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Approach 2: Convert list to data frame
+
+df &amp;lt;- data.frame(matrix(unlist(funnel), nrow = length(funnel), byrow = TRUE))
+df2 &amp;lt;- data.frame(matrix(unlist(funnel), nrow = length(funnel), byrow = FALSE))
+df3 &amp;lt;- data.frame(matrix(unlist(funnel), nrow = 321, byrow = TRUE), stringsAsFactors = FALSE)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The next approach is to use &lt;code&gt;lapply()&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#works but everything is on one column
+
+unlist(lapply(funnel, c)) %&amp;gt;% view() 
+
+# this makes everything a list, but we want everything into a vector
+t(lapply(funnel, c)) %&amp;gt;% view() 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, the approach that worked best, in this particular case was &lt;code&gt;sapply()&lt;/code&gt;. This functions turns things into vector, which can then be converted into a dataframe:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#still the ideal, this works because &#39;c&#39; is used ot combine lists
+
+t(sapply(funnel, c)) %&amp;gt;% view()  
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Styling tables with reactable</title>
       <link>/technical_notes/example_tech/rstats_viz_reactable/</link>
       <pubDate>Fri, 25 Sep 2020 00:00:00 +0100</pubDate>

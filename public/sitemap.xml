@@ -43,6 +43,11 @@
   </url>
   
   <url>
+    <loc>/technical_notes/example_tech/rstats_unnest/</loc>
+    <lastmod>2020-10-11T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/technical_notes/example_tech/rstats_viz_reactable/</loc>
     <lastmod>2020-09-25T00:00:00+01:00</lastmod>
   </url>
@@ -118,6 +123,11 @@
   </url>
   
   <url>
+    <loc>/technical_notes/</loc>
+    <lastmod>2020-10-11T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/authors/</loc>
     <lastmod>2020-10-10T00:00:00+00:00</lastmod>
   </url>
@@ -135,11 +145,6 @@
   <url>
     <loc>/post/</loc>
     <lastmod>2020-10-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/technical_notes/</loc>
-    <lastmod>2020-09-25T00:00:00+01:00</lastmod>
   </url>
   
   <url>
