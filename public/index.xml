@@ -13,6 +13,47 @@
     </image>
     
     <item>
+      <title>Setting up Conda Virtual Env and IPython</title>
+      <link>/technical_notes/example_tech/python_virtualenv/</link>
+      <pubDate>Thu, 22 Oct 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_virtualenv/</guid>
+      <description>&lt;h2 id=&#34;virtual-environment-best-practices&#34;&gt;Virtual Environment Best Practices&lt;/h2&gt;
+&lt;p&gt;NOTE: This is from chapter 2 of Joel Grus&amp;rsquo; &amp;lsquo;Data Science from Scratch&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;Joel&amp;rsquo;s a known 
+&lt;a href=&#34;https://www.youtube.com/watch?v=7jiPeIFXb6U&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;opponent of notebooks&lt;/a&gt; and recommends operating in IPython instead.&lt;/p&gt;
+&lt;p&gt;I was pleasantly surprised that the process of setting up a virtual environment and IPython was relatively painless. Here&amp;rsquo;s my process, taken from the book with some tweaks:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# create a Python 3.6 environment named &#39;dsfs&#39;
+conda create -n dsfs python=3.6
+
+# update conda to latest version (4.9.0)
+conda update -n base -c defaults conda
+
+# to activate virtual environment (named it &#39;dsfs&#39; to keep it simple)
+source activate dsfs
+
+# install pip (note: currently using Python 3.8.5)
+python3 get-pip.py
+
+# install IPython 
+python3 -m pip install ipython
+
+# save IPython session
+# save lines 1-21 in session to file initial_ipython_session.py
+%save initial_ipython_session 1-21
+
+# exit IPython
+ctrl + D
+
+# exit conda virtual environment
+conda deactivate
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s a png of the above code:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./png/conda_virtualenv.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Creating and Looping through DataFrames</title>
       <link>/technical_notes/example_tech/python_tip2/</link>
       <pubDate>Wed, 23 Sep 2020 00:00:00 +0100</pubDate>

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/technical_notes/example_tech/python_virtualenv/</loc>
+    <lastmod>2020-10-22T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/technical_notes/example_tech/python_tip2/</loc>
     <lastmod>2020-09-23T00:00:00+01:00</lastmod>
   </url>
@@ -124,7 +129,7 @@
   
   <url>
     <loc>/technical_notes/</loc>
-    <lastmod>2020-10-11T00:00:00+01:00</lastmod>
+    <lastmod>2020-10-22T00:00:00+01:00</lastmod>
   </url>
   
   <url>
