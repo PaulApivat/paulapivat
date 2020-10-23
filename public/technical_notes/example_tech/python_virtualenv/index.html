@@ -792,6 +792,7 @@ I was pleasantly surprised that the process of setting up a virtual environment 
       <nav id="TableOfContents">
   <ul>
     <li><a href="#virtual-environment-best-practices">Virtual Environment Best Practices</a></li>
+    <li><a href="#pulling-up-a-saved-ipython-session-in-vscode">Pulling up a saved IPython session in VSCode</a></li>
   </ul>
 </nav>
 
@@ -838,8 +839,22 @@ ctrl + D
 conda deactivate
 
 </code></pre>
-<p>Here&rsquo;s a png of the above code:</p>
-<p><img src="./png/conda_virtualenv.png" alt="png"></p>
+<h2 id="pulling-up-a-saved-ipython-session-in-vscode">Pulling up a saved IPython session in VSCode</h2>
+<p><strong>note</strong>: I am using VSCode as my main python IDE outside of <code>jupyter notebooks</code>.</p>
+<p>After you&rsquo;ve saved an IPython session (see above), you may want to pull up the <code>.py</code> file for further edits at a later time. To do this, you&rsquo;ll need to ensure that the <code>code</code> command for VSCode is installed.</p>
+<p>Assuming you&rsquo;re already <em>in</em> VSCode, 
+<a href="https://stackoverflow.com/questions/30065227/run-open-vscode-from-mac-terminal" target="_blank" rel="noopener">press</a> (I&rsquo;m using macOS):</p>
+<pre><code>Command + Shift + P
+</code></pre>
+<p>Then select <code>Shell Command: Install code in PATH</code>. That&rsquo;s it.</p>
+<p>To open a previously saved <code>IPython</code> session in VSCode from the VSCode terminal, type:</p>
+<pre><code>% code name_of_file.py
+</code></pre>
+<p>Note that this can be done from (base) or from a previously configured virtual environment session, for example:</p>
+<pre><code>(base) paulapivat@Pauls-MacBook dsfs % code function_session.py
+(base) paulapivat@Pauls-MacBook dsfs % source activate dsfs
+(dsfs) paulapivat@Pauls-MacBook dsfs % code function_session.py
+</code></pre>
 
           </div>
 

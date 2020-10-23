@@ -51,6 +51,33 @@ conda deactivate
 
 ```
 
-Here's a png of the above code:
+## Pulling up a saved IPython session in VSCode
 
-![png](./png/conda_virtualenv.png)
+**note**: I am using VSCode as my main python IDE outside of `jupyter notebooks`.
+
+After you've saved an IPython session (see above), you may want to pull up the `.py` file for further edits at a later time. To do this, you'll need to ensure that the `code` command for VSCode is installed.
+
+Assuming you're already *in* VSCode, [press](https://stackoverflow.com/questions/30065227/run-open-vscode-from-mac-terminal) (I'm using macOS):
+
+```
+Command + Shift + P
+```
+
+Then select `Shell Command: Install code in PATH`. That's it. 
+
+To open a previously saved `IPython` session in VSCode from the VSCode terminal, type:
+
+```
+% code name_of_file.py
+```
+
+Note that this can be done from (base) or from a previously configured virtual environment session, for example:
+
+```
+(base) paulapivat@Pauls-MacBook dsfs % code function_session.py
+(base) paulapivat@Pauls-MacBook dsfs % source activate dsfs
+(dsfs) paulapivat@Pauls-MacBook dsfs % code function_session.py
+```
+
+
+
