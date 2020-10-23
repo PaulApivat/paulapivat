@@ -26,6 +26,73 @@
 &lt;a href=&#34;https://github.com/PaulApivat/dsfs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;repo&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;installation-virtual-environment-and-modules&#34;&gt;Installation, Virtual Environment and Modules&lt;/h3&gt;
 &lt;h3 id=&#34;functions&#34;&gt;Functions&lt;/h3&gt;
+&lt;p&gt;Three things are emphasized here: passing functions as arguments for other functions, lambda functions and default parameter values.&lt;/p&gt;
+&lt;p&gt;The illustration of functions being passed as arguments is demonstrated below. A function &lt;code&gt;double&lt;/code&gt; is created. A function &lt;code&gt;apply_to_one&lt;/code&gt; is created. The &lt;code&gt;double&lt;/code&gt; function is pointed at &lt;code&gt;my_double&lt;/code&gt;. We pass &lt;code&gt;my_double&lt;/code&gt; into the &lt;code&gt;apply_to_one&lt;/code&gt; function and set that to &lt;code&gt;x&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Whatever function is passed to &lt;code&gt;apply_to_one&lt;/code&gt;, &lt;em&gt;its&lt;/em&gt; argument is 1. So passing &lt;code&gt;my_double&lt;/code&gt; means we are doubling 1, so x is 2.&lt;/p&gt;
+&lt;p&gt;But the important thing is that a function got passed to another function (aka higher order functions).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def double(x):
+    &amp;quot;&amp;quot;&amp;quot;
+    this function doubles and returns the argument
+    &amp;quot;&amp;quot;&amp;quot;
+    return x * 2
+    
+def apply_to_one(f):
+    &amp;quot;&amp;quot;&amp;quot;Calls the function f with 1 as its argument&amp;quot;&amp;quot;&amp;quot;
+    return f(1)
+    
+my_double = double
+
+# x is 2 here
+x = apply_to_one(my_double)
+
+# extending this example
+def apply_five_to(e):
+    &amp;quot;&amp;quot;&amp;quot;returns the function e with 5 as its argument&amp;quot;&amp;quot;&amp;quot;
+    return e(5)
+
+# doubling 5 is 10
+w = apply_five_to(my_double)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Since functions are going to be used extensively, here&amp;rsquo;s another more complicated example. I found this from 
+&lt;a href=&#34;https://treyhunner.com/2020/01/passing-functions-as-arguments/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Trey Hunner&amp;rsquo;s site&lt;/a&gt;. Two functions are defined - &lt;code&gt;square&lt;/code&gt; and &lt;code&gt;cube&lt;/code&gt;. Both functions are saved to a list called &lt;code&gt;operations&lt;/code&gt;. Another list, &lt;code&gt;numbers&lt;/code&gt; is created.&lt;/p&gt;
+&lt;p&gt;Finally, for-loop is used to iterate through &lt;code&gt;numbers&lt;/code&gt;, and the &lt;code&gt;enumerate&lt;/code&gt; property allows access to both index and item in numbers. That&amp;rsquo;s used to find whether the &lt;code&gt;action&lt;/code&gt; is a &lt;code&gt;square&lt;/code&gt; or &lt;code&gt;cube&lt;/code&gt;, which is then given as its argument, the items inside the &lt;code&gt;numbers&lt;/code&gt; list.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# create two functions
+def square(n): return n**2
+def cube(n): return n**3
+
+# store those functions inside a list, operations, to reference later
+operations = [square, cube]
+
+# create a list of numbers
+numbers = [2,1,3,4,7,11,18,29]
+
+# loop through the numbers list
+# using enumerate the identify index and items
+# [i % 2] results in either 0 or 1, that&#39;s pointed at action
+# using the dunder, name, retrieves the name of the function - either square or cube - from the operations list
+# print __name__ along with the item from the numbers list
+# action is either a square or cube
+
+for i, n in enumerate(numbers):
+    action = operations[i % 2]
+    print(f&amp;quot;{action.__name__}({n}):&amp;quot;, action(n))
+
+# print
+square(2): 4
+cube(1): 1
+square(3): 9
+cube(4): 64
+square(7): 49
+cube(11): 1331
+square(18): 324
+cube(29): 24389
+
+# more explicit way to write the for-loop
+for index, num in enumerate(numbers):
+    action = operations[index % 2]
+    print(f&amp;quot;{action.__name__}({num}):&amp;quot;, action(num))
+
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;strings&#34;&gt;Strings&lt;/h3&gt;
 &lt;h3 id=&#34;exceptions&#34;&gt;Exceptions&lt;/h3&gt;
 &lt;h3 id=&#34;lists&#34;&gt;Lists&lt;/h3&gt;
