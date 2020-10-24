@@ -183,7 +183,7 @@ pct_format = "%s %s" %('Paul','Apivat')
 
 ### Exceptions
 
-The author covers exceptions to make the point that they're not all that bad in Python and it's worth handling exceptions you're self to make code more readable. Here's my own example that's slightly different from the book:
+The author covers exceptions to make the point that they're not all that bad in Python and it's worth handling exceptions yourself to make code more readable. Here's my own example that's slightly different from the book:
 
 ```python
 integer_list = [1,2,3]
@@ -193,7 +193,7 @@ heterogeneous_list = ["string", 0.1, True]
 # you can sum a list of integers, here 1 + 2 + 3 = 6
 sum(integer_list)
 
-# but you cannot sum a list of heteregenous data types
+# but you cannot sum a list of heterogeneous data types
 # doing so raises a TypeError
 sum(heterogeneous_list)
 
@@ -212,7 +212,7 @@ except TypeError:
     print("cannot add objects of different data types")
 ```
 
-At this point, i'm not sure how useful it is to handle exceptions yourself, so we'll come back to this section if we see better and more useful examples.  
+At this point, the primary benefits to handling exceptions yourself is for code readability, so we'll come back to this section if we see more useful examples.  
 
 ### Lists
 

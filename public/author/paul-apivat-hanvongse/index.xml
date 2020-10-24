@@ -153,7 +153,7 @@ string_format = &amp;quot;{0} {1}&amp;quot;.format(first_name, last_name)
 pct_format = &amp;quot;%s %s&amp;quot; %(&#39;Paul&#39;,&#39;Apivat&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;exceptions&#34;&gt;Exceptions&lt;/h3&gt;
-&lt;p&gt;The author covers exceptions to make the point that they&amp;rsquo;re not all that bad in Python and it&amp;rsquo;s worth handling exceptions you&amp;rsquo;re self to make code more readable. Here&amp;rsquo;s my own example that&amp;rsquo;s slightly different from the book:&lt;/p&gt;
+&lt;p&gt;The author covers exceptions to make the point that they&amp;rsquo;re not all that bad in Python and it&amp;rsquo;s worth handling exceptions yourself to make code more readable. Here&amp;rsquo;s my own example that&amp;rsquo;s slightly different from the book:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;integer_list = [1,2,3]
 
 heterogeneous_list = [&amp;quot;string&amp;quot;, 0.1, True]
@@ -161,7 +161,7 @@ heterogeneous_list = [&amp;quot;string&amp;quot;, 0.1, True]
 # you can sum a list of integers, here 1 + 2 + 3 = 6
 sum(integer_list)
 
-# but you cannot sum a list of heteregenous data types
+# but you cannot sum a list of heterogeneous data types
 # doing so raises a TypeError
 sum(heterogeneous_list)
 
@@ -179,7 +179,7 @@ try:
 except TypeError:
     print(&amp;quot;cannot add objects of different data types&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;At this point, i&amp;rsquo;m not sure how useful it is to handle exceptions yourself, so we&amp;rsquo;ll come back to this section if we see better and more useful examples.&lt;/p&gt;
+&lt;p&gt;At this point, the primary benefits to handling exceptions yourself is for code readability, so we&amp;rsquo;ll come back to this section if we see more useful examples.&lt;/p&gt;
 &lt;h3 id=&#34;lists&#34;&gt;Lists&lt;/h3&gt;
 &lt;h3 id=&#34;tuples&#34;&gt;Tuples&lt;/h3&gt;
 &lt;h3 id=&#34;dictionaries&#34;&gt;Dictionaries&lt;/h3&gt;
