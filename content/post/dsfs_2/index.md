@@ -161,7 +161,58 @@ There are whole books, or at least whole chapters, that can be written about Pyt
 
 ### Strings
 
+Strings may not be terribly exciting for data science or machine learning, unless you're getting into natural language processing, so we'll keep it brief here. The key take aways are that *backslashes* encode special characters and that **f-strings** is the most updated way to do string interpolation. Here are some examples:
+
+```python
+# point strings to variables (we'll use my name)
+first_name = "Paul"
+last_name = "Apivat"
+
+# f-string (recommended), 'Paul Apivat'
+f_string = f"{first_name} {last_name}"
+
+# string addition, 'Paul Apivat'
+string_addition = first_name + " " + last_name
+
+# string format, 'Paul Apivat'
+string_format = "{0} {1}".format(first_name, last_name)
+
+# percent format (NOT recommended), 'Paul Apivat'
+pct_format = "%s %s" %('Paul','Apivat')
+```
+
 ### Exceptions
+
+The author covers exceptions to make the point that they're not all that bad in Python and it's worth handling exceptions you're self to make code more readable. Here's my own example that's slightly different from the book:
+
+```python
+integer_list = [1,2,3]
+
+heterogeneous_list = ["string", 0.1, True]
+
+# you can sum a list of integers, here 1 + 2 + 3 = 6
+sum(integer_list)
+
+# but you cannot sum a list of heteregenous data types
+# doing so raises a TypeError
+sum(heterogeneous_list)
+
+# the error crashes your program and is not fun to look at
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-12-3287dd0c6c22> in <module>
+----> 1 sum(heterogeneous_list)
+
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
+
+# so the idea is to handle the exceptions with your own messages
+try:
+    sum(heterogeneous_list)
+except TypeError:
+    print("cannot add objects of different data types")
+```
+
+At this point, i'm not sure how useful it is to handle exceptions yourself, so we'll come back to this section if we see better and more useful examples.  
 
 ### Lists
 

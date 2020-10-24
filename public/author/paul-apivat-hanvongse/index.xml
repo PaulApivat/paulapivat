@@ -135,7 +135,51 @@ list(filter(lambda n: n % 2 == 0, numbers))
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;There are whole books, or at least whole chapters, that can be written about Python functions, but we&amp;rsquo;ll limit our discussion for now to the idea that &lt;strong&gt;functions can be passed as arguments to other functions&lt;/strong&gt;. I&amp;rsquo;ll report back on this section as we progress through the book.&lt;/p&gt;
 &lt;h3 id=&#34;strings&#34;&gt;Strings&lt;/h3&gt;
+&lt;p&gt;Strings may not be terribly exciting for data science or machine learning, unless you&amp;rsquo;re getting into natural language processing, so we&amp;rsquo;ll keep it brief here. The key take aways are that &lt;em&gt;backslashes&lt;/em&gt; encode special characters and that &lt;strong&gt;f-strings&lt;/strong&gt; is the most updated way to do string interpolation. Here are some examples:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# point strings to variables (we&#39;ll use my name)
+first_name = &amp;quot;Paul&amp;quot;
+last_name = &amp;quot;Apivat&amp;quot;
+
+# f-string (recommended), &#39;Paul Apivat&#39;
+f_string = f&amp;quot;{first_name} {last_name}&amp;quot;
+
+# string addition, &#39;Paul Apivat&#39;
+string_addition = first_name + &amp;quot; &amp;quot; + last_name
+
+# string format, &#39;Paul Apivat&#39;
+string_format = &amp;quot;{0} {1}&amp;quot;.format(first_name, last_name)
+
+# percent format (NOT recommended), &#39;Paul Apivat&#39;
+pct_format = &amp;quot;%s %s&amp;quot; %(&#39;Paul&#39;,&#39;Apivat&#39;)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;exceptions&#34;&gt;Exceptions&lt;/h3&gt;
+&lt;p&gt;The author covers exceptions to make the point that they&amp;rsquo;re not all that bad in Python and it&amp;rsquo;s worth handling exceptions you&amp;rsquo;re self to make code more readable. Here&amp;rsquo;s my own example that&amp;rsquo;s slightly different from the book:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;integer_list = [1,2,3]
+
+heterogeneous_list = [&amp;quot;string&amp;quot;, 0.1, True]
+
+# you can sum a list of integers, here 1 + 2 + 3 = 6
+sum(integer_list)
+
+# but you cannot sum a list of heteregenous data types
+# doing so raises a TypeError
+sum(heterogeneous_list)
+
+# the error crashes your program and is not fun to look at
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+&amp;lt;ipython-input-12-3287dd0c6c22&amp;gt; in &amp;lt;module&amp;gt;
+----&amp;gt; 1 sum(heterogeneous_list)
+
+TypeError: unsupported operand type(s) for +: &#39;int&#39; and &#39;str&#39;
+
+# so the idea is to handle the exceptions with your own messages
+try:
+    sum(heterogeneous_list)
+except TypeError:
+    print(&amp;quot;cannot add objects of different data types&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At this point, i&amp;rsquo;m not sure how useful it is to handle exceptions yourself, so we&amp;rsquo;ll come back to this section if we see better and more useful examples.&lt;/p&gt;
 &lt;h3 id=&#34;lists&#34;&gt;Lists&lt;/h3&gt;
 &lt;h3 id=&#34;tuples&#34;&gt;Tuples&lt;/h3&gt;
 &lt;h3 id=&#34;dictionaries&#34;&gt;Dictionaries&lt;/h3&gt;

@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    6 min read
+    7 min read
   </span>
   
 
@@ -875,7 +875,51 @@ list(filter(lambda n: n % 2 == 0, numbers))
 </code></pre>
 <p>There are whole books, or at least whole chapters, that can be written about Python functions, but we&rsquo;ll limit our discussion for now to the idea that <strong>functions can be passed as arguments to other functions</strong>. I&rsquo;ll report back on this section as we progress through the book.</p>
 <h3 id="strings">Strings</h3>
+<p>Strings may not be terribly exciting for data science or machine learning, unless you&rsquo;re getting into natural language processing, so we&rsquo;ll keep it brief here. The key take aways are that <em>backslashes</em> encode special characters and that <strong>f-strings</strong> is the most updated way to do string interpolation. Here are some examples:</p>
+<pre><code class="language-python"># point strings to variables (we'll use my name)
+first_name = &quot;Paul&quot;
+last_name = &quot;Apivat&quot;
+
+# f-string (recommended), 'Paul Apivat'
+f_string = f&quot;{first_name} {last_name}&quot;
+
+# string addition, 'Paul Apivat'
+string_addition = first_name + &quot; &quot; + last_name
+
+# string format, 'Paul Apivat'
+string_format = &quot;{0} {1}&quot;.format(first_name, last_name)
+
+# percent format (NOT recommended), 'Paul Apivat'
+pct_format = &quot;%s %s&quot; %('Paul','Apivat')
+</code></pre>
 <h3 id="exceptions">Exceptions</h3>
+<p>The author covers exceptions to make the point that they&rsquo;re not all that bad in Python and it&rsquo;s worth handling exceptions you&rsquo;re self to make code more readable. Here&rsquo;s my own example that&rsquo;s slightly different from the book:</p>
+<pre><code class="language-python">integer_list = [1,2,3]
+
+heterogeneous_list = [&quot;string&quot;, 0.1, True]
+
+# you can sum a list of integers, here 1 + 2 + 3 = 6
+sum(integer_list)
+
+# but you cannot sum a list of heteregenous data types
+# doing so raises a TypeError
+sum(heterogeneous_list)
+
+# the error crashes your program and is not fun to look at
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+&lt;ipython-input-12-3287dd0c6c22&gt; in &lt;module&gt;
+----&gt; 1 sum(heterogeneous_list)
+
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
+
+# so the idea is to handle the exceptions with your own messages
+try:
+    sum(heterogeneous_list)
+except TypeError:
+    print(&quot;cannot add objects of different data types&quot;)
+</code></pre>
+<p>At this point, i&rsquo;m not sure how useful it is to handle exceptions yourself, so we&rsquo;ll come back to this section if we see better and more useful examples.</p>
 <h3 id="lists">Lists</h3>
 <h3 id="tuples">Tuples</h3>
 <h3 id="dictionaries">Dictionaries</h3>
