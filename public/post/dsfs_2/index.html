@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    5 min read
+    6 min read
   </span>
   
 
@@ -765,6 +765,12 @@
 <p>Additional code can be found in this 
 <a href="https://github.com/PaulApivat/dsfs" target="_blank" rel="noopener">repo</a></p>
 <h3 id="installation-virtual-environment-and-modules">Installation, Virtual Environment and Modules</h3>
+<p>These section takes the reader through installing a virtual environment using Anaconda Python distribution. The author points out a best practice, &ldquo;you should always work in a virtual environment and never use &lsquo;base&rsquo; Python installation&rdquo;. Moreover, the author favors IPython over jupyter notebooks (he&rsquo;s a noted 
+<a href="https://www.youtube.com/watch?v=7jiPeIFXb6U" target="_blank" rel="noopener">critic of the notebook</a>)</p>
+<p>The first time I installed Python, it took me awhile to get things right and eventually I relied on jupyter notebooks through Anaconda. As we go through this book, I&rsquo;ll be using virtual environments and IPython as much as I can (although I may sprinkle in a notebook here and there). My IDE for interacting with the conda virtual environment and IPython will be VSCode.</p>
+<p>Fortunately, I had a relatively painless process setting up a virtual environment and IPython, although I had to take a slight detour to setup the <code>code</code> command for VSCode.</p>
+<p>Here&rsquo;s a summary of the commands I used for setup:</p>
+<p><img src="./python_virtual_env.png" alt="png"></p>
 <h3 id="functions">Functions</h3>
 <p>Three things are emphasized here: passing functions as arguments for other functions, lambda functions and default parameter values.</p>
 <p>The illustration of functions being passed as arguments is demonstrated below. A function <code>double</code> is created. A function <code>apply_to_one</code> is created. The <code>double</code> function is pointed at <code>my_double</code>. We pass <code>my_double</code> into the <code>apply_to_one</code> function and set that to <code>x</code>.</p>

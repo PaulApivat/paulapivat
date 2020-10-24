@@ -1076,6 +1076,12 @@ hist(x)
 &lt;p&gt;Additional code can be found in this 
 &lt;a href=&#34;https://github.com/PaulApivat/dsfs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;repo&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;installation-virtual-environment-and-modules&#34;&gt;Installation, Virtual Environment and Modules&lt;/h3&gt;
+&lt;p&gt;These section takes the reader through installing a virtual environment using Anaconda Python distribution. The author points out a best practice, &amp;ldquo;you should always work in a virtual environment and never use &amp;lsquo;base&amp;rsquo; Python installation&amp;rdquo;. Moreover, the author favors IPython over jupyter notebooks (he&amp;rsquo;s a noted 
+&lt;a href=&#34;https://www.youtube.com/watch?v=7jiPeIFXb6U&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;critic of the notebook&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;The first time I installed Python, it took me awhile to get things right and eventually I relied on jupyter notebooks through Anaconda. As we go through this book, I&amp;rsquo;ll be using virtual environments and IPython as much as I can (although I may sprinkle in a notebook here and there). My IDE for interacting with the conda virtual environment and IPython will be VSCode.&lt;/p&gt;
+&lt;p&gt;Fortunately, I had a relatively painless process setting up a virtual environment and IPython, although I had to take a slight detour to setup the &lt;code&gt;code&lt;/code&gt; command for VSCode.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a summary of the commands I used for setup:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./python_virtual_env.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;functions&#34;&gt;Functions&lt;/h3&gt;
 &lt;p&gt;Three things are emphasized here: passing functions as arguments for other functions, lambda functions and default parameter values.&lt;/p&gt;
 &lt;p&gt;The illustration of functions being passed as arguments is demonstrated below. A function &lt;code&gt;double&lt;/code&gt; is created. A function &lt;code&gt;apply_to_one&lt;/code&gt; is created. The &lt;code&gt;double&lt;/code&gt; function is pointed at &lt;code&gt;my_double&lt;/code&gt;. We pass &lt;code&gt;my_double&lt;/code&gt; into the &lt;code&gt;apply_to_one&lt;/code&gt; function and set that to &lt;code&gt;x&lt;/code&gt;.&lt;/p&gt;

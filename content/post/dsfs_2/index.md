@@ -30,6 +30,16 @@ Additional code can be found in this [repo](https://github.com/PaulApivat/dsfs)
 
 ### Installation, Virtual Environment and Modules
 
+These section takes the reader through installing a virtual environment using Anaconda Python distribution. The author points out a best practice, "you should always work in a virtual environment and never use 'base' Python installation". Moreover, the author favors IPython over jupyter notebooks (he's a noted [critic of the notebook](https://www.youtube.com/watch?v=7jiPeIFXb6U))
+
+The first time I installed Python, it took me awhile to get things right and eventually I relied on jupyter notebooks through Anaconda. As we go through this book, I'll be using virtual environments and IPython as much as I can (although I may sprinkle in a notebook here and there). My IDE for interacting with the conda virtual environment and IPython will be VSCode. 
+
+Fortunately, I had a relatively painless process setting up a virtual environment and IPython, although I had to take a slight detour to setup the `code` command for VSCode.
+
+Here's a summary of the commands I used for setup:
+
+![png](./python_virtual_env.png)
+
 ### Functions
 
 Three things are emphasized here: passing functions as arguments for other functions, lambda functions and default parameter values. 
