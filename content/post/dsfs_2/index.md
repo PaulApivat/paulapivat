@@ -67,7 +67,7 @@ w = apply_five_to(my_double)
 
 Since functions are going to be used extensively, here's another more complicated example. I found this from [Trey Hunner's site](https://treyhunner.com/2020/01/passing-functions-as-arguments/). Two functions are defined - `square` and `cube`. Both functions are saved to a list called `operations`. Another list, `numbers` is created. 
 
-Finally, for-loop is used to iterate through `numbers`, and the `enumerate` property allows access to both index and item in numbers. That's used to find whether the `action` is a `square` or `cube`, which is then given as its argument, the items inside the `numbers` list. 
+Finally, a for-loop is used to iterate through `numbers`, and the `enumerate` property allows access to both index and item in numbers. That's used to find whether the `action` is a `square` or `cube` (operations[0] is `square`, operations[1] is `cube`), which is then given as its argument, the items inside the `numbers` list. 
 
 ```
 # create two functions
@@ -101,13 +101,53 @@ cube(11): 1331
 square(18): 324
 cube(29): 24389
 
-# more explicit way to write the for-loop
+# more explicit, yet verbose way to write the for-loop
 for index, num in enumerate(numbers):
     action = operations[index % 2]
     print(f"{action.__name__}({num}):", action(num))
 
 ```
 
+This section also introduces `lambda` functions (aka anonymous functions) to demonstrate how functions, being first-class in Python, can, like any variable, be passed into the argument of another function. However, with `lambda` instead of defining functions with `def`, it is defined inside another function. Here's an illustration:
+
+```
+# we'll reuse apply_five_to, which takes in a function and provides '5' as the argument
+def apply_five_to(e):
+    """returns the function e with 5 as its argument"""
+    return e(5)
+
+# this lambda function adds '4' to any argument
+# when passing this lambda function to apply_five_to
+# you get y = 5 + 4
+y = apply_five_to(lambda x: x + 4)
+
+# we can also change what the lambda function does without defining a separate function
+# here the lambda function multiplies the argument by 4
+# y = 20
+y = apply_five_to(lambda x: x * 4)
+
+```
+Lambda functions are convenient in that you can pass it into another function *immediately* without having to define it separately, but the consensus seems to be that you should just use `def`.
+
+Here's an external example of `lambda` functions from [Trey Hunner](https://treyhunner.com/2020/01/passing-functions-as-arguments/). In this example, a `lambda` function is used within a `filter` function that takes in two arguments.
+
+```
+# calling help(filter) displays an explanation
+
+class filter(object)
+ |  filter(function or None, iterable) --> filter object
+
+# create a list of numbers
+numbers = [2,1,3,4,7,11,18,29]
+
+# the lambda function will return n if it is an even number
+# we filter the numbers list using the lambda function
+# wrapped in a list, this returns [2,4,18]
+list(filter(lambda n: n % 2 == 0, numbers))
+
+```
+
+There are whole books, or at least whole chapters, that can be written about Python functions, but we'll limit our discussion for now to the idea that **functions can be passed as arguments to other functions**. I'll report back on this section as we progress through the book.
 
 ### Strings
 

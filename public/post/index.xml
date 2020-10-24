@@ -55,7 +55,7 @@ w = apply_five_to(my_double)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Since functions are going to be used extensively, here&amp;rsquo;s another more complicated example. I found this from 
 &lt;a href=&#34;https://treyhunner.com/2020/01/passing-functions-as-arguments/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Trey Hunner&amp;rsquo;s site&lt;/a&gt;. Two functions are defined - &lt;code&gt;square&lt;/code&gt; and &lt;code&gt;cube&lt;/code&gt;. Both functions are saved to a list called &lt;code&gt;operations&lt;/code&gt;. Another list, &lt;code&gt;numbers&lt;/code&gt; is created.&lt;/p&gt;
-&lt;p&gt;Finally, for-loop is used to iterate through &lt;code&gt;numbers&lt;/code&gt;, and the &lt;code&gt;enumerate&lt;/code&gt; property allows access to both index and item in numbers. That&amp;rsquo;s used to find whether the &lt;code&gt;action&lt;/code&gt; is a &lt;code&gt;square&lt;/code&gt; or &lt;code&gt;cube&lt;/code&gt;, which is then given as its argument, the items inside the &lt;code&gt;numbers&lt;/code&gt; list.&lt;/p&gt;
+&lt;p&gt;Finally, a for-loop is used to iterate through &lt;code&gt;numbers&lt;/code&gt;, and the &lt;code&gt;enumerate&lt;/code&gt; property allows access to both index and item in numbers. That&amp;rsquo;s used to find whether the &lt;code&gt;action&lt;/code&gt; is a &lt;code&gt;square&lt;/code&gt; or &lt;code&gt;cube&lt;/code&gt; (operations[0] is &lt;code&gt;square&lt;/code&gt;, operations[1] is &lt;code&gt;cube&lt;/code&gt;), which is then given as its argument, the items inside the &lt;code&gt;numbers&lt;/code&gt; list.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# create two functions
 def square(n): return n**2
 def cube(n): return n**3
@@ -87,12 +87,47 @@ cube(11): 1331
 square(18): 324
 cube(29): 24389
 
-# more explicit way to write the for-loop
+# more explicit, yet verbose way to write the for-loop
 for index, num in enumerate(numbers):
     action = operations[index % 2]
     print(f&amp;quot;{action.__name__}({num}):&amp;quot;, action(num))
 
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This section also introduces &lt;code&gt;lambda&lt;/code&gt; functions (aka anonymous functions) to demonstrate how functions, being first-class in Python, can, like any variable, be passed into the argument of another function. However, with &lt;code&gt;lambda&lt;/code&gt; instead of defining functions with &lt;code&gt;def&lt;/code&gt;, it is defined inside another function. Here&amp;rsquo;s an illustration:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# we&#39;ll reuse apply_five_to, which takes in a function and provides &#39;5&#39; as the argument
+def apply_five_to(e):
+    &amp;quot;&amp;quot;&amp;quot;returns the function e with 5 as its argument&amp;quot;&amp;quot;&amp;quot;
+    return e(5)
+
+# this lambda function adds &#39;4&#39; to any argument
+# when passing this lambda function to apply_five_to
+# you get y = 5 + 4
+y = apply_five_to(lambda x: x + 4)
+
+# we can also change what the lambda function does without defining a separate function
+# here the lambda function multiplies the argument by 4
+# y = 20
+y = apply_five_to(lambda x: x * 4)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Lambda functions are convenient in that you can pass it into another function &lt;em&gt;immediately&lt;/em&gt; without having to define it separately, but the consensus seems to be that you should just use &lt;code&gt;def&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s an external example of &lt;code&gt;lambda&lt;/code&gt; functions from 
+&lt;a href=&#34;https://treyhunner.com/2020/01/passing-functions-as-arguments/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Trey Hunner&lt;/a&gt;. In this example, a &lt;code&gt;lambda&lt;/code&gt; function is used within a &lt;code&gt;filter&lt;/code&gt; function that takes in two arguments.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# calling help(filter) displays an explanation
+
+class filter(object)
+ |  filter(function or None, iterable) --&amp;gt; filter object
+
+# create a list of numbers
+numbers = [2,1,3,4,7,11,18,29]
+
+# the lambda function will return n if it is an even number
+# we filter the numbers list using the lambda function
+# wrapped in a list, this returns [2,4,18]
+list(filter(lambda n: n % 2 == 0, numbers))
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There are whole books, or at least whole chapters, that can be written about Python functions, but we&amp;rsquo;ll limit our discussion for now to the idea that &lt;strong&gt;functions can be passed as arguments to other functions&lt;/strong&gt;. I&amp;rsquo;ll report back on this section as we progress through the book.&lt;/p&gt;
 &lt;h3 id=&#34;strings&#34;&gt;Strings&lt;/h3&gt;
 &lt;h3 id=&#34;exceptions&#34;&gt;Exceptions&lt;/h3&gt;
 &lt;h3 id=&#34;lists&#34;&gt;Lists&lt;/h3&gt;
