@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    7 min read
+    8 min read
   </span>
   
 
@@ -921,6 +921,47 @@ except TypeError:
 </code></pre>
 <p>At this point, the primary benefits to handling exceptions yourself is for code readability, so we&rsquo;ll come back to this section if we see more useful examples.</p>
 <h3 id="lists">Lists</h3>
+<p>Lists are fundamental to Python so I&rsquo;m going to spend some time exploring their features. Within the context of data science, <code>NumPy arrays</code>, as a corollary to python&rsquo;s native <code>lists</code> are used frequently, so I thought it&rsquo;d be good to implement all <code>list</code> operations covered in this section in <code>Numpy arrays</code> to <em>tease apart their similarities and differences</em>.</p>
+<p>Here are the similarties:</p>
+<pre><code class="language-python"># setup
+import numpy as np
+
+# create comparables
+python_list = [1,2,3,4,5,6,7,8,9]
+numpy_array = np.array([1,2,3,4,5,6,7,8,9])
+
+# bracket operations
+
+# get nth element with square bracket
+python_list[0] # 1
+numpy_array[0] # 1
+python_list[8] # 9
+numpy_array[8] # 9
+python_list[-1] # 9
+numpy_array[-1] # 9
+
+# square bracket to slice 
+python_list[:3] # [1, 2, 3]
+numpy_array[:3] # array([1, 2, 3])
+
+python_list[1:5] # [2, 3, 4, 5]
+numpy_array[1:5] # array([2, 3, 4, 5])
+
+# start, stop, step
+python_list[1:8:2] # [2, 4, 6, 8]
+numpy_array[1:8:2] # array([2, 4, 6, 8])
+
+# use in operator to check membership
+1 in python_list # true
+1 in numpy_array # true
+
+0 in python_list # false
+0 in numpy_array # false
+
+</code></pre>
+<p>Here are the differences:</p>
+<pre><code class="language-python">
+</code></pre>
 <h3 id="tuples">Tuples</h3>
 <h3 id="dictionaries">Dictionaries</h3>
 <h3 id="defaultdict">defaultdict</h3>

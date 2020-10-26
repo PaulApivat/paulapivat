@@ -216,6 +216,55 @@ At this point, the primary benefits to handling exceptions yourself is for code 
 
 ### Lists
 
+Lists are fundamental to Python so I'm going to spend some time exploring their features. Within the context of data science, `NumPy arrays`, as a corollary to python's native `lists` are used frequently, so I thought it'd be good to implement all `list` operations covered in this section in `Numpy arrays` to *tease apart their similarities and differences*. 
+
+Here are the similarties:
+
+```python
+# setup
+import numpy as np
+
+# create comparables
+python_list = [1,2,3,4,5,6,7,8,9]
+numpy_array = np.array([1,2,3,4,5,6,7,8,9])
+
+# bracket operations
+
+# get nth element with square bracket
+python_list[0] # 1
+numpy_array[0] # 1
+python_list[8] # 9
+numpy_array[8] # 9
+python_list[-1] # 9
+numpy_array[-1] # 9
+
+# square bracket to slice 
+python_list[:3] # [1, 2, 3]
+numpy_array[:3] # array([1, 2, 3])
+
+python_list[1:5] # [2, 3, 4, 5]
+numpy_array[1:5] # array([2, 3, 4, 5])
+
+# start, stop, step
+python_list[1:8:2] # [2, 4, 6, 8]
+numpy_array[1:8:2] # array([2, 4, 6, 8])
+
+# use in operator to check membership
+1 in python_list # true
+1 in numpy_array # true
+
+0 in python_list # false
+0 in numpy_array # false
+
+```
+
+Here are the differences:
+
+```python
+
+```
+
+
 ### Tuples
 
 ### Dictionaries

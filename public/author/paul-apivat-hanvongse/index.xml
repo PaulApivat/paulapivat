@@ -181,6 +181,47 @@ except TypeError:
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;At this point, the primary benefits to handling exceptions yourself is for code readability, so we&amp;rsquo;ll come back to this section if we see more useful examples.&lt;/p&gt;
 &lt;h3 id=&#34;lists&#34;&gt;Lists&lt;/h3&gt;
+&lt;p&gt;Lists are fundamental to Python so I&amp;rsquo;m going to spend some time exploring their features. Within the context of data science, &lt;code&gt;NumPy arrays&lt;/code&gt;, as a corollary to python&amp;rsquo;s native &lt;code&gt;lists&lt;/code&gt; are used frequently, so I thought it&amp;rsquo;d be good to implement all &lt;code&gt;list&lt;/code&gt; operations covered in this section in &lt;code&gt;Numpy arrays&lt;/code&gt; to &lt;em&gt;tease apart their similarities and differences&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Here are the similarties:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# setup
+import numpy as np
+
+# create comparables
+python_list = [1,2,3,4,5,6,7,8,9]
+numpy_array = np.array([1,2,3,4,5,6,7,8,9])
+
+# bracket operations
+
+# get nth element with square bracket
+python_list[0] # 1
+numpy_array[0] # 1
+python_list[8] # 9
+numpy_array[8] # 9
+python_list[-1] # 9
+numpy_array[-1] # 9
+
+# square bracket to slice 
+python_list[:3] # [1, 2, 3]
+numpy_array[:3] # array([1, 2, 3])
+
+python_list[1:5] # [2, 3, 4, 5]
+numpy_array[1:5] # array([2, 3, 4, 5])
+
+# start, stop, step
+python_list[1:8:2] # [2, 4, 6, 8]
+numpy_array[1:8:2] # array([2, 4, 6, 8])
+
+# use in operator to check membership
+1 in python_list # true
+1 in numpy_array # true
+
+0 in python_list # false
+0 in numpy_array # false
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here are the differences:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;tuples&#34;&gt;Tuples&lt;/h3&gt;
 &lt;h3 id=&#34;dictionaries&#34;&gt;Dictionaries&lt;/h3&gt;
 &lt;h3 id=&#34;defaultdict&#34;&gt;defaultdict&lt;/h3&gt;
