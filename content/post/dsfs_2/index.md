@@ -256,14 +256,61 @@ numpy_array[1:8:2] # array([2, 4, 6, 8])
 0 in python_list # false
 0 in numpy_array # false
 
+# finding length
+len(python_list) # 9
+len(numpy_array) # 9
+
+# unpacking
+x,y = [1,2] # now x is 1, y is 2
+w,z = np.array([1,2]) # now w is 1, z is 2
+
+
 ```
 
 Here are the differences:
 
 ```python
 
+# python lists can store mixed data types
+heterogeneous_list = ['string', 0.1, True]
+type(heterogeneous_list[0]) # str
+type(heterogeneous_list[1]) # float
+type(heterogeneous_list[2]) # bool
+
+# numpy arrays cannot store mixed data types
+# numpy arrays turn all data types into strings
+homogeneous_numpy_array = np.array(['string', 0.1, True]) # saved with mixed data types
+type(homogeneous_numpy_array[0]) # numpy.str_
+type(homogeneous_numpy_array[1]) # numpy.str_
+type(homogeneous_numpy_array[2]) # numpy.str_
+
+
+# modifying list vs numpy array
+
+# lists can use extend to modify list in place
+python_list.extend([10,12,13])  # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13]
+numpy_array.extend([10,12,13]) # AttributeError: 'numpy.ndarray'
+
+# numpy array must use append, instead of extend
+numpy_array = np.append(numpy_array,[10,12,13])
+
+# python lists can be added with other lists
+new_python_list = python_list + [14,15] # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15]
+numpy_array + [14,15] # ValueError
+
+# numpy array cannot be added (use append instead)
+# array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 12, 13, 14, 15])
+new_numpy_array = np.append(numpy_array, [14,15]) 
+
+# python lists have the append attribute
+python_list.append(0) # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 0]
+
+# the append attribute for numpy array is used differently
+numpy_array = np.append(numpy_array, [0])
+
 ```
 
+Python lists and numpy array likely have more in common than otherwise, but there are meaningful differences as well.
 
 ### Tuples
 
