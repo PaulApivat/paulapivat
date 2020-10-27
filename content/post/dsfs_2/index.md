@@ -391,9 +391,9 @@ Tuples, for the most part, seem to be redundant with `lists`, but we'll see if t
 
 ## Dictionaries
 
-Dictionaries are good for storing structured data. They have a key/value pair so you can look up values of certain keys. The author provides some ways to initialize a dictionary, with comments about what is *more or less pythonic*. 
+Dictionaries are good for storing structured data. They have a key/value pair so you can look up values of certain keys. The author provides some ways to initialize a dictionary, with comments about what is *more or less pythonic* (I'll take the author's word for it, but open to other perspectives).
 
-I'll take the authors word for it (but it does seem arbitrary).
+Some of the things you can do with `dictionaries` are query keys, values, assign new key/value pairs, check for existence of keys or retrieve certain values.
 
 ```python
 
@@ -521,6 +521,7 @@ except TypeError:
    print('lists are not hashable')
 
 ```
+
 
 ### defaultdict
 

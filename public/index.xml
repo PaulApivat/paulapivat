@@ -1389,8 +1389,8 @@ x,y = y,x
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Tuples, for the most part, seem to be redundant with &lt;code&gt;lists&lt;/code&gt;, but we&amp;rsquo;ll see if there are special use-cases for immutability down the line.&lt;/p&gt;
 &lt;h2 id=&#34;dictionaries&#34;&gt;Dictionaries&lt;/h2&gt;
-&lt;p&gt;Dictionaries are good for storing structured data. They have a key/value pair so you can look up values of certain keys. The author provides some ways to initialize a dictionary, with comments about what is &lt;em&gt;more or less pythonic&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;ll take the authors word for it (but it does seem arbitrary).&lt;/p&gt;
+&lt;p&gt;Dictionaries are good for storing structured data. They have a key/value pair so you can look up values of certain keys. The author provides some ways to initialize a dictionary, with comments about what is &lt;em&gt;more or less pythonic&lt;/em&gt; (I&amp;rsquo;ll take the author&amp;rsquo;s word for it, but open to other perspectives).&lt;/p&gt;
+&lt;p&gt;Some of the things you can do with &lt;code&gt;dictionaries&lt;/code&gt; are query keys, values, assign new key/value pairs, check for existence of keys or retrieve certain values.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
 empty_dict = {}                   # most pythonic
 empty_dict2 = dict()              # less pythonic
