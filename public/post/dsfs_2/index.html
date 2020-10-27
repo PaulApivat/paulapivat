@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    9 min read
+    10 min read
   </span>
   
 
@@ -922,9 +922,9 @@ except TypeError:
     print(&quot;cannot add objects of different data types&quot;)
 </code></pre>
 <p>At this point, the primary benefits to handling exceptions yourself is for code readability, so we&rsquo;ll come back to this section if we see more useful examples.</p>
-<p>#lists</p>
+<h2 id="lists">lists</h2>
 <p>Lists are fundamental to Python so I&rsquo;m going to spend some time exploring their features. Within the context of data science, <code>NumPy arrays</code>, as a corollary to python&rsquo;s native <code>lists</code> are used frequently, so I thought it&rsquo;d be good to implement all <code>list</code> operations covered in this section in <code>Numpy arrays</code> to <em>tease apart their similarities and differences</em>.</p>
-<p>Here are the similarties:</p>
+<p>Below are the similarties. This implies that whatever can be done in python <code>lists</code> can also be done in numpy <code>arrays</code>, including: getting the nth element in the list/array with square brackets, slicing the list/array, iterating through the list/array with <em>start, stop, step</em>, using the <code>in</code> operator to find list/array membership, checking length and unpacking list/arrays.</p>
 <pre><code class="language-python"># setup
 import numpy as np
 
@@ -970,7 +970,7 @@ w,z = np.array([1,2]) # now w is 1, z is 2
 
 
 </code></pre>
-<p>Here are the differences:</p>
+<p>Here are the differences. Here, the tasks that can be done in python <code>lists</code>, but require a different approach for numpy <code>array</code> including: modification (extend in list, append for array). Finally, lists can store mixed data types, while numpy array will convert to string.</p>
 <pre><code class="language-python">
 # python lists can store mixed data types
 heterogeneous_list = ['string', 0.1, True]

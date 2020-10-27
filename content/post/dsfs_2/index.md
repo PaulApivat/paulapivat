@@ -216,11 +216,11 @@ except TypeError:
 
 At this point, the primary benefits to handling exceptions yourself is for code readability, so we'll come back to this section if we see more useful examples.  
 
-#lists 
+## lists 
 
 Lists are fundamental to Python so I'm going to spend some time exploring their features. Within the context of data science, `NumPy arrays`, as a corollary to python's native `lists` are used frequently, so I thought it'd be good to implement all `list` operations covered in this section in `Numpy arrays` to *tease apart their similarities and differences*. 
 
-Here are the similarties:
+Below are the similarties. This implies that whatever can be done in python `lists` can also be done in numpy `arrays`, including: getting the nth element in the list/array with square brackets, slicing the list/array, iterating through the list/array with *start, stop, step*, using the `in` operator to find list/array membership, checking length and unpacking list/arrays. 
 
 ```python
 # setup
@@ -269,7 +269,7 @@ w,z = np.array([1,2]) # now w is 1, z is 2
 
 ```
 
-Here are the differences:
+Here are the differences. Here, the tasks that can be done in python `lists`, but require a different approach for numpy `array` including: modification (extend in list, append for array). Finally, lists can store mixed data types, while numpy array will convert to string. 
 
 ```python
 

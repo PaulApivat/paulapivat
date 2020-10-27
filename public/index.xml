@@ -1233,9 +1233,9 @@ except TypeError:
     print(&amp;quot;cannot add objects of different data types&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;At this point, the primary benefits to handling exceptions yourself is for code readability, so we&amp;rsquo;ll come back to this section if we see more useful examples.&lt;/p&gt;
-&lt;p&gt;#lists&lt;/p&gt;
+&lt;h2 id=&#34;lists&#34;&gt;lists&lt;/h2&gt;
 &lt;p&gt;Lists are fundamental to Python so I&amp;rsquo;m going to spend some time exploring their features. Within the context of data science, &lt;code&gt;NumPy arrays&lt;/code&gt;, as a corollary to python&amp;rsquo;s native &lt;code&gt;lists&lt;/code&gt; are used frequently, so I thought it&amp;rsquo;d be good to implement all &lt;code&gt;list&lt;/code&gt; operations covered in this section in &lt;code&gt;Numpy arrays&lt;/code&gt; to &lt;em&gt;tease apart their similarities and differences&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;Here are the similarties:&lt;/p&gt;
+&lt;p&gt;Below are the similarties. This implies that whatever can be done in python &lt;code&gt;lists&lt;/code&gt; can also be done in numpy &lt;code&gt;arrays&lt;/code&gt;, including: getting the nth element in the list/array with square brackets, slicing the list/array, iterating through the list/array with &lt;em&gt;start, stop, step&lt;/em&gt;, using the &lt;code&gt;in&lt;/code&gt; operator to find list/array membership, checking length and unpacking list/arrays.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# setup
 import numpy as np
 
@@ -1281,7 +1281,7 @@ w,z = np.array([1,2]) # now w is 1, z is 2
 
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here are the differences:&lt;/p&gt;
+&lt;p&gt;Here are the differences. Here, the tasks that can be done in python &lt;code&gt;lists&lt;/code&gt;, but require a different approach for numpy &lt;code&gt;array&lt;/code&gt; including: modification (extend in list, append for array). Finally, lists can store mixed data types, while numpy array will convert to string.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
 # python lists can store mixed data types
 heterogeneous_list = [&#39;string&#39;, 0.1, True]
