@@ -8,7 +8,7 @@ featured: false
 image:
   caption: ""
   focal_point: ""
-lastMod: "2020-10-23T00:00:00Z"
+lastMod: "2020-10-27T00:00:00Z"
 projects: []
 subtitle: Python crash course
 summary: Survey of python features relevant for Data Science
@@ -16,9 +16,17 @@ tags: []
 title: Data Science from Scratch (ch2)
 ---
 
+**Table of Content:**
+- [Set Up](#setup)
+- [Functions](#functions)
+- [Strings](#strings)
+- [Exceptions](#exceptions)
+- [Lists](#lists)
+- [Tuples](#tuples)
+- [Dictionaries](#dictionaries)
+
 ## Chapter 2: A Crash Course in Python
 
-[scroll down to List section](#lists)
 
 This is the first of many chapters i'll be covering from Joel Grus' Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for "doing" data science from scratch, including essential setup of virtual environments and other tooling.
 
@@ -30,6 +38,7 @@ At several sections throughout this chapter, the author emphasises how much a pa
 
 Additional code can be found in this [repo](https://github.com/PaulApivat/dsfs)
 
+## Setup
 ### Installation, Virtual Environment and Modules
 
 These section takes the reader through installing a virtual environment using Anaconda Python distribution. The author points out a best practice, "you should always work in a virtual environment and never use 'base' Python installation". Moreover, the author favors IPython over jupyter notebooks (he's a noted [critic of the notebook](https://www.youtube.com/watch?v=7jiPeIFXb6U))
@@ -42,7 +51,7 @@ Here's a summary of the commands I used for setup:
 
 ![png](./python_virtual_env.png)
 
-### Functions
+## Functions
 
 Three things are emphasized here: passing functions as arguments for other functions, lambda functions and default parameter values. 
 
@@ -161,7 +170,7 @@ list(filter(lambda n: n % 2 == 0, numbers))
 
 There are whole books, or at least whole chapters, that can be written about Python functions, but we'll limit our discussion for now to the idea that **functions can be passed as arguments to other functions**. I'll report back on this section as we progress through the book.
 
-### Strings
+## Strings
 
 Strings may not be terribly exciting for data science or machine learning, unless you're getting into natural language processing, so we'll keep it brief here. The key take aways are that *backslashes* encode special characters and that **f-strings** is the most updated way to do string interpolation. Here are some examples:
 
@@ -183,7 +192,7 @@ string_format = "{0} {1}".format(first_name, last_name)
 pct_format = "%s %s" %('Paul','Apivat')
 ```
 
-### Exceptions
+## Exceptions
 
 The author covers exceptions to make the point that they're not all that bad in Python and it's worth handling exceptions yourself to make code more readable. Here's my own example that's slightly different from the book:
 
@@ -216,11 +225,13 @@ except TypeError:
 
 At this point, the primary benefits to handling exceptions yourself is for code readability, so we'll come back to this section if we see more useful examples.  
 
-## lists 
+## Lists 
 
-Lists are fundamental to Python so I'm going to spend some time exploring their features. Within the context of data science, `NumPy arrays`, as a corollary to python's native `lists` are used frequently, so I thought it'd be good to implement all `list` operations covered in this section in `Numpy arrays` to *tease apart their similarities and differences*. 
+Lists are fundamental to Python so I'm going to spend some time exploring their features. For data science, `NumPy arrays` are used frequently, so I thought it'd be good to implement all `list` operations covered in this section in `Numpy arrays` to *tease apart their similarities and differences*. 
 
-Below are the similarties. This implies that whatever can be done in python `lists` can also be done in numpy `arrays`, including: getting the nth element in the list/array with square brackets, slicing the list/array, iterating through the list/array with *start, stop, step*, using the `in` operator to find list/array membership, checking length and unpacking list/arrays. 
+Below are the similarities. 
+
+This implies that whatever can be done in python `lists` can also be done in numpy `arrays`, including: getting the *nth* element in the list/array with square brackets, slicing the list/array, iterating through the list/array with *start, stop, step*, using the `in` operator to find list/array membership, checking length and unpacking list/arrays. 
 
 ```python
 # setup
@@ -269,7 +280,9 @@ w,z = np.array([1,2]) # now w is 1, z is 2
 
 ```
 
-Here are the differences. Here, the tasks that can be done in python `lists`, but require a different approach for numpy `array` including: modification (extend in list, append for array). Finally, lists can store mixed data types, while numpy array will convert to string. 
+Now, here are the differences. 
+
+These tasks can be done in python `lists`, but require a different approach for NumPy `array` including: modification (extend in list, append for array). Finally, lists can store mixed data types, while NumPy array will convert to string. 
 
 ```python
 
@@ -312,11 +325,202 @@ numpy_array = np.append(numpy_array, [0])
 
 ```
 
-Python lists and numpy array likely have more in common than otherwise, but there are meaningful differences as well.
+Python `lists` and NumPy `arrays` have much in common, but there are meaningful differences as well.
 
-### Tuples
+#### Python Lists vs NumPy Arrays: What's the difference
 
-### Dictionaries
+Now that we know that there *are* meaningful differences, what can we attribute these differences to? This [explainer from UCF](https://webcourses.ucf.edu/courses/1249560/pages/python-lists-vs-numpy-arrays-what-is-the-difference) highlights **performance** differences including:
+
+- Size
+- Performance
+- Functionality
+
+I'm tempted to go down this 🐇 🕳️ of further `lists` vs `array` comparisons, but we'll hold off for now.
+
+
+## Tuples
+
+Similar to `lists`, but `tuples` are immutable. 
+
+```python
+
+my_list = [1,2]   # check type(my_list)
+my_tuple = (1,2)  # check type(my_tuple)
+other_tuple = 3,4 # tuples don't require parentheses
+
+my_list[1] = 3    # lists ARE mutable, my_list is now [1,3]
+
+# exception handling when trying to change tuple
+try:
+    my_tuple[1] = 3
+except TypeError:
+    print("tuples are immutable")
+
+```
+
+`Tuples` are good at returning multiple values from functions:
+
+```python
+
+# use tuple to return multiple values
+def sum_and_product(x,y):
+    """you can return multiple values from functions using tuples"""
+    return (x + y), (x * y)
+    
+sp = sum_and_product(4,5)  # sp is (9,20), a tuple
+
+```
+However, `lists` can also be used to return multiple values:
+
+```python
+
+def sum_and_product_list(x,y):
+    return [(x + y), (x * y)]
+
+spl = sum_and_product_list(5,6)  # [11, 30]
+type(spl) # list
+```
+Finally, both `tuples` and `lists` can be used for multiple assignments, here's a pythonic way to swap variables:
+
+```python
+x, y = 1,2
+x,y = y,x
+```
+
+Tuples, for the most part, seem to be redundant with `lists`, but we'll see if there are special use-cases for immutability down the line. 
+
+## Dictionaries
+
+Dictionaries are good for storing structured data. They have a key/value pair so you can look up values of certain keys. The author provides some ways to initialize a dictionary, with comments about what is *more or less pythonic*. 
+
+I'll take the authors word for it (but it does seem arbitrary).
+
+```python
+
+empty_dict = {}                   # most pythonic
+empty_dict2 = dict()              # less pythonic
+grades = {"Joel": 80, "Grus": 99} # dictionary literal
+
+type(grades)  # type check, dict
+
+# use bracket to look up values
+grades["Grus"]  # 99
+grades["Joel"]  # 80
+
+# KeyError for looking up non-existent keys
+try:
+   kate_grades = grades["Kate"]
+except KeyError:
+   print("That key doesn't exist")
+   
+# use in operator to check existence of key
+joe_has_grade = "Joel" in grades  
+joe_has_grade # true
+
+kate_does_not = "Kate" in grades
+kate_does_not # false
+
+# use 'get' method to get values in dictionaries
+grades.get("Joel") # 80
+grades.get("Grus") # 99
+grades.get("Kate") # default: None
+
+# assign new key/value pair using brackets
+grades["Tim"] = 93
+
+grades # {'Joel': 80, 'Grus': 99, 'Tim': 93}
+
+```
+
+Dictionaries are good for representing structured data that can be queries. The key take-away here is that in order to iterate through `dictionaries` to get either `keys`, `values` or both, we'll need to use specific methods likes `keys()`, `values()` or `items()`.
+
+```python
+
+tweet = {
+    "user": "paulapivat",
+    "text": "Reading Data Science from Scratch",
+    "retweet_count": 100,
+    "hashtags": ["#66daysofdata", "datascience", "machinelearning", "python", "R"]
+    }
+    
+# query specific values
+tweet["retweet_count"] # 100
+
+# query values within a list
+tweet["hashtags"] # ['#66daysofdata', 'datascience', 'machinelearning', 'python', 'R']
+tweet["hashtags"][2] # 'machinelearning'
+
+# retrieve ALL keys
+tweet_keys = tweet.keys()
+tweet_keys              # dict_keys(['user', 'text', 'retweet_count', 'hashtags'])
+type(tweet_keys)        # different data type: dict != dict_keys
+
+# retrieve ALL values
+tweet_values = tweet.values() 
+tweet_values  # dict_values(['paulapivat', 'Reading Data Science from Scratch', 100, ['#66daysofdata', 'datascience', 'machinelearning', 'python', 'R']])
+
+type(tweet_values)      # different data type: dict != dict_values
+
+# create iterable for Key-Value pairs (in tuple)
+tweet_items = tweet.items()
+
+# iterate through tweet_items()
+for key,value in tweet_items:
+    print("These are the keys:", key)
+    print("These are the values:", value)
+    
+# cannot iterate through original tweet dictionary
+# ValueError: too many values to unpack (expected 2)
+for key, value in tweet:
+    print(key)
+    
+# cannot use 'enumerate' because that only provides index and key (no value)
+for key, value in enumerate(tweet):
+    print(key)   # print 0 1 2 3 - index values
+    print(value) # user text retweet_count hashtags (incorrectly print keys)
+```
+
+Just like in `lists` and `tuples`, you can use the `in` operator to find membership. The one caveat is you cannot look up *values* that are in `lists`, unless you use bracket notation to help.
+
+```python
+
+# search keys
+"user" in tweet # true
+"bball" in tweet # false
+
+"paulapivat" in tweet_values # true
+'python' in tweet_values # false (python is nested in 'hashtags')
+"hashtags" in tweet  # true
+
+# finding values inside a list requires brackets to help
+'python' in tweet['hashtags']  # true
+
+```
+
+**What is or is not hashable?**
+
+`Dictionary` keys must be hashable.
+
+`Strings` are hashable. So we can use `strings` as dictionary keys, but we **cannot** use `lists` because they are not hashable.
+
+```python
+
+paul = "paul"
+type(paul)        # check type, str
+
+hash(paul)        # -3897810863245179227 ; strings are hashable
+paul.__hash__()   # -3897810863245179227 ; another way to find the hash
+
+jake = ['jake']   # this is a list
+type(jake)        # check type, list
+
+# lists are not hashable - cannot be used as dictionary keys
+try:
+   hash(jake)
+except TypeError:
+   print('lists are not hashable')
+
+```
 
 ### defaultdict
 

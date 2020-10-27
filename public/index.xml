@@ -1068,15 +1068,31 @@ hist(x)
       <link>/post/dsfs_2/</link>
       <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
       <guid>/post/dsfs_2/</guid>
-      <description>&lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
-&lt;p&gt;
-&lt;a href=&#34;#lists&#34;&gt;scroll down to List section&lt;/a&gt;&lt;/p&gt;
+      <description>&lt;p&gt;&lt;strong&gt;Table of Content:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;#setup&#34;&gt;Set Up&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#functions&#34;&gt;Functions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#strings&#34;&gt;Strings&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#exceptions&#34;&gt;Exceptions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#lists&#34;&gt;Lists&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#tuples&#34;&gt;Tuples&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#dictionaries&#34;&gt;Dictionaries&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
 &lt;p&gt;This is the first of many chapters i&amp;rsquo;ll be covering from Joel Grus&amp;rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &amp;ldquo;doing&amp;rdquo; data science from scratch, including essential setup of virtual environments and other tooling.&lt;/p&gt;
 &lt;p&gt;While the chapter is not meant to be comprehensive, I may supplement certain sections with external content for greater detail in certain parts.&lt;/p&gt;
 &lt;p&gt;My goal is twofold. First, to go through this book and, as a byproduct, learn python. Second, to look out for and highlight the areas where the &lt;em&gt;pythonic&lt;/em&gt; way of doing things is necessary to accomplish something in the data science process.&lt;/p&gt;
 &lt;p&gt;At several sections throughout this chapter, the author emphasises how much a particular feature will be used later in the book (e.g., functions, dictionaries, list, list comprehensions (and for-loops), assert, iterables and generators, randomness, type annotations). Things &lt;em&gt;not&lt;/em&gt; used as much (e.g., sets, automated test, subclasses that inherit functionality from a parent class, zip and argument unpacking, args, kwargs).&lt;/p&gt;
 &lt;p&gt;Additional code can be found in this 
 &lt;a href=&#34;https://github.com/PaulApivat/dsfs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;repo&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
 &lt;h3 id=&#34;installation-virtual-environment-and-modules&#34;&gt;Installation, Virtual Environment and Modules&lt;/h3&gt;
 &lt;p&gt;These section takes the reader through installing a virtual environment using Anaconda Python distribution. The author points out a best practice, &amp;ldquo;you should always work in a virtual environment and never use &amp;lsquo;base&amp;rsquo; Python installation&amp;rdquo;. Moreover, the author favors IPython over jupyter notebooks (he&amp;rsquo;s a noted 
 &lt;a href=&#34;https://www.youtube.com/watch?v=7jiPeIFXb6U&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;critic of the notebook&lt;/a&gt;)&lt;/p&gt;
@@ -1084,7 +1100,7 @@ hist(x)
 &lt;p&gt;Fortunately, I had a relatively painless process setting up a virtual environment and IPython, although I had to take a slight detour to setup the &lt;code&gt;code&lt;/code&gt; command for VSCode.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s a summary of the commands I used for setup:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./python_virtual_env.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;functions&#34;&gt;Functions&lt;/h3&gt;
+&lt;h2 id=&#34;functions&#34;&gt;Functions&lt;/h2&gt;
 &lt;p&gt;Three things are emphasized here: passing functions as arguments for other functions, lambda functions and default parameter values.&lt;/p&gt;
 &lt;p&gt;The illustration of functions being passed as arguments is demonstrated below. A function &lt;code&gt;double&lt;/code&gt; is created. A function &lt;code&gt;apply_to_one&lt;/code&gt; is created. The &lt;code&gt;double&lt;/code&gt; function is pointed at &lt;code&gt;my_double&lt;/code&gt;. We pass &lt;code&gt;my_double&lt;/code&gt; into the &lt;code&gt;apply_to_one&lt;/code&gt; function and set that to &lt;code&gt;x&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Whatever function is passed to &lt;code&gt;apply_to_one&lt;/code&gt;, &lt;em&gt;its&lt;/em&gt; argument is 1. So passing &lt;code&gt;my_double&lt;/code&gt; means we are doubling 1, so x is 2.&lt;/p&gt;
@@ -1187,7 +1203,7 @@ list(filter(lambda n: n % 2 == 0, numbers))
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;There are whole books, or at least whole chapters, that can be written about Python functions, but we&amp;rsquo;ll limit our discussion for now to the idea that &lt;strong&gt;functions can be passed as arguments to other functions&lt;/strong&gt;. I&amp;rsquo;ll report back on this section as we progress through the book.&lt;/p&gt;
-&lt;h3 id=&#34;strings&#34;&gt;Strings&lt;/h3&gt;
+&lt;h2 id=&#34;strings&#34;&gt;Strings&lt;/h2&gt;
 &lt;p&gt;Strings may not be terribly exciting for data science or machine learning, unless you&amp;rsquo;re getting into natural language processing, so we&amp;rsquo;ll keep it brief here. The key take aways are that &lt;em&gt;backslashes&lt;/em&gt; encode special characters and that &lt;strong&gt;f-strings&lt;/strong&gt; is the most updated way to do string interpolation. Here are some examples:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# point strings to variables (we&#39;ll use my name)
 first_name = &amp;quot;Paul&amp;quot;
@@ -1205,7 +1221,7 @@ string_format = &amp;quot;{0} {1}&amp;quot;.format(first_name, last_name)
 # percent format (NOT recommended), &#39;Paul Apivat&#39;
 pct_format = &amp;quot;%s %s&amp;quot; %(&#39;Paul&#39;,&#39;Apivat&#39;)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;exceptions&#34;&gt;Exceptions&lt;/h3&gt;
+&lt;h2 id=&#34;exceptions&#34;&gt;Exceptions&lt;/h2&gt;
 &lt;p&gt;The author covers exceptions to make the point that they&amp;rsquo;re not all that bad in Python and it&amp;rsquo;s worth handling exceptions yourself to make code more readable. Here&amp;rsquo;s my own example that&amp;rsquo;s slightly different from the book:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;integer_list = [1,2,3]
 
@@ -1233,9 +1249,10 @@ except TypeError:
     print(&amp;quot;cannot add objects of different data types&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;At this point, the primary benefits to handling exceptions yourself is for code readability, so we&amp;rsquo;ll come back to this section if we see more useful examples.&lt;/p&gt;
-&lt;h2 id=&#34;lists&#34;&gt;lists&lt;/h2&gt;
-&lt;p&gt;Lists are fundamental to Python so I&amp;rsquo;m going to spend some time exploring their features. Within the context of data science, &lt;code&gt;NumPy arrays&lt;/code&gt;, as a corollary to python&amp;rsquo;s native &lt;code&gt;lists&lt;/code&gt; are used frequently, so I thought it&amp;rsquo;d be good to implement all &lt;code&gt;list&lt;/code&gt; operations covered in this section in &lt;code&gt;Numpy arrays&lt;/code&gt; to &lt;em&gt;tease apart their similarities and differences&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;Below are the similarties. This implies that whatever can be done in python &lt;code&gt;lists&lt;/code&gt; can also be done in numpy &lt;code&gt;arrays&lt;/code&gt;, including: getting the nth element in the list/array with square brackets, slicing the list/array, iterating through the list/array with &lt;em&gt;start, stop, step&lt;/em&gt;, using the &lt;code&gt;in&lt;/code&gt; operator to find list/array membership, checking length and unpacking list/arrays.&lt;/p&gt;
+&lt;h2 id=&#34;lists&#34;&gt;Lists&lt;/h2&gt;
+&lt;p&gt;Lists are fundamental to Python so I&amp;rsquo;m going to spend some time exploring their features. For data science, &lt;code&gt;NumPy arrays&lt;/code&gt; are used frequently, so I thought it&amp;rsquo;d be good to implement all &lt;code&gt;list&lt;/code&gt; operations covered in this section in &lt;code&gt;Numpy arrays&lt;/code&gt; to &lt;em&gt;tease apart their similarities and differences&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Below are the similarities.&lt;/p&gt;
+&lt;p&gt;This implies that whatever can be done in python &lt;code&gt;lists&lt;/code&gt; can also be done in numpy &lt;code&gt;arrays&lt;/code&gt;, including: getting the &lt;em&gt;nth&lt;/em&gt; element in the list/array with square brackets, slicing the list/array, iterating through the list/array with &lt;em&gt;start, stop, step&lt;/em&gt;, using the &lt;code&gt;in&lt;/code&gt; operator to find list/array membership, checking length and unpacking list/arrays.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# setup
 import numpy as np
 
@@ -1281,7 +1298,8 @@ w,z = np.array([1,2]) # now w is 1, z is 2
 
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here are the differences. Here, the tasks that can be done in python &lt;code&gt;lists&lt;/code&gt;, but require a different approach for numpy &lt;code&gt;array&lt;/code&gt; including: modification (extend in list, append for array). Finally, lists can store mixed data types, while numpy array will convert to string.&lt;/p&gt;
+&lt;p&gt;Now, here are the differences.&lt;/p&gt;
+&lt;p&gt;These tasks can be done in python &lt;code&gt;lists&lt;/code&gt;, but require a different approach for NumPy &lt;code&gt;array&lt;/code&gt; including: modification (extend in list, append for array). Finally, lists can store mixed data types, while NumPy array will convert to string.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
 # python lists can store mixed data types
 heterogeneous_list = [&#39;string&#39;, 0.1, True]
@@ -1321,9 +1339,172 @@ python_list.append(0) # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 0]
 numpy_array = np.append(numpy_array, [0])
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Python lists and numpy array likely have more in common than otherwise, but there are meaningful differences as well.&lt;/p&gt;
-&lt;h3 id=&#34;tuples&#34;&gt;Tuples&lt;/h3&gt;
-&lt;h3 id=&#34;dictionaries&#34;&gt;Dictionaries&lt;/h3&gt;
+&lt;p&gt;Python &lt;code&gt;lists&lt;/code&gt; and NumPy &lt;code&gt;arrays&lt;/code&gt; have much in common, but there are meaningful differences as well.&lt;/p&gt;
+&lt;h4 id=&#34;python-lists-vs-numpy-arrays-whats-the-difference&#34;&gt;Python Lists vs NumPy Arrays: What&amp;rsquo;s the difference&lt;/h4&gt;
+&lt;p&gt;Now that we know that there &lt;em&gt;are&lt;/em&gt; meaningful differences, what can we attribute these differences to? This 
+&lt;a href=&#34;https://webcourses.ucf.edu/courses/1249560/pages/python-lists-vs-numpy-arrays-what-is-the-difference&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;explainer from UCF&lt;/a&gt; highlights &lt;strong&gt;performance&lt;/strong&gt; differences including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Size&lt;/li&gt;
+&lt;li&gt;Performance&lt;/li&gt;
+&lt;li&gt;Functionality&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I&amp;rsquo;m tempted to go down this 🐇 🕳️ of further &lt;code&gt;lists&lt;/code&gt; vs &lt;code&gt;array&lt;/code&gt; comparisons, but we&amp;rsquo;ll hold off for now.&lt;/p&gt;
+&lt;h2 id=&#34;tuples&#34;&gt;Tuples&lt;/h2&gt;
+&lt;p&gt;Similar to &lt;code&gt;lists&lt;/code&gt;, but &lt;code&gt;tuples&lt;/code&gt; are immutable.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+my_list = [1,2]   # check type(my_list)
+my_tuple = (1,2)  # check type(my_tuple)
+other_tuple = 3,4 # tuples don&#39;t require parentheses
+
+my_list[1] = 3    # lists ARE mutable, my_list is now [1,3]
+
+# exception handling when trying to change tuple
+try:
+    my_tuple[1] = 3
+except TypeError:
+    print(&amp;quot;tuples are immutable&amp;quot;)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Tuples&lt;/code&gt; are good at returning multiple values from functions:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+# use tuple to return multiple values
+def sum_and_product(x,y):
+    &amp;quot;&amp;quot;&amp;quot;you can return multiple values from functions using tuples&amp;quot;&amp;quot;&amp;quot;
+    return (x + y), (x * y)
+    
+sp = sum_and_product(4,5)  # sp is (9,20), a tuple
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, &lt;code&gt;lists&lt;/code&gt; can also be used to return multiple values:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+def sum_and_product_list(x,y):
+    return [(x + y), (x * y)]
+
+spl = sum_and_product_list(5,6)  # [11, 30]
+type(spl) # list
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, both &lt;code&gt;tuples&lt;/code&gt; and &lt;code&gt;lists&lt;/code&gt; can be used for multiple assignments, here&amp;rsquo;s a pythonic way to swap variables:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;x, y = 1,2
+x,y = y,x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Tuples, for the most part, seem to be redundant with &lt;code&gt;lists&lt;/code&gt;, but we&amp;rsquo;ll see if there are special use-cases for immutability down the line.&lt;/p&gt;
+&lt;h2 id=&#34;dictionaries&#34;&gt;Dictionaries&lt;/h2&gt;
+&lt;p&gt;Dictionaries are good for storing structured data. They have a key/value pair so you can look up values of certain keys. The author provides some ways to initialize a dictionary, with comments about what is &lt;em&gt;more or less pythonic&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll take the authors word for it (but it does seem arbitrary).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+empty_dict = {}                   # most pythonic
+empty_dict2 = dict()              # less pythonic
+grades = {&amp;quot;Joel&amp;quot;: 80, &amp;quot;Grus&amp;quot;: 99} # dictionary literal
+
+type(grades)  # type check, dict
+
+# use bracket to look up values
+grades[&amp;quot;Grus&amp;quot;]  # 99
+grades[&amp;quot;Joel&amp;quot;]  # 80
+
+# KeyError for looking up non-existent keys
+try:
+   kate_grades = grades[&amp;quot;Kate&amp;quot;]
+except KeyError:
+   print(&amp;quot;That key doesn&#39;t exist&amp;quot;)
+   
+# use in operator to check existence of key
+joe_has_grade = &amp;quot;Joel&amp;quot; in grades  
+joe_has_grade # true
+
+kate_does_not = &amp;quot;Kate&amp;quot; in grades
+kate_does_not # false
+
+# use &#39;get&#39; method to get values in dictionaries
+grades.get(&amp;quot;Joel&amp;quot;) # 80
+grades.get(&amp;quot;Grus&amp;quot;) # 99
+grades.get(&amp;quot;Kate&amp;quot;) # default: None
+
+# assign new key/value pair using brackets
+grades[&amp;quot;Tim&amp;quot;] = 93
+
+grades # {&#39;Joel&#39;: 80, &#39;Grus&#39;: 99, &#39;Tim&#39;: 93}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Dictionaries are good for representing structured data that can be queries. The key take-away here is that in order to iterate through &lt;code&gt;dictionaries&lt;/code&gt; to get either &lt;code&gt;keys&lt;/code&gt;, &lt;code&gt;values&lt;/code&gt; or both, we&amp;rsquo;ll need to use specific methods likes &lt;code&gt;keys()&lt;/code&gt;, &lt;code&gt;values()&lt;/code&gt; or &lt;code&gt;items()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+tweet = {
+    &amp;quot;user&amp;quot;: &amp;quot;paulapivat&amp;quot;,
+    &amp;quot;text&amp;quot;: &amp;quot;Reading Data Science from Scratch&amp;quot;,
+    &amp;quot;retweet_count&amp;quot;: 100,
+    &amp;quot;hashtags&amp;quot;: [&amp;quot;#66daysofdata&amp;quot;, &amp;quot;datascience&amp;quot;, &amp;quot;machinelearning&amp;quot;, &amp;quot;python&amp;quot;, &amp;quot;R&amp;quot;]
+    }
+    
+# query specific values
+tweet[&amp;quot;retweet_count&amp;quot;] # 100
+
+# query values within a list
+tweet[&amp;quot;hashtags&amp;quot;] # [&#39;#66daysofdata&#39;, &#39;datascience&#39;, &#39;machinelearning&#39;, &#39;python&#39;, &#39;R&#39;]
+tweet[&amp;quot;hashtags&amp;quot;][2] # &#39;machinelearning&#39;
+
+# retrieve ALL keys
+tweet_keys = tweet.keys()
+tweet_keys              # dict_keys([&#39;user&#39;, &#39;text&#39;, &#39;retweet_count&#39;, &#39;hashtags&#39;])
+type(tweet_keys)        # different data type: dict != dict_keys
+
+# retrieve ALL values
+tweet_values = tweet.values() 
+tweet_values  # dict_values([&#39;paulapivat&#39;, &#39;Reading Data Science from Scratch&#39;, 100, [&#39;#66daysofdata&#39;, &#39;datascience&#39;, &#39;machinelearning&#39;, &#39;python&#39;, &#39;R&#39;]])
+
+type(tweet_values)      # different data type: dict != dict_values
+
+# create iterable for Key-Value pairs (in tuple)
+tweet_items = tweet.items()
+
+# iterate through tweet_items()
+for key,value in tweet_items:
+    print(&amp;quot;These are the keys:&amp;quot;, key)
+    print(&amp;quot;These are the values:&amp;quot;, value)
+    
+# cannot iterate through original tweet dictionary
+# ValueError: too many values to unpack (expected 2)
+for key, value in tweet:
+    print(key)
+    
+# cannot use &#39;enumerate&#39; because that only provides index and key (no value)
+for key, value in enumerate(tweet):
+    print(key)   # print 0 1 2 3 - index values
+    print(value) # user text retweet_count hashtags (incorrectly print keys)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Just like in &lt;code&gt;lists&lt;/code&gt; and &lt;code&gt;tuples&lt;/code&gt;, you can use the &lt;code&gt;in&lt;/code&gt; operator to find membership. The one caveat is you cannot look up &lt;em&gt;values&lt;/em&gt; that are in &lt;code&gt;lists&lt;/code&gt;, unless you use bracket notation to help.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+# search keys
+&amp;quot;user&amp;quot; in tweet # true
+&amp;quot;bball&amp;quot; in tweet # false
+
+&amp;quot;paulapivat&amp;quot; in tweet_values # true
+&#39;python&#39; in tweet_values # false (python is nested in &#39;hashtags&#39;)
+&amp;quot;hashtags&amp;quot; in tweet  # true
+
+# finding values inside a list requires brackets to help
+&#39;python&#39; in tweet[&#39;hashtags&#39;]  # true
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;What is or is not hashable?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Dictionary&lt;/code&gt; keys must be hashable.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Strings&lt;/code&gt; are hashable. So we can use &lt;code&gt;strings&lt;/code&gt; as dictionary keys, but we &lt;strong&gt;cannot&lt;/strong&gt; use &lt;code&gt;lists&lt;/code&gt; because they are not hashable.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+paul = &amp;quot;paul&amp;quot;
+type(paul)        # check type, str
+
+hash(paul)        # -3897810863245179227 ; strings are hashable
+paul.__hash__()   # -3897810863245179227 ; another way to find the hash
+
+jake = [&#39;jake&#39;]   # this is a list
+type(jake)        # check type, list
+
+# lists are not hashable - cannot be used as dictionary keys
+try:
+   hash(jake)
+except TypeError:
+   print(&#39;lists are not hashable&#39;)
+
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;defaultdict&#34;&gt;defaultdict&lt;/h3&gt;
 &lt;h3 id=&#34;counters&#34;&gt;Counters&lt;/h3&gt;
 &lt;h3 id=&#34;sets&#34;&gt;Sets&lt;/h3&gt;
