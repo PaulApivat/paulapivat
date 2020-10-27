@@ -18,6 +18,8 @@ title: Data Science from Scratch (ch2)
 
 ## Chapter 2: A Crash Course in Python
 
+[scroll down to List section](#lists)
+
 This is the first of many chapters i'll be covering from Joel Grus' Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for "doing" data science from scratch, including essential setup of virtual environments and other tooling.
 
 While the chapter is not meant to be comprehensive, I may supplement certain sections with external content for greater detail in certain parts. 
@@ -214,7 +216,7 @@ except TypeError:
 
 At this point, the primary benefits to handling exceptions yourself is for code readability, so we'll come back to this section if we see more useful examples.  
 
-### Lists
+#lists 
 
 Lists are fundamental to Python so I'm going to spend some time exploring their features. Within the context of data science, `NumPy arrays`, as a corollary to python's native `lists` are used frequently, so I thought it'd be good to implement all `list` operations covered in this section in `Numpy arrays` to *tease apart their similarities and differences*. 
 

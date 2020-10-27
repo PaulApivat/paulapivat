@@ -18,6 +18,8 @@
       <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
       <guid>/post/dsfs_2/</guid>
       <description>&lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;#lists&#34;&gt;scroll down to List section&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;This is the first of many chapters i&amp;rsquo;ll be covering from Joel Grus&amp;rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &amp;ldquo;doing&amp;rdquo; data science from scratch, including essential setup of virtual environments and other tooling.&lt;/p&gt;
 &lt;p&gt;While the chapter is not meant to be comprehensive, I may supplement certain sections with external content for greater detail in certain parts.&lt;/p&gt;
 &lt;p&gt;My goal is twofold. First, to go through this book and, as a byproduct, learn python. Second, to look out for and highlight the areas where the &lt;em&gt;pythonic&lt;/em&gt; way of doing things is necessary to accomplish something in the data science process.&lt;/p&gt;
@@ -180,7 +182,7 @@ except TypeError:
     print(&amp;quot;cannot add objects of different data types&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;At this point, the primary benefits to handling exceptions yourself is for code readability, so we&amp;rsquo;ll come back to this section if we see more useful examples.&lt;/p&gt;
-&lt;h3 id=&#34;lists&#34;&gt;Lists&lt;/h3&gt;
+&lt;p&gt;#lists&lt;/p&gt;
 &lt;p&gt;Lists are fundamental to Python so I&amp;rsquo;m going to spend some time exploring their features. Within the context of data science, &lt;code&gt;NumPy arrays&lt;/code&gt;, as a corollary to python&amp;rsquo;s native &lt;code&gt;lists&lt;/code&gt; are used frequently, so I thought it&amp;rsquo;d be good to implement all &lt;code&gt;list&lt;/code&gt; operations covered in this section in &lt;code&gt;Numpy arrays&lt;/code&gt; to &lt;em&gt;tease apart their similarities and differences&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;Here are the similarties:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# setup

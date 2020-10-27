@@ -758,6 +758,8 @@
 
     <div class="article-style">
       <h2 id="chapter-2-a-crash-course-in-python">Chapter 2: A Crash Course in Python</h2>
+<p>
+<a href="#lists">scroll down to List section</a></p>
 <p>This is the first of many chapters i&rsquo;ll be covering from Joel Grus&rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &ldquo;doing&rdquo; data science from scratch, including essential setup of virtual environments and other tooling.</p>
 <p>While the chapter is not meant to be comprehensive, I may supplement certain sections with external content for greater detail in certain parts.</p>
 <p>My goal is twofold. First, to go through this book and, as a byproduct, learn python. Second, to look out for and highlight the areas where the <em>pythonic</em> way of doing things is necessary to accomplish something in the data science process.</p>
@@ -920,7 +922,7 @@ except TypeError:
     print(&quot;cannot add objects of different data types&quot;)
 </code></pre>
 <p>At this point, the primary benefits to handling exceptions yourself is for code readability, so we&rsquo;ll come back to this section if we see more useful examples.</p>
-<h3 id="lists">Lists</h3>
+<p>#lists</p>
 <p>Lists are fundamental to Python so I&rsquo;m going to spend some time exploring their features. Within the context of data science, <code>NumPy arrays</code>, as a corollary to python&rsquo;s native <code>lists</code> are used frequently, so I thought it&rsquo;d be good to implement all <code>list</code> operations covered in this section in <code>Numpy arrays</code> to <em>tease apart their similarities and differences</em>.</p>
 <p>Here are the similarties:</p>
 <pre><code class="language-python"># setup
