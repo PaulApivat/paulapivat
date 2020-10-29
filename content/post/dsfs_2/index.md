@@ -660,8 +660,124 @@ defaultdict(int,
              'RAPTOR': 1})
 
 ```
-Unlike a regular dictionary, when `defaultdict` tries to look up a key it doesn't contain, it'll automatically add a value for it using the argument we provided when we first created the `defaultdict`. If you see above, we entered an `int` as the argument, which allows it to automatically *add a value*. 
+Unlike a regular dictionary, when `defaultdict` tries to look up a key it doesn't contain, it'll automatically add a value for it using the argument we provided when we first created the `defaultdict`. If you see above, we entered an `int` as the argument, which allows it to automatically *add an integer value*. 
 
+If you want your `defaultdict` to have `values` be `lists`, you can pass a `list` as argument. Then, when you `append` a value, it is automatically contained in a `list`.
+
+```python
+dd_list = defaultdict(list) # defaultdict(list, {})
+
+dd_list[2].append(1)        # defaultdict(list, {2: [1]})
+
+dd_list[4].append('string') # defaultdict(list, {2: [1], 4: ['string']})
+
+```
+You can also pass a `dict` into `defaultdict`, ensuring that all appended values are contained in a `dict`:
+
+```python
+
+dd_dict = defaultdict(dict) # defaultdict(dict, {})
+
+# match key-with-value
+dd_dict['first_name'] = 'lebron' # defaultdict(dict, {'first_name': 'lebron'})
+dd_dict['last_name'] = 'james'   
+
+# match key with dictionary containing another key-value pair
+dd_dict['team']['city'] = 'Los Angeles'
+
+# defaultdict(dict,
+#            {'first_name': 'lebron',
+#             'last_name': 'james',
+#             'team': {'city': 'Los Angeles'}})
+
+```
+#### Application: Grouping with defaultdict
+
+The follow example is from [Real Python](https://realpython.com/python-defaultdict/), a fantastic resource for all things Python. 
+
+It is common to use `defaultdict` to group items in a sequence or collection, setting the initial parameter (aka `.default_factory`) set to `list`.
+
+```python
+dep = [('Sales', 'John Doe'),
+       ('Sales', 'Martin Smith'),
+       ('Accounting', 'Jane Doe'),
+       ('Marketing', 'Elizabeth Smith'),
+       ('Marketing', 'Adam Doe')]
+       
+from collections import defaultdict
+
+dep_dd = defaultdict(list)
+
+for department, employee in dep:
+    dep_dd[department].append(employee)
+    
+dep_dd
+#defaultdict(list,
+#            {'Sales': ['John Doe', 'Martin Smith'],
+#             'Accounting': ['Jane Doe'],
+#             'Marketing': ['Elizabeth Smith', 'Adam Doe']})
+
+```
+
+What happens when you have **duplicate** entries? We're jumping ahead slightly to use `set` handle duplicates and only group unique entries:
+
+```python
+
+# departments with duplicate entries
+dep = [('Sales', 'John Doe'),
+       ('Sales', 'Martin Smith'),
+       ('Accounting', 'Jane Doe'),
+       ('Marketing', 'Elizabeth Smith'),
+       ('Marketing', 'Elizabeth Smith'),
+       ('Marketing', 'Adam Doe'),
+       ('Marketing', 'Adam Doe'),
+       ('Marketing', 'Adam Doe')]
+
+# use defaultdict with set
+dep_dd = defaultdict(set)
+
+# set object has no attribute 'append'
+# so use 'add' to achieve the same effect
+for department, employee in dep:
+    dep_dd[department].add(employee)
+    
+dep_dd
+#defaultdict(set,
+#            {'Sales': {'John Doe', 'Martin Smith'},
+#             'Accounting': {'Jane Doe'},
+#             'Marketing': {'Adam Doe', 'Elizabeth Smith'}})
+```
+
+#### Application: Accumulating with defaultdict
+
+Finally, we'll use `defaultdict` to accumulate values:
+
+```python
+incomes = [('Books', 1250.00),
+           ('Books', 1300.00),
+           ('Books', 1420.00),
+           ('Tutorials', 560.00),
+           ('Tutorials', 630.00),
+           ('Tutorials', 750.00),
+           ('Courses', 2500.00),
+           ('Courses', 2430.00),
+           ('Courses', 2750.00),]
+
+# enter float as argument        
+dd = defaultdict(float)  # collections.defaultdict
+
+# defaultdict(float, {'Books': 3970.0, 'Tutorials': 1940.0, 'Courses': 7680.0})
+for product, income in incomes:
+    dd[product] += income
+    
+for product, income in dd.items():
+    print(f"Total income for {product}: ${income:,.2f}")
+
+# Total income for Books: $3,970.00
+# Total income for Tutorials: $1,940.00
+# Total income for Courses: $7,680.00
+```
+I can see that `defaultdict` and `dictionaries` can be handy for grouping, counting and accumulating values in a column. We'll come back to revisit these foundational concepts once the data science applications are clearer. For now, we'll stop here and proceed to the next topic: counters. 
 
 ### Counters
 

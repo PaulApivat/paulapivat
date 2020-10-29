@@ -723,7 +723,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    16 min read
+    18 min read
   </span>
   
 
@@ -1317,7 +1317,109 @@ defaultdict(int,
              'RAPTOR': 1})
 
 </code></pre>
-<p>Unlike a regular dictionary, when <code>defaultdict</code> tries to look up a key it doesn&rsquo;t contain, it&rsquo;ll automatically add a value for it using the argument we provided when we first created the <code>defaultdict</code>. If you see above, we entered an <code>int</code> as the argument, which allows it to automatically <em>add a value</em>.</p>
+<p>Unlike a regular dictionary, when <code>defaultdict</code> tries to look up a key it doesn&rsquo;t contain, it&rsquo;ll automatically add a value for it using the argument we provided when we first created the <code>defaultdict</code>. If you see above, we entered an <code>int</code> as the argument, which allows it to automatically <em>add an integer value</em>.</p>
+<p>If you want your <code>defaultdict</code> to have <code>values</code> be <code>lists</code>, you can pass a <code>list</code> as argument. Then, when you <code>append</code> a value, it is automatically contained in a <code>list</code>.</p>
+<pre><code class="language-python">dd_list = defaultdict(list) # defaultdict(list, {})
+
+dd_list[2].append(1)        # defaultdict(list, {2: [1]})
+
+dd_list[4].append('string') # defaultdict(list, {2: [1], 4: ['string']})
+
+</code></pre>
+<p>You can also pass a <code>dict</code> into <code>defaultdict</code>, ensuring that all appended values are contained in a <code>dict</code>:</p>
+<pre><code class="language-python">
+dd_dict = defaultdict(dict) # defaultdict(dict, {})
+
+# match key-with-value
+dd_dict['first_name'] = 'lebron' # defaultdict(dict, {'first_name': 'lebron'})
+dd_dict['last_name'] = 'james'   
+
+# match key with dictionary containing another key-value pair
+dd_dict['team']['city'] = 'Los Angeles'
+
+# defaultdict(dict,
+#            {'first_name': 'lebron',
+#             'last_name': 'james',
+#             'team': {'city': 'Los Angeles'}})
+
+</code></pre>
+<h4 id="application-grouping-with-defaultdict">Application: Grouping with defaultdict</h4>
+<p>The follow example is from 
+<a href="https://realpython.com/python-defaultdict/" target="_blank" rel="noopener">Real Python</a>, a fantastic resource for all things Python.</p>
+<p>It is common to use <code>defaultdict</code> to group items in a sequence or collection, setting the initial parameter (aka <code>.default_factory</code>) set to <code>list</code>.</p>
+<pre><code class="language-python">dep = [('Sales', 'John Doe'),
+       ('Sales', 'Martin Smith'),
+       ('Accounting', 'Jane Doe'),
+       ('Marketing', 'Elizabeth Smith'),
+       ('Marketing', 'Adam Doe')]
+       
+from collections import defaultdict
+
+dep_dd = defaultdict(list)
+
+for department, employee in dep:
+    dep_dd[department].append(employee)
+    
+dep_dd
+#defaultdict(list,
+#            {'Sales': ['John Doe', 'Martin Smith'],
+#             'Accounting': ['Jane Doe'],
+#             'Marketing': ['Elizabeth Smith', 'Adam Doe']})
+
+</code></pre>
+<p>What happens when you have <strong>duplicate</strong> entries? We&rsquo;re jumping ahead slightly to use <code>set</code> handle duplicates and only group unique entries:</p>
+<pre><code class="language-python">
+# departments with duplicate entries
+dep = [('Sales', 'John Doe'),
+       ('Sales', 'Martin Smith'),
+       ('Accounting', 'Jane Doe'),
+       ('Marketing', 'Elizabeth Smith'),
+       ('Marketing', 'Elizabeth Smith'),
+       ('Marketing', 'Adam Doe'),
+       ('Marketing', 'Adam Doe'),
+       ('Marketing', 'Adam Doe')]
+
+# use defaultdict with set
+dep_dd = defaultdict(set)
+
+# set object has no attribute 'append'
+# so use 'add' to achieve the same effect
+for department, employee in dep:
+    dep_dd[department].add(employee)
+    
+dep_dd
+#defaultdict(set,
+#            {'Sales': {'John Doe', 'Martin Smith'},
+#             'Accounting': {'Jane Doe'},
+#             'Marketing': {'Adam Doe', 'Elizabeth Smith'}})
+</code></pre>
+<h4 id="application-accumulating-with-defaultdict">Application: Accumulating with defaultdict</h4>
+<p>Finally, we&rsquo;ll use <code>defaultdict</code> to accumulate values:</p>
+<pre><code class="language-python">incomes = [('Books', 1250.00),
+           ('Books', 1300.00),
+           ('Books', 1420.00),
+           ('Tutorials', 560.00),
+           ('Tutorials', 630.00),
+           ('Tutorials', 750.00),
+           ('Courses', 2500.00),
+           ('Courses', 2430.00),
+           ('Courses', 2750.00),]
+
+# enter float as argument        
+dd = defaultdict(float)  # collections.defaultdict
+
+# defaultdict(float, {'Books': 3970.0, 'Tutorials': 1940.0, 'Courses': 7680.0})
+for product, income in incomes:
+    dd[product] += income
+    
+for product, income in dd.items():
+    print(f&quot;Total income for {product}: ${income:,.2f}&quot;)
+
+# Total income for Books: $3,970.00
+# Total income for Tutorials: $1,940.00
+# Total income for Courses: $7,680.00
+</code></pre>
+<p>I can see that <code>defaultdict</code> and <code>dictionaries</code> can be handy for grouping, counting and accumulating values in a column. We&rsquo;ll come back to revisit these foundational concepts once the data science applications are clearer. For now, we&rsquo;ll stop here and proceed to the next topic: counters.</p>
 <h3 id="counters">Counters</h3>
 <h3 id="sets">Sets</h3>
 <h3 id="control-flow">Control Flow</h3>

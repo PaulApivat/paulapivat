@@ -1626,7 +1626,109 @@ defaultdict(int,
              &#39;RAPTOR&#39;: 1})
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Unlike a regular dictionary, when &lt;code&gt;defaultdict&lt;/code&gt; tries to look up a key it doesn&amp;rsquo;t contain, it&amp;rsquo;ll automatically add a value for it using the argument we provided when we first created the &lt;code&gt;defaultdict&lt;/code&gt;. If you see above, we entered an &lt;code&gt;int&lt;/code&gt; as the argument, which allows it to automatically &lt;em&gt;add a value&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Unlike a regular dictionary, when &lt;code&gt;defaultdict&lt;/code&gt; tries to look up a key it doesn&amp;rsquo;t contain, it&amp;rsquo;ll automatically add a value for it using the argument we provided when we first created the &lt;code&gt;defaultdict&lt;/code&gt;. If you see above, we entered an &lt;code&gt;int&lt;/code&gt; as the argument, which allows it to automatically &lt;em&gt;add an integer value&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;If you want your &lt;code&gt;defaultdict&lt;/code&gt; to have &lt;code&gt;values&lt;/code&gt; be &lt;code&gt;lists&lt;/code&gt;, you can pass a &lt;code&gt;list&lt;/code&gt; as argument. Then, when you &lt;code&gt;append&lt;/code&gt; a value, it is automatically contained in a &lt;code&gt;list&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;dd_list = defaultdict(list) # defaultdict(list, {})
+
+dd_list[2].append(1)        # defaultdict(list, {2: [1]})
+
+dd_list[4].append(&#39;string&#39;) # defaultdict(list, {2: [1], 4: [&#39;string&#39;]})
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can also pass a &lt;code&gt;dict&lt;/code&gt; into &lt;code&gt;defaultdict&lt;/code&gt;, ensuring that all appended values are contained in a &lt;code&gt;dict&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+dd_dict = defaultdict(dict) # defaultdict(dict, {})
+
+# match key-with-value
+dd_dict[&#39;first_name&#39;] = &#39;lebron&#39; # defaultdict(dict, {&#39;first_name&#39;: &#39;lebron&#39;})
+dd_dict[&#39;last_name&#39;] = &#39;james&#39;   
+
+# match key with dictionary containing another key-value pair
+dd_dict[&#39;team&#39;][&#39;city&#39;] = &#39;Los Angeles&#39;
+
+# defaultdict(dict,
+#            {&#39;first_name&#39;: &#39;lebron&#39;,
+#             &#39;last_name&#39;: &#39;james&#39;,
+#             &#39;team&#39;: {&#39;city&#39;: &#39;Los Angeles&#39;}})
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;application-grouping-with-defaultdict&#34;&gt;Application: Grouping with defaultdict&lt;/h4&gt;
+&lt;p&gt;The follow example is from 
+&lt;a href=&#34;https://realpython.com/python-defaultdict/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Real Python&lt;/a&gt;, a fantastic resource for all things Python.&lt;/p&gt;
+&lt;p&gt;It is common to use &lt;code&gt;defaultdict&lt;/code&gt; to group items in a sequence or collection, setting the initial parameter (aka &lt;code&gt;.default_factory&lt;/code&gt;) set to &lt;code&gt;list&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;dep = [(&#39;Sales&#39;, &#39;John Doe&#39;),
+       (&#39;Sales&#39;, &#39;Martin Smith&#39;),
+       (&#39;Accounting&#39;, &#39;Jane Doe&#39;),
+       (&#39;Marketing&#39;, &#39;Elizabeth Smith&#39;),
+       (&#39;Marketing&#39;, &#39;Adam Doe&#39;)]
+       
+from collections import defaultdict
+
+dep_dd = defaultdict(list)
+
+for department, employee in dep:
+    dep_dd[department].append(employee)
+    
+dep_dd
+#defaultdict(list,
+#            {&#39;Sales&#39;: [&#39;John Doe&#39;, &#39;Martin Smith&#39;],
+#             &#39;Accounting&#39;: [&#39;Jane Doe&#39;],
+#             &#39;Marketing&#39;: [&#39;Elizabeth Smith&#39;, &#39;Adam Doe&#39;]})
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What happens when you have &lt;strong&gt;duplicate&lt;/strong&gt; entries? We&amp;rsquo;re jumping ahead slightly to use &lt;code&gt;set&lt;/code&gt; handle duplicates and only group unique entries:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+# departments with duplicate entries
+dep = [(&#39;Sales&#39;, &#39;John Doe&#39;),
+       (&#39;Sales&#39;, &#39;Martin Smith&#39;),
+       (&#39;Accounting&#39;, &#39;Jane Doe&#39;),
+       (&#39;Marketing&#39;, &#39;Elizabeth Smith&#39;),
+       (&#39;Marketing&#39;, &#39;Elizabeth Smith&#39;),
+       (&#39;Marketing&#39;, &#39;Adam Doe&#39;),
+       (&#39;Marketing&#39;, &#39;Adam Doe&#39;),
+       (&#39;Marketing&#39;, &#39;Adam Doe&#39;)]
+
+# use defaultdict with set
+dep_dd = defaultdict(set)
+
+# set object has no attribute &#39;append&#39;
+# so use &#39;add&#39; to achieve the same effect
+for department, employee in dep:
+    dep_dd[department].add(employee)
+    
+dep_dd
+#defaultdict(set,
+#            {&#39;Sales&#39;: {&#39;John Doe&#39;, &#39;Martin Smith&#39;},
+#             &#39;Accounting&#39;: {&#39;Jane Doe&#39;},
+#             &#39;Marketing&#39;: {&#39;Adam Doe&#39;, &#39;Elizabeth Smith&#39;}})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;application-accumulating-with-defaultdict&#34;&gt;Application: Accumulating with defaultdict&lt;/h4&gt;
+&lt;p&gt;Finally, we&amp;rsquo;ll use &lt;code&gt;defaultdict&lt;/code&gt; to accumulate values:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;incomes = [(&#39;Books&#39;, 1250.00),
+           (&#39;Books&#39;, 1300.00),
+           (&#39;Books&#39;, 1420.00),
+           (&#39;Tutorials&#39;, 560.00),
+           (&#39;Tutorials&#39;, 630.00),
+           (&#39;Tutorials&#39;, 750.00),
+           (&#39;Courses&#39;, 2500.00),
+           (&#39;Courses&#39;, 2430.00),
+           (&#39;Courses&#39;, 2750.00),]
+
+# enter float as argument        
+dd = defaultdict(float)  # collections.defaultdict
+
+# defaultdict(float, {&#39;Books&#39;: 3970.0, &#39;Tutorials&#39;: 1940.0, &#39;Courses&#39;: 7680.0})
+for product, income in incomes:
+    dd[product] += income
+    
+for product, income in dd.items():
+    print(f&amp;quot;Total income for {product}: ${income:,.2f}&amp;quot;)
+
+# Total income for Books: $3,970.00
+# Total income for Tutorials: $1,940.00
+# Total income for Courses: $7,680.00
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I can see that &lt;code&gt;defaultdict&lt;/code&gt; and &lt;code&gt;dictionaries&lt;/code&gt; can be handy for grouping, counting and accumulating values in a column. We&amp;rsquo;ll come back to revisit these foundational concepts once the data science applications are clearer. For now, we&amp;rsquo;ll stop here and proceed to the next topic: counters.&lt;/p&gt;
 &lt;h3 id=&#34;counters&#34;&gt;Counters&lt;/h3&gt;
 &lt;h3 id=&#34;sets&#34;&gt;Sets&lt;/h3&gt;
 &lt;h3 id=&#34;control-flow&#34;&gt;Control Flow&lt;/h3&gt;
