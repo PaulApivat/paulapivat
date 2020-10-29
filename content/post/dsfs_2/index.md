@@ -8,7 +8,7 @@ featured: false
 image:
   caption: ""
   focal_point: ""
-lastMod: "2020-10-27T00:00:00Z"
+lastMod: "2020-10-29T00:00:00Z"
 projects: []
 subtitle: Python crash course
 summary: Survey of python features relevant for Data Science
@@ -24,6 +24,7 @@ title: Data Science from Scratch (ch2)
 - [Lists](#lists)
 - [Tuples](#tuples)
 - [Dictionaries](#dictionaries)
+- [defaultdict](#defaultdict)
 
 ## Chapter 2: A Crash Course in Python
 
@@ -523,7 +524,144 @@ except TypeError:
 ```
 
 
-### defaultdict
+## defaultdict
+
+`defaultdict` is a **subclass** of dictionaries (`dict`, see previous post), so it *inherits* most of its behavior from `dict` with additional features. To understand how those features make it different, and more convenient in some cases, we'll need to run into some errors. 
+
+If we try to count words in a document, the general approach is to create a dictionary where the dictionary `keys` are words and the dictionary `values` are counts of those words. 
+
+Let's try do do this with a regular dictionary. 
+
+First, to setup, we'll take a list of words and `split()` into individual words. I took this paragraph from [another project](https://rpubs.com/paulapivat/vintage_nba_seasons) i'm working on and artificially added some extra words to ensure that certain words appeared more than once (it'll be apparent why soon).
+
+```python
+
+# paragraph
+lines = ["This table highlights 538's new NBA statistic, RAPTOR, in addition to the more established Wins Above Replacement (WAR). An extra column, Playoff (P/O) War, is provided to highlight stars performers in the post-season, when the stakes are higher. The table is limited to the top-100 players who have played at least 1,000 minutes minutes the table Wins NBA NBA RAPTOR more players"]
+
+# split paragraphy into individual words
+lines = " ".join(lines).split()
+
+type(lines) # list
+```
+
+Now that we have our `lines` list, we'll create an empty `dict` called `word_counts` and have each word be the `key` and each `value` be the count of that word.
+
+```python
+# empty list
+word_counts = {}
+
+# loop through lines to count each word
+for word in lines:
+    word_counts[word] += 1
+    
+# KeyError: 'This'
+```
+We received a `KeyError` for the very first word in `lines` (i.e. 'This') because the **list tried to count a key that didn't exist**. We've learned to handle exceptions so we can use `try` and `except`.
+
+Here, we're looping through `lines` and when we try to count a key that doesn't exist, like we did previously, we're *now* anticipating a `KeyError` and will set the initial count to 1, then it can continue to loop-through and count the word, which now exists, so it can be incremented up. 
+
+```python
+# empty list
+word_counts = {}
+
+# exception handling
+for word in lines:
+    try:
+        word_counts[word] += 1
+    except KeyError:
+        word_counts[word] = 1
+
+# call word_counts
+# abbreviated for space
+word_counts
+
+{'This': 1,
+ 'table': 3,
+ 'highlights': 1,
+ "538's": 1,
+ 'new': 1,
+ 'NBA': 3,
+ 'statistic,': 1,
+ 'RAPTOR,': 1,
+ 'in': 2,
+ 'addition': 1,
+ 'to': 3,
+ 'the': 5,
+ 'more': 2,
+ ...
+ 'top-100': 1,
+ 'players': 2,
+ 'who': 1,
+ 'have': 1,
+ 'played': 1,
+ 'at': 1,
+ 'least': 1,
+ '1,000': 1,
+ 'minutes': 2,
+ 'RAPTOR': 1}
+```
+Now, there are other ways to achieve the above:
+
+```python
+# use conditional flow
+word_counts = {}
+
+for word in lines:
+    if word in word_counts:
+        word_counts[word] += 1
+    else:
+        word_counts[word] = 1
+        
+# use get
+for word in lines:
+    previous_count = word_counts.get(word, 0)
+    word_counts[word] = previous_count + 1
+```
+
+Here's where the author makes the case for `defaultdict`, arguing that the two aforementioned approaches are unweildy. We'll come back full circle to try our first approach, using `defaultdict` instead of the traditional `dict`.
+
+`defaultdict` is a subclass of `dict` and must be imported from `collections`:
+
+```python
+from collections import defaultdict
+
+word_counts = defaultdict(int)
+
+for word in lines:
+    word_counts[word] += 1
+    
+# we no longer get a KeyError
+# abbreviated for space
+defaultdict(int,
+            {'This': 1,
+             'table': 3,
+             'highlights': 1,
+             "538's": 1,
+             'new': 1,
+             'NBA': 3,
+             'statistic,': 1,
+             'RAPTOR,': 1,
+             'in': 2,
+             'addition': 1,
+             'to': 3,
+             'the': 5,
+             'more': 2,
+             ...
+             'top-100': 1,
+             'players': 2,
+             'who': 1,
+             'have': 1,
+             'played': 1,
+             'at': 1,
+             'least': 1,
+             '1,000': 1,
+             'minutes': 2,
+             'RAPTOR': 1})
+
+```
+Unlike a regular dictionary, when `defaultdict` tries to look up a key it doesn't contain, it'll automatically add a value for it using the argument we provided when we first created the `defaultdict`. If you see above, we entered an `int` as the argument, which allows it to automatically *add a value*. 
+
 
 ### Counters
 

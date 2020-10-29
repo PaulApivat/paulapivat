@@ -33,6 +33,8 @@
 &lt;a href=&#34;#tuples&#34;&gt;Tuples&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#dictionaries&#34;&gt;Dictionaries&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#defaultdict&#34;&gt;defaultdict&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
 &lt;p&gt;This is the first of many chapters i&amp;rsquo;ll be covering from Joel Grus&amp;rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &amp;ldquo;doing&amp;rdquo; data science from scratch, including essential setup of virtual environments and other tooling.&lt;/p&gt;
@@ -454,7 +456,126 @@ except TypeError:
    print(&#39;lists are not hashable&#39;)
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;defaultdict&#34;&gt;defaultdict&lt;/h3&gt;
+&lt;h2 id=&#34;defaultdict&#34;&gt;defaultdict&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;defaultdict&lt;/code&gt; is a &lt;strong&gt;subclass&lt;/strong&gt; of dictionaries (&lt;code&gt;dict&lt;/code&gt;, see previous post), so it &lt;em&gt;inherits&lt;/em&gt; most of its behavior from &lt;code&gt;dict&lt;/code&gt; with additional features. To understand how those features make it different, and more convenient in some cases, we&amp;rsquo;ll need to run into some errors.&lt;/p&gt;
+&lt;p&gt;If we try to count words in a document, the general approach is to create a dictionary where the dictionary &lt;code&gt;keys&lt;/code&gt; are words and the dictionary &lt;code&gt;values&lt;/code&gt; are counts of those words.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s try do do this with a regular dictionary.&lt;/p&gt;
+&lt;p&gt;First, to setup, we&amp;rsquo;ll take a list of words and &lt;code&gt;split()&lt;/code&gt; into individual words. I took this paragraph from 
+&lt;a href=&#34;https://rpubs.com/paulapivat/vintage_nba_seasons&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;another project&lt;/a&gt; i&amp;rsquo;m working on and artificially added some extra words to ensure that certain words appeared more than once (it&amp;rsquo;ll be apparent why soon).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+# paragraph
+lines = [&amp;quot;This table highlights 538&#39;s new NBA statistic, RAPTOR, in addition to the more established Wins Above Replacement (WAR). An extra column, Playoff (P/O) War, is provided to highlight stars performers in the post-season, when the stakes are higher. The table is limited to the top-100 players who have played at least 1,000 minutes minutes the table Wins NBA NBA RAPTOR more players&amp;quot;]
+
+# split paragraphy into individual words
+lines = &amp;quot; &amp;quot;.join(lines).split()
+
+type(lines) # list
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now that we have our &lt;code&gt;lines&lt;/code&gt; list, we&amp;rsquo;ll create an empty &lt;code&gt;dict&lt;/code&gt; called &lt;code&gt;word_counts&lt;/code&gt; and have each word be the &lt;code&gt;key&lt;/code&gt; and each &lt;code&gt;value&lt;/code&gt; be the count of that word.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# empty list
+word_counts = {}
+
+# loop through lines to count each word
+for word in lines:
+    word_counts[word] += 1
+    
+# KeyError: &#39;This&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We received a &lt;code&gt;KeyError&lt;/code&gt; for the very first word in &lt;code&gt;lines&lt;/code&gt; (i.e. &amp;lsquo;This&amp;rsquo;) because the &lt;strong&gt;list tried to count a key that didn&amp;rsquo;t exist&lt;/strong&gt;. We&amp;rsquo;ve learned to handle exceptions so we can use &lt;code&gt;try&lt;/code&gt; and &lt;code&gt;except&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Here, we&amp;rsquo;re looping through &lt;code&gt;lines&lt;/code&gt; and when we try to count a key that doesn&amp;rsquo;t exist, like we did previously, we&amp;rsquo;re &lt;em&gt;now&lt;/em&gt; anticipating a &lt;code&gt;KeyError&lt;/code&gt; and will set the initial count to 1, then it can continue to loop-through and count the word, which now exists, so it can be incremented up.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# empty list
+word_counts = {}
+
+# exception handling
+for word in lines:
+    try:
+        word_counts[word] += 1
+    except KeyError:
+        word_counts[word] = 1
+
+# call word_counts
+# abbreviated for space
+word_counts
+
+{&#39;This&#39;: 1,
+ &#39;table&#39;: 3,
+ &#39;highlights&#39;: 1,
+ &amp;quot;538&#39;s&amp;quot;: 1,
+ &#39;new&#39;: 1,
+ &#39;NBA&#39;: 3,
+ &#39;statistic,&#39;: 1,
+ &#39;RAPTOR,&#39;: 1,
+ &#39;in&#39;: 2,
+ &#39;addition&#39;: 1,
+ &#39;to&#39;: 3,
+ &#39;the&#39;: 5,
+ &#39;more&#39;: 2,
+ ...
+ &#39;top-100&#39;: 1,
+ &#39;players&#39;: 2,
+ &#39;who&#39;: 1,
+ &#39;have&#39;: 1,
+ &#39;played&#39;: 1,
+ &#39;at&#39;: 1,
+ &#39;least&#39;: 1,
+ &#39;1,000&#39;: 1,
+ &#39;minutes&#39;: 2,
+ &#39;RAPTOR&#39;: 1}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, there are other ways to achieve the above:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# use conditional flow
+word_counts = {}
+
+for word in lines:
+    if word in word_counts:
+        word_counts[word] += 1
+    else:
+        word_counts[word] = 1
+        
+# use get
+for word in lines:
+    previous_count = word_counts.get(word, 0)
+    word_counts[word] = previous_count + 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s where the author makes the case for &lt;code&gt;defaultdict&lt;/code&gt;, arguing that the two aforementioned approaches are unweildy. We&amp;rsquo;ll come back full circle to try our first approach, using &lt;code&gt;defaultdict&lt;/code&gt; instead of the traditional &lt;code&gt;dict&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;defaultdict&lt;/code&gt; is a subclass of &lt;code&gt;dict&lt;/code&gt; and must be imported from &lt;code&gt;collections&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from collections import defaultdict
+
+word_counts = defaultdict(int)
+
+for word in lines:
+    word_counts[word] += 1
+    
+# we no longer get a KeyError
+# abbreviated for space
+defaultdict(int,
+            {&#39;This&#39;: 1,
+             &#39;table&#39;: 3,
+             &#39;highlights&#39;: 1,
+             &amp;quot;538&#39;s&amp;quot;: 1,
+             &#39;new&#39;: 1,
+             &#39;NBA&#39;: 3,
+             &#39;statistic,&#39;: 1,
+             &#39;RAPTOR,&#39;: 1,
+             &#39;in&#39;: 2,
+             &#39;addition&#39;: 1,
+             &#39;to&#39;: 3,
+             &#39;the&#39;: 5,
+             &#39;more&#39;: 2,
+             ...
+             &#39;top-100&#39;: 1,
+             &#39;players&#39;: 2,
+             &#39;who&#39;: 1,
+             &#39;have&#39;: 1,
+             &#39;played&#39;: 1,
+             &#39;at&#39;: 1,
+             &#39;least&#39;: 1,
+             &#39;1,000&#39;: 1,
+             &#39;minutes&#39;: 2,
+             &#39;RAPTOR&#39;: 1})
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Unlike a regular dictionary, when &lt;code&gt;defaultdict&lt;/code&gt; tries to look up a key it doesn&amp;rsquo;t contain, it&amp;rsquo;ll automatically add a value for it using the argument we provided when we first created the &lt;code&gt;defaultdict&lt;/code&gt;. If you see above, we entered an &lt;code&gt;int&lt;/code&gt; as the argument, which allows it to automatically &lt;em&gt;add a value&lt;/em&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;counters&#34;&gt;Counters&lt;/h3&gt;
 &lt;h3 id=&#34;sets&#34;&gt;Sets&lt;/h3&gt;
 &lt;h3 id=&#34;control-flow&#34;&gt;Control Flow&lt;/h3&gt;
