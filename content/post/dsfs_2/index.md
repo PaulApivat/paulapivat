@@ -25,6 +25,8 @@ title: Data Science from Scratch (ch2)
 - [Tuples](#tuples)
 - [Dictionaries](#dictionaries)
 - [defaultdict](#defaultdict)
+- [Counters](#counters)
+- [Sets](#sets)
 
 ## Chapter 2: A Crash Course in Python
 
@@ -783,9 +785,117 @@ I can see that `defaultdict` and `dictionaries` can be handy for grouping, count
 
 In summary, `dictionaries` and `defaultdict` can be used to group items, accumulate items and count items. Both can be used even when the `key` doesn't (yet) exist, but its `defaultdict` handles this more succintly. For now, we'll stop here and proceed to the next topic: counters. 
 
-### Counters
+## Counters
 
-### Sets
+`Counter` is a `dict` **subclass** for counting hashable objects (see [doc](https://docs.python.org/3/library/collections.html#collections.Counter)). 
+Back to our example in the previous section, we can use `Counter` instead of `dict`, specifically for counting:
+
+```python
+from collections import Counter
+
+# we can count the letters in this paragraph
+count_letters = Counter("This table highlights 538's new NBA statistic, RAPTOR, in addition to the more established Wins Above Replacement (WAR). An extra column, Playoff (P/O) War, is provided to highlight stars performers in the post-season, when the stakes are higher. The table is limited to the top-100 players who have played at least 1,000 minutes minutes the table Wins NBA NBA RAPTOR more players")
+
+# call count_letters
+count_letters
+
+# returns
+Counter({'T': 4,
+         'h': 19,
+         'i': 22,
+         's': 24,
+         ' ': 61,
+         't': 29,
+         'a': 20,
+         'b': 5,
+         'l': 14,
+         'e': 35,
+         'g': 5,
+         '5': 1,
+         '3': 1,
+         '8': 1,
+         "'": 1,
+         'n': 13,
+         'w': 3,
+         'N': 3,
+         'B': 3,
+         'A': 8,
+         'c': 3,
+         ',': 6,
+         'R': 6,
+         'P': 4,
+         'O': 3,
+         'd': 7,
+         'o': 15,
+         'm': 8,
+         'r': 13,
+         'W': 4,
+         'v': 3,
+         'p': 8,
+         '(': 2,
+         ')': 2,
+         '.': 2,
+         'x': 1,
+         'u': 3,
+         'y': 4,
+         'f': 3,
+         '/': 1,
+         '-': 2,
+         'k': 1,
+         '1': 2,
+         '0': 5})
+
+```
+`Counter` very easily did what `defaultdict(int)` did previously. We can even call the `most_common` method to get the most common letters:
+
+```python
+
+# get the thirteen most common letters
+for letter, count in count_letters.most_common(13):
+   print(letter, count)
+   
+# returns - 13 items
+  61
+e 35
+t 29
+s 24
+i 22
+a 20
+h 19
+o 15
+l 14
+n 13
+r 13
+A 8
+m 8
+```
+
+## Sets
+
+We had a glimpse of `set` previously. There are two things the author emphasize with `set`. First, they're faster than lists for checking membership:
+
+```python
+
+lines_list = ["This table highlights 538's new NBA statistic, RAPTOR, in addition to the more established Wins Above Replacement (WAR). An extra column, Playoff (P/O) War, is provided to highlight stars performers in the post-season, when the stakes are higher. The table is limited to the top-100 players who have played at least 1,000 minutes minutes the table Wins NBA NBA RAPTOR more players"]
+
+"zip" in lines_list # False, but have to check every element
+
+lines_set = set(lines_list)
+type(lines_set) # set
+
+"zip" in lines_set # Very fast to check
+```
+Because this was an arbitrary example, it's not obvious that checking membership in `set` is faster than `list` so we'll take the author's word for it.
+
+The second highlight for `set` is to find **distinct** items in a collection:
+
+```python
+number_list = [1,2,3,1,2,3] # list with six items
+item_set = set(number_list) # turn it into a set
+
+item_set # now has three items {1, 2, 3}
+turn_into_list = list(item_set) # turn into distinct item list
+```
 
 ### Control Flow
 

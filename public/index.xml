@@ -1086,6 +1086,10 @@ hist(x)
 &lt;a href=&#34;#dictionaries&#34;&gt;Dictionaries&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#defaultdict&#34;&gt;defaultdict&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#counters&#34;&gt;Counters&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#sets&#34;&gt;Sets&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
 &lt;p&gt;This is the first of many chapters i&amp;rsquo;ll be covering from Joel Grus&amp;rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &amp;ldquo;doing&amp;rdquo; data science from scratch, including essential setup of virtual environments and other tooling.&lt;/p&gt;
@@ -1732,8 +1736,106 @@ for product, income in dd.items():
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I can see that &lt;code&gt;defaultdict&lt;/code&gt; and &lt;code&gt;dictionaries&lt;/code&gt; can be handy for grouping, counting and accumulating values in a column. We&amp;rsquo;ll come back to revisit these foundational concepts once the data science applications are clearer.&lt;/p&gt;
 &lt;p&gt;In summary, &lt;code&gt;dictionaries&lt;/code&gt; and &lt;code&gt;defaultdict&lt;/code&gt; can be used to group items, accumulate items and count items. Both can be used even when the &lt;code&gt;key&lt;/code&gt; doesn&amp;rsquo;t (yet) exist, but its &lt;code&gt;defaultdict&lt;/code&gt; handles this more succintly. For now, we&amp;rsquo;ll stop here and proceed to the next topic: counters.&lt;/p&gt;
-&lt;h3 id=&#34;counters&#34;&gt;Counters&lt;/h3&gt;
-&lt;h3 id=&#34;sets&#34;&gt;Sets&lt;/h3&gt;
+&lt;h2 id=&#34;counters&#34;&gt;Counters&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Counter&lt;/code&gt; is a &lt;code&gt;dict&lt;/code&gt; &lt;strong&gt;subclass&lt;/strong&gt; for counting hashable objects (see 
+&lt;a href=&#34;https://docs.python.org/3/library/collections.html#collections.Counter&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;doc&lt;/a&gt;).
+Back to our example in the previous section, we can use &lt;code&gt;Counter&lt;/code&gt; instead of &lt;code&gt;dict&lt;/code&gt;, specifically for counting:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from collections import Counter
+
+# we can count the letters in this paragraph
+count_letters = Counter(&amp;quot;This table highlights 538&#39;s new NBA statistic, RAPTOR, in addition to the more established Wins Above Replacement (WAR). An extra column, Playoff (P/O) War, is provided to highlight stars performers in the post-season, when the stakes are higher. The table is limited to the top-100 players who have played at least 1,000 minutes minutes the table Wins NBA NBA RAPTOR more players&amp;quot;)
+
+# call count_letters
+count_letters
+
+# returns
+Counter({&#39;T&#39;: 4,
+         &#39;h&#39;: 19,
+         &#39;i&#39;: 22,
+         &#39;s&#39;: 24,
+         &#39; &#39;: 61,
+         &#39;t&#39;: 29,
+         &#39;a&#39;: 20,
+         &#39;b&#39;: 5,
+         &#39;l&#39;: 14,
+         &#39;e&#39;: 35,
+         &#39;g&#39;: 5,
+         &#39;5&#39;: 1,
+         &#39;3&#39;: 1,
+         &#39;8&#39;: 1,
+         &amp;quot;&#39;&amp;quot;: 1,
+         &#39;n&#39;: 13,
+         &#39;w&#39;: 3,
+         &#39;N&#39;: 3,
+         &#39;B&#39;: 3,
+         &#39;A&#39;: 8,
+         &#39;c&#39;: 3,
+         &#39;,&#39;: 6,
+         &#39;R&#39;: 6,
+         &#39;P&#39;: 4,
+         &#39;O&#39;: 3,
+         &#39;d&#39;: 7,
+         &#39;o&#39;: 15,
+         &#39;m&#39;: 8,
+         &#39;r&#39;: 13,
+         &#39;W&#39;: 4,
+         &#39;v&#39;: 3,
+         &#39;p&#39;: 8,
+         &#39;(&#39;: 2,
+         &#39;)&#39;: 2,
+         &#39;.&#39;: 2,
+         &#39;x&#39;: 1,
+         &#39;u&#39;: 3,
+         &#39;y&#39;: 4,
+         &#39;f&#39;: 3,
+         &#39;/&#39;: 1,
+         &#39;-&#39;: 2,
+         &#39;k&#39;: 1,
+         &#39;1&#39;: 2,
+         &#39;0&#39;: 5})
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;Counter&lt;/code&gt; very easily did what &lt;code&gt;defaultdict(int)&lt;/code&gt; did previously. We can even call the &lt;code&gt;most_common&lt;/code&gt; method to get the most common letters:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+# get the thirteen most common letters
+for letter, count in count_letters.most_common(13):
+   print(letter, count)
+   
+# returns - 13 items
+  61
+e 35
+t 29
+s 24
+i 22
+a 20
+h 19
+o 15
+l 14
+n 13
+r 13
+A 8
+m 8
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;sets&#34;&gt;Sets&lt;/h2&gt;
+&lt;p&gt;We had a glimpse of &lt;code&gt;set&lt;/code&gt; previously. There are two things the author emphasize with &lt;code&gt;set&lt;/code&gt;. First, they&amp;rsquo;re faster than lists for checking membership:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+lines_list = [&amp;quot;This table highlights 538&#39;s new NBA statistic, RAPTOR, in addition to the more established Wins Above Replacement (WAR). An extra column, Playoff (P/O) War, is provided to highlight stars performers in the post-season, when the stakes are higher. The table is limited to the top-100 players who have played at least 1,000 minutes minutes the table Wins NBA NBA RAPTOR more players&amp;quot;]
+
+&amp;quot;zip&amp;quot; in lines_list # False, but have to check every element
+
+lines_set = set(lines_list)
+type(lines_set) # set
+
+&amp;quot;zip&amp;quot; in lines_set # Very fast to check
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Because this was an arbitrary example, it&amp;rsquo;s not obvious that checking membership in &lt;code&gt;set&lt;/code&gt; is faster than &lt;code&gt;list&lt;/code&gt; so we&amp;rsquo;ll take the author&amp;rsquo;s word for it.&lt;/p&gt;
+&lt;p&gt;The second highlight for &lt;code&gt;set&lt;/code&gt; is to find &lt;strong&gt;distinct&lt;/strong&gt; items in a collection:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;number_list = [1,2,3,1,2,3] # list with six items
+item_set = set(number_list) # turn it into a set
+
+item_set # now has three items {1, 2, 3}
+turn_into_list = list(item_set) # turn into distinct item list
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;control-flow&#34;&gt;Control Flow&lt;/h3&gt;
 &lt;h3 id=&#34;truthiness&#34;&gt;Truthiness&lt;/h3&gt;
 &lt;h3 id=&#34;sorting&#34;&gt;Sorting&lt;/h3&gt;
