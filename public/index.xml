@@ -1098,6 +1098,8 @@ hist(x)
 &lt;h3 id=&#34;installation-virtual-environment-and-modules&#34;&gt;Installation, Virtual Environment and Modules&lt;/h3&gt;
 &lt;p&gt;These section takes the reader through installing a virtual environment using Anaconda Python distribution. The author points out a best practice, &amp;ldquo;you should always work in a virtual environment and never use &amp;lsquo;base&amp;rsquo; Python installation&amp;rdquo;. Moreover, the author favors IPython over jupyter notebooks (he&amp;rsquo;s a noted 
 &lt;a href=&#34;https://www.youtube.com/watch?v=7jiPeIFXb6U&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;critic of the notebook&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Jeremy Howard of fast.ai offers a contrasting perspective. He &lt;em&gt;does&lt;/em&gt; 
+&lt;a href=&#34;https://www.youtube.com/watch?v=9Q6sLbz37gk&amp;amp;feature=emb_title&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;like notebooks&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The first time I installed Python, it took me awhile to get things right and eventually I relied on jupyter notebooks through Anaconda. As we go through this book, I&amp;rsquo;ll be using virtual environments and IPython as much as I can (although I may sprinkle in a notebook here and there). My IDE for interacting with the conda virtual environment and IPython will be VSCode.&lt;/p&gt;
 &lt;p&gt;Fortunately, I had a relatively painless process setting up a virtual environment and IPython, although I had to take a slight detour to setup the &lt;code&gt;code&lt;/code&gt; command for VSCode.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s a summary of the commands I used for setup:&lt;/p&gt;
@@ -1728,7 +1730,8 @@ for product, income in dd.items():
 # Total income for Tutorials: $1,940.00
 # Total income for Courses: $7,680.00
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I can see that &lt;code&gt;defaultdict&lt;/code&gt; and &lt;code&gt;dictionaries&lt;/code&gt; can be handy for grouping, counting and accumulating values in a column. We&amp;rsquo;ll come back to revisit these foundational concepts once the data science applications are clearer. For now, we&amp;rsquo;ll stop here and proceed to the next topic: counters.&lt;/p&gt;
+&lt;p&gt;I can see that &lt;code&gt;defaultdict&lt;/code&gt; and &lt;code&gt;dictionaries&lt;/code&gt; can be handy for grouping, counting and accumulating values in a column. We&amp;rsquo;ll come back to revisit these foundational concepts once the data science applications are clearer.&lt;/p&gt;
+&lt;p&gt;In summary, &lt;code&gt;dictionaries&lt;/code&gt; and &lt;code&gt;defaultdict&lt;/code&gt; can be used to group items, accumulate items and count items. Both can be used even when the &lt;code&gt;key&lt;/code&gt; doesn&amp;rsquo;t (yet) exist, but its &lt;code&gt;defaultdict&lt;/code&gt; handles this more succintly. For now, we&amp;rsquo;ll stop here and proceed to the next topic: counters.&lt;/p&gt;
 &lt;h3 id=&#34;counters&#34;&gt;Counters&lt;/h3&gt;
 &lt;h3 id=&#34;sets&#34;&gt;Sets&lt;/h3&gt;
 &lt;h3 id=&#34;control-flow&#34;&gt;Control Flow&lt;/h3&gt;

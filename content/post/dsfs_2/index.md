@@ -44,6 +44,8 @@ Additional code can be found in this [repo](https://github.com/PaulApivat/dsfs)
 
 These section takes the reader through installing a virtual environment using Anaconda Python distribution. The author points out a best practice, "you should always work in a virtual environment and never use 'base' Python installation". Moreover, the author favors IPython over jupyter notebooks (he's a noted [critic of the notebook](https://www.youtube.com/watch?v=7jiPeIFXb6U))
 
+Jeremy Howard of fast.ai offers a contrasting perspective. He *does* [like notebooks](https://www.youtube.com/watch?v=9Q6sLbz37gk&feature=emb_title).
+
 The first time I installed Python, it took me awhile to get things right and eventually I relied on jupyter notebooks through Anaconda. As we go through this book, I'll be using virtual environments and IPython as much as I can (although I may sprinkle in a notebook here and there). My IDE for interacting with the conda virtual environment and IPython will be VSCode. 
 
 Fortunately, I had a relatively painless process setting up a virtual environment and IPython, although I had to take a slight detour to setup the `code` command for VSCode.
@@ -777,7 +779,9 @@ for product, income in dd.items():
 # Total income for Tutorials: $1,940.00
 # Total income for Courses: $7,680.00
 ```
-I can see that `defaultdict` and `dictionaries` can be handy for grouping, counting and accumulating values in a column. We'll come back to revisit these foundational concepts once the data science applications are clearer. For now, we'll stop here and proceed to the next topic: counters. 
+I can see that `defaultdict` and `dictionaries` can be handy for grouping, counting and accumulating values in a column. We'll come back to revisit these foundational concepts once the data science applications are clearer. 
+
+In summary, `dictionaries` and `defaultdict` can be used to group items, accumulate items and count items. Both can be used even when the `key` doesn't (yet) exist, but its `defaultdict` handles this more succintly. For now, we'll stop here and proceed to the next topic: counters. 
 
 ### Counters
 

@@ -723,7 +723,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    18 min read
+    19 min read
   </span>
   
 
@@ -789,6 +789,8 @@
 <h3 id="installation-virtual-environment-and-modules">Installation, Virtual Environment and Modules</h3>
 <p>These section takes the reader through installing a virtual environment using Anaconda Python distribution. The author points out a best practice, &ldquo;you should always work in a virtual environment and never use &lsquo;base&rsquo; Python installation&rdquo;. Moreover, the author favors IPython over jupyter notebooks (he&rsquo;s a noted 
 <a href="https://www.youtube.com/watch?v=7jiPeIFXb6U" target="_blank" rel="noopener">critic of the notebook</a>)</p>
+<p>Jeremy Howard of fast.ai offers a contrasting perspective. He <em>does</em> 
+<a href="https://www.youtube.com/watch?v=9Q6sLbz37gk&amp;feature=emb_title" target="_blank" rel="noopener">like notebooks</a>.</p>
 <p>The first time I installed Python, it took me awhile to get things right and eventually I relied on jupyter notebooks through Anaconda. As we go through this book, I&rsquo;ll be using virtual environments and IPython as much as I can (although I may sprinkle in a notebook here and there). My IDE for interacting with the conda virtual environment and IPython will be VSCode.</p>
 <p>Fortunately, I had a relatively painless process setting up a virtual environment and IPython, although I had to take a slight detour to setup the <code>code</code> command for VSCode.</p>
 <p>Here&rsquo;s a summary of the commands I used for setup:</p>
@@ -1419,7 +1421,8 @@ for product, income in dd.items():
 # Total income for Tutorials: $1,940.00
 # Total income for Courses: $7,680.00
 </code></pre>
-<p>I can see that <code>defaultdict</code> and <code>dictionaries</code> can be handy for grouping, counting and accumulating values in a column. We&rsquo;ll come back to revisit these foundational concepts once the data science applications are clearer. For now, we&rsquo;ll stop here and proceed to the next topic: counters.</p>
+<p>I can see that <code>defaultdict</code> and <code>dictionaries</code> can be handy for grouping, counting and accumulating values in a column. We&rsquo;ll come back to revisit these foundational concepts once the data science applications are clearer.</p>
+<p>In summary, <code>dictionaries</code> and <code>defaultdict</code> can be used to group items, accumulate items and count items. Both can be used even when the <code>key</code> doesn&rsquo;t (yet) exist, but its <code>defaultdict</code> handles this more succintly. For now, we&rsquo;ll stop here and proceed to the next topic: counters.</p>
 <h3 id="counters">Counters</h3>
 <h3 id="sets">Sets</h3>
 <h3 id="control-flow">Control Flow</h3>
