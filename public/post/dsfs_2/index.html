@@ -723,7 +723,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    21 min read
+    22 min read
   </span>
   
 
@@ -781,6 +781,8 @@
 <a href="#counters">Counters</a></li>
 <li>
 <a href="#sets">Sets</a></li>
+<li>
+<a href="#controlflow">Control Flow</a></li>
 </ul>
 <h2 id="chapter-2-a-crash-course-in-python">Chapter 2: A Crash Course in Python</h2>
 <p>This is the first of many chapters i&rsquo;ll be covering from Joel Grus&rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &ldquo;doing&rdquo; data science from scratch, including essential setup of virtual environments and other tooling.</p>
@@ -1527,7 +1529,41 @@ item_set = set(number_list) # turn it into a set
 item_set # now has three items {1, 2, 3}
 turn_into_list = list(item_set) # turn into distinct item list
 </code></pre>
-<h3 id="control-flow">Control Flow</h3>
+<h2 id="controlflow">Controlflow</h2>
+<p>I believe the main take away from this section is to briefly highlight the various control flows possible.</p>
+<p>Here&rsquo;s a traditional if-else statement:</p>
+<pre><code class="language-python">x = 5
+
+if x % 2 == 0:
+    parity = &quot;even&quot;
+else:
+    parity = &quot;odd&quot;
+    
+parity # 'odd'
+</code></pre>
+<p>The author may, from time to time, opt to use a shorter <em>ternary</em> if-else one-liner, like so:</p>
+<pre><code class="language-python">parity = &quot;even&quot; if x % 2 == 0 else &quot;odd&quot;
+</code></pre>
+<p>The author points out that while <strong>while-loops</strong> exist:</p>
+<pre><code class="language-python">x = 0
+
+while x &lt; 10:
+    print(f&quot;{x} is less than 10&quot;)
+    x += 1
+</code></pre>
+<p><strong>for</strong> and <strong>in</strong> will be used more often (the code below is both shorter and more readable):</p>
+<pre><code class="language-python">for x in range(10):
+    print(f&quot;{x} is less than 10&quot;)
+</code></pre>
+<p>We&rsquo;ll also <strong>note</strong> that <code>range(x)</code> also goes up to <code>x-1</code>.</p>
+<p>Finally, more complex logic <em>is</em> possible, although we&rsquo;ll have to revisit exactly when more complex logic is used in a data science context.</p>
+<pre><code class="language-python">for x in range(10):
+    if x == 3:
+        continue
+    if x == 5:
+        break
+    print(x)
+</code></pre>
 <h3 id="truthiness">Truthiness</h3>
 <h3 id="sorting">Sorting</h3>
 <h3 id="list-comprehensions">List Comprehensions</h3>

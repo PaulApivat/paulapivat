@@ -27,6 +27,7 @@ title: Data Science from Scratch (ch2)
 - [defaultdict](#defaultdict)
 - [Counters](#counters)
 - [Sets](#sets)
+- [Control Flow](#controlflow)
 
 ## Chapter 2: A Crash Course in Python
 
@@ -897,7 +898,54 @@ item_set # now has three items {1, 2, 3}
 turn_into_list = list(item_set) # turn into distinct item list
 ```
 
-### Control Flow
+## Controlflow
+
+I believe the main take away from this section is to briefly highlight the various control flows possible.
+
+Here's a traditional if-else statement:
+
+```python
+x = 5
+
+if x % 2 == 0:
+    parity = "even"
+else:
+    parity = "odd"
+    
+parity # 'odd'
+```
+The author may, from time to time, opt to use a shorter *ternary* if-else one-liner, like so:
+
+```python
+parity = "even" if x % 2 == 0 else "odd"
+```
+The author points out that while **while-loops** exist:
+
+```python
+x = 0
+
+while x < 10:
+    print(f"{x} is less than 10")
+    x += 1
+```
+**for** and **in** will be used more often (the code below is both shorter and more readable):
+
+```python
+for x in range(10):
+    print(f"{x} is less than 10")
+```
+We'll also **note** that `range(x)` also goes up to `x-1`.
+
+Finally, more complex logic *is* possible, although we'll have to revisit exactly when more complex logic is used in a data science context. 
+
+```python
+for x in range(10):
+    if x == 3:
+        continue
+    if x == 5:
+        break
+    print(x)
+```
 
 ### Truthiness
 

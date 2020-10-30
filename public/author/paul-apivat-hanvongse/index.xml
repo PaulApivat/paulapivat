@@ -39,6 +39,8 @@
 &lt;a href=&#34;#counters&#34;&gt;Counters&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#sets&#34;&gt;Sets&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#controlflow&#34;&gt;Control Flow&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
 &lt;p&gt;This is the first of many chapters i&amp;rsquo;ll be covering from Joel Grus&amp;rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &amp;ldquo;doing&amp;rdquo; data science from scratch, including essential setup of virtual environments and other tooling.&lt;/p&gt;
@@ -785,7 +787,41 @@ item_set = set(number_list) # turn it into a set
 item_set # now has three items {1, 2, 3}
 turn_into_list = list(item_set) # turn into distinct item list
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;control-flow&#34;&gt;Control Flow&lt;/h3&gt;
+&lt;h2 id=&#34;controlflow&#34;&gt;Controlflow&lt;/h2&gt;
+&lt;p&gt;I believe the main take away from this section is to briefly highlight the various control flows possible.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a traditional if-else statement:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;x = 5
+
+if x % 2 == 0:
+    parity = &amp;quot;even&amp;quot;
+else:
+    parity = &amp;quot;odd&amp;quot;
+    
+parity # &#39;odd&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The author may, from time to time, opt to use a shorter &lt;em&gt;ternary&lt;/em&gt; if-else one-liner, like so:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;parity = &amp;quot;even&amp;quot; if x % 2 == 0 else &amp;quot;odd&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The author points out that while &lt;strong&gt;while-loops&lt;/strong&gt; exist:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;x = 0
+
+while x &amp;lt; 10:
+    print(f&amp;quot;{x} is less than 10&amp;quot;)
+    x += 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;for&lt;/strong&gt; and &lt;strong&gt;in&lt;/strong&gt; will be used more often (the code below is both shorter and more readable):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for x in range(10):
+    print(f&amp;quot;{x} is less than 10&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We&amp;rsquo;ll also &lt;strong&gt;note&lt;/strong&gt; that &lt;code&gt;range(x)&lt;/code&gt; also goes up to &lt;code&gt;x-1&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Finally, more complex logic &lt;em&gt;is&lt;/em&gt; possible, although we&amp;rsquo;ll have to revisit exactly when more complex logic is used in a data science context.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for x in range(10):
+    if x == 3:
+        continue
+    if x == 5:
+        break
+    print(x)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;truthiness&#34;&gt;Truthiness&lt;/h3&gt;
 &lt;h3 id=&#34;sorting&#34;&gt;Sorting&lt;/h3&gt;
 &lt;h3 id=&#34;list-comprehensions&#34;&gt;List Comprehensions&lt;/h3&gt;
