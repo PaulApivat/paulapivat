@@ -1116,7 +1116,75 @@ squares = [x * x for x in range(5)]
 # [0, 4, 16]
 even_squares = [x * x for x in even_numbers]
 ```
+[Dan Bader provides](https://dbader.org/blog/list-dict-set-comprehensions-in-python) a helpful way to conceptualizing `list comprehensions`:
 
+```python
+(values) = [ (expression) for (item) in (collections) ]
+```
+A good way to understand `list comprehensions` is to de-construct it back to a regular for-loop:
+
+```python
+# recreation of even_numbers
+even_bracket = []
+for x in range(5):
+    if x % 2 == 0:
+       even_bracket.append(x)
+       
+# recreation of squares
+square_bracket = []
+for x in range(5):
+    square_bracket.append(x * x)
+
+# recreate even_squares
+square_even_bracket = []
+for x in even_bracket:
+    square_even_bracket.append(x * x)
+
+```
+
+List comprehensions also allow for **filtering with conditions**.
+
+```python
+# traditional for-loop
+filtered_bracket = []
+
+for x in range(10):
+    if x > 5:
+        filtered_bracket.append(x * x)
+        
+# list comprehension
+filtered_comprehension = [x * x
+                          for x in range(10)
+                          if x > 5]
+
+```
+The key take-away here is that `list comprehensions` follow a pattern:
+
+```python
+values = [expression
+          for item in collection
+          if condition]
+```
+
+Python also supports dictionaries or sets comprehension, although we'll have to revisit this post as to **why** we would want to do this in a data wrangling, transformation or analysis context.
+
+```python
+# {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+square_dict = {x: x * x for x in range(5)}
+
+# {1}
+square_set = {x * x for x in [1,-1]}
+```
+
+Finally, comprehensions can include nested for-loops:
+
+```python
+pairs = [(x,y)
+         for x in range(10)
+         for y in range(10)]
+```
+
+We will expect to use `list comprehensions` often, so we'll revisit this section as we seem more applications in context. 
 
 
 ### Automated Testing and assert
