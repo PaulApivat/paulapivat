@@ -41,6 +41,8 @@
 &lt;a href=&#34;#sets&#34;&gt;Sets&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#controlflow&#34;&gt;Control Flow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#truthiness&#34;&gt;Truthiness&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
 &lt;p&gt;This is the first of many chapters i&amp;rsquo;ll be covering from Joel Grus&amp;rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &amp;ldquo;doing&amp;rdquo; data science from scratch, including essential setup of virtual environments and other tooling.&lt;/p&gt;
@@ -822,7 +824,75 @@ while x &amp;lt; 10:
         break
     print(x)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;truthiness&#34;&gt;Truthiness&lt;/h3&gt;
+&lt;h2 id=&#34;truthiness&#34;&gt;Truthiness&lt;/h2&gt;
+&lt;p&gt;Booleans in Python, &lt;code&gt;True&lt;/code&gt; and &lt;code&gt;False&lt;/code&gt;, are only have the first letter capitalized. And Python uses &lt;code&gt;None&lt;/code&gt; to indicate a nonexistent value. We&amp;rsquo;ll try to handle the exception below:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;1 &amp;lt; 2 # True (not TRUE)
+1 &amp;gt; 2 # False (not FALSE)
+
+x = 1
+try:
+    assert x is None
+except AssertionError:
+    print(&amp;quot;There was an AssertionError because x is not &#39;None&#39;&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A major takeaway for me is the concept of &amp;ldquo;truthy&amp;rdquo; and &amp;ldquo;falsy&amp;rdquo;. The first thing to note is that anything &lt;em&gt;after&lt;/em&gt; &lt;code&gt;if&lt;/code&gt; implies &amp;ldquo;is true&amp;rdquo; which is why if-statements can be used to &lt;strong&gt;check&lt;/strong&gt; is a list, string or dictionary is empty:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;x = [1]
+y = []
+
+# if x...is true
+# Truthy
+if x:
+    print(&amp;quot;Truthy&amp;quot;)
+else:
+    print(&amp;quot;Falsy&amp;quot;)
+
+# if y...is true    
+# Falsy
+print(&amp;quot;Truthy&amp;quot;) if y else print(&amp;quot;Falsy&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You&amp;rsquo;ll note the &lt;em&gt;ternary&lt;/em&gt; version here is slightly less readable. Here are more examples to understand &amp;ldquo;truthiness&amp;rdquo;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;## Truthy example
+
+# create a function that returns a string
+def some_func():
+    return &amp;quot;a string&amp;quot;
+    
+# set s to some_func 
+s = some_func()
+
+# use if-statement to check truthiness - returns &#39;a&#39;
+if s:
+    first_char = s[0]
+else:
+    first_char = &amp;quot;&amp;quot;
+    
+## Falsy example
+
+# another function return empty string
+def another_func():
+    return &amp;quot;&amp;quot;
+
+# set another_func to y (falsy example)
+y = another_func()
+
+# when &#39;truthy&#39; return second value,
+# when &#39;falsy&#39; return first value
+first_character = y and y[0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, the author brings up &lt;strong&gt;all&lt;/strong&gt; and &lt;strong&gt;any&lt;/strong&gt; functions. The former returns &lt;code&gt;True&lt;/code&gt; when &lt;em&gt;every&lt;/em&gt; element is truthy; the latter returns &lt;code&gt;True&lt;/code&gt; when &lt;em&gt;at least one&lt;/em&gt; element is truthy:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+all([True, 1, {3}]) # True
+
+all([True, 1, {}])  # False
+
+any([True, 1, {}])  # True
+
+all([])             # True
+
+any([])             # False
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You&amp;rsquo;ll note that the truthiness &lt;strong&gt;within&lt;/strong&gt; the list is being evaluated. So &lt;code&gt;all([])&lt;/code&gt; suggests there are no &amp;lsquo;falsy&amp;rsquo; elements within the list, because it&amp;rsquo;s empty, so it evaluates to &lt;code&gt;True&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;On the other hand, &lt;code&gt;any([])&lt;/code&gt; suggests not even one (or at least one) element is &amp;lsquo;truthy&amp;rsquo;, because the list is empty, so it evaluates to &lt;code&gt;False&lt;/code&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;sorting&#34;&gt;Sorting&lt;/h3&gt;
 &lt;h3 id=&#34;list-comprehensions&#34;&gt;List Comprehensions&lt;/h3&gt;
 &lt;h3 id=&#34;automated-testing-and-assert&#34;&gt;Automated Testing and assert&lt;/h3&gt;

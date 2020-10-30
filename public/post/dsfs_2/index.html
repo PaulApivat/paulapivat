@@ -723,7 +723,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    22 min read
+    23 min read
   </span>
   
 
@@ -783,6 +783,8 @@
 <a href="#sets">Sets</a></li>
 <li>
 <a href="#controlflow">Control Flow</a></li>
+<li>
+<a href="#truthiness">Truthiness</a></li>
 </ul>
 <h2 id="chapter-2-a-crash-course-in-python">Chapter 2: A Crash Course in Python</h2>
 <p>This is the first of many chapters i&rsquo;ll be covering from Joel Grus&rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &ldquo;doing&rdquo; data science from scratch, including essential setup of virtual environments and other tooling.</p>
@@ -1564,7 +1566,75 @@ while x &lt; 10:
         break
     print(x)
 </code></pre>
-<h3 id="truthiness">Truthiness</h3>
+<h2 id="truthiness">Truthiness</h2>
+<p>Booleans in Python, <code>True</code> and <code>False</code>, are only have the first letter capitalized. And Python uses <code>None</code> to indicate a nonexistent value. We&rsquo;ll try to handle the exception below:</p>
+<pre><code class="language-python">1 &lt; 2 # True (not TRUE)
+1 &gt; 2 # False (not FALSE)
+
+x = 1
+try:
+    assert x is None
+except AssertionError:
+    print(&quot;There was an AssertionError because x is not 'None'&quot;)
+</code></pre>
+<p>A major takeaway for me is the concept of &ldquo;truthy&rdquo; and &ldquo;falsy&rdquo;. The first thing to note is that anything <em>after</em> <code>if</code> implies &ldquo;is true&rdquo; which is why if-statements can be used to <strong>check</strong> is a list, string or dictionary is empty:</p>
+<pre><code class="language-python">x = [1]
+y = []
+
+# if x...is true
+# Truthy
+if x:
+    print(&quot;Truthy&quot;)
+else:
+    print(&quot;Falsy&quot;)
+
+# if y...is true    
+# Falsy
+print(&quot;Truthy&quot;) if y else print(&quot;Falsy&quot;)
+</code></pre>
+<p>You&rsquo;ll note the <em>ternary</em> version here is slightly less readable. Here are more examples to understand &ldquo;truthiness&rdquo;.</p>
+<pre><code class="language-python">## Truthy example
+
+# create a function that returns a string
+def some_func():
+    return &quot;a string&quot;
+    
+# set s to some_func 
+s = some_func()
+
+# use if-statement to check truthiness - returns 'a'
+if s:
+    first_char = s[0]
+else:
+    first_char = &quot;&quot;
+    
+## Falsy example
+
+# another function return empty string
+def another_func():
+    return &quot;&quot;
+
+# set another_func to y (falsy example)
+y = another_func()
+
+# when 'truthy' return second value,
+# when 'falsy' return first value
+first_character = y and y[0]
+</code></pre>
+<p>Finally, the author brings up <strong>all</strong> and <strong>any</strong> functions. The former returns <code>True</code> when <em>every</em> element is truthy; the latter returns <code>True</code> when <em>at least one</em> element is truthy:</p>
+<pre><code class="language-python">
+all([True, 1, {3}]) # True
+
+all([True, 1, {}])  # False
+
+any([True, 1, {}])  # True
+
+all([])             # True
+
+any([])             # False
+</code></pre>
+<p>You&rsquo;ll note that the truthiness <strong>within</strong> the list is being evaluated. So <code>all([])</code> suggests there are no &lsquo;falsy&rsquo; elements within the list, because it&rsquo;s empty, so it evaluates to <code>True</code>.</p>
+<p>On the other hand, <code>any([])</code> suggests not even one (or at least one) element is &lsquo;truthy&rsquo;, because the list is empty, so it evaluates to <code>False</code>.</p>
 <h3 id="sorting">Sorting</h3>
 <h3 id="list-comprehensions">List Comprehensions</h3>
 <h3 id="automated-testing-and-assert">Automated Testing and assert</h3>

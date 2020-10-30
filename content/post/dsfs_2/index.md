@@ -28,6 +28,7 @@ title: Data Science from Scratch (ch2)
 - [Counters](#counters)
 - [Sets](#sets)
 - [Control Flow](#controlflow)
+- [Truthiness](#truthiness)
 
 ## Chapter 2: A Crash Course in Python
 
@@ -947,7 +948,85 @@ for x in range(10):
     print(x)
 ```
 
-### Truthiness
+## Truthiness
+
+Booleans in Python, `True` and `False`, are only have the first letter capitalized. And Python uses `None` to indicate a nonexistent value. We'll try to handle the exception below:
+
+```python
+1 < 2 # True (not TRUE)
+1 > 2 # False (not FALSE)
+
+x = 1
+try:
+    assert x is None
+except AssertionError:
+    print("There was an AssertionError because x is not 'None'")
+```
+A major takeaway for me is the concept of "truthy" and "falsy". The first thing to note is that anything *after* `if` implies "is true" which is why if-statements can be used to **check** is a list, string or dictionary is empty:
+
+```python
+x = [1]
+y = []
+
+# if x...is true
+# Truthy
+if x:
+    print("Truthy")
+else:
+    print("Falsy")
+
+# if y...is true    
+# Falsy
+print("Truthy") if y else print("Falsy")
+```
+You'll note the *ternary* version here is slightly less readable. Here are more examples to understand "truthiness".
+
+```python
+## Truthy example
+
+# create a function that returns a string
+def some_func():
+    return "a string"
+    
+# set s to some_func 
+s = some_func()
+
+# use if-statement to check truthiness - returns 'a'
+if s:
+    first_char = s[0]
+else:
+    first_char = ""
+    
+## Falsy example
+
+# another function return empty string
+def another_func():
+    return ""
+
+# set another_func to y (falsy example)
+y = another_func()
+
+# when 'truthy' return second value,
+# when 'falsy' return first value
+first_character = y and y[0]
+```
+Finally, the author brings up **all** and **any** functions. The former returns `True` when *every* element is truthy; the latter returns `True` when *at least one* element is truthy:
+
+```python
+
+all([True, 1, {3}]) # True
+
+all([True, 1, {}])  # False
+
+any([True, 1, {}])  # True
+
+all([])             # True
+
+any([])             # False
+```
+You'll note that the truthiness **within** the list is being evaluated. So `all([])` suggests there are no 'falsy' elements within the list, because it's empty, so it evaluates to `True`. 
+
+On the other hand, `any([])` suggests not even one (or at least one) element is 'truthy', because the list is empty, so it evaluates to `False`. 
 
 ### Sorting
 
