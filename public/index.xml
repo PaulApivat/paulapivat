@@ -1094,6 +1094,10 @@ hist(x)
 &lt;a href=&#34;#controlflow&#34;&gt;Control Flow&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#truthiness&#34;&gt;Truthiness&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#sorting&#34;&gt;Sorting&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#list_comprehensions&#34;&gt;List Comprehensions&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
 &lt;p&gt;This is the first of many chapters i&amp;rsquo;ll be covering from Joel Grus&amp;rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &amp;ldquo;doing&amp;rdquo; data science from scratch, including essential setup of virtual environments and other tooling.&lt;/p&gt;
@@ -1944,8 +1948,76 @@ any([])             # False
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;You&amp;rsquo;ll note that the truthiness &lt;strong&gt;within&lt;/strong&gt; the list is being evaluated. So &lt;code&gt;all([])&lt;/code&gt; suggests there are no &amp;lsquo;falsy&amp;rsquo; elements within the list, because it&amp;rsquo;s empty, so it evaluates to &lt;code&gt;True&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;On the other hand, &lt;code&gt;any([])&lt;/code&gt; suggests not even one (or at least one) element is &amp;lsquo;truthy&amp;rsquo;, because the list is empty, so it evaluates to &lt;code&gt;False&lt;/code&gt;.&lt;/p&gt;
-&lt;h3 id=&#34;sorting&#34;&gt;Sorting&lt;/h3&gt;
-&lt;h3 id=&#34;list-comprehensions&#34;&gt;List Comprehensions&lt;/h3&gt;
+&lt;h2 id=&#34;sorting&#34;&gt;Sorting&lt;/h2&gt;
+&lt;p&gt;Sorting is generally straight forward with either &lt;code&gt;sorted()&lt;/code&gt; or &lt;code&gt;sort()&lt;/code&gt;. Here&amp;rsquo;s a more complex example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# create a list containing one paragraph
+lines = [&amp;quot;This table highlights 538&#39;s new NBA statistic, RAPTOR, in addition to the more established Wins Above Replacement (WAR). An extra column, Playoff (P/O) War, is provided to highlight stars performers in the post-season, when the stakes are higher. The table is limited to the top-100 players who have played at least 1,000 minutes minutes the table Wins NBA NBA RAPTOR more players&amp;quot;]
+
+# split paragraph into individual words
+lines = &amp;quot; &amp;quot;.join(lines_list).split()
+
+# import Counter
+from collections import Counter
+
+# count words in lines
+word_counts = Counter(lines)
+
+# sort words and count from largest to smallest
+wc = sorted(word_counts.items(),
+            key=lambda x: x[1],   # key line
+            reverse=True)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s another example involving coffee:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+coffee_prices = {
+   &#39;cappuccino&#39;: 54,
+   &#39;latte&#39;: 56,
+   &#39;espresso&#39;: 72,
+   &#39;americano&#39;: 48,
+   &#39;cortado&#39;: 41
+}
+
+# .items() access dictionary key-value pairs
+# key is what the sorted() function will sort by
+# reverse indicates descending or ascending 
+sorted(coffee_prices.items(), key=lambda x: x[1], reverse=False)
+
+# [(&#39;cortado&#39;, 41),
+# (&#39;americano&#39;, 48),
+# (&#39;cappuccino&#39;, 54),
+# (&#39;latte&#39;, 56),
+# (&#39;espresso&#39;, 72)]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;list_comprehensions&#34;&gt;list_comprehensions&lt;/h2&gt;
+&lt;p&gt;Previously, we saw &lt;strong&gt;if-statements&lt;/strong&gt; expressed in one-line, for example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;y = []
+
+# Falsy
+print(&amp;quot;Truthy&amp;quot;) if y else print(&amp;quot;Falsy&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can also write &lt;strong&gt;for-loops&lt;/strong&gt; in one-line. And thats a way to think about &lt;code&gt;list comprehensions&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+# traditional for-loop
+num = []
+for x in range(5):
+    if x % 2 == 0:
+        num.append(x)
+
+num # call num
+
+# list comprehension, provides the same thing
+[x for x in range(5) if x % 2 == 0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here are some examples from Data Science from Scratch:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# [0, 2, 4]
+even_numbers = [x for x in range(5) if x % 2 == 0] 
+
+# [0, 1, 4, 9, 16]
+squares = [x * x for x in range(5)]
+
+# [0, 4, 16]
+even_squares = [x * x for x in even_numbers]
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;automated-testing-and-assert&#34;&gt;Automated Testing and assert&lt;/h3&gt;
 &lt;h3 id=&#34;object-oriented-programming&#34;&gt;Object-Oriented Programming&lt;/h3&gt;
 &lt;h3 id=&#34;iterables-and-generators&#34;&gt;Iterables and Generators&lt;/h3&gt;

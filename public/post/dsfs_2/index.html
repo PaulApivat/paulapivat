@@ -723,7 +723,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    23 min read
+    25 min read
   </span>
   
 
@@ -785,6 +785,10 @@
 <a href="#controlflow">Control Flow</a></li>
 <li>
 <a href="#truthiness">Truthiness</a></li>
+<li>
+<a href="#sorting">Sorting</a></li>
+<li>
+<a href="#list_comprehensions">List Comprehensions</a></li>
 </ul>
 <h2 id="chapter-2-a-crash-course-in-python">Chapter 2: A Crash Course in Python</h2>
 <p>This is the first of many chapters i&rsquo;ll be covering from Joel Grus&rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &ldquo;doing&rdquo; data science from scratch, including essential setup of virtual environments and other tooling.</p>
@@ -1635,8 +1639,76 @@ any([])             # False
 </code></pre>
 <p>You&rsquo;ll note that the truthiness <strong>within</strong> the list is being evaluated. So <code>all([])</code> suggests there are no &lsquo;falsy&rsquo; elements within the list, because it&rsquo;s empty, so it evaluates to <code>True</code>.</p>
 <p>On the other hand, <code>any([])</code> suggests not even one (or at least one) element is &lsquo;truthy&rsquo;, because the list is empty, so it evaluates to <code>False</code>.</p>
-<h3 id="sorting">Sorting</h3>
-<h3 id="list-comprehensions">List Comprehensions</h3>
+<h2 id="sorting">Sorting</h2>
+<p>Sorting is generally straight forward with either <code>sorted()</code> or <code>sort()</code>. Here&rsquo;s a more complex example:</p>
+<pre><code class="language-python"># create a list containing one paragraph
+lines = [&quot;This table highlights 538's new NBA statistic, RAPTOR, in addition to the more established Wins Above Replacement (WAR). An extra column, Playoff (P/O) War, is provided to highlight stars performers in the post-season, when the stakes are higher. The table is limited to the top-100 players who have played at least 1,000 minutes minutes the table Wins NBA NBA RAPTOR more players&quot;]
+
+# split paragraph into individual words
+lines = &quot; &quot;.join(lines_list).split()
+
+# import Counter
+from collections import Counter
+
+# count words in lines
+word_counts = Counter(lines)
+
+# sort words and count from largest to smallest
+wc = sorted(word_counts.items(),
+            key=lambda x: x[1],   # key line
+            reverse=True)
+</code></pre>
+<p>Here&rsquo;s another example involving coffee:</p>
+<pre><code class="language-python">
+coffee_prices = {
+   'cappuccino': 54,
+   'latte': 56,
+   'espresso': 72,
+   'americano': 48,
+   'cortado': 41
+}
+
+# .items() access dictionary key-value pairs
+# key is what the sorted() function will sort by
+# reverse indicates descending or ascending 
+sorted(coffee_prices.items(), key=lambda x: x[1], reverse=False)
+
+# [('cortado', 41),
+# ('americano', 48),
+# ('cappuccino', 54),
+# ('latte', 56),
+# ('espresso', 72)]
+</code></pre>
+<h2 id="list_comprehensions">list_comprehensions</h2>
+<p>Previously, we saw <strong>if-statements</strong> expressed in one-line, for example:</p>
+<pre><code class="language-python">y = []
+
+# Falsy
+print(&quot;Truthy&quot;) if y else print(&quot;Falsy&quot;)
+</code></pre>
+<p>We can also write <strong>for-loops</strong> in one-line. And thats a way to think about <code>list comprehensions</code>.</p>
+<pre><code class="language-python">
+# traditional for-loop
+num = []
+for x in range(5):
+    if x % 2 == 0:
+        num.append(x)
+
+num # call num
+
+# list comprehension, provides the same thing
+[x for x in range(5) if x % 2 == 0]
+</code></pre>
+<p>Here are some examples from Data Science from Scratch:</p>
+<pre><code class="language-python"># [0, 2, 4]
+even_numbers = [x for x in range(5) if x % 2 == 0] 
+
+# [0, 1, 4, 9, 16]
+squares = [x * x for x in range(5)]
+
+# [0, 4, 16]
+even_squares = [x * x for x in even_numbers]
+</code></pre>
 <h3 id="automated-testing-and-assert">Automated Testing and assert</h3>
 <h3 id="object-oriented-programming">Object-Oriented Programming</h3>
 <h3 id="iterables-and-generators">Iterables and Generators</h3>

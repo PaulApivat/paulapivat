@@ -29,6 +29,8 @@ title: Data Science from Scratch (ch2)
 - [Sets](#sets)
 - [Control Flow](#controlflow)
 - [Truthiness](#truthiness)
+- [Sorting](#sorting)
+- [List Comprehensions](#list_comprehensions)
 
 ## Chapter 2: A Crash Course in Python
 
@@ -1028,9 +1030,94 @@ You'll note that the truthiness **within** the list is being evaluated. So `all(
 
 On the other hand, `any([])` suggests not even one (or at least one) element is 'truthy', because the list is empty, so it evaluates to `False`. 
 
-### Sorting
+## Sorting
 
-### List Comprehensions
+Sorting is generally straight forward with either `sorted()` or `sort()`. Here's a more complex example:
+
+```python
+# create a list containing one paragraph
+lines = ["This table highlights 538's new NBA statistic, RAPTOR, in addition to the more established Wins Above Replacement (WAR). An extra column, Playoff (P/O) War, is provided to highlight stars performers in the post-season, when the stakes are higher. The table is limited to the top-100 players who have played at least 1,000 minutes minutes the table Wins NBA NBA RAPTOR more players"]
+
+# split paragraph into individual words
+lines = " ".join(lines_list).split()
+
+# import Counter
+from collections import Counter
+
+# count words in lines
+word_counts = Counter(lines)
+
+# sort words and count from largest to smallest
+wc = sorted(word_counts.items(),
+            key=lambda x: x[1],   # key line
+            reverse=True)
+```
+Here's another example involving coffee:
+
+```python
+
+coffee_prices = {
+   'cappuccino': 54,
+   'latte': 56,
+   'espresso': 72,
+   'americano': 48,
+   'cortado': 41
+}
+
+# .items() access dictionary key-value pairs
+# key is what the sorted() function will sort by
+# reverse indicates descending or ascending 
+sorted(coffee_prices.items(), key=lambda x: x[1], reverse=False)
+
+# [('cortado', 41),
+# ('americano', 48),
+# ('cappuccino', 54),
+# ('latte', 56),
+# ('espresso', 72)]
+```
+
+
+## list_comprehensions
+
+Previously, we saw **if-statements** expressed in one-line, for example:
+
+```python
+y = []
+
+# Falsy
+print("Truthy") if y else print("Falsy")
+```
+
+We can also write **for-loops** in one-line. And thats a way to think about `list comprehensions`. 
+
+```python
+
+# traditional for-loop
+num = []
+for x in range(5):
+    if x % 2 == 0:
+        num.append(x)
+
+num # call num
+
+# list comprehension, provides the same thing
+[x for x in range(5) if x % 2 == 0]
+```
+
+Here are some examples from Data Science from Scratch:
+
+```python
+# [0, 2, 4]
+even_numbers = [x for x in range(5) if x % 2 == 0] 
+
+# [0, 1, 4, 9, 16]
+squares = [x * x for x in range(5)]
+
+# [0, 4, 16]
+even_squares = [x * x for x in even_numbers]
+```
+
+
 
 ### Automated Testing and assert
 
