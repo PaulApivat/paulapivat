@@ -1020,7 +1020,7 @@ square_set = {x * x for x in [1,-1]}
          for x in range(10)
          for y in range(10)]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We will expect to use &lt;code&gt;list comprehensions&lt;/code&gt; often, so we&amp;rsquo;ll revisit this section as we seem more applications in context.&lt;/p&gt;
+&lt;p&gt;We will expect to use &lt;code&gt;list comprehensions&lt;/code&gt; often, so we&amp;rsquo;ll revisit this section as we see more applications in context.&lt;/p&gt;
 &lt;h3 id=&#34;automated-testing-and-assert&#34;&gt;Automated Testing and assert&lt;/h3&gt;
 &lt;h3 id=&#34;object-oriented-programming&#34;&gt;Object-Oriented Programming&lt;/h3&gt;
 &lt;h3 id=&#34;iterables-and-generators&#34;&gt;Iterables and Generators&lt;/h3&gt;

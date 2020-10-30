@@ -1184,7 +1184,7 @@ pairs = [(x,y)
          for y in range(10)]
 ```
 
-We will expect to use `list comprehensions` often, so we'll revisit this section as we seem more applications in context. 
+We will expect to use `list comprehensions` often, so we'll revisit this section as we see more applications in context. 
 
 
 ### Automated Testing and assert
