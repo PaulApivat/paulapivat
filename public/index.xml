@@ -1098,6 +1098,10 @@ hist(x)
 &lt;a href=&#34;#sorting&#34;&gt;Sorting&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#list_comprehensions&#34;&gt;List Comprehensions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#assert&#34;&gt;Assert&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#object-oriented_programming&#34;&gt;Object-Oriented Programming&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
 &lt;p&gt;This is the first of many chapters i&amp;rsquo;ll be covering from Joel Grus&amp;rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &amp;ldquo;doing&amp;rdquo; data science from scratch, including essential setup of virtual environments and other tooling.&lt;/p&gt;
@@ -2072,8 +2076,65 @@ square_set = {x * x for x in [1,-1]}
          for y in range(10)]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We will expect to use &lt;code&gt;list comprehensions&lt;/code&gt; often, so we&amp;rsquo;ll revisit this section as we see more applications in context.&lt;/p&gt;
-&lt;h3 id=&#34;automated-testing-and-assert&#34;&gt;Automated Testing and assert&lt;/h3&gt;
-&lt;h3 id=&#34;object-oriented-programming&#34;&gt;Object-Oriented Programming&lt;/h3&gt;
+&lt;h2 id=&#34;assert&#34;&gt;Assert&lt;/h2&gt;
+&lt;h4 id=&#34;automated-testing-and-assert&#34;&gt;Automated Testing and Assert&lt;/h4&gt;
+&lt;p&gt;One of the many cool things about Data Science from Scratch (by Joel Grus) is his use of assertions as a way to &amp;ldquo;test&amp;rdquo; code. This is a software engineering practice (see 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Test-driven_development&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;test-driven development&lt;/a&gt;) that may not be as pervasive in data science, but I suspect, will see growth in usage and will soon become best practice.&lt;/p&gt;
+&lt;p&gt;While there are testing frameworks that deserve their own chapters, throughout &lt;em&gt;this&lt;/em&gt; book, fortunately the author has provided a simple way to test by way of the &lt;code&gt;assert&lt;/code&gt; key word, here&amp;rsquo;s an example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# create function to return the largest value in a list
+def largest_item(x):
+    return max(x)
+    
+# assert that our function is working properly
+# we will see &#39;nothing&#39; if things are working properly
+assert largest_item([10, 20, 5, 40, 99]) == 99
+
+# an AssertionError will pop up if any other value is used
+assert largest_item([10, 20, 5, 40, 99]) == 40
+---------------------------------------------------------------------------
+AssertionError                            Traceback (most recent call last)
+&amp;lt;ipython-input-21-12dc291d091e&amp;gt; in &amp;lt;module&amp;gt;
+----&amp;gt; 1 assert largest_item([10, 20, 5, 40, 99]) == 40
+
+# we can also create an assertion for input values
+def largest_item(x):
+    assert x, &amp;quot;empty list has no largest value&amp;quot;
+    return max(x)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;object-oriented_programming&#34;&gt;Object-Oriented_Programming&lt;/h2&gt;
+&lt;p&gt;Object-oriented programming could be it&amp;rsquo;s own chapter, so we&amp;rsquo;ll go over a toy example from the book and tie it to the previous section on assert.&lt;/p&gt;
+&lt;p&gt;First, we&amp;rsquo;ll create a &lt;strong&gt;class&lt;/strong&gt; &lt;code&gt;CountingClicker&lt;/code&gt; that initializes at count 0, has several methods including a &lt;code&gt;click&lt;/code&gt; method to increment the count, a &lt;code&gt;read&lt;/code&gt; method to read the present number of count and a &lt;code&gt;reset&lt;/code&gt; method to reset the count back to 0.&lt;/p&gt;
+&lt;p&gt;Then we&amp;rsquo;ll write some &lt;code&gt;assert&lt;/code&gt; statements to test that our class method is working as intended.&lt;/p&gt;
+&lt;p&gt;You&amp;rsquo;ll &lt;strong&gt;note&lt;/strong&gt; that there are private methods and public methods. Private methods have the &lt;strong&gt;double underscore&lt;/strong&gt; (aka dunder methods), they&amp;rsquo;re generally not called, but python won&amp;rsquo;t stop you. Then we have the more familiar &lt;em&gt;public&lt;/em&gt; methods. Also, all the methods have to be written &lt;strong&gt;within&lt;/strong&gt; the scope of the class &lt;code&gt;CountingClicker&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;class CountingClicker:
+    &amp;quot;&amp;quot;&amp;quot;A class can/should have a docstring, just like a function&amp;quot;&amp;quot;&amp;quot;
+    def __init__(self, count = 0):
+        self.count = count
+    def __repr__(self):
+        return f&amp;quot;CountingClicker(count = {self.count})&amp;quot;
+    def click(self, num_times = 1):
+        &amp;quot;&amp;quot;&amp;quot;Click the clicker some number of times.&amp;quot;&amp;quot;&amp;quot;
+        self.count += num_times
+    def read(self):
+        return self.count
+    def reset(self):
+        self.count = 0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After we&amp;rsquo;ve written the class and associated methods, we can write &lt;code&gt;assert&lt;/code&gt; statements to test them. You&amp;rsquo;ll want to write the below statements &lt;strong&gt;in this order&lt;/strong&gt; because we&amp;rsquo;re testing the behavior of our &lt;code&gt;CountingClicker&lt;/code&gt; class.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;clicker = CountingClicker()
+
+assert clicker.read() == 0, &amp;quot;clicker should start with count 0&amp;quot;
+
+clicker.click()
+
+clicker.click()
+
+assert clicker.read() == 2, &amp;quot;after two clicks, clicker should have count of 2&amp;quot;
+
+clicker.reset()
+
+assert clicker.read() == 0, &amp;quot;after reset, clicker should be back to 0&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;iterables-and-generators&#34;&gt;Iterables and Generators&lt;/h3&gt;
 &lt;h3 id=&#34;randomness&#34;&gt;Randomness&lt;/h3&gt;
 &lt;h3 id=&#34;regular-expressions&#34;&gt;Regular Expressions&lt;/h3&gt;

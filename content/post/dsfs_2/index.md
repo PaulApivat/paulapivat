@@ -31,6 +31,8 @@ title: Data Science from Scratch (ch2)
 - [Truthiness](#truthiness)
 - [Sorting](#sorting)
 - [List Comprehensions](#list_comprehensions)
+- [Assert](#assert)
+- [Object-Oriented Programming](#object-oriented_programming)
 
 ## Chapter 2: A Crash Course in Python
 
@@ -1187,9 +1189,80 @@ pairs = [(x,y)
 We will expect to use `list comprehensions` often, so we'll revisit this section as we see more applications in context. 
 
 
-### Automated Testing and assert
+## Assert
 
-### Object-Oriented Programming
+#### Automated Testing and Assert
+
+One of the many cool things about Data Science from Scratch (by Joel Grus) is his use of assertions as a way to "test" code. This is a software engineering practice (see [test-driven development](https://en.wikipedia.org/wiki/Test-driven_development)) that may not be as pervasive in data science, but I suspect, will see growth in usage and will soon become best practice. 
+
+While there are testing frameworks that deserve their own chapters, throughout *this* book, fortunately the author has provided a simple way to test by way of the `assert` key word, here's an example:
+
+```python
+# create function to return the largest value in a list
+def largest_item(x):
+    return max(x)
+    
+# assert that our function is working properly
+# we will see 'nothing' if things are working properly
+assert largest_item([10, 20, 5, 40, 99]) == 99
+
+# an AssertionError will pop up if any other value is used
+assert largest_item([10, 20, 5, 40, 99]) == 40
+---------------------------------------------------------------------------
+AssertionError                            Traceback (most recent call last)
+<ipython-input-21-12dc291d091e> in <module>
+----> 1 assert largest_item([10, 20, 5, 40, 99]) == 40
+
+# we can also create an assertion for input values
+def largest_item(x):
+    assert x, "empty list has no largest value"
+    return max(x)
+```
+
+## Object-Oriented_Programming
+
+Object-oriented programming could be it's own chapter, so we'll go over a toy example from the book and tie it to the previous section on assert. 
+
+First, we'll create a **class** `CountingClicker` that initializes at count 0, has several methods including a `click` method to increment the count, a `read` method to read the present number of count and a `reset` method to reset the count back to 0.
+
+Then we'll write some `assert` statements to test that our class method is working as intended. 
+
+You'll **note** that there are private methods and public methods. Private methods have the **double underscore** (aka dunder methods), they're generally not called, but python won't stop you. Then we have the more familiar *public* methods. Also, all the methods have to be written **within** the scope of the class `CountingClicker`. 
+
+```python
+class CountingClicker:
+    """A class can/should have a docstring, just like a function"""
+    def __init__(self, count = 0):
+        self.count = count
+    def __repr__(self):
+        return f"CountingClicker(count = {self.count})"
+    def click(self, num_times = 1):
+        """Click the clicker some number of times."""
+        self.count += num_times
+    def read(self):
+        return self.count
+    def reset(self):
+        self.count = 0
+```
+
+After we've written the class and associated methods, we can write `assert` statements to test them. You'll want to write the below statements **in this order** because we're testing the behavior of our `CountingClicker` class. 
+
+```python
+clicker = CountingClicker()
+
+assert clicker.read() == 0, "clicker should start with count 0"
+
+clicker.click()
+
+clicker.click()
+
+assert clicker.read() == 2, "after two clicks, clicker should have count of 2"
+
+clicker.reset()
+
+assert clicker.read() == 0, "after reset, clicker should be back to 0"
+```
+
 
 ### Iterables and Generators
 
