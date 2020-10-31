@@ -1772,7 +1772,9 @@ square_set = {x * x for x in [1,-1]}
 <h2 id="assert">Assert</h2>
 <h4 id="automated-testing-and-assert">Automated Testing and Assert</h4>
 <p>One of the many cool things about Data Science from Scratch (by Joel Grus) is his use of assertions as a way to &ldquo;test&rdquo; code. This is a software engineering practice (see 
-<a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank" rel="noopener">test-driven development</a>) that may not be as pervasive in data science, but I suspect, will see growth in usage and will soon become best practice.</p>
+<a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank" rel="noopener">test-driven development</a>) that may not be as pervasive in data science, but I suspect, will see 
+<a href="https://www.kdnuggets.com/2020/08/unit-test-data-pipeline-thank-yourself-later.html" target="_blank" rel="noopener">growth in usage</a> and will soon become best practice, if we&rsquo;re not 
+<a href="https://www.datacamp.com/courses/unit-testing-for-data-science-in-python" target="_blank" rel="noopener">already there</a>.</p>
 <p>While there are testing frameworks that deserve their own chapters, throughout <em>this</em> book, fortunately the author has provided a simple way to test by way of the <code>assert</code> key word, here&rsquo;s an example:</p>
 <pre><code class="language-python"># create function to return the largest value in a list
 def largest_item(x):
@@ -1795,6 +1797,7 @@ def largest_item(x):
     return max(x)
 </code></pre>
 <h2 id="object-oriented_programming">Object-Oriented_Programming</h2>
+<p>Object-oriented programming could be it&rsquo;s own chapter, so we won&rsquo;t try to shoot for comprehensiveness here. Instead, we&rsquo;ll try to understand it&rsquo;s basics and the <code>assert</code> function is going to help us understand it even better.</p>
 <p>Object-oriented programming could be it&rsquo;s own chapter, so we&rsquo;ll go over a toy example from the book and tie it to the previous section on assert.</p>
 <p>First, we&rsquo;ll create a <strong>class</strong> <code>CountingClicker</code> that initializes at count 0, has several methods including a <code>click</code> method to increment the count, a <code>read</code> method to read the present number of count and a <code>reset</code> method to reset the count back to 0.</p>
 <p>Then we&rsquo;ll write some <code>assert</code> statements to test that our class method is working as intended.</p>
@@ -1828,7 +1831,10 @@ clicker.reset()
 
 assert clicker.read() == 0, &quot;after reset, clicker should be back to 0&quot;
 </code></pre>
+<p>In summary, we created a class <code>CountingClicker</code> whose methods allow it to display in text (<code>__repr__</code>), <code>click</code>, <code>read</code> and <code>reset</code>.</p>
+<p>All these methods belong to the <code>class</code> CountingClicker and will be passed along to new instances of classes - we have yet to see what this will look like as it relates to tasks in data science so we&rsquo;ll revisit this post when we have updates on the applied end.</p>
 <h2 id="iterables_and_generators">Iterables_and_Generators</h2>
+<h3 id="a-brief-forey-into-lazy-evaluation">A Brief Forey into Lazy Evaluation</h3>
 <p>A key concept that is introduced when discussing the creation of &ldquo;generators&rdquo; is using <code>for</code> and <code>in</code> to <strong>iterate</strong> over generators (like lists), but <strong>lazily on demand</strong>. This is formally called 
 <a href="https://en.wikipedia.org/wiki/Lazy_evaluation" target="_blank" rel="noopener">lazy evaluation</a> or &lsquo;call-by-need&rsquo; which delays the evaluation of an expression until the value is needed. We can think of this as a form of optimization - avoiding repeating function calls when not needed.</p>
 <p>Here&rsquo;s a graphic borrowed from 

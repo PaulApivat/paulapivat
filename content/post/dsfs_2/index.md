@@ -1194,7 +1194,7 @@ We will expect to use `list comprehensions` often, so we'll revisit this section
 
 #### Automated Testing and Assert
 
-One of the many cool things about Data Science from Scratch (by Joel Grus) is his use of assertions as a way to "test" code. This is a software engineering practice (see [test-driven development](https://en.wikipedia.org/wiki/Test-driven_development)) that may not be as pervasive in data science, but I suspect, will see growth in usage and will soon become best practice. 
+One of the many cool things about Data Science from Scratch (by Joel Grus) is his use of assertions as a way to "test" code. This is a software engineering practice (see [test-driven development](https://en.wikipedia.org/wiki/Test-driven_development)) that may not be as pervasive in data science, but I suspect, will see [growth in usage](https://www.kdnuggets.com/2020/08/unit-test-data-pipeline-thank-yourself-later.html) and will soon become best practice, if we're not [already there](https://www.datacamp.com/courses/unit-testing-for-data-science-in-python). 
 
 While there are testing frameworks that deserve their own chapters, throughout *this* book, fortunately the author has provided a simple way to test by way of the `assert` key word, here's an example:
 
@@ -1221,6 +1221,8 @@ def largest_item(x):
 ```
 
 ## Object-Oriented_Programming
+
+Object-oriented programming could be it's own chapter, so we won't try to shoot for comprehensiveness here. Instead, we'll try to understand it's basics and the `assert` function is going to help us understand it even better. 
 
 Object-oriented programming could be it's own chapter, so we'll go over a toy example from the book and tie it to the previous section on assert. 
 
@@ -1263,9 +1265,13 @@ clicker.reset()
 
 assert clicker.read() == 0, "after reset, clicker should be back to 0"
 ```
+In summary, we created a class `CountingClicker` whose methods allow it to display in text (`__repr__`), `click`, `read` and `reset`.
 
+All these methods belong to the `class` CountingClicker and will be passed along to new instances of classes - we have yet to see what this will look like as it relates to tasks in data science so we'll revisit this post when we have updates on the applied end. 
 
 ## Iterables_and_Generators
+
+### A Brief Forey into Lazy Evaluation
 
 A key concept that is introduced when discussing the creation of "generators" is using `for` and `in` to **iterate** over generators (like lists), but **lazily on demand**. This is formally called [lazy evaluation](https://en.wikipedia.org/wiki/Lazy_evaluation) or 'call-by-need' which delays the evaluation of an expression until the value is needed. We can think of this as a form of optimization - avoiding repeating function calls when not needed. 
 
