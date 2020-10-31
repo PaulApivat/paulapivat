@@ -51,6 +51,8 @@
 &lt;a href=&#34;#assert&#34;&gt;Assert&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#object-oriented_programming&#34;&gt;Object-Oriented Programming&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#iterables_and_generators&#34;&gt;Iterables &amp;amp; Generators&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
 &lt;p&gt;This is the first of many chapters i&amp;rsquo;ll be covering from Joel Grus&amp;rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &amp;ldquo;doing&amp;rdquo; data science from scratch, including essential setup of virtual environments and other tooling.&lt;/p&gt;
@@ -1069,7 +1071,7 @@ def largest_item(x):
     def reset(self):
         self.count = 0
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;After we&amp;rsquo;ve written the class and associated methods, we can write &lt;code&gt;assert&lt;/code&gt; statements to test them. You&amp;rsquo;ll want to write the below statements &lt;strong&gt;in this order&lt;/strong&gt; because we&amp;rsquo;re testing the behavior of our &lt;code&gt;CountingClicker&lt;/code&gt; class.&lt;/p&gt;
+&lt;p&gt;After we&amp;rsquo;ve written the class and associated methods, we can write &lt;code&gt;assert&lt;/code&gt; statements to test them. You&amp;rsquo;ll want to write the below statements &lt;strong&gt;in this order&lt;/strong&gt; because we&amp;rsquo;re testing the &lt;em&gt;behavior&lt;/em&gt; of our &lt;code&gt;CountingClicker&lt;/code&gt; class.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;clicker = CountingClicker()
 
 assert clicker.read() == 0, &amp;quot;clicker should start with count 0&amp;quot;
@@ -1084,7 +1086,72 @@ clicker.reset()
 
 assert clicker.read() == 0, &amp;quot;after reset, clicker should be back to 0&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;iterables-and-generators&#34;&gt;Iterables and Generators&lt;/h3&gt;
+&lt;h2 id=&#34;iterables_and_generators&#34;&gt;Iterables_and_Generators&lt;/h2&gt;
+&lt;p&gt;A key concept that is introduced when discussing the creation of &amp;ldquo;generators&amp;rdquo; is using &lt;code&gt;for&lt;/code&gt; and &lt;code&gt;in&lt;/code&gt; to &lt;strong&gt;iterate&lt;/strong&gt; over generators (like lists), but &lt;strong&gt;lazily on demand&lt;/strong&gt;. This is formally called 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Lazy_evaluation&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;lazy evaluation&lt;/a&gt; or &amp;lsquo;call-by-need&amp;rsquo; which delays the evaluation of an expression until the value is needed. We can think of this as a form of optimization - avoiding repeating function calls when not needed.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a graphic borrowed from 
+&lt;a href=&#34;https://towardsdatascience.com/what-is-lazy-evaluation-in-python-9efb1d3bfed0&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Xiaoxu Gao&lt;/a&gt;, check out her post 
+&lt;a href=&#34;https://towardsdatascience.com/what-is-lazy-evaluation-in-python-9efb1d3bfed0&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./lazy_eval.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll create some &lt;code&gt;generators&lt;/code&gt; (customized function/class), but bear in mind that it will be redundant with &lt;code&gt;range()&lt;/code&gt;, both of which illustrate lazy evaluation.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Example 1: create natural_numbers() function that incrementally counts numbers
+def natural_numbers():
+    &amp;quot;&amp;quot;&amp;quot;returns 1, 2, 3, ...&amp;quot;&amp;quot;&amp;quot;
+    n = 1
+    while True:
+        yield n
+        n += 1
+
+# check it&#39;s type
+type(natural_numbers()) # generator
+
+# call it, you get: &amp;lt;generator object natural_numbers at 0x7fb4d787b2e0&amp;gt;
+natural_numbers()
+
+# the point of lazy evaluation is that it won&#39;t do anything
+# until you iterate over it (but avoid infinite loop with logic breaks)
+for i in natural_numbers():
+    print(i)
+    if i == 37:
+        break
+print(&amp;quot;exit loop&amp;quot;)
+
+# result 1...37 exit loop
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s another example using &lt;code&gt;range&lt;/code&gt;, a built-in python function that also uses &lt;strong&gt;lazy evaluation&lt;/strong&gt;. Even when you call this &lt;code&gt;generator&lt;/code&gt;, it &lt;strong&gt;won&amp;rsquo;t do anything until you iterate over it&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;evens_below_30 = (i for i in range(30) if i % 2 == 0)
+
+# check its type - generator
+type(evens_below_30)
+
+# call it, you get: &amp;lt;generator object &amp;lt;genexpr&amp;gt; at 0x7fb4d70ef580&amp;gt;
+# calling it does nothing
+evens_below_30
+
+# now iterate over it with for and in - now it does something
+# prints: 0, 2, 4, 6 ... 28
+for i in evens_below_30:
+    print(i)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, this section brings up another important key word &lt;strong&gt;enumerate&lt;/strong&gt; for when we want to iterate over a &lt;code&gt;generator&lt;/code&gt; or &lt;code&gt;list&lt;/code&gt; and get both &lt;code&gt;values&lt;/code&gt; and &lt;code&gt;indices&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# create list of names
+names = [&#39;Alice&#39;, &#39;Lebron&#39;, &#39;Kobe&#39;, &#39;Bob&#39;, &#39;Charles&#39;, &#39;Shaq&#39;, &#39;Kenny&#39;]
+
+# Pythonic way
+for i, name in enumerate(names):
+    print(f&amp;quot;index: {i}, name: {name}&amp;quot;)
+    
+# NOT pythonic
+for i in range(len(names)):
+    print(f&amp;quot;index: {i}, name: {names[i]}&amp;quot;)
+    
+# Also NOT pythonic
+i = 0
+for name in names:
+    print(f&amp;quot;index {i} is {names[i]}&amp;quot;)
+    i += 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In my view, the &lt;em&gt;pythonic way&lt;/em&gt; is much more readable here.&lt;/p&gt;
 &lt;h3 id=&#34;randomness&#34;&gt;Randomness&lt;/h3&gt;
 &lt;h3 id=&#34;regular-expressions&#34;&gt;Regular Expressions&lt;/h3&gt;
 &lt;h3 id=&#34;zip-and-argument-unpacking&#34;&gt;zip and Argument Unpacking&lt;/h3&gt;

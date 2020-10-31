@@ -33,6 +33,7 @@ title: Data Science from Scratch (ch2)
 - [List Comprehensions](#list_comprehensions)
 - [Assert](#assert)
 - [Object-Oriented Programming](#object-oriented_programming)
+- [Iterables & Generators](#iterables_and_generators)
 
 ## Chapter 2: A Crash Course in Python
 
@@ -1245,7 +1246,7 @@ class CountingClicker:
         self.count = 0
 ```
 
-After we've written the class and associated methods, we can write `assert` statements to test them. You'll want to write the below statements **in this order** because we're testing the behavior of our `CountingClicker` class. 
+After we've written the class and associated methods, we can write `assert` statements to test them. You'll want to write the below statements **in this order** because we're testing the *behavior* of our `CountingClicker` class. 
 
 ```python
 clicker = CountingClicker()
@@ -1264,7 +1265,79 @@ assert clicker.read() == 0, "after reset, clicker should be back to 0"
 ```
 
 
-### Iterables and Generators
+## Iterables_and_Generators
+
+A key concept that is introduced when discussing the creation of "generators" is using `for` and `in` to **iterate** over generators (like lists), but **lazily on demand**. This is formally called [lazy evaluation](https://en.wikipedia.org/wiki/Lazy_evaluation) or 'call-by-need' which delays the evaluation of an expression until the value is needed. We can think of this as a form of optimization - avoiding repeating function calls when not needed. 
+
+Here's a graphic borrowed from [Xiaoxu Gao](https://towardsdatascience.com/what-is-lazy-evaluation-in-python-9efb1d3bfed0), check out her post [here](https://towardsdatascience.com/what-is-lazy-evaluation-in-python-9efb1d3bfed0):
+
+![png](./lazy_eval.png)
+
+We'll create some `generators` (customized function/class), but bear in mind that it will be redundant with `range()`, both of which illustrate lazy evaluation. 
+
+```python
+# Example 1: create natural_numbers() function that incrementally counts numbers
+def natural_numbers():
+    """returns 1, 2, 3, ..."""
+    n = 1
+    while True:
+        yield n
+        n += 1
+
+# check it's type
+type(natural_numbers()) # generator
+
+# call it, you get: <generator object natural_numbers at 0x7fb4d787b2e0>
+natural_numbers()
+
+# the point of lazy evaluation is that it won't do anything
+# until you iterate over it (but avoid infinite loop with logic breaks)
+for i in natural_numbers():
+    print(i)
+    if i == 37:
+        break
+print("exit loop")
+
+# result 1...37 exit loop
+```
+Here's another example using `range`, a built-in python function that also uses **lazy evaluation**. Even when you call this `generator`, it **won't do anything until you iterate over it**. 
+
+```python
+evens_below_30 = (i for i in range(30) if i % 2 == 0)
+
+# check its type - generator
+type(evens_below_30)
+
+# call it, you get: <generator object <genexpr> at 0x7fb4d70ef580>
+# calling it does nothing
+evens_below_30
+
+# now iterate over it with for and in - now it does something
+# prints: 0, 2, 4, 6 ... 28
+for i in evens_below_30:
+    print(i)
+```
+Finally, this section brings up another important key word **enumerate** for when we want to iterate over a `generator` or `list` and get both `values` and `indices`:
+
+```python
+# create list of names
+names = ['Alice', 'Lebron', 'Kobe', 'Bob', 'Charles', 'Shaq', 'Kenny']
+
+# Pythonic way
+for i, name in enumerate(names):
+    print(f"index: {i}, name: {name}")
+    
+# NOT pythonic
+for i in range(len(names)):
+    print(f"index: {i}, name: {names[i]}")
+    
+# Also NOT pythonic
+i = 0
+for name in names:
+    print(f"index {i} is {names[i]}")
+    i += 1
+```
+In my view, the *pythonic way* is much more readable here. 
 
 ### Randomness
 

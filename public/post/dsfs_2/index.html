@@ -723,7 +723,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    28 min read
+    30 min read
   </span>
   
 
@@ -793,6 +793,8 @@
 <a href="#assert">Assert</a></li>
 <li>
 <a href="#object-oriented_programming">Object-Oriented Programming</a></li>
+<li>
+<a href="#iterables_and_generators">Iterables &amp; Generators</a></li>
 </ul>
 <h2 id="chapter-2-a-crash-course-in-python">Chapter 2: A Crash Course in Python</h2>
 <p>This is the first of many chapters i&rsquo;ll be covering from Joel Grus&rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &ldquo;doing&rdquo; data science from scratch, including essential setup of virtual environments and other tooling.</p>
@@ -1811,7 +1813,7 @@ def largest_item(x):
     def reset(self):
         self.count = 0
 </code></pre>
-<p>After we&rsquo;ve written the class and associated methods, we can write <code>assert</code> statements to test them. You&rsquo;ll want to write the below statements <strong>in this order</strong> because we&rsquo;re testing the behavior of our <code>CountingClicker</code> class.</p>
+<p>After we&rsquo;ve written the class and associated methods, we can write <code>assert</code> statements to test them. You&rsquo;ll want to write the below statements <strong>in this order</strong> because we&rsquo;re testing the <em>behavior</em> of our <code>CountingClicker</code> class.</p>
 <pre><code class="language-python">clicker = CountingClicker()
 
 assert clicker.read() == 0, &quot;clicker should start with count 0&quot;
@@ -1826,7 +1828,72 @@ clicker.reset()
 
 assert clicker.read() == 0, &quot;after reset, clicker should be back to 0&quot;
 </code></pre>
-<h3 id="iterables-and-generators">Iterables and Generators</h3>
+<h2 id="iterables_and_generators">Iterables_and_Generators</h2>
+<p>A key concept that is introduced when discussing the creation of &ldquo;generators&rdquo; is using <code>for</code> and <code>in</code> to <strong>iterate</strong> over generators (like lists), but <strong>lazily on demand</strong>. This is formally called 
+<a href="https://en.wikipedia.org/wiki/Lazy_evaluation" target="_blank" rel="noopener">lazy evaluation</a> or &lsquo;call-by-need&rsquo; which delays the evaluation of an expression until the value is needed. We can think of this as a form of optimization - avoiding repeating function calls when not needed.</p>
+<p>Here&rsquo;s a graphic borrowed from 
+<a href="https://towardsdatascience.com/what-is-lazy-evaluation-in-python-9efb1d3bfed0" target="_blank" rel="noopener">Xiaoxu Gao</a>, check out her post 
+<a href="https://towardsdatascience.com/what-is-lazy-evaluation-in-python-9efb1d3bfed0" target="_blank" rel="noopener">here</a>:</p>
+<p><img src="./lazy_eval.png" alt="png"></p>
+<p>We&rsquo;ll create some <code>generators</code> (customized function/class), but bear in mind that it will be redundant with <code>range()</code>, both of which illustrate lazy evaluation.</p>
+<pre><code class="language-python"># Example 1: create natural_numbers() function that incrementally counts numbers
+def natural_numbers():
+    &quot;&quot;&quot;returns 1, 2, 3, ...&quot;&quot;&quot;
+    n = 1
+    while True:
+        yield n
+        n += 1
+
+# check it's type
+type(natural_numbers()) # generator
+
+# call it, you get: &lt;generator object natural_numbers at 0x7fb4d787b2e0&gt;
+natural_numbers()
+
+# the point of lazy evaluation is that it won't do anything
+# until you iterate over it (but avoid infinite loop with logic breaks)
+for i in natural_numbers():
+    print(i)
+    if i == 37:
+        break
+print(&quot;exit loop&quot;)
+
+# result 1...37 exit loop
+</code></pre>
+<p>Here&rsquo;s another example using <code>range</code>, a built-in python function that also uses <strong>lazy evaluation</strong>. Even when you call this <code>generator</code>, it <strong>won&rsquo;t do anything until you iterate over it</strong>.</p>
+<pre><code class="language-python">evens_below_30 = (i for i in range(30) if i % 2 == 0)
+
+# check its type - generator
+type(evens_below_30)
+
+# call it, you get: &lt;generator object &lt;genexpr&gt; at 0x7fb4d70ef580&gt;
+# calling it does nothing
+evens_below_30
+
+# now iterate over it with for and in - now it does something
+# prints: 0, 2, 4, 6 ... 28
+for i in evens_below_30:
+    print(i)
+</code></pre>
+<p>Finally, this section brings up another important key word <strong>enumerate</strong> for when we want to iterate over a <code>generator</code> or <code>list</code> and get both <code>values</code> and <code>indices</code>:</p>
+<pre><code class="language-python"># create list of names
+names = ['Alice', 'Lebron', 'Kobe', 'Bob', 'Charles', 'Shaq', 'Kenny']
+
+# Pythonic way
+for i, name in enumerate(names):
+    print(f&quot;index: {i}, name: {name}&quot;)
+    
+# NOT pythonic
+for i in range(len(names)):
+    print(f&quot;index: {i}, name: {names[i]}&quot;)
+    
+# Also NOT pythonic
+i = 0
+for name in names:
+    print(f&quot;index {i} is {names[i]}&quot;)
+    i += 1
+</code></pre>
+<p>In my view, the <em>pythonic way</em> is much more readable here.</p>
 <h3 id="randomness">Randomness</h3>
 <h3 id="regular-expressions">Regular Expressions</h3>
 <h3 id="zip-and-argument-unpacking">zip and Argument Unpacking</h3>
