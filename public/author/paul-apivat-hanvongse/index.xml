@@ -53,6 +53,8 @@
 &lt;a href=&#34;#object-oriented_programming&#34;&gt;Object-Oriented Programming&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#iterables_and_generators&#34;&gt;Iterables &amp;amp; Generators&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#pseudorandomness&#34;&gt;Pseudorandomness&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
 &lt;p&gt;This is the first of many chapters i&amp;rsquo;ll be covering from Joel Grus&amp;rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &amp;ldquo;doing&amp;rdquo; data science from scratch, including essential setup of virtual environments and other tooling.&lt;/p&gt;
@@ -1158,7 +1160,103 @@ for name in names:
     i += 1
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In my view, the &lt;em&gt;pythonic way&lt;/em&gt; is much more readable here.&lt;/p&gt;
-&lt;h3 id=&#34;randomness&#34;&gt;Randomness&lt;/h3&gt;
+&lt;h2 id=&#34;pseudorandomness&#34;&gt;Pseudorandomness&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;random&lt;/code&gt; module is used extensively in data science. Particularly when random numbers need to be generated and we want &lt;strong&gt;reproducible&lt;/strong&gt; results the next time we run our model (in Python its &lt;code&gt;random.seed(x)&lt;/code&gt;, in R its &lt;code&gt;set.seed(x)&lt;/code&gt;), where x is any integer we decide (we just need to be consistent when we revisit our model).&lt;/p&gt;
+&lt;p&gt;Technically, the module produces &lt;strong&gt;deterministic&lt;/strong&gt; results, hence it&amp;rsquo;s pseudorandom, here&amp;rsquo;s an example to highlight how the randomness is deterministic:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import random
+random.seed(10) # say we use 10
+
+# this variable is from the book
+four_randoms = [random.random() for _ in range(4)]
+
+# call four_randoms - same result from Data Science from Scratch
+# because the book also uses random.seed(10)
+[0.5714025946899135,
+ 0.4288890546751146,
+ 0.5780913011344704,
+ 0.20609823213950174]
+
+# if we use x instead of underscore
+# a different set of four &amp;quot;random&amp;quot; numbers is generated
+another_four_randoms = [random.random() for x in range(4)]
+
+[0.81332125135732, 
+ 0.8235888725334455, 
+ 0.6534725339011758, 
+ 0.16022955651881965]
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;brief-detour-into-_&#34;&gt;Brief detour into _&lt;/h4&gt;
+&lt;p&gt;Reading around from other sources suggests that the underscore &amp;ldquo;_&amp;rdquo; is used in a for loop when we don&amp;rsquo;t care about the variable (its a throwaway) and have no plans to use it, for example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# prints &#39;hello&#39; five times
+for _ in range(5):
+    print(&amp;quot;hello&amp;quot;)
+    
+# we could use x as well
+for x in range(5):
+    print(&amp;quot;hello&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In the above example, either &lt;code&gt;_&lt;/code&gt; or &lt;code&gt;x&lt;/code&gt; could have been used and there doesn&amp;rsquo;t seem to be much difference. We could technically &lt;em&gt;call&lt;/em&gt; &lt;code&gt;_&lt;/code&gt;, but its considered bad practice:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# bad practice, but prints 0, 1, 2, 3, 4
+for _ in range(5):
+    print(_)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Nevertheless, &lt;code&gt;_&lt;/code&gt; matters in the context of pseudorandomness because it yields a &lt;em&gt;different&lt;/em&gt; result:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import random
+random.seed(10)
+
+# these two yield different results, even with the same random.seed(10)
+four_randoms = [random.random() for _ in range(4)]
+another_four_randoms = [random.random() for x in range(4)]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But back to determinism, or pseudorandomness, we need to &lt;em&gt;change&lt;/em&gt; the &lt;code&gt;random.seed(11)&lt;/code&gt;, then back to &lt;code&gt;random.seed(10)&lt;/code&gt; to see this play out:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# new random.seed()
+random.seed(11)
+
+# reset four_randoms
+four_randoms = [random.random() for _ in range(4)]
+[0.4523795535098186, 
+0.559772386080496, 
+0.9242105840237294, 
+0.4656500700997733]
+
+# change to previous random.seed()
+random.seed(10)
+
+# reset four_randoms (again)
+four_randoms = [random.random() for _ in range(4)]
+
+# get previous result (see above)
+[0.5714025946899135,
+ 0.4288890546751146,
+ 0.5780913011344704,
+ 0.20609823213950174]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Other features of the &lt;code&gt;random&lt;/code&gt; module include: &lt;code&gt;random.randrange&lt;/code&gt;, &lt;code&gt;random.shuffle&lt;/code&gt;, &lt;code&gt;random.choice&lt;/code&gt; and &lt;code&gt;random.sample&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;random.randrange(3,6) # choose randomly between [3,4,5]
+
+# random shuffle
+one_to_ten = [1,2,3,4,5,6,7,8,9,10]
+random.shuffle(one_to_ten)
+print(one_to_ten)  # example: [8, 7, 9, 3, 5, 2, 10, 1, 6, 4]
+random.shuffle(one_to_ten) # again
+print(one_to_ten)  # example: [3, 10, 8, 6, 9, 2, 7, 1, 4, 5]
+
+# random choice
+list_of_people = ([&amp;quot;Bush&amp;quot;, &amp;quot;Clinton&amp;quot;, &amp;quot;Obama&amp;quot;, &amp;quot;Biden&amp;quot;, &amp;quot;Trump&amp;quot;])
+random.choice(list_of_people) # first time, &#39;Clinton&#39;
+random.choice(list_of_people) # second time, &#39;Biden&#39;
+
+# random sample
+lottery_numbers = range(60) # get a range of 60 numbers
+winning_numbers = random.sample(lottery_numbers, 6) # get a random sample of 6 numbers
+winning_numbers # example: [39, 24, 2, 37, 0, 15]
+
+# because its pseudorandom, if you want a different set of 6 numbers
+# reset the winning_numbers
+winning_numbers = random.sample(lottery_numbers, 6)
+winning_numbers # a different set of numbers [8, 12, 19, 34, 23, 49]
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;regular-expressions&#34;&gt;Regular Expressions&lt;/h3&gt;
 &lt;h3 id=&#34;zip-and-argument-unpacking&#34;&gt;zip and Argument Unpacking&lt;/h3&gt;
 &lt;h3 id=&#34;args-and-kwargs&#34;&gt;args and kwargs&lt;/h3&gt;

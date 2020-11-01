@@ -34,6 +34,7 @@ title: Data Science from Scratch (ch2)
 - [Assert](#assert)
 - [Object-Oriented Programming](#object-oriented_programming)
 - [Iterables & Generators](#iterables_and_generators)
+- [Pseudorandomness](#pseudorandomness)
 
 ## Chapter 2: A Crash Course in Python
 
@@ -1345,7 +1346,118 @@ for name in names:
 ```
 In my view, the *pythonic way* is much more readable here. 
 
-### Randomness
+## Pseudorandomness
+
+The `random` module is used extensively in data science. Particularly when random numbers need to be generated and we want **reproducible** results the next time we run our model (in Python its `random.seed(x)`, in R its `set.seed(x)`), where x is any integer we decide (we just need to be consistent when we revisit our model).
+
+Technically, the module produces **deterministic** results, hence it's pseudorandom, here's an example to highlight how the randomness is deterministic:
+
+```python
+import random
+random.seed(10) # say we use 10
+
+# this variable is from the book
+four_randoms = [random.random() for _ in range(4)]
+
+# call four_randoms - same result from Data Science from Scratch
+# because the book also uses random.seed(10)
+[0.5714025946899135,
+ 0.4288890546751146,
+ 0.5780913011344704,
+ 0.20609823213950174]
+
+# if we use x instead of underscore
+# a different set of four "random" numbers is generated
+another_four_randoms = [random.random() for x in range(4)]
+
+[0.81332125135732, 
+ 0.8235888725334455, 
+ 0.6534725339011758, 
+ 0.16022955651881965]
+
+```
+#### Brief detour into _
+
+Reading around from other sources suggests that the underscore "_" is used in a for loop when we don't care about the variable (its a throwaway) and have no plans to use it, for example:
+
+```python
+# prints 'hello' five times
+for _ in range(5):
+    print("hello")
+    
+# we could use x as well
+for x in range(5):
+    print("hello")
+```
+In the above example, either `_` or `x` could have been used and there doesn't seem to be much difference. We could technically *call* `_`, but its considered bad practice:
+
+```python
+# bad practice, but prints 0, 1, 2, 3, 4
+for _ in range(5):
+    print(_)
+```
+Nevertheless, `_` matters in the context of pseudorandomness because it yields a *different* result:
+
+```python
+import random
+random.seed(10)
+
+# these two yield different results, even with the same random.seed(10)
+four_randoms = [random.random() for _ in range(4)]
+another_four_randoms = [random.random() for x in range(4)]
+```
+But back to determinism, or pseudorandomness, we need to *change* the `random.seed(11)`, then back to `random.seed(10)` to see this play out:
+
+```python
+# new random.seed()
+random.seed(11)
+
+# reset four_randoms
+four_randoms = [random.random() for _ in range(4)]
+[0.4523795535098186, 
+0.559772386080496, 
+0.9242105840237294, 
+0.4656500700997733]
+
+# change to previous random.seed()
+random.seed(10)
+
+# reset four_randoms (again)
+four_randoms = [random.random() for _ in range(4)]
+
+# get previous result (see above)
+[0.5714025946899135,
+ 0.4288890546751146,
+ 0.5780913011344704,
+ 0.20609823213950174]
+```
+Other features of the `random` module include: `random.randrange`, `random.shuffle`, `random.choice` and `random.sample`:
+
+```python
+random.randrange(3,6) # choose randomly between [3,4,5]
+
+# random shuffle
+one_to_ten = [1,2,3,4,5,6,7,8,9,10]
+random.shuffle(one_to_ten)
+print(one_to_ten)  # example: [8, 7, 9, 3, 5, 2, 10, 1, 6, 4]
+random.shuffle(one_to_ten) # again
+print(one_to_ten)  # example: [3, 10, 8, 6, 9, 2, 7, 1, 4, 5]
+
+# random choice
+list_of_people = (["Bush", "Clinton", "Obama", "Biden", "Trump"])
+random.choice(list_of_people) # first time, 'Clinton'
+random.choice(list_of_people) # second time, 'Biden'
+
+# random sample
+lottery_numbers = range(60) # get a range of 60 numbers
+winning_numbers = random.sample(lottery_numbers, 6) # get a random sample of 6 numbers
+winning_numbers # example: [39, 24, 2, 37, 0, 15]
+
+# because its pseudorandom, if you want a different set of 6 numbers
+# reset the winning_numbers
+winning_numbers = random.sample(lottery_numbers, 6)
+winning_numbers # a different set of numbers [8, 12, 19, 34, 23, 49]
+```
 
 ### Regular Expressions
 

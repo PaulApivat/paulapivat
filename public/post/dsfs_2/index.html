@@ -723,7 +723,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    30 min read
+    33 min read
   </span>
   
 
@@ -795,6 +795,8 @@
 <a href="#object-oriented_programming">Object-Oriented Programming</a></li>
 <li>
 <a href="#iterables_and_generators">Iterables &amp; Generators</a></li>
+<li>
+<a href="#pseudorandomness">Pseudorandomness</a></li>
 </ul>
 <h2 id="chapter-2-a-crash-course-in-python">Chapter 2: A Crash Course in Python</h2>
 <p>This is the first of many chapters i&rsquo;ll be covering from Joel Grus&rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &ldquo;doing&rdquo; data science from scratch, including essential setup of virtual environments and other tooling.</p>
@@ -1900,7 +1902,103 @@ for name in names:
     i += 1
 </code></pre>
 <p>In my view, the <em>pythonic way</em> is much more readable here.</p>
-<h3 id="randomness">Randomness</h3>
+<h2 id="pseudorandomness">Pseudorandomness</h2>
+<p>The <code>random</code> module is used extensively in data science. Particularly when random numbers need to be generated and we want <strong>reproducible</strong> results the next time we run our model (in Python its <code>random.seed(x)</code>, in R its <code>set.seed(x)</code>), where x is any integer we decide (we just need to be consistent when we revisit our model).</p>
+<p>Technically, the module produces <strong>deterministic</strong> results, hence it&rsquo;s pseudorandom, here&rsquo;s an example to highlight how the randomness is deterministic:</p>
+<pre><code class="language-python">import random
+random.seed(10) # say we use 10
+
+# this variable is from the book
+four_randoms = [random.random() for _ in range(4)]
+
+# call four_randoms - same result from Data Science from Scratch
+# because the book also uses random.seed(10)
+[0.5714025946899135,
+ 0.4288890546751146,
+ 0.5780913011344704,
+ 0.20609823213950174]
+
+# if we use x instead of underscore
+# a different set of four &quot;random&quot; numbers is generated
+another_four_randoms = [random.random() for x in range(4)]
+
+[0.81332125135732, 
+ 0.8235888725334455, 
+ 0.6534725339011758, 
+ 0.16022955651881965]
+
+</code></pre>
+<h4 id="brief-detour-into-_">Brief detour into _</h4>
+<p>Reading around from other sources suggests that the underscore &ldquo;_&rdquo; is used in a for loop when we don&rsquo;t care about the variable (its a throwaway) and have no plans to use it, for example:</p>
+<pre><code class="language-python"># prints 'hello' five times
+for _ in range(5):
+    print(&quot;hello&quot;)
+    
+# we could use x as well
+for x in range(5):
+    print(&quot;hello&quot;)
+</code></pre>
+<p>In the above example, either <code>_</code> or <code>x</code> could have been used and there doesn&rsquo;t seem to be much difference. We could technically <em>call</em> <code>_</code>, but its considered bad practice:</p>
+<pre><code class="language-python"># bad practice, but prints 0, 1, 2, 3, 4
+for _ in range(5):
+    print(_)
+</code></pre>
+<p>Nevertheless, <code>_</code> matters in the context of pseudorandomness because it yields a <em>different</em> result:</p>
+<pre><code class="language-python">import random
+random.seed(10)
+
+# these two yield different results, even with the same random.seed(10)
+four_randoms = [random.random() for _ in range(4)]
+another_four_randoms = [random.random() for x in range(4)]
+</code></pre>
+<p>But back to determinism, or pseudorandomness, we need to <em>change</em> the <code>random.seed(11)</code>, then back to <code>random.seed(10)</code> to see this play out:</p>
+<pre><code class="language-python"># new random.seed()
+random.seed(11)
+
+# reset four_randoms
+four_randoms = [random.random() for _ in range(4)]
+[0.4523795535098186, 
+0.559772386080496, 
+0.9242105840237294, 
+0.4656500700997733]
+
+# change to previous random.seed()
+random.seed(10)
+
+# reset four_randoms (again)
+four_randoms = [random.random() for _ in range(4)]
+
+# get previous result (see above)
+[0.5714025946899135,
+ 0.4288890546751146,
+ 0.5780913011344704,
+ 0.20609823213950174]
+</code></pre>
+<p>Other features of the <code>random</code> module include: <code>random.randrange</code>, <code>random.shuffle</code>, <code>random.choice</code> and <code>random.sample</code>:</p>
+<pre><code class="language-python">random.randrange(3,6) # choose randomly between [3,4,5]
+
+# random shuffle
+one_to_ten = [1,2,3,4,5,6,7,8,9,10]
+random.shuffle(one_to_ten)
+print(one_to_ten)  # example: [8, 7, 9, 3, 5, 2, 10, 1, 6, 4]
+random.shuffle(one_to_ten) # again
+print(one_to_ten)  # example: [3, 10, 8, 6, 9, 2, 7, 1, 4, 5]
+
+# random choice
+list_of_people = ([&quot;Bush&quot;, &quot;Clinton&quot;, &quot;Obama&quot;, &quot;Biden&quot;, &quot;Trump&quot;])
+random.choice(list_of_people) # first time, 'Clinton'
+random.choice(list_of_people) # second time, 'Biden'
+
+# random sample
+lottery_numbers = range(60) # get a range of 60 numbers
+winning_numbers = random.sample(lottery_numbers, 6) # get a random sample of 6 numbers
+winning_numbers # example: [39, 24, 2, 37, 0, 15]
+
+# because its pseudorandom, if you want a different set of 6 numbers
+# reset the winning_numbers
+winning_numbers = random.sample(lottery_numbers, 6)
+winning_numbers # a different set of numbers [8, 12, 19, 34, 23, 49]
+</code></pre>
 <h3 id="regular-expressions">Regular Expressions</h3>
 <h3 id="zip-and-argument-unpacking">zip and Argument Unpacking</h3>
 <h3 id="args-and-kwargs">args and kwargs</h3>
