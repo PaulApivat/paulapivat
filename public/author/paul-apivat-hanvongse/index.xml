@@ -55,6 +55,8 @@
 &lt;a href=&#34;#iterables_and_generators&#34;&gt;Iterables &amp;amp; Generators&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#pseudorandomness&#34;&gt;Pseudorandomness&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#regex&#34;&gt;Regular Expression&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;chapter-2-a-crash-course-in-python&#34;&gt;Chapter 2: A Crash Course in Python&lt;/h2&gt;
 &lt;p&gt;This is the first of many chapters i&amp;rsquo;ll be covering from Joel Grus&amp;rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &amp;ldquo;doing&amp;rdquo; data science from scratch, including essential setup of virtual environments and other tooling.&lt;/p&gt;
@@ -1029,6 +1031,51 @@ square_set = {x * x for x in [1,-1]}
          for y in range(10)]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We will expect to use &lt;code&gt;list comprehensions&lt;/code&gt; often, so we&amp;rsquo;ll revisit this section as we see more applications in context.&lt;/p&gt;
+&lt;h4 id=&#34;map-filter-reduce-partial&#34;&gt;Map, Filter, Reduce, Partial&lt;/h4&gt;
+&lt;p&gt;In the first edition of this book the author introduced these functions, but has since reached enlightenment 🧘, he states:&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;On my journey toward enlightenment I have realized that these functions (i.e., map, filter, reduce, partial) are best avoided, and their uses in the book have been replaced with list comprehensions, for loops and other, more Pythonic constructs.&amp;rdquo; (p.36)&lt;/p&gt;
+&lt;p&gt;He&amp;rsquo;s being facetious, but I was intrigued anyways. So here&amp;rsquo;s an example replacing &lt;strong&gt;map&lt;/strong&gt; with &lt;strong&gt;list comprehensions&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# create list of names
+names = [&#39;Russel&#39;, &#39;Kareem&#39;, &#39;Jordan&#39;, &#39;James&#39;]
+
+# use map function to loop over names and apply an anonymous function
+greeted = map(lambda x: &#39;Hi &#39; + x, names)
+
+# map returns an iterator (see also lazy evaluation)
+print(greeted) # &amp;lt;map object at 0x7fc667c81f40&amp;gt;
+
+# because lazy evaluation, won&#39;t do anything unless iterate over it
+for name in greeted:
+     print(name)
+
+#Hi Russel
+#Hi Kareem
+#Hi Jordan
+#Hi James
+
+## List Comprehension way to do this operation
+greeted2 = [&#39;Hi &#39; + name for name in names]
+
+# non-lazy evaluation (or eager)
+print(greeted2) # [&#39;Hi Russel&#39;, &#39;Hi Kareem&#39;, &#39;Hi Jordan&#39;, &#39;Hi James&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s another example replacing &lt;strong&gt;filter&lt;/strong&gt; with &lt;strong&gt;list comprehensions&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# create list of integers
+numbers = [13, 4, 18, 35]
+
+# filter creates an interator
+div_by_5 = filter(lambda num: num % 5 == 0, numbers)
+
+print(div_by_5) # &amp;lt;filter object at 0x7fc667c9ad30&amp;gt;
+print(list(div_by_5)) # must convert iterator into a list - [35]
+
+# using list comprehension to achieve the same thing
+another_div_by_5 = [num for num in numbers if num % 5 == 0]
+
+# lists do not use lazy evaluation, so it will print out immediately
+print(another_div_by_5) # [35]
+
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;assert&#34;&gt;Assert&lt;/h2&gt;
 &lt;h4 id=&#34;automated-testing-and-assert&#34;&gt;Automated Testing and Assert&lt;/h4&gt;
 &lt;p&gt;One of the many cool things about Data Science from Scratch (by Joel Grus) is his use of assertions as a way to &amp;ldquo;test&amp;rdquo; code. This is a software engineering practice (see 
@@ -1257,12 +1304,32 @@ winning_numbers # example: [39, 24, 2, 37, 0, 15]
 winning_numbers = random.sample(lottery_numbers, 6)
 winning_numbers # a different set of numbers [8, 12, 19, 34, 23, 49]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;regular-expressions&#34;&gt;Regular Expressions&lt;/h3&gt;
-&lt;h3 id=&#34;zip-and-argument-unpacking&#34;&gt;zip and Argument Unpacking&lt;/h3&gt;
-&lt;h3 id=&#34;args-and-kwargs&#34;&gt;args and kwargs&lt;/h3&gt;
+&lt;h2 id=&#34;regex&#34;&gt;Regex&lt;/h2&gt;
+&lt;h4 id=&#34;regular-expressions&#34;&gt;Regular Expressions&lt;/h4&gt;
+&lt;p&gt;Whole books can be written about &lt;code&gt;regular expressions&lt;/code&gt; so the author briefly highlights a couple features that may come in handy, &lt;code&gt;re.match&lt;/code&gt;, &lt;code&gt;re.search&lt;/code&gt;, &lt;code&gt;re.split&lt;/code&gt; and &lt;code&gt;re.sub&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import re
+
+re_examples = [
+    not re.match(&amp;quot;a&amp;quot;, &amp;quot;cat&amp;quot;),                   # re.match check the word cat &#39;starts&#39; letter &#39;a&#39;
+    re.search(&amp;quot;a&amp;quot;, &amp;quot;cat&amp;quot;),                      # re.search check if word cat &#39;contains&#39; letter &#39;a&#39;
+    not re.search(&amp;quot;c&amp;quot;, &amp;quot;dog&amp;quot;),                  # &#39;dog&#39; does not contain &#39;c&#39;
+    3 == len(re.split(&amp;quot;[ab]&amp;quot;, &amp;quot;carbs&amp;quot;)),        # 3 equals length of &amp;quot;carbs&amp;quot; once you split out [ab]
+    &amp;quot;R-D-&amp;quot; == re.sub(&amp;quot;[0-9]&amp;quot;, &amp;quot;-&amp;quot;, &amp;quot;R2D2&amp;quot;)      # sub out numbers in &#39;R2D2&#39; with hyphen &amp;quot;-&amp;quot;
+    ]
+
+# test that all examples are true
+assert all(re_examples), &amp;quot;all the regex examples should be True&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The final line reviews our understanding of testing (&lt;code&gt;assert&lt;/code&gt;) and truthiness (&lt;code&gt;all&lt;/code&gt;) applied to our regular expression examples, pretty neat.&lt;/p&gt;
+&lt;h2 id=&#34;functional_programming&#34;&gt;Functional_Programming&lt;/h2&gt;
+&lt;p&gt;see 
+&lt;a href=&#34;#list_comprehensions&#34;&gt;List Comprehensions&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;zip-and-argument-unpacking&#34;&gt;zip and Argument Unpacking&lt;/h2&gt;
+&lt;p&gt;The author states, &amp;ldquo;it is rare that we&amp;rsquo;ll find this useful.&amp;rdquo; (p.37) So we&amp;rsquo;ll circle back if it comes up.&lt;/p&gt;
+&lt;h2 id=&#34;args-and-kwargs&#34;&gt;args and kwargs&lt;/h2&gt;
+&lt;p&gt;The authors states, &amp;ldquo;it is more correct and readable if you&amp;rsquo;re explicit about what sorts of arguments your functions require; accordingly, we will use &lt;strong&gt;args&lt;/strong&gt; and &lt;strong&gt;kwargs&lt;/strong&gt; only when we have no other option.&amp;rdquo; (p. 38) So we&amp;rsquo;ll circle back if it comes up.&lt;/p&gt;
 &lt;h3 id=&#34;type-annotations&#34;&gt;Type Annotations&lt;/h3&gt;
 &lt;h3 id=&#34;how-to-write-type-annotations&#34;&gt;How to Write Type Annotations&lt;/h3&gt;
-&lt;h3 id=&#34;heading&#34;&gt;&lt;/h3&gt;
 </description>
     </item>
     

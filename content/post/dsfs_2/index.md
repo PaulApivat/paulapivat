@@ -35,6 +35,7 @@ title: Data Science from Scratch (ch2)
 - [Object-Oriented Programming](#object-oriented_programming)
 - [Iterables & Generators](#iterables_and_generators)
 - [Pseudorandomness](#pseudorandomness)
+- [Regular Expression](#regex)
 
 ## Chapter 2: A Crash Course in Python
 
@@ -1190,6 +1191,58 @@ pairs = [(x,y)
 
 We will expect to use `list comprehensions` often, so we'll revisit this section as we see more applications in context. 
 
+#### Map, Filter, Reduce, Partial
+
+In the first edition of this book the author introduced these functions, but has since reached enlightenment 🧘, he states:
+
+"On my journey toward enlightenment I have realized that these functions (i.e., map, filter, reduce, partial) are best avoided, and their uses in the book have been replaced with list comprehensions, for loops and other, more Pythonic constructs." (p.36)
+
+He's being facetious, but I was intrigued anyways. So here's an example replacing **map** with **list comprehensions**.
+
+```python
+# create list of names
+names = ['Russel', 'Kareem', 'Jordan', 'James']
+
+# use map function to loop over names and apply an anonymous function
+greeted = map(lambda x: 'Hi ' + x, names)
+
+# map returns an iterator (see also lazy evaluation)
+print(greeted) # <map object at 0x7fc667c81f40>
+
+# because lazy evaluation, won't do anything unless iterate over it
+for name in greeted:
+     print(name)
+
+#Hi Russel
+#Hi Kareem
+#Hi Jordan
+#Hi James
+
+## List Comprehension way to do this operation
+greeted2 = ['Hi ' + name for name in names]
+
+# non-lazy evaluation (or eager)
+print(greeted2) # ['Hi Russel', 'Hi Kareem', 'Hi Jordan', 'Hi James']
+```
+Here's another example replacing **filter** with **list comprehensions**:
+
+```python
+# create list of integers
+numbers = [13, 4, 18, 35]
+
+# filter creates an interator
+div_by_5 = filter(lambda num: num % 5 == 0, numbers)
+
+print(div_by_5) # <filter object at 0x7fc667c9ad30>
+print(list(div_by_5)) # must convert iterator into a list - [35]
+
+# using list comprehension to achieve the same thing
+another_div_by_5 = [num for num in numbers if num % 5 == 0]
+
+# lists do not use lazy evaluation, so it will print out immediately
+print(another_div_by_5) # [35]
+
+```
 
 ## Assert
 
@@ -1459,18 +1512,45 @@ winning_numbers = random.sample(lottery_numbers, 6)
 winning_numbers # a different set of numbers [8, 12, 19, 34, 23, 49]
 ```
 
-### Regular Expressions
+## Regex
+#### Regular Expressions
 
-### zip and Argument Unpacking
+Whole books can be written about `regular expressions` so the author briefly highlights a couple features that may come in handy, `re.match`, `re.search`, `re.split` and `re.sub`:
 
-### args and kwargs
+```python
+import re
+
+re_examples = [
+    not re.match("a", "cat"),                   # re.match check the word cat 'starts' letter 'a'
+    re.search("a", "cat"),                      # re.search check if word cat 'contains' letter 'a'
+    not re.search("c", "dog"),                  # 'dog' does not contain 'c'
+    3 == len(re.split("[ab]", "carbs")),        # 3 equals length of "carbs" once you split out [ab]
+    "R-D-" == re.sub("[0-9]", "-", "R2D2")      # sub out numbers in 'R2D2' with hyphen "-"
+    ]
+
+# test that all examples are true
+assert all(re_examples), "all the regex examples should be True"
+```
+The final line reviews our understanding of testing (`assert`) and truthiness (`all`) applied to our regular expression examples, pretty neat. 
+
+## Functional_Programming
+
+see [List Comprehensions](#list_comprehensions)
+
+## zip and Argument Unpacking
+
+The author states, "it is rare that we'll find this useful." (p.37) So we'll circle back if it comes up. 
+
+## args and kwargs
+
+The authors states, "it is more correct and readable if you're explicit about what sorts of arguments your functions require; accordingly, we will use **args** and **kwargs** only when we have no other option." (p. 38) So we'll circle back if it comes up. 
 
 ### Type Annotations
 
 ### How to Write Type Annotations
 
 
-###
+
 
 
 

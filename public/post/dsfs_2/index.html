@@ -723,7 +723,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    33 min read
+    35 min read
   </span>
   
 
@@ -797,6 +797,8 @@
 <a href="#iterables_and_generators">Iterables &amp; Generators</a></li>
 <li>
 <a href="#pseudorandomness">Pseudorandomness</a></li>
+<li>
+<a href="#regex">Regular Expression</a></li>
 </ul>
 <h2 id="chapter-2-a-crash-course-in-python">Chapter 2: A Crash Course in Python</h2>
 <p>This is the first of many chapters i&rsquo;ll be covering from Joel Grus&rsquo; Data Science from Scratch book (2nd edition). This chapter provides a quick survey of python features needed for &ldquo;doing&rdquo; data science from scratch, including essential setup of virtual environments and other tooling.</p>
@@ -1771,6 +1773,51 @@ square_set = {x * x for x in [1,-1]}
          for y in range(10)]
 </code></pre>
 <p>We will expect to use <code>list comprehensions</code> often, so we&rsquo;ll revisit this section as we see more applications in context.</p>
+<h4 id="map-filter-reduce-partial">Map, Filter, Reduce, Partial</h4>
+<p>In the first edition of this book the author introduced these functions, but has since reached enlightenment 🧘, he states:</p>
+<p>&ldquo;On my journey toward enlightenment I have realized that these functions (i.e., map, filter, reduce, partial) are best avoided, and their uses in the book have been replaced with list comprehensions, for loops and other, more Pythonic constructs.&rdquo; (p.36)</p>
+<p>He&rsquo;s being facetious, but I was intrigued anyways. So here&rsquo;s an example replacing <strong>map</strong> with <strong>list comprehensions</strong>.</p>
+<pre><code class="language-python"># create list of names
+names = ['Russel', 'Kareem', 'Jordan', 'James']
+
+# use map function to loop over names and apply an anonymous function
+greeted = map(lambda x: 'Hi ' + x, names)
+
+# map returns an iterator (see also lazy evaluation)
+print(greeted) # &lt;map object at 0x7fc667c81f40&gt;
+
+# because lazy evaluation, won't do anything unless iterate over it
+for name in greeted:
+     print(name)
+
+#Hi Russel
+#Hi Kareem
+#Hi Jordan
+#Hi James
+
+## List Comprehension way to do this operation
+greeted2 = ['Hi ' + name for name in names]
+
+# non-lazy evaluation (or eager)
+print(greeted2) # ['Hi Russel', 'Hi Kareem', 'Hi Jordan', 'Hi James']
+</code></pre>
+<p>Here&rsquo;s another example replacing <strong>filter</strong> with <strong>list comprehensions</strong>:</p>
+<pre><code class="language-python"># create list of integers
+numbers = [13, 4, 18, 35]
+
+# filter creates an interator
+div_by_5 = filter(lambda num: num % 5 == 0, numbers)
+
+print(div_by_5) # &lt;filter object at 0x7fc667c9ad30&gt;
+print(list(div_by_5)) # must convert iterator into a list - [35]
+
+# using list comprehension to achieve the same thing
+another_div_by_5 = [num for num in numbers if num % 5 == 0]
+
+# lists do not use lazy evaluation, so it will print out immediately
+print(another_div_by_5) # [35]
+
+</code></pre>
 <h2 id="assert">Assert</h2>
 <h4 id="automated-testing-and-assert">Automated Testing and Assert</h4>
 <p>One of the many cool things about Data Science from Scratch (by Joel Grus) is his use of assertions as a way to &ldquo;test&rdquo; code. This is a software engineering practice (see 
@@ -1999,12 +2046,32 @@ winning_numbers # example: [39, 24, 2, 37, 0, 15]
 winning_numbers = random.sample(lottery_numbers, 6)
 winning_numbers # a different set of numbers [8, 12, 19, 34, 23, 49]
 </code></pre>
-<h3 id="regular-expressions">Regular Expressions</h3>
-<h3 id="zip-and-argument-unpacking">zip and Argument Unpacking</h3>
-<h3 id="args-and-kwargs">args and kwargs</h3>
+<h2 id="regex">Regex</h2>
+<h4 id="regular-expressions">Regular Expressions</h4>
+<p>Whole books can be written about <code>regular expressions</code> so the author briefly highlights a couple features that may come in handy, <code>re.match</code>, <code>re.search</code>, <code>re.split</code> and <code>re.sub</code>:</p>
+<pre><code class="language-python">import re
+
+re_examples = [
+    not re.match(&quot;a&quot;, &quot;cat&quot;),                   # re.match check the word cat 'starts' letter 'a'
+    re.search(&quot;a&quot;, &quot;cat&quot;),                      # re.search check if word cat 'contains' letter 'a'
+    not re.search(&quot;c&quot;, &quot;dog&quot;),                  # 'dog' does not contain 'c'
+    3 == len(re.split(&quot;[ab]&quot;, &quot;carbs&quot;)),        # 3 equals length of &quot;carbs&quot; once you split out [ab]
+    &quot;R-D-&quot; == re.sub(&quot;[0-9]&quot;, &quot;-&quot;, &quot;R2D2&quot;)      # sub out numbers in 'R2D2' with hyphen &quot;-&quot;
+    ]
+
+# test that all examples are true
+assert all(re_examples), &quot;all the regex examples should be True&quot;
+</code></pre>
+<p>The final line reviews our understanding of testing (<code>assert</code>) and truthiness (<code>all</code>) applied to our regular expression examples, pretty neat.</p>
+<h2 id="functional_programming">Functional_Programming</h2>
+<p>see 
+<a href="#list_comprehensions">List Comprehensions</a></p>
+<h2 id="zip-and-argument-unpacking">zip and Argument Unpacking</h2>
+<p>The author states, &ldquo;it is rare that we&rsquo;ll find this useful.&rdquo; (p.37) So we&rsquo;ll circle back if it comes up.</p>
+<h2 id="args-and-kwargs">args and kwargs</h2>
+<p>The authors states, &ldquo;it is more correct and readable if you&rsquo;re explicit about what sorts of arguments your functions require; accordingly, we will use <strong>args</strong> and <strong>kwargs</strong> only when we have no other option.&rdquo; (p. 38) So we&rsquo;ll circle back if it comes up.</p>
 <h3 id="type-annotations">Type Annotations</h3>
 <h3 id="how-to-write-type-annotations">How to Write Type Annotations</h3>
-<h3 id="heading"></h3>
 
     </div>
 
