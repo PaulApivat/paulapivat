@@ -1071,9 +1071,12 @@ hist(x)
       <description>&lt;p&gt;&lt;strong&gt;Table of Content:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href=&#34;#setup&#34;&gt;Set Up&lt;/a&gt;&lt;/li&gt;
+&lt;a href=&#34;#datascienster_pt1&#34;&gt;Part 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#datascienster_pt2&#34;&gt;Part 2&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;a-motivating-hypothetical&#34;&gt;A Motivating Hypothetical&lt;/h2&gt;
+&lt;h2 id=&#34;datascienster_pt1&#34;&gt;DataScienster_pt1&lt;/h2&gt;
+&lt;h4 id=&#34;collections-and-comprehensions&#34;&gt;Collections and Comprehensions&lt;/h4&gt;
 &lt;p&gt;
 &lt;a href=&#34;https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Science from Scratch&lt;/a&gt; opens with a narrative motivating example where you, dear reader, are newly hired to lead data science at &lt;em&gt;DataSciencester&lt;/em&gt;, a social network exclusively for data scientists.&lt;/p&gt;
 &lt;p&gt;Joel Grus, the author, explains:&lt;/p&gt;
@@ -1183,7 +1186,19 @@ friendships
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This pattern of using a one-line for-loop (aka comprehension) will come up often. If we add up all the connections, we get 24 and to find the average, we simply divide by the number of users (10) for 2.4, this part is straight-forward.&lt;/p&gt;
-&lt;h4 id=&#34;who-are-the-most-connected-people&#34;&gt;Who are the most connected people?&lt;/h4&gt;
+&lt;h4 id=&#34;can-we-sort-who-has-most-to-least-friends-to-find-the-most-connected-individuals&#34;&gt;Can we sort who has most-to-least friends to find the most connected individuals?&lt;/h4&gt;
+&lt;p&gt;To answer this question, again, a &lt;strong&gt;list comprehension&lt;/strong&gt; is used. The cool thing is that we re-use functions we had previously created (&lt;code&gt;number_of_friends(user)&lt;/code&gt;).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Create a list that loops over users dict, applying a previously defined function
+num_friends_by_id = [(user[&amp;quot;id&amp;quot;], number_of_friends(user)) for user in users]
+
+# Then sort
+num_friends_by_id.sort(                                 # Sort the list
+    key=lambda id_and_friends: id_and_friends[1],       # by number friends
+    reverse=True)                                       # descending order
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We have just identified how &lt;em&gt;central&lt;/em&gt; an individual is to the network, and we can expect to explore &lt;strong&gt;degree centrality&lt;/strong&gt; and &lt;strong&gt;networks&lt;/strong&gt; more in future chapters, but for the purposes of &lt;em&gt;this&lt;/em&gt; post, we have identified the central role that &lt;strong&gt;collections&lt;/strong&gt; (lists, dictionaries, tuples) as well as &lt;strong&gt;comprehensions&lt;/strong&gt; play in Python operations.&lt;/p&gt;
+&lt;p&gt;In the next post, we&amp;rsquo;ll examing how friendship connections may or may not overlap with interests.&lt;/p&gt;
+&lt;h2 id=&#34;datascienster_pt2&#34;&gt;DataScienster_pt2&lt;/h2&gt;
 </description>
     </item>
     

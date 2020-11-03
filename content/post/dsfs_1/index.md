@@ -10,17 +10,19 @@ image:
   focal_point: ""
 lastMod: "2020-11-03T00:00:00Z"
 projects: []
-subtitle: Frequently Used Python Datatypes 
+subtitle: Frequently Used Python Operations 
 summary: Problem solving in Python
 tags: []
 title: Data Science from Scratch (ch1)
 ---
 
 **Table of Content:**
-- [Set Up](#setup)
+- [Part 1](#datascienster_pt1)
+- [Part 2](#datascienster_pt2)
 
+## DataScienster_pt1
 
-## A Motivating Hypothetical
+#### Collections and Comprehensions
 
 [Data Science from Scratch](https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/) opens with a narrative motivating example where you, dear reader, are newly hired to lead data science at *DataSciencester*, a social network exclusively for data scientists. 
 
@@ -157,7 +159,26 @@ friendships
 ```
 This pattern of using a one-line for-loop (aka comprehension) will come up often. If we add up all the connections, we get 24 and to find the average, we simply divide by the number of users (10) for 2.4, this part is straight-forward.
 
-#### Who are the most connected people? 
+#### Can we sort who has most-to-least friends to find the most connected individuals?
+
+To answer this question, again, a **list comprehension** is used. The cool thing is that we re-use functions we had previously created (`number_of_friends(user)`).
+
+```python
+# Create a list that loops over users dict, applying a previously defined function
+num_friends_by_id = [(user["id"], number_of_friends(user)) for user in users]
+
+# Then sort
+num_friends_by_id.sort(                                 # Sort the list
+    key=lambda id_and_friends: id_and_friends[1],       # by number friends
+    reverse=True)                                       # descending order
+```
+
+We have just identified how *central* an individual is to the network, and we can expect to explore **degree centrality** and **networks** more in future chapters, but for the purposes of *this* post, we have identified the central role that **collections** (lists, dictionaries, tuples) as well as **comprehensions** play in Python operations. 
+
+In the next post, we'll examing how friendship connections may or may not overlap with interests.
+
+## DataScienster_pt2
+
 
 
 

@@ -684,7 +684,7 @@
   <h1>Data Science from Scratch (ch1)</h1>
 
   
-  <p class="page-subtitle">Frequently Used Python Datatypes</p>
+  <p class="page-subtitle">Frequently Used Python Operations</p>
   
 
   
@@ -760,9 +760,12 @@
       <p><strong>Table of Content:</strong></p>
 <ul>
 <li>
-<a href="#setup">Set Up</a></li>
+<a href="#datascienster_pt1">Part 1</a></li>
+<li>
+<a href="#datascienster_pt2">Part 2</a></li>
 </ul>
-<h2 id="a-motivating-hypothetical">A Motivating Hypothetical</h2>
+<h2 id="datascienster_pt1">DataScienster_pt1</h2>
+<h4 id="collections-and-comprehensions">Collections and Comprehensions</h4>
 <p>
 <a href="https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/" target="_blank" rel="noopener">Data Science from Scratch</a> opens with a narrative motivating example where you, dear reader, are newly hired to lead data science at <em>DataSciencester</em>, a social network exclusively for data scientists.</p>
 <p>Joel Grus, the author, explains:</p>
@@ -872,7 +875,19 @@ friendships
 }
 </code></pre>
 <p>This pattern of using a one-line for-loop (aka comprehension) will come up often. If we add up all the connections, we get 24 and to find the average, we simply divide by the number of users (10) for 2.4, this part is straight-forward.</p>
-<h4 id="who-are-the-most-connected-people">Who are the most connected people?</h4>
+<h4 id="can-we-sort-who-has-most-to-least-friends-to-find-the-most-connected-individuals">Can we sort who has most-to-least friends to find the most connected individuals?</h4>
+<p>To answer this question, again, a <strong>list comprehension</strong> is used. The cool thing is that we re-use functions we had previously created (<code>number_of_friends(user)</code>).</p>
+<pre><code class="language-python"># Create a list that loops over users dict, applying a previously defined function
+num_friends_by_id = [(user[&quot;id&quot;], number_of_friends(user)) for user in users]
+
+# Then sort
+num_friends_by_id.sort(                                 # Sort the list
+    key=lambda id_and_friends: id_and_friends[1],       # by number friends
+    reverse=True)                                       # descending order
+</code></pre>
+<p>We have just identified how <em>central</em> an individual is to the network, and we can expect to explore <strong>degree centrality</strong> and <strong>networks</strong> more in future chapters, but for the purposes of <em>this</em> post, we have identified the central role that <strong>collections</strong> (lists, dictionaries, tuples) as well as <strong>comprehensions</strong> play in Python operations.</p>
+<p>In the next post, we&rsquo;ll examing how friendship connections may or may not overlap with interests.</p>
+<h2 id="datascienster_pt2">DataScienster_pt2</h2>
 
     </div>
 
