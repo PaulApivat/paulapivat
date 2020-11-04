@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    5 min read
+    10 min read
   </span>
   
 
@@ -888,6 +888,185 @@ num_friends_by_id.sort(                                 # Sort the list
 <p>We have just identified how <em>central</em> an individual is to the network, and we can expect to explore <strong>degree centrality</strong> and <strong>networks</strong> more in future chapters, but for the purposes of <em>this</em> post, we have identified the central role that <strong>collections</strong> (lists, dictionaries, tuples) as well as <strong>comprehensions</strong> play in Python operations.</p>
 <p>In the next post, we&rsquo;ll examing how friendship connections may or may not overlap with interests.</p>
 <h2 id="datascienster_pt2">DataScienster_pt2</h2>
+<h4 id="friends-you-may-know">Friends you may know</h4>
+<p>We have a sense of the <em>total number of connections</em> and a sorting of the <em>most connected</em> individuals. Now, we may want to design a &ldquo;people you may know&rdquo; suggester.</p>
+<p>Quick recap, here&rsquo;s what the friendship dictionary looks like.</p>
+<pre><code class="language-python">friendships
+
+{
+ 0: [1, 2],
+ 1: [0, 2, 3],
+ 2: [0, 1, 3],
+ 3: [1, 2, 4],
+ 4: [3, 5],
+ 5: [4, 6, 7],
+ 6: [5, 8],
+ 7: [5, 8],
+ 8: [6, 7, 9],
+ 9: [8]
+}
+
+</code></pre>
+<p>Again, the first step is to <em>iterate</em> over friends and collect friends&rsquo; friend. The follow function returns a <strong>list comprehension</strong>. Let&rsquo;s examine this function line-by-line to understand how it works. It&rsquo;s returning friend_of_a_friend (foaf) id for each of the none individuals&rsquo; id, then grabing the id of <em>their</em> friends.</p>
+<p>We&rsquo;ll break it down in code below this function:</p>
+<pre><code class="language-python">def foaf_ids_bad(user):
+    &quot;&quot;&quot;foaf is short for 'friend of a friend' &quot;&quot;&quot;
+    return [foaf_id
+            for friend_id in friendships[user[&quot;id&quot;]]
+            for foaf_id in friendships[friend_id]]
+
+# Let's take Hero, to see Hero's friends 
+# we'll call the first key of the friendships dict
+# Hero has two friends with ids 1 and 2
+friendships[0]  # [1,2]
+
+# then we'll loop over *each* of the friends
+friendships[1]  # [0, 2, 3]
+friendships[2]  # [0, 1, 3]
+
+# assert that function works
+assert foaf_ids_bad(users[0]) == [0, 2, 3, 0, 1, 3]
+</code></pre>
+<h4 id="can-we-count-mutual-friends">Can we count mutual friends?</h4>
+<p>To answer this we&rsquo;ll use a <code>Counter</code>, which we 
+<a href="https://paulapivat.com/post/dsfs_2/#counters" target="_blank" rel="noopener">learned</a> is a <code>dict</code> subclass. Moreover, the function <code>friends_of_friends(user)</code>,</p>
+<pre><code class="language-python">from collections import Counter
+
+def friends_of_friends(user):
+    user_id = user[&quot;id&quot;]
+    return Counter(
+        foaf_id
+        for friend_id in friendships[user_id]    # for each of my friends,
+        for foaf_id in friendships[friend_id]    # find their friends
+        if foaf_id != user_id                    # who aren't me
+        and foaf_id not in friendships[user_id]  # and aren't my friends
+    )
+
+# lets look at Hero
+# he has two common friends with Chi 
+# Chi is neither Hero nor his direct friends
+friends_of_friends(users[0])  # Counter({3: 2})
+</code></pre>
+<p>In addition to friendship data, we also have <strong>interest</strong> data. Here we see a <code>list</code> of <code>tuples</code>, containing a user_id and a string representing a specific of technology.</p>
+<pre><code class="language-python">interests = [
+    (0, &quot;Hadoop&quot;), (0, &quot;Big Data&quot;), (0, &quot;HBase&quot;), (0, &quot;Java&quot;),
+    (0, &quot;Spark&quot;), (0, &quot;Storm&quot;), (0, &quot;Cassandra&quot;),
+    (1, &quot;NoSQL&quot;), (1, &quot;MongoDB&quot;), (1, &quot;Cassandra&quot;), (1, &quot;HBase&quot;),
+    (1, &quot;Postgres&quot;), (2, &quot;Python&quot;), (2, &quot;scikit-learn&quot;), (2, &quot;scipy&quot;),
+    (2, &quot;numpy&quot;), (2, &quot;statsmodels&quot;), (2, &quot;pandas&quot;), (3, &quot;R&quot;), (3, &quot;Python&quot;),
+    (3, &quot;statistics&quot;), (3, &quot;regression&quot;), (3, &quot;probability&quot;),
+    (4, &quot;machine learning&quot;), (4, &quot;regression&quot;), (4, &quot;decision trees&quot;),
+    (4, &quot;libsvm&quot;), (5, &quot;Python&quot;), (5, &quot;R&quot;), (5, &quot;Java&quot;), (5, &quot;C++&quot;),
+    (5, &quot;Haskell&quot;), (5, &quot;programming langauges&quot;), (6, &quot;statistics&quot;),
+    (6, &quot;probability&quot;), (6, &quot;mathematics&quot;), (6, &quot;theory&quot;),
+    (7, &quot;machine learning&quot;), (7, &quot;scikit-learn&quot;), (7, &quot;Mahout&quot;),
+    (7, &quot;neural networks&quot;), (8, &quot;neural networks&quot;), (8, &quot;deep learning&quot;),
+    (8, &quot;Big Data&quot;), (8, &quot;artificial intelligence&quot;), (9, &quot;Hadoop&quot;),
+    (9, &quot;Java&quot;), (9, &quot;MapReduce&quot;), (9, &quot;Big Data&quot;)
+    ]
+
+</code></pre>
+<p>First thing we&rsquo;ll do is find users with a specific interest. This is function returns a <strong>list comprehension</strong>. It first split each <code>tuple</code> into <code>user_id</code> (integer) and <code>user_interest</code> (string), then conditionally check if the <code>string</code> in the <code>tuple</code> matches the input parameter.</p>
+<pre><code class="language-python">def data_scientists_who_like(target_interest):
+    &quot;&quot;&quot;Find the ids of all users who like the target interests.&quot;&quot;&quot;
+    return [user_id
+            for user_id, user_interest in interests
+            if user_interest == target_interest]
+            
+# let's see all user_id who likes &quot;statistics&quot;
+data_scientists_who_like(&quot;statistics&quot;)   # [3, 6]
+
+</code></pre>
+<p>We may also want to count the number of times a specific interest comes up. Here&rsquo;s a function for that. We use a basic for-loop and if-statement to check 
+<a href="https://paulapivat.com/post/dsfs_2/#truthiness" target="_blank" rel="noopener">truthiness</a> of <code>user_interest == target_interest</code>.</p>
+<pre><code class="language-python">def num_user_with_interest_in(target_interest):
+    interest_count = 0
+    for user_id, user_interest in interests:
+        if user_interest == target_interest:
+            interest_count += 1
+    return interest_count
+</code></pre>
+<p>A concern is having to examine a whole list of interests for every search. The author proposes buildingan index from interests to users. Here, a 
+<a href="https://paulapivat.com/post/dsfs_2/#defaultdict" target="_blank" rel="noopener">defaultdict</a> is imported, then populated with user_id</p>
+<pre><code class="language-python">from collections import defaultdict
+
+# user_ids matched to specific interest
+user_ids_by_interest = defaultdict(list)
+
+for user_id, interest in interests:
+    user_ids_by_interest[interest].append(user_id)
+
+# three users interested in Python
+assert user_ids_by_interest[&quot;Python&quot;] == [2,3,5]
+
+# list of interests by user_id
+interests_by_user_id = defaultdict(list)
+
+for user_id, interest in interests:
+    interests_by_user_id[user_id].append(interest)
+
+# check all of Hero's interests
+assert interests_by_user_id[0] == ['Hadoop', 'Big Data', 'HBase', 'Java', 'Spark', 'Storm', 'Cassandra']
+</code></pre>
+<p>We can find who has the most interests in common with a given user. Looks like Klein (#9) has the most common interests with Hero (#0). Here we return a Counter with for-loops and an if-statement.</p>
+<pre><code class="language-python">def most_common_interests_with(user):
+    return Counter(
+        interested_user_id
+        for interest in interests_by_user_id[user[&quot;id&quot;]]
+        for interested_user_id in user_ids_by_interest[interest]
+        if interested_user_id != user[&quot;id&quot;]
+        )
+        
+# let's check to see who has the most common interest with Hero
+most_common_interests_with(users[0]) # Counter({9: 3, 8: 1, 1: 2, 5: 1})
+</code></pre>
+<p>Finally, we can also find which topics are most popular among the network. Previously, we calculated the number of users interested in a particular topic, but now we want to compare the whole list.</p>
+<pre><code class="language-python">words_and_counts = Counter(word
+                           for user, interest in interests
+                           for word in interest.lower().split())
+</code></pre>
+<h4 id="salaries-and-experience-data">Salaries and Experience Data</h4>
+<p>We&rsquo;re also given anonymous salary and tenure (number of years work experience) data, let&rsquo;s see what we can do with that information. First we&rsquo;ll find the average salary. Again, we&rsquo;ll start by creating a list (defaultdict), then loop through <code>salaries_and_tenures</code>.</p>
+<pre><code class="language-python">salaries_and_tenures = [(83000, 8.7), (88000, 8.1),
+                        (48000, 0.7), (76000, 6),
+                        (69000, 6.5), (76000, 7.5),
+                        (60000, 2.5), (83000, 10),
+                        (48000, 1.9), (63000, 4.2)]
+                        
+salary_by_tenure = defaultdict(list)
+
+for salary, tenure in salaries_and_tenures:
+    salary_by_tenure[tenure].append(salary)
+
+# find average salary by tenure
+average_salary_by_tenure = {
+    tenure: sum(salaries) / len(salaries)
+    for tenure, salaries in salary_by_tenure.items()
+    }
+</code></pre>
+<p>The problem is that this is not terribly informative as each tenure value has a different salary. Not even the <code>average_salary_by_tenure</code> is informative, so our next move is to group similar tenure values together.</p>
+<p>First, we&rsquo;ll create the groupings/categories using a 
+<a href="https://paulapivat.com/post/dsfs_2/#controlflow" target="_blank" rel="noopener">control-flow</a>, then we&rsquo;ll create a <code>list</code>(<code>defaultdict</code>), and loop through <code>salaries_and_tenures</code> to populate the newly created <code>salary_by_tenure_bucket</code>. Finally calculate the average.</p>
+<pre><code class="language-python">def tenure_bucket(tenure):
+    if tenure &lt; 2:
+        return &quot;less than two&quot;
+    elif tenure &lt; 5:
+        return &quot;between two and five&quot;
+    else:
+        return &quot;more than five&quot;
+        
+salary_by_tenure_bucket = defaultdict(list)
+
+for salary, tenure in salaries_and_tenures:
+    bucket = tenure_bucket(tenure)
+    salary_by_tenure_bucket[bucket].append(salary)
+    
+# finally calculate average
+average_salary_by_bucket = {
+    tenure_bucket: sum(salaries) / len(salaries)
+    for tenure_bucket, salaries in salary_by_tenure_bucket.items()
+    }
+</code></pre>
 
     </div>
 
