@@ -1199,6 +1199,12 @@ num_friends_by_id.sort(                                 # Sort the list
 &lt;p&gt;We have just identified how &lt;em&gt;central&lt;/em&gt; an individual is to the network, and we can expect to explore &lt;strong&gt;degree centrality&lt;/strong&gt; and &lt;strong&gt;networks&lt;/strong&gt; more in future chapters, but for the purposes of &lt;em&gt;this&lt;/em&gt; post, we have identified the central role that &lt;strong&gt;collections&lt;/strong&gt; (lists, dictionaries, tuples) as well as &lt;strong&gt;comprehensions&lt;/strong&gt; play in Python operations.&lt;/p&gt;
 &lt;p&gt;In the next post, we&amp;rsquo;ll examing how friendship connections may or may not overlap with interests.&lt;/p&gt;
 &lt;h2 id=&#34;datascienster_pt2&#34;&gt;DataScienster_pt2&lt;/h2&gt;
+&lt;p&gt;In the previous section, we began examining a toy data set see what kind of Python concepts from the crash course we&amp;rsquo;d see in action.&lt;/p&gt;
+&lt;p&gt;What stands out is the use of collections and comprehension. We&amp;rsquo;ll see this trend continue as data is given to us in the form of a list of dict or tuples.&lt;/p&gt;
+&lt;p&gt;Often time, we&amp;rsquo;re manipulating the data to make it faster and more efficient to iterate through the data. The tool that comes up quite often is using defaultdict to initialize an empty list. Followed by list comprehensions to iterate through data.&lt;/p&gt;
+&lt;p&gt;Indeed, either we&amp;rsquo;re seeing how the author, specifically, approaches problem or how problems are approached in Python, in general.&lt;/p&gt;
+&lt;p&gt;What I&amp;rsquo;m keeping in mind is that there are more than one way to approach data science problems and this is one of them.&lt;/p&gt;
+&lt;p&gt;With that said, let&amp;rsquo;s pick up where the previous section left off.&lt;/p&gt;
 &lt;h4 id=&#34;friends-you-may-know&#34;&gt;Friends you may know&lt;/h4&gt;
 &lt;p&gt;We have a sense of the &lt;em&gt;total number of connections&lt;/em&gt; and a sorting of the &lt;em&gt;most connected&lt;/em&gt; individuals. Now, we may want to design a &amp;ldquo;people you may know&amp;rdquo; suggester.&lt;/p&gt;
 &lt;p&gt;Quick recap, here&amp;rsquo;s what the friendship dictionary looks like.&lt;/p&gt;
@@ -1218,7 +1224,7 @@ num_friends_by_id.sort(                                 # Sort the list
 }
 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Again, the first step is to &lt;em&gt;iterate&lt;/em&gt; over friends and collect friends&amp;rsquo; friend. The follow function returns a &lt;strong&gt;list comprehension&lt;/strong&gt;. Let&amp;rsquo;s examine this function line-by-line to understand how it works. It&amp;rsquo;s returning friend_of_a_friend (foaf) id for each of the none individuals&amp;rsquo; id, then grabing the id of &lt;em&gt;their&lt;/em&gt; friends.&lt;/p&gt;
+&lt;p&gt;Again, the first step is to &lt;em&gt;iterate&lt;/em&gt; over friends and collect friends&amp;rsquo; friend. The following function returns a &lt;strong&gt;list comprehension&lt;/strong&gt;. Let&amp;rsquo;s examine this function line-by-line to understand how it works. It returns friend_of_a_friend (foaf) id for each of the  individuals&amp;rsquo; id, then grabing the id of &lt;em&gt;their&lt;/em&gt; friends.&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll break it down in code below this function:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def foaf_ids_bad(user):
     &amp;quot;&amp;quot;&amp;quot;foaf is short for &#39;friend of a friend&#39; &amp;quot;&amp;quot;&amp;quot;
@@ -1297,7 +1303,7 @@ data_scientists_who_like(&amp;quot;statistics&amp;quot;)   # [3, 6]
             interest_count += 1
     return interest_count
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;A concern is having to examine a whole list of interests for every search. The author proposes buildingan index from interests to users. Here, a 
+&lt;p&gt;A concern is having to examine a whole list of interests for every search. The author proposes building an index from interests to users. Here, a 
 &lt;a href=&#34;https://paulapivat.com/post/dsfs_2/#defaultdict&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;defaultdict&lt;/a&gt; is imported, then populated with user_id&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from collections import defaultdict
 
@@ -1378,6 +1384,11 @@ average_salary_by_bucket = {
     for tenure_bucket, salaries in salary_by_tenure_bucket.items()
     }
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;One thing to note is that the &amp;ldquo;given&amp;rdquo; data, in this hypothetical toy example is either in a list of dictionaries or tuples, which may be atypical if we&amp;rsquo;re used to working with tabular data in dataFrame (pandas) or native data.frame in R.&lt;/p&gt;
+&lt;p&gt;Again, we are reminded that the higher purpose of this book - Data Science from Scratch (by Joel Grus; 2nd Ed) is to eschew libraries in favor of plain python to build everything from the ground up.&lt;/p&gt;
+&lt;p&gt;Should your goal be to learn how various algorithms work by building them up from scratch, and in the process learn how data problems can be solved with python and minimal libraries, this is your book.&lt;/p&gt;
+&lt;p&gt;Joel Grus does make clear that you would use libraries and frameworks (pandas, scikit-learn, matplotlib etc), rather than coded-from-scratch algorithms when working in production environments and will point out resource for further reading at the end of the chapters.&lt;/p&gt;
+&lt;p&gt;In the next post, we&amp;rsquo;ll get into visualizing data.&lt;/p&gt;
 </description>
     </item>
     

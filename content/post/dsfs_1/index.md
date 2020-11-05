@@ -179,6 +179,18 @@ In the next post, we'll examing how friendship connections may or may not overla
 
 ## DataScienster_pt2
 
+In the previous section, we began examining a toy data set see what kind of Python concepts from the crash course we'd see in action.
+
+What stands out is the use of collections and comprehension. We'll see this trend continue as data is given to us in the form of a list of dict or tuples.
+
+Often time, we're manipulating the data to make it faster and more efficient to iterate through the data. The tool that comes up quite often is using defaultdict to initialize an empty list. Followed by list comprehensions to iterate through data.
+
+Indeed, either we're seeing how the author, specifically, approaches problem or how problems are approached in Python, in general.
+
+What I'm keeping in mind is that there are more than one way to approach data science problems and this is one of them.
+
+With that said, let's pick up where the previous section left off.
+
 #### Friends you may know
 
 We have a sense of the *total number of connections* and a sorting of the *most connected* individuals. Now, we may want to design a "people you may know" suggester. 
@@ -202,7 +214,7 @@ friendships
 }
 
 ```
-Again, the first step is to *iterate* over friends and collect friends' friend. The follow function returns a **list comprehension**. Let's examine this function line-by-line to understand how it works. It's returning friend_of_a_friend (foaf) id for each of the none individuals' id, then grabing the id of *their* friends. 
+Again, the first step is to *iterate* over friends and collect friends' friend. The following function returns a **list comprehension**. Let's examine this function line-by-line to understand how it works. It returns friend_of_a_friend (foaf) id for each of the  individuals' id, then grabing the id of *their* friends. 
 
 We'll break it down in code below this function:
 
@@ -295,7 +307,7 @@ def num_user_with_interest_in(target_interest):
     return interest_count
 ```
 
-A concern is having to examine a whole list of interests for every search. The author proposes buildingan index from interests to users. Here, a [defaultdict](https://paulapivat.com/post/dsfs_2/#defaultdict) is imported, then populated with user_id
+A concern is having to examine a whole list of interests for every search. The author proposes building an index from interests to users. Here, a [defaultdict](https://paulapivat.com/post/dsfs_2/#defaultdict) is imported, then populated with user_id
 
 ```python
 from collections import defaultdict
@@ -389,3 +401,13 @@ average_salary_by_bucket = {
     for tenure_bucket, salaries in salary_by_tenure_bucket.items()
     }
 ```
+
+One thing to note is that the "given" data, in this hypothetical toy example is either in a list of dictionaries or tuples, which may be atypical if we're used to working with tabular data in dataFrame (pandas) or native data.frame in R.
+
+Again, we are reminded that the higher purpose of this book - Data Science from Scratch (by Joel Grus; 2nd Ed) is to eschew libraries in favor of plain python to build everything from the ground up.
+
+Should your goal be to learn how various algorithms work by building them up from scratch, and in the process learn how data problems can be solved with python and minimal libraries, this is your book.
+
+Joel Grus does make clear that you would use libraries and frameworks (pandas, scikit-learn, matplotlib etc), rather than coded-from-scratch algorithms when working in production environments and will point out resource for further reading at the end of the chapters.
+
+In the next post, we'll get into visualizing data.
