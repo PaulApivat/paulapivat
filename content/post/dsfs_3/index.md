@@ -16,15 +16,12 @@ tags: []
 title: Introduction to Matplotlib 
 ---
 
-**Table of Content:**
-- [Part 1: Plot](#datascienster_pt1)
-- [Part 2: Process](#datascienster_pt2)
-- [Part 3: Comparison](#)
 
 ## Data Visualization
 
-#### Plot
+Chapter 3 of Data Science from Scratch introduces us to visualizing data using [matplotlib](https://matplotlib.org/). This is widely used in the Python ecosystem, although my sense is that people are *just as happy, if not more*, to use other libraries like [seaborn](https://seaborn.pydata.org/), [Altair](https://altair-viz.github.io/) and [bokeh](https://bokeh.org/). (**note**: seaborn is built on top of matplotlib).
 
-#### Process
+This chapter is fairly brief and is meant as a quick introduction to matplotlib - to get readers familiar with basic charts. Whole books can be written on **data visualization** alone, so this is meant more as an appetizer, rather than a full-course. 
 
-#### Comparison
+There's a fair amount of detail involved in using matplotlib, so we'll break it down to demystify it.
+
