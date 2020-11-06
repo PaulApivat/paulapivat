@@ -1,5 +1,5 @@
 ---
-title: 'Top-100 Vintage NBA Seasons with {reactable}'
+title: Vintage NBA Seasons 
 author: Paul Apivat Hanvongse
 date: "2020-10-31"
 slug: vintage-nba
