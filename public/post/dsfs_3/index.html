@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    3 min read
+    4 min read
   </span>
   
 
@@ -758,6 +758,7 @@
 
     <div class="article-style">
       <h2 id="data-visualization">Data Visualization</h2>
+<p><img src="./viz_cover.png" alt="png"></p>
 <p>Chapter 3 of Data Science from Scratch introduces us to visualizing data using 
 <a href="https://matplotlib.org/" target="_blank" rel="noopener">matplotlib</a>. This is widely used in the Python ecosystem, although my sense is that people are <em>just as happy, if not more</em>, to use other libraries like 
 <a href="https://seaborn.pydata.org/" target="_blank" rel="noopener">seaborn</a>, 
@@ -809,9 +810,79 @@ plt.show()
 <p>Here&rsquo;s a <strong>stem plot</strong> version:</p>
 <p><img src="./stem_movies.png" alt="png"></p>
 <p>As with the previous example, changing just one <strong>function</strong> from <code>plt.bar</code> to <code>plt.stem</code> gave us a different plot:</p>
-<pre><code class="language-python">
+<pre><code class="language-python">#---- Original Bar Chart ----#
+
+movies = [&quot;Annie Hall&quot;, &quot;Ben-Hur&quot;, &quot;Casablanca&quot;, &quot;Gandhi&quot;, &quot;West Side Story&quot;]
+num_oscars = [5,11,3,8,10]
+
+plt.bar(range(len(movies)), num_oscars)
+plt.title(&quot;My Favorite Movies&quot;)
+plt.ylabel(&quot;# of Academy Awards&quot;)
+plt.xticks(range(len(movies)), movies)
+plt.show()
+
+# ---- Stem Chart ---- #
+
+movies = [&quot;Annie Hall&quot;, &quot;Ben-Hur&quot;, &quot;Casablanca&quot;, &quot;Gandhi&quot;, &quot;West Side Story&quot;]
+num_oscars = [5,11,3,8,10]
+
+plt.stem(range(len(movies)), num_oscars) # the only change
+plt.title(&quot;My Favorite Movies&quot;)
+plt.ylabel(&quot;# of Academy Awards&quot;)
+plt.xticks(range(len(movies)), movies)
+plt.show()
 </code></pre>
-<h4 id="hierarchy">Hierarchy</h4>
+<h4 id="there-are-levels-to-this-hierarchy">There are levels to this: Hierarchy</h4>
+<p>I&rsquo;m all for keeping <strong>matplotlib</strong> as simple as possible but one thing the above examples gloss over is the <strong>matplotlib object hierarchy</strong>, which is something worth understanding to get a feel for how the various functions operate.</p>
+<p>This next figure is borrowed from 
+<a href="https://realpython.com/python-matplotlib-guide/" target="_blank" rel="noopener">Real Python</a> and it nicely highlights the hierarchy inherent in <em>every</em> plot:</p>
+<p><img src="./hierarchy.png" alt="png"></p>
+<p>You&rsquo;ll note the levels: Figure, Axes and Axis. When digging into 
+<a href="https://matplotlib.org/api/axes_api.html?" target="_blank" rel="noopener">matplotlib documentation on axes</a>, these levels are brought to the foreground.</p>
+<p>To really see this in action, we&rsquo;ll need to code our plot <em>slightly</em> differently. For the last chart this chapter examines the <strong>bias-variance tradeoff</strong> which is something we&rsquo;ll learn more about in future chapters, but it highlights the 
+<a href="https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff" target="_blank" rel="noopener">trade-off</a> in trying to simultanenously minimize two sources of error so our algorithm generalizes to new situations.</p>
+<p>Here&rsquo;s the code:</p>
+<pre><code class="language-python"># BOOK version
+variance = [1,2,4,8,16,32,64,128,256]
+bias_squared = [256, 128, 64, 32, 16, 8, 4, 2, 1]
+total_error = [x + y for x,y in zip(variance, bias_squared)]
+xs = [i for i, _ in enumerate(variance)]
+
+plt.plot(xs, variance, 'g-', label='variance')
+plt.plot(xs, bias_squared, 'r-', label='bias^2')
+plt.plot(xs, total_error, 'b:', label='total error')
+plt.legend(loc=9)
+plt.xlabel(&quot;model complexity&quot;)
+plt.xticks([])
+plt.title(&quot;The Bias-Variance Tradeoff&quot;)
+plt.show()
+
+# ALTERNATE version
+variance = [1,2,4,8,16,32,64,128,256]
+bias_squared = [256, 128, 64, 32, 16, 8, 4, 2, 1]
+total_error = [x + y for x,y in zip(variance, bias_squared)]
+xs = [i for i, _ in enumerate(variance)]
+
+fig, ax = plt.subplots(figsize=(8,5))
+ax.plot(xs, variance, 'g-', label='variance')
+ax.plot(xs, bias_squared, 'r-', label='bias^2')
+ax.plot(xs, total_error, 'b:', label='total error')
+ax.legend(loc='upper center')
+ax.set_xlabel(&quot;model complexity&quot;)
+ax.set_title(&quot;The Bias-Variance Tradeoff: Alt Version&quot;)
+fig.tight_layout()
+fig.show()
+
+</code></pre>
+<p>Instead using the <code>plt</code> module, we use <code>fig</code> and <code>ax</code>, here are their data types:</p>
+<pre><code class="language-python">type(fig) # matplotlib.figure.Figure
+type(ax)  # matplotlib.axes._subplots.AxesSubplot
+</code></pre>
+<p>This makes <em>explicit</em> the <strong>matplotlib object hierarchy</strong>, particularly as we see how we access function at the <code>axes._subplits.AxesSubplot</code> level (the 
+<a href="https://matplotlib.org/api/axes_api.html?" target="_blank" rel="noopener">documentation has much more detail</a>).</p>
+<p>Here&rsquo;s the chart:</p>
+<p><img src="./bias_var_alt.png" alt="png"></p>
+<p>In summary, we learned that matplotlib <em>can</em> be fairly simple to use for static, simple plots, but we&rsquo;re better served having <em>some</em> understanding of matplotlib&rsquo;s object hierarchy. We&rsquo;ll examine more chart types as we proceed with the rest of the chapters.</p>
 
     </div>
 

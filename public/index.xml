@@ -1069,6 +1069,7 @@ hist(x)
       <pubDate>Thu, 05 Nov 2020 00:00:00 +0000</pubDate>
       <guid>/post/dsfs_3/</guid>
       <description>&lt;h2 id=&#34;data-visualization&#34;&gt;Data Visualization&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;./viz_cover.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Chapter 3 of Data Science from Scratch introduces us to visualizing data using 
 &lt;a href=&#34;https://matplotlib.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;matplotlib&lt;/a&gt;. This is widely used in the Python ecosystem, although my sense is that people are &lt;em&gt;just as happy, if not more&lt;/em&gt;, to use other libraries like 
 &lt;a href=&#34;https://seaborn.pydata.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;seaborn&lt;/a&gt;, 
@@ -1120,9 +1121,79 @@ plt.show()
 &lt;p&gt;Here&amp;rsquo;s a &lt;strong&gt;stem plot&lt;/strong&gt; version:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./stem_movies.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;As with the previous example, changing just one &lt;strong&gt;function&lt;/strong&gt; from &lt;code&gt;plt.bar&lt;/code&gt; to &lt;code&gt;plt.stem&lt;/code&gt; gave us a different plot:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#---- Original Bar Chart ----#
+
+movies = [&amp;quot;Annie Hall&amp;quot;, &amp;quot;Ben-Hur&amp;quot;, &amp;quot;Casablanca&amp;quot;, &amp;quot;Gandhi&amp;quot;, &amp;quot;West Side Story&amp;quot;]
+num_oscars = [5,11,3,8,10]
+
+plt.bar(range(len(movies)), num_oscars)
+plt.title(&amp;quot;My Favorite Movies&amp;quot;)
+plt.ylabel(&amp;quot;# of Academy Awards&amp;quot;)
+plt.xticks(range(len(movies)), movies)
+plt.show()
+
+# ---- Stem Chart ---- #
+
+movies = [&amp;quot;Annie Hall&amp;quot;, &amp;quot;Ben-Hur&amp;quot;, &amp;quot;Casablanca&amp;quot;, &amp;quot;Gandhi&amp;quot;, &amp;quot;West Side Story&amp;quot;]
+num_oscars = [5,11,3,8,10]
+
+plt.stem(range(len(movies)), num_oscars) # the only change
+plt.title(&amp;quot;My Favorite Movies&amp;quot;)
+plt.ylabel(&amp;quot;# of Academy Awards&amp;quot;)
+plt.xticks(range(len(movies)), movies)
+plt.show()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;hierarchy&#34;&gt;Hierarchy&lt;/h4&gt;
+&lt;h4 id=&#34;there-are-levels-to-this-hierarchy&#34;&gt;There are levels to this: Hierarchy&lt;/h4&gt;
+&lt;p&gt;I&amp;rsquo;m all for keeping &lt;strong&gt;matplotlib&lt;/strong&gt; as simple as possible but one thing the above examples gloss over is the &lt;strong&gt;matplotlib object hierarchy&lt;/strong&gt;, which is something worth understanding to get a feel for how the various functions operate.&lt;/p&gt;
+&lt;p&gt;This next figure is borrowed from 
+&lt;a href=&#34;https://realpython.com/python-matplotlib-guide/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Real Python&lt;/a&gt; and it nicely highlights the hierarchy inherent in &lt;em&gt;every&lt;/em&gt; plot:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./hierarchy.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;You&amp;rsquo;ll note the levels: Figure, Axes and Axis. When digging into 
+&lt;a href=&#34;https://matplotlib.org/api/axes_api.html?&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;matplotlib documentation on axes&lt;/a&gt;, these levels are brought to the foreground.&lt;/p&gt;
+&lt;p&gt;To really see this in action, we&amp;rsquo;ll need to code our plot &lt;em&gt;slightly&lt;/em&gt; differently. For the last chart this chapter examines the &lt;strong&gt;bias-variance tradeoff&lt;/strong&gt; which is something we&amp;rsquo;ll learn more about in future chapters, but it highlights the 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;trade-off&lt;/a&gt; in trying to simultanenously minimize two sources of error so our algorithm generalizes to new situations.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# BOOK version
+variance = [1,2,4,8,16,32,64,128,256]
+bias_squared = [256, 128, 64, 32, 16, 8, 4, 2, 1]
+total_error = [x + y for x,y in zip(variance, bias_squared)]
+xs = [i for i, _ in enumerate(variance)]
+
+plt.plot(xs, variance, &#39;g-&#39;, label=&#39;variance&#39;)
+plt.plot(xs, bias_squared, &#39;r-&#39;, label=&#39;bias^2&#39;)
+plt.plot(xs, total_error, &#39;b:&#39;, label=&#39;total error&#39;)
+plt.legend(loc=9)
+plt.xlabel(&amp;quot;model complexity&amp;quot;)
+plt.xticks([])
+plt.title(&amp;quot;The Bias-Variance Tradeoff&amp;quot;)
+plt.show()
+
+# ALTERNATE version
+variance = [1,2,4,8,16,32,64,128,256]
+bias_squared = [256, 128, 64, 32, 16, 8, 4, 2, 1]
+total_error = [x + y for x,y in zip(variance, bias_squared)]
+xs = [i for i, _ in enumerate(variance)]
+
+fig, ax = plt.subplots(figsize=(8,5))
+ax.plot(xs, variance, &#39;g-&#39;, label=&#39;variance&#39;)
+ax.plot(xs, bias_squared, &#39;r-&#39;, label=&#39;bias^2&#39;)
+ax.plot(xs, total_error, &#39;b:&#39;, label=&#39;total error&#39;)
+ax.legend(loc=&#39;upper center&#39;)
+ax.set_xlabel(&amp;quot;model complexity&amp;quot;)
+ax.set_title(&amp;quot;The Bias-Variance Tradeoff: Alt Version&amp;quot;)
+fig.tight_layout()
+fig.show()
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Instead using the &lt;code&gt;plt&lt;/code&gt; module, we use &lt;code&gt;fig&lt;/code&gt; and &lt;code&gt;ax&lt;/code&gt;, here are their data types:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;type(fig) # matplotlib.figure.Figure
+type(ax)  # matplotlib.axes._subplots.AxesSubplot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This makes &lt;em&gt;explicit&lt;/em&gt; the &lt;strong&gt;matplotlib object hierarchy&lt;/strong&gt;, particularly as we see how we access function at the &lt;code&gt;axes._subplits.AxesSubplot&lt;/code&gt; level (the 
+&lt;a href=&#34;https://matplotlib.org/api/axes_api.html?&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;documentation has much more detail&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the chart:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./bias_var_alt.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;In summary, we learned that matplotlib &lt;em&gt;can&lt;/em&gt; be fairly simple to use for static, simple plots, but we&amp;rsquo;re better served having &lt;em&gt;some&lt;/em&gt; understanding of matplotlib&amp;rsquo;s object hierarchy. We&amp;rsquo;ll examine more chart types as we proceed with the rest of the chapters.&lt;/p&gt;
 </description>
     </item>
     
