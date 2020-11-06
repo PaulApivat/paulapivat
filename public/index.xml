@@ -1064,7 +1064,7 @@ hist(x)
     </item>
     
     <item>
-      <title>Introduction to Matplotlib</title>
+      <title>Making sense of matplotlib</title>
       <link>/post/dsfs_3/</link>
       <pubDate>Thu, 05 Nov 2020 00:00:00 +0000</pubDate>
       <guid>/post/dsfs_3/</guid>
@@ -1193,7 +1193,7 @@ type(ax)  # matplotlib.axes._subplots.AxesSubplot
 &lt;a href=&#34;https://matplotlib.org/api/axes_api.html?&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;documentation has much more detail&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the chart:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./bias_var_alt.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;In summary, we learned that matplotlib &lt;em&gt;can&lt;/em&gt; be fairly simple to use for static, simple plots, but we&amp;rsquo;re better served having &lt;em&gt;some&lt;/em&gt; understanding of matplotlib&amp;rsquo;s object hierarchy. We&amp;rsquo;ll examine more chart types as we proceed with the rest of the chapters.&lt;/p&gt;
+&lt;p&gt;In summary, we learned that matplotlib &lt;em&gt;can&lt;/em&gt; be fairly simple to use for static, simple plots, but we&amp;rsquo;re better served having &lt;em&gt;some&lt;/em&gt; understanding of &lt;strong&gt;matplotlib&amp;rsquo;s object hierarchy&lt;/strong&gt;. We&amp;rsquo;ll examine more chart types as we proceed with the rest of the chapters.&lt;/p&gt;
 </description>
     </item>
     

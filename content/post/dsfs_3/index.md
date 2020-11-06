@@ -13,7 +13,7 @@ projects: []
 subtitle: Data Visualization with Matplotlib
 summary: Visualizing Data in Python
 tags: []
-title: Introduction to Matplotlib 
+title: Making sense of matplotlib 
 ---
 
 
@@ -175,4 +175,4 @@ Here's the chart:
 
 ![png](./bias_var_alt.png)
 
-In summary, we learned that matplotlib *can* be fairly simple to use for static, simple plots, but we're better served having *some* understanding of matplotlib's object hierarchy. We'll examine more chart types as we proceed with the rest of the chapters. 
+In summary, we learned that matplotlib *can* be fairly simple to use for static, simple plots, but we're better served having *some* understanding of **matplotlib's object hierarchy**. We'll examine more chart types as we proceed with the rest of the chapters. 
