@@ -35,7 +35,7 @@ library(reactable)
 library(htmltools)
 
 # read data
-df <- read_csv("historical_RAPTOR_by_player.csv")
+df <- read_csv("./data/historical_RAPTOR_by_player.csv")
 df %>% head()
 ```
 
