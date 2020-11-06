@@ -8,7 +8,7 @@ active = true  # Activate this widget? true/false
 weight = 60  # Order that this section will appear.
 
 title = "Recent Posts"
-subtitle = "Other blog: [Getwyze.com](http://getwyze.com/)"
+subtitle = "Other blogs: [Getwyze.com](http://getwyze.com/) | [dev.to](https://dev.to/paulapivat) | [hashnode](https://paulapivat.hashnode.dev/) | [medium](https://paulapivat.medium.com/)"
 
 [content]
   # Page type to display. E.g. post, talk, or publication.
