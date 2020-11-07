@@ -1,0 +1,1340 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Paul Apivat Hanvongse">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Comparing lists to dataframes">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/list-to-df/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#E32626">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Domine:wght@400;700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/post/list-to-df/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="twitter:site" content="@paulapivat">
+  <meta property="twitter:creator" content="@paulapivat">
+  
+  <meta property="og:site_name" content="Paul Apivat">
+  <meta property="og:url" content="/post/list-to-df/">
+  <meta property="og:title" content="An alternative to for-loops | Paul Apivat">
+  <meta property="og:description" content="Comparing lists to dataframes"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-11-07T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-11-07T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/list-to-df/"
+  },
+  "headline": "An alternative to for-loops",
+  
+  "datePublished": "2020-11-07T00:00:00Z",
+  "dateModified": "2020-11-07T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Paul Apivat Hanvongse"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Paul Apivat",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Comparing lists to dataframes"
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>An alternative to for-loops | Paul Apivat</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Paul Apivat</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Paul Apivat</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#"><span>Start Here</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>About</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#accomplishments"><span>News</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#gallery"><span>Viz</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/courses/"><span>Courses</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/technical_notes/"><span>Technical Notes</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>An alternative to for-loops</h1>
+
+  
+  <p class="page-subtitle">Solving data problems in multiple ways</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/author/paul-apivat-hanvongse/">Paul Apivat Hanvongse</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Nov 7, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    7 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="lists-vs-dataframes">Lists vs. DataFrames</h2>
+<p>A couple days back I wrote a post summarizing 
+<a href="https://paulapivat.com/post/dsfs_1/" target="_blank" rel="noopener">chapter 1 of Data Science from Scratch</a>, which reviewed what I saw were frequently used Python data operations, namely collections and comprehensions.</p>
+<p>After providing a Python crash course in chapter 2, I went back to chapter 1 to examine the author&rsquo;s toy example establishing the narrative of a newly hired data scientist on her first day at the job.</p>
+<p>The author had been explicit about avoiding frameworks (i.e., Pandas, Numpy) and it was clear the author would take a pure Python approach to introducing and solving problems.</p>
+<p>I saw how much Collections and Comprehension were used. Data was provided in the form of <code>lists</code>, either lists of <code>dictionaries</code> or <code>tuples</code>. And to answer questions <em>about</em> the data, the author often used <code>list comprehensions</code> - iterating through lists with a for-loop. I am beginning to see this as a very Python-centric way of approaching problems.</p>
+<p>I went through the toy examples and considered how the hypothetical problems were introduced and addressed (I thought it was very well done and am confident in proceeding with this book); however, there was one question I kept wondering:</p>
+<blockquote>
+<p>What about data frames?</p>
+</blockquote>
+<p>I had imagined myself as a newly hired data scientist for the fictional company - Data Scienster - who had been given some data about the social network of data scientists and I couldn&rsquo;t help but wonder:</p>
+<blockquote>
+<p>Would I really be given data stored in lists, over data frames?</p>
+</blockquote>
+<p>As a long-time Excel, then R, user, this goes against my assumptions about data. I realize there is unstructured data and that <strong>not</strong> all data is tabular data, I get that. But so much of data <em>is</em> tabular data I feel like it&rsquo;s reasonable to <em>begin</em> here (<strong>note</strong>: I&rsquo;m open to other perspectives here, feel free to leave a comment below!).</p>
+<p>In any case, I had this <strong>incredible itch</strong> to go back to that chapter and ask:</p>
+<blockquote>
+<p>How would I approach the same problem using data frames?</p>
+</blockquote>
+<p>So that&rsquo;s what this post is about. You can reference these previous post for context; also keep in mind, this is a brief detour and deviation from Joel Grus&rsquo; book (for example, I&rsquo;ll be using 
+<a href="https://pandas.pydata.org/" target="_blank" rel="noopener">pandas</a> here and a 
+<a href="https://jupyter.org/" target="_blank" rel="noopener">jupyter notebook</a> here, both of which are avoided in the book). I plan on continuing with the book, but <strong>data frames</strong> are too much apart of how I <em>think</em> about data to ignore for a whole book.</p>
+<p>For review, here&rsquo;s the data you, dear reader, are given as a newly hired data scientist at Data Scienster™</p>
+<pre><code class="language-python">
+# users in the network
+# stored as a list of dictionaries
+users = [
+    {&quot;id&quot;: 0, &quot;name&quot;: &quot;Hero&quot;},
+    {&quot;id&quot;: 1, &quot;name&quot;: &quot;Dunn&quot;},
+    {&quot;id&quot;: 2, &quot;name&quot;: &quot;Sue&quot;},
+    {&quot;id&quot;: 3, &quot;name&quot;: &quot;Chi&quot;},
+    {&quot;id&quot;: 4, &quot;name&quot;: &quot;Thor&quot;},
+    {&quot;id&quot;: 5, &quot;name&quot;: &quot;Clive&quot;},
+    {&quot;id&quot;: 6, &quot;name&quot;: &quot;Hicks&quot;},
+    {&quot;id&quot;: 7, &quot;name&quot;: &quot;Devin&quot;},
+    {&quot;id&quot;: 8, &quot;name&quot;: &quot;Kate&quot;},
+    {&quot;id&quot;: 9, &quot;name&quot;: &quot;Klein&quot;}
+]
+
+# friendship pairings in the network
+# stored as a list of tuples
+friendship_pairs = [(0,1), (0,2), (1,2), (1,3), (2,3), (3,4),
+                    (4,5), (5,6), (5,7), (6,8), (7,8), (8,9)]
+                    
+# interests data
+# stored as another list of tuples
+interests = [
+    (0, &quot;Hadoop&quot;), (0, &quot;Big Data&quot;), (0, &quot;HBase&quot;), (0, &quot;Java&quot;),
+    (0, &quot;Spark&quot;), (0, &quot;Storm&quot;), (0, &quot;Cassandra&quot;),
+    (1, &quot;NoSQL&quot;), (1, &quot;MongoDB&quot;), (1, &quot;Cassandra&quot;), (1, &quot;HBase&quot;),
+    (1, &quot;Postgres&quot;), (2, &quot;Python&quot;), (2, &quot;scikit-learn&quot;), (2, &quot;scipy&quot;),
+    (2, &quot;numpy&quot;), (2, &quot;statsmodels&quot;), (2, &quot;pandas&quot;), (3, &quot;R&quot;), (3, &quot;Python&quot;),
+    (3, &quot;statistics&quot;), (3, &quot;regression&quot;), (3, &quot;probability&quot;),
+    (4, &quot;machine learning&quot;), (4, &quot;regression&quot;), (4, &quot;decision trees&quot;),
+    (4, &quot;libsvm&quot;), (5, &quot;Python&quot;), (5, &quot;R&quot;), (5, &quot;Java&quot;), (5, &quot;C++&quot;),
+    (5, &quot;Haskell&quot;), (5, &quot;programming langauges&quot;), (6, &quot;statistics&quot;),
+    (6, &quot;probability&quot;), (6, &quot;mathematics&quot;), (6, &quot;theory&quot;),
+    (7, &quot;machine learning&quot;), (7, &quot;scikit-learn&quot;), (7, &quot;Mahout&quot;),
+    (7, &quot;neural networks&quot;), (8, &quot;neural networks&quot;), (8, &quot;deep learning&quot;),
+    (8, &quot;Big Data&quot;), (8, &quot;artificial intelligence&quot;), (9, &quot;Hadoop&quot;),
+    (9, &quot;Java&quot;), (9, &quot;MapReduce&quot;), (9, &quot;Big Data&quot;)
+    ]
+</code></pre>
+<p>Given just these pieces of data, we can create <strong>functions</strong>, use <strong>for-loops</strong> and <strong>list comprehensions</strong> to answer some questions like:</p>
+<ul>
+<li>Who are each user friends with?</li>
+<li>What are the total and average number of connections?</li>
+<li>Which users share the same interest?</li>
+<li>What are the most popular topics in this network?</li>
+</ul>
+<p>However, the chapter ends with lists, functions and comprehension. What about <strong>storing data in data frames?</strong></p>
+<p>I contend that you could answer the above questions with data frames, and I found myself wanting to combine all three pieces of data into <strong>one</strong> data frame.</p>
+<p>First we&rsquo;ll store <code>users</code> as a data frame:</p>
+<pre><code class="language-python">import pandas as pd
+
+# convert list of dict into dataframe
+users_df = pd.DataFrame(users)
+users_df
+</code></pre>
+<p>Just visually, a <code>data frame</code> looks different from a <code>list of dictionaries</code>:</p>
+<p><img src="./list_to_df.png" alt="png"></p>
+<p>Your mileage may vary, but <em>I make sense of the data</em> very differently when I&rsquo;m looking at a list vs a data frame. Old habits die hard and <strong>rows and columns</strong> are ingrained in me. But I digress.</p>
+<p>Next, we&rsquo;re given a <code>list of tuples</code> representing friendship pairs and we proceed to turn that into a <code>dictionary</code> by using a <code>dictionary comprehension</code>:</p>
+<pre><code class="language-python"># list of tuples
+friendship_pairs = [(0,1), (0,2), (1,2), (1,3), (2,3), (3,4),
+                    (4,5), (5,6), (5,7), (6,8), (7,8), (8,9)]
+                    
+# create a dict, where keys are users id, 
+# dictionary comprehension
+friendships = {user[&quot;id&quot;]: [] for user in users}
+
+for i, j in friendship_pairs:
+    friendships[i].append(j)
+    friendships[j].append(i)
+</code></pre>
+<p>Similar to the previous example, I find that viewing the data as a <code>data frame</code> is <em>different</em> from viewing it as a <code>dictionary</code>:</p>
+<p><img src="./dict_to_df.png" alt="png"></p>
+<p>From this point, I&rsquo;m doing several operations in 
+<a href="https://pandas.pydata.org/" target="_blank" rel="noopener">pandas</a> to <strong>join</strong> the first two tables, such that I have a column with the user&rsquo;s id, user&rsquo;s name and the id of their first, second or, in some cases, third friends (at most people in this network have 3 direct connections).</p>
+<p>If you want to know the specific 
+<a href="https://pandas.pydata.org/" target="_blank" rel="noopener">pandas</a> operation, here&rsquo;s the code:</p>
+<pre><code class="language-python"># The users_df is fine as is with two columns: id and name (see above)
+
+# We'll transform the friendships_df
+
+# reset_index allows us to add an index column
+friendships_df.reset_index(inplace=True)
+# add index column
+friendships_df = friendships_df.rename(columns = {&quot;id&quot;:&quot;new column name&quot;})
+# change index column to 'id'
+friendships_df = friendships_df.rename(columns = {'index':'id'})
+# join with users_df so we get each person's name
+users_friendships = pd.merge(users_df, friendships_df, on='id')
+</code></pre>
+<p>Once we&rsquo;ve joined <code>users_df</code> and <code>friendships_df</code>, we have:</p>
+<p><img src="./users_friendships.png" alt="png"></p>
+<p>Since we have <code>users</code> and <code>friendships</code> data, we could write a function to help us answer &ldquo;how many friends does each user have?&quot;. In addition, we&rsquo;ll have to create a <code>list comprehension</code> so we loop through each <code>user</code> within <code>users</code>:</p>
+<pre><code class="language-python"># function to count how many friend each user has
+def number_of_friends(user):
+    &quot;&quot;&quot;How many friends does _user_ have?&quot;&quot;&quot;
+    user_id = user[&quot;id&quot;]
+    friend_ids = friendships[user_id]
+    return len(friend_ids)
+
+# list comprehension to apply the function for each user
+num_friends_by_id = [(user[&quot;id&quot;], number_of_friends(user)) for user in users]
+
+# this gives us a list of tuples
+num_friends_by_id
+
+[(0, 2),
+ (1, 3),
+ (2, 3),
+ (3, 3),
+ (4, 2),
+ (5, 3),
+ (6, 2),
+ (7, 2),
+ (8, 3),
+ (9, 1)]
+
+</code></pre>
+<p>Again, viewing the data as a  <code>list of tuples</code> is different from a <code>data frame</code>, so let&rsquo;s go ahead and turn that into a pandas data frame:</p>
+<pre><code class="language-python"># when converting to data frame, we can set the name of the columns to id and num_friends; this sets us up for another join
+num_friends_by_id = pd.DataFrame(num_friends_by_id, columns = ['id', 'num_friends'])
+</code></pre>
+<p>Because we have an &lsquo;id&rsquo; column, we can join this with our previously created <code>users_friendships</code> data frame:</p>
+<p><img src="./num_friends_by_id.png" alt="png"></p>
+<p>Once joined with <code>users_friendships</code> using the <code>merge</code> function, we get (<code>users_friendships2</code>):</p>
+<p><img src="./users_friendships2.png" alt="png"></p>
+<p>By now you&rsquo;re familiar with the process. We have a Python <strong>collection</strong>, generally a <code>list</code> of <code>dictionaries</code> or <code>tuples</code> and we want to convert them to a <code>data frame</code>.</p>
+<p>We&rsquo;ll repeat this process for the <code>interests</code> variable which is a long <code>list of tuples</code> (see above). We&rsquo;ll convert to data frame, then join with <code>users_friendships_2</code> to get a longer data frame with <code>interests</code> as one of the columns (note: picture is cut for space):</p>
+<p><img src="./interests.png" alt="png"></p>
+<p>The nice thing about <strong>pandas</strong> is that once you have all your data <em>joined</em> together in a data frame, you can <strong>query</strong> the data.</p>
+<p>For example, I may want to see all users have an interest in &ldquo;Big Data&rdquo;:</p>
+<p><img src="./big_data.png" alt="png"></p>
+<p>Previously, we would have had to create a function that returns a <code>list comprehension</code>:</p>
+<pre><code class="language-python">def data_scientists_who_like(target_interest):
+    &quot;&quot;&quot;Find the ids of all users who like the target interests.&quot;&quot;&quot;
+    return [user_id
+            for user_id, user_interest in interests
+            if user_interest == target_interest]
+            
+data_scientists_who_like(&quot;Big Data&quot;)
+</code></pre>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/list-to-df/&amp;text=An%20alternative%20to%20for-loops" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/list-to-df/&amp;t=An%20alternative%20to%20for-loops" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=An%20alternative%20to%20for-loops&amp;body=/post/list-to-df/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/list-to-df/&amp;title=An%20alternative%20to%20for-loops" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=An%20alternative%20to%20for-loops%20/post/list-to-df/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/list-to-df/&amp;title=An%20alternative%20to%20for-loops" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/paul-apivat-hanvongse/avatar_hu63a07477d78c9be41fad7b90b509fc17_91571_270x270_fill_q90_lanczos_center.jpg" alt="Paul Apivat Hanvongse">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="/">Paul Apivat Hanvongse</a></h5>
+        <h6 class="card-subtitle">Self-Employed | Getwyze</h6>
+        <p class="card-text">My interests include data visualization, data analytics and data science.</p>
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/paulapivat/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/paulapivat" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    
+      <a href="/privacy/">Privacy Policy</a>
+    
+    
+       &middot; 
+      <a href="/terms/">Terms</a>
+    
+  </p>
+  
+
+  <p class="powered-by">
+    © 2020 Paul Apivat Hanvongse. All Rights Reserved.
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
