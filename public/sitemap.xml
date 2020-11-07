@@ -128,11 +128,6 @@
   </url>
   
   <url>
-    <loc>/post/list-to-df/</loc>
-    <lastmod>2020-11-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/authors/</loc>
     <lastmod>2020-11-07T00:00:00+00:00</lastmod>
   </url>
@@ -144,6 +139,11 @@
   
   <url>
     <loc>/post/</loc>
+    <lastmod>2020-11-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/list-to-df/</loc>
     <lastmod>2020-11-07T00:00:00+00:00</lastmod>
   </url>
   

@@ -13,33 +13,22 @@
     </image>
     
     <item>
-      <title>An alternative to for-loops</title>
+      <title>Supplementing for-loops with data frames</title>
       <link>/post/list-to-df/</link>
       <pubDate>Sat, 07 Nov 2020 00:00:00 +0000</pubDate>
       <guid>/post/list-to-df/</guid>
-      <description>&lt;h2 id=&#34;lists-vs-dataframes&#34;&gt;Lists vs. DataFrames&lt;/h2&gt;
-&lt;p&gt;A couple days back I wrote a post summarizing 
-&lt;a href=&#34;https://paulapivat.com/post/dsfs_1/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;chapter 1 of Data Science from Scratch&lt;/a&gt;, which reviewed what I saw were frequently used Python data operations, namely collections and comprehensions.&lt;/p&gt;
-&lt;p&gt;After providing a Python crash course in chapter 2, I went back to chapter 1 to examine the author&amp;rsquo;s toy example establishing the narrative of a newly hired data scientist on her first day at the job.&lt;/p&gt;
-&lt;p&gt;The author had been explicit about avoiding frameworks (i.e., Pandas, Numpy) and it was clear the author would take a pure Python approach to introducing and solving problems.&lt;/p&gt;
-&lt;p&gt;I saw how much Collections and Comprehension were used. Data was provided in the form of &lt;code&gt;lists&lt;/code&gt;, either lists of &lt;code&gt;dictionaries&lt;/code&gt; or &lt;code&gt;tuples&lt;/code&gt;. And to answer questions &lt;em&gt;about&lt;/em&gt; the data, the author often used &lt;code&gt;list comprehensions&lt;/code&gt; - iterating through lists with a for-loop. I am beginning to see this as a very Python-centric way of approaching problems.&lt;/p&gt;
-&lt;p&gt;I went through the toy examples and considered how the hypothetical problems were introduced and addressed (I thought it was very well done and am confident in proceeding with this book); however, there was one question I kept wondering:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;What about data frames?&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;I had imagined myself as a newly hired data scientist for the fictional company - Data Scienster - who had been given some data about the social network of data scientists and I couldn&amp;rsquo;t help but wonder:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Would I really be given data stored in lists, over data frames?&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;As a long-time Excel, then R, user, this goes against my assumptions about data. I realize there is unstructured data and that &lt;strong&gt;not&lt;/strong&gt; all data is tabular data, I get that. But so much of data &lt;em&gt;is&lt;/em&gt; tabular data I feel like it&amp;rsquo;s reasonable to &lt;em&gt;begin&lt;/em&gt; here (&lt;strong&gt;note&lt;/strong&gt;: I&amp;rsquo;m open to other perspectives here, feel free to leave a comment below!).&lt;/p&gt;
-&lt;p&gt;In any case, I had this &lt;strong&gt;incredible itch&lt;/strong&gt; to go back to that chapter and ask:&lt;/p&gt;
+      <description>&lt;h2 id=&#34;beyond-collections-and-comprehensions&#34;&gt;Beyond Collections and Comprehensions&lt;/h2&gt;
+&lt;p&gt;A couple days back I wrote a post summarizing how much Collections and Comprehension were used. Data was provided in the form of &lt;code&gt;lists&lt;/code&gt;, either lists of &lt;code&gt;dictionaries&lt;/code&gt; or &lt;code&gt;tuples&lt;/code&gt;. And to answer questions &lt;em&gt;about&lt;/em&gt; the data, the author often used &lt;code&gt;list comprehensions&lt;/code&gt; - iterating through lists with a for-loop. I am beginning to see this as a very Python-centric way of approaching problems.&lt;/p&gt;
+&lt;p&gt;As a long-time Excel, then R, user, this goes against my assumptions about data. I realize there is unstructured data and that &lt;strong&gt;not&lt;/strong&gt; all data is tabular data. But so much of data &lt;em&gt;is&lt;/em&gt; tabular I feel like it&amp;rsquo;s reasonable to begin here (&lt;strong&gt;note&lt;/strong&gt;: I&amp;rsquo;m open to other perspectives here, feel free to leave a comment below!).&lt;/p&gt;
+&lt;p&gt;In any case, I had this &lt;strong&gt;itch&lt;/strong&gt; to go back to that chapter and ask:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;How would I approach the same problem using data frames?&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;So that&amp;rsquo;s what this post is about. You can reference these previous post for context; also keep in mind, this is a brief detour and deviation from Joel Grus&amp;rsquo; book (for example, I&amp;rsquo;ll be using 
+&lt;p&gt;So that&amp;rsquo;s what this post is about. You can reference these 
+&lt;a href=&#34;https://paulapivat.com/post/dsfs_1/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;previous post&lt;/a&gt; for context; also keep in mind, this is a brief detour and deviation from Joel Grus&amp;rsquo; book (for example, I&amp;rsquo;ll be using 
 &lt;a href=&#34;https://pandas.pydata.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pandas&lt;/a&gt; here and a 
-&lt;a href=&#34;https://jupyter.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;jupyter notebook&lt;/a&gt; here, both of which are avoided in the book). I plan on continuing with the book, but &lt;strong&gt;data frames&lt;/strong&gt; are too much apart of how I &lt;em&gt;think&lt;/em&gt; about data to ignore for a whole book.&lt;/p&gt;
-&lt;p&gt;For review, here&amp;rsquo;s the data you, dear reader, are given as a newly hired data scientist at Data Scienster™&lt;/p&gt;
+&lt;a href=&#34;https://jupyter.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;jupyter notebook&lt;/a&gt; here, both of which are not covered in the book).&lt;/p&gt;
+&lt;p&gt;For review, here&amp;rsquo;s the data you are given as a newly hired data scientist at Data Scienster™&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
 # users in the network
 # stored as a list of dictionaries
@@ -88,7 +77,6 @@ interests = [
 &lt;li&gt;What are the most popular topics in this network?&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;However, the chapter ends with lists, functions and comprehension. What about &lt;strong&gt;storing data in data frames?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;I contend that you could answer the above questions with data frames, and I found myself wanting to combine all three pieces of data into &lt;strong&gt;one&lt;/strong&gt; data frame.&lt;/p&gt;
 &lt;p&gt;First we&amp;rsquo;ll store &lt;code&gt;users&lt;/code&gt; as a data frame:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import pandas as pd
 
@@ -98,7 +86,7 @@ users_df
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Just visually, a &lt;code&gt;data frame&lt;/code&gt; looks different from a &lt;code&gt;list of dictionaries&lt;/code&gt;:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./list_to_df.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Your mileage may vary, but &lt;em&gt;I make sense of the data&lt;/em&gt; very differently when I&amp;rsquo;m looking at a list vs a data frame. Old habits die hard and &lt;strong&gt;rows and columns&lt;/strong&gt; are ingrained in me. But I digress.&lt;/p&gt;
+&lt;p&gt;Your mileage may vary, but &lt;em&gt;I make sense of the data&lt;/em&gt; very differently when I&amp;rsquo;m looking at a list vs a data frame. &lt;strong&gt;Rows and columns&lt;/strong&gt; are ingrained in how I think about data.&lt;/p&gt;
 &lt;p&gt;Next, we&amp;rsquo;re given a &lt;code&gt;list of tuples&lt;/code&gt; representing friendship pairs and we proceed to turn that into a &lt;code&gt;dictionary&lt;/code&gt; by using a &lt;code&gt;dictionary comprehension&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# list of tuples
 friendship_pairs = [(0,1), (0,2), (1,2), (1,3), (2,3), (3,4),
@@ -168,9 +156,9 @@ num_friends_by_id = pd.DataFrame(num_friends_by_id, columns = [&#39;id&#39;, &#3
 &lt;p&gt;Once joined with &lt;code&gt;users_friendships&lt;/code&gt; using the &lt;code&gt;merge&lt;/code&gt; function, we get (&lt;code&gt;users_friendships2&lt;/code&gt;):&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./users_friendships2.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;By now you&amp;rsquo;re familiar with the process. We have a Python &lt;strong&gt;collection&lt;/strong&gt;, generally a &lt;code&gt;list&lt;/code&gt; of &lt;code&gt;dictionaries&lt;/code&gt; or &lt;code&gt;tuples&lt;/code&gt; and we want to convert them to a &lt;code&gt;data frame&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;We&amp;rsquo;ll repeat this process for the &lt;code&gt;interests&lt;/code&gt; variable which is a long &lt;code&gt;list of tuples&lt;/code&gt; (see above). We&amp;rsquo;ll convert to data frame, then join with &lt;code&gt;users_friendships_2&lt;/code&gt; to get a longer data frame with &lt;code&gt;interests&lt;/code&gt; as one of the columns (note: picture is cut for space):&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll repeat this process for the &lt;code&gt;interests&lt;/code&gt; variable which is a long &lt;code&gt;list of tuples&lt;/code&gt; (see above). We&amp;rsquo;ll convert to data frame, then join with &lt;code&gt;users_friendships_2&lt;/code&gt; to get a longer data frame with &lt;code&gt;interests&lt;/code&gt; as one of the columns (&lt;em&gt;note&lt;/em&gt; : picture is cut for space):&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./interests.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;The nice thing about &lt;strong&gt;pandas&lt;/strong&gt; is that once you have all your data &lt;em&gt;joined&lt;/em&gt; together in a data frame, you can &lt;strong&gt;query&lt;/strong&gt; the data.&lt;/p&gt;
+&lt;p&gt;The nice thing about &lt;strong&gt;pandas&lt;/strong&gt; is that once you have all your data &lt;strong&gt;joined&lt;/strong&gt; together in a data frame, you can &lt;strong&gt;query&lt;/strong&gt; the data.&lt;/p&gt;
 &lt;p&gt;For example, I may want to see all users have an interest in &amp;ldquo;Big Data&amp;rdquo;:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./big_data.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Previously, we would have had to create a function that returns a &lt;code&gt;list comprehension&lt;/code&gt;:&lt;/p&gt;
@@ -182,6 +170,33 @@ num_friends_by_id = pd.DataFrame(num_friends_by_id, columns = [&#39;id&#39;, &#3
             
 data_scientists_who_like(&amp;quot;Big Data&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The data frame has other advantages, you could also query columns on multiple conditions, here are two ways to query multiple topics:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+# Option One: Use .query()
+user_friendship_topics.query(&#39;topic == &amp;quot;machine learning&amp;quot; | topic == &amp;quot;regression&amp;quot; | topic == &amp;quot;decision trees&amp;quot; | topic == &amp;quot;libsvm&amp;quot;&#39;)
+
+# Option Two: Use .isin()
+user_friendship_topics[user_friendship_topics[&#39;topic&#39;].isin([&amp;quot;machine learning&amp;quot;, &amp;quot;regression&amp;quot;, &amp;quot;decision trees&amp;quot;, &amp;quot;libsvm&amp;quot;])]
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Both options return this data frame:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./multi_condition.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;By querying the data frame, we learned:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;all users interested in these four topics&lt;/li&gt;
+&lt;li&gt;users that have interests in common with Thor&lt;/li&gt;
+&lt;li&gt;(if needed) the &lt;code&gt;num_friends&lt;/code&gt; that each user has&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can also find out the most popular topics within this network:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# groupby topic, tally(count), then reset_index(), then sort
+user_friendship_topics.groupby([&#39;topic&#39;]).count().reset_index().sort_values(&#39;id&#39;, ascending=False)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can even &lt;code&gt;groupby&lt;/code&gt; two columns (name &amp;amp; topic) to see topic of interests listed by each user:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;user_friendship_topics.groupby([&#39;name&#39;, &#39;topic&#39;]).count()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./user_by_topic.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Hopefully you&amp;rsquo;re convinced that &lt;strong&gt;data frames&lt;/strong&gt; are a powerful supplement to the more familiar operations in Python like &lt;strong&gt;for-loops&lt;/strong&gt; and/or &lt;strong&gt;list comprehensions&lt;/strong&gt;; that both are worth knowing well to manipulate data in a variety of formats. (e.g., to access JSON data, Python dictionaries are 
+&lt;a href=&#34;https://www.freecodecamp.org/news/python-read-json-file-how-to-load-json-from-a-file-and-parse-dumps/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ideal&lt;/a&gt;).&lt;/p&gt;
 </description>
     </item>
     

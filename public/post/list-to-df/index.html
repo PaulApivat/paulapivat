@@ -27,7 +27,7 @@
   
     
   
-  <meta name="description" content="Comparing lists to dataframes">
+  <meta name="description" content="Combining for-loops, list comprehensions and data frames">
 
   
   <link rel="alternate" hreflang="en-us" href="/post/list-to-df/">
@@ -237,8 +237,8 @@
   
   <meta property="og:site_name" content="Paul Apivat">
   <meta property="og:url" content="/post/list-to-df/">
-  <meta property="og:title" content="An alternative to for-loops | Paul Apivat">
-  <meta property="og:description" content="Comparing lists to dataframes"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:title" content="Supplementing for-loops with data frames | Paul Apivat">
+  <meta property="og:description" content="Combining for-loops, list comprehensions and data frames"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
@@ -270,7 +270,7 @@
     "@type": "WebPage",
     "@id": "/post/list-to-df/"
   },
-  "headline": "An alternative to for-loops",
+  "headline": "Supplementing for-loops with data frames",
   
   "datePublished": "2020-11-07T00:00:00Z",
   "dateModified": "2020-11-07T00:00:00Z",
@@ -288,7 +288,7 @@
       "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "Comparing lists to dataframes"
+  "description": "Combining for-loops, list comprehensions and data frames"
 }
 </script>
 
@@ -306,7 +306,7 @@
 
 
 
-  <title>An alternative to for-loops | Paul Apivat</title>
+  <title>Supplementing for-loops with data frames | Paul Apivat</title>
 
 </head>
 
@@ -681,10 +681,10 @@
   
   
 <div class="article-container pt-3">
-  <h1>An alternative to for-loops</h1>
+  <h1>Supplementing for-loops with data frames</h1>
 
   
-  <p class="page-subtitle">Solving data problems in multiple ways</p>
+  <p class="page-subtitle">Solving data problems with multiple tools</p>
   
 
   
@@ -757,29 +757,18 @@
   <div class="article-container">
 
     <div class="article-style">
-      <h2 id="lists-vs-dataframes">Lists vs. DataFrames</h2>
-<p>A couple days back I wrote a post summarizing 
-<a href="https://paulapivat.com/post/dsfs_1/" target="_blank" rel="noopener">chapter 1 of Data Science from Scratch</a>, which reviewed what I saw were frequently used Python data operations, namely collections and comprehensions.</p>
-<p>After providing a Python crash course in chapter 2, I went back to chapter 1 to examine the author&rsquo;s toy example establishing the narrative of a newly hired data scientist on her first day at the job.</p>
-<p>The author had been explicit about avoiding frameworks (i.e., Pandas, Numpy) and it was clear the author would take a pure Python approach to introducing and solving problems.</p>
-<p>I saw how much Collections and Comprehension were used. Data was provided in the form of <code>lists</code>, either lists of <code>dictionaries</code> or <code>tuples</code>. And to answer questions <em>about</em> the data, the author often used <code>list comprehensions</code> - iterating through lists with a for-loop. I am beginning to see this as a very Python-centric way of approaching problems.</p>
-<p>I went through the toy examples and considered how the hypothetical problems were introduced and addressed (I thought it was very well done and am confident in proceeding with this book); however, there was one question I kept wondering:</p>
-<blockquote>
-<p>What about data frames?</p>
-</blockquote>
-<p>I had imagined myself as a newly hired data scientist for the fictional company - Data Scienster - who had been given some data about the social network of data scientists and I couldn&rsquo;t help but wonder:</p>
-<blockquote>
-<p>Would I really be given data stored in lists, over data frames?</p>
-</blockquote>
-<p>As a long-time Excel, then R, user, this goes against my assumptions about data. I realize there is unstructured data and that <strong>not</strong> all data is tabular data, I get that. But so much of data <em>is</em> tabular data I feel like it&rsquo;s reasonable to <em>begin</em> here (<strong>note</strong>: I&rsquo;m open to other perspectives here, feel free to leave a comment below!).</p>
-<p>In any case, I had this <strong>incredible itch</strong> to go back to that chapter and ask:</p>
+      <h2 id="beyond-collections-and-comprehensions">Beyond Collections and Comprehensions</h2>
+<p>A couple days back I wrote a post summarizing how much Collections and Comprehension were used. Data was provided in the form of <code>lists</code>, either lists of <code>dictionaries</code> or <code>tuples</code>. And to answer questions <em>about</em> the data, the author often used <code>list comprehensions</code> - iterating through lists with a for-loop. I am beginning to see this as a very Python-centric way of approaching problems.</p>
+<p>As a long-time Excel, then R, user, this goes against my assumptions about data. I realize there is unstructured data and that <strong>not</strong> all data is tabular data. But so much of data <em>is</em> tabular I feel like it&rsquo;s reasonable to begin here (<strong>note</strong>: I&rsquo;m open to other perspectives here, feel free to leave a comment below!).</p>
+<p>In any case, I had this <strong>itch</strong> to go back to that chapter and ask:</p>
 <blockquote>
 <p>How would I approach the same problem using data frames?</p>
 </blockquote>
-<p>So that&rsquo;s what this post is about. You can reference these previous post for context; also keep in mind, this is a brief detour and deviation from Joel Grus&rsquo; book (for example, I&rsquo;ll be using 
+<p>So that&rsquo;s what this post is about. You can reference these 
+<a href="https://paulapivat.com/post/dsfs_1/" target="_blank" rel="noopener">previous post</a> for context; also keep in mind, this is a brief detour and deviation from Joel Grus&rsquo; book (for example, I&rsquo;ll be using 
 <a href="https://pandas.pydata.org/" target="_blank" rel="noopener">pandas</a> here and a 
-<a href="https://jupyter.org/" target="_blank" rel="noopener">jupyter notebook</a> here, both of which are avoided in the book). I plan on continuing with the book, but <strong>data frames</strong> are too much apart of how I <em>think</em> about data to ignore for a whole book.</p>
-<p>For review, here&rsquo;s the data you, dear reader, are given as a newly hired data scientist at Data Scienster™</p>
+<a href="https://jupyter.org/" target="_blank" rel="noopener">jupyter notebook</a> here, both of which are not covered in the book).</p>
+<p>For review, here&rsquo;s the data you are given as a newly hired data scientist at Data Scienster™</p>
 <pre><code class="language-python">
 # users in the network
 # stored as a list of dictionaries
@@ -828,7 +817,6 @@ interests = [
 <li>What are the most popular topics in this network?</li>
 </ul>
 <p>However, the chapter ends with lists, functions and comprehension. What about <strong>storing data in data frames?</strong></p>
-<p>I contend that you could answer the above questions with data frames, and I found myself wanting to combine all three pieces of data into <strong>one</strong> data frame.</p>
 <p>First we&rsquo;ll store <code>users</code> as a data frame:</p>
 <pre><code class="language-python">import pandas as pd
 
@@ -838,7 +826,7 @@ users_df
 </code></pre>
 <p>Just visually, a <code>data frame</code> looks different from a <code>list of dictionaries</code>:</p>
 <p><img src="./list_to_df.png" alt="png"></p>
-<p>Your mileage may vary, but <em>I make sense of the data</em> very differently when I&rsquo;m looking at a list vs a data frame. Old habits die hard and <strong>rows and columns</strong> are ingrained in me. But I digress.</p>
+<p>Your mileage may vary, but <em>I make sense of the data</em> very differently when I&rsquo;m looking at a list vs a data frame. <strong>Rows and columns</strong> are ingrained in how I think about data.</p>
 <p>Next, we&rsquo;re given a <code>list of tuples</code> representing friendship pairs and we proceed to turn that into a <code>dictionary</code> by using a <code>dictionary comprehension</code>:</p>
 <pre><code class="language-python"># list of tuples
 friendship_pairs = [(0,1), (0,2), (1,2), (1,3), (2,3), (3,4),
@@ -908,9 +896,9 @@ num_friends_by_id = pd.DataFrame(num_friends_by_id, columns = ['id', 'num_friend
 <p>Once joined with <code>users_friendships</code> using the <code>merge</code> function, we get (<code>users_friendships2</code>):</p>
 <p><img src="./users_friendships2.png" alt="png"></p>
 <p>By now you&rsquo;re familiar with the process. We have a Python <strong>collection</strong>, generally a <code>list</code> of <code>dictionaries</code> or <code>tuples</code> and we want to convert them to a <code>data frame</code>.</p>
-<p>We&rsquo;ll repeat this process for the <code>interests</code> variable which is a long <code>list of tuples</code> (see above). We&rsquo;ll convert to data frame, then join with <code>users_friendships_2</code> to get a longer data frame with <code>interests</code> as one of the columns (note: picture is cut for space):</p>
+<p>We&rsquo;ll repeat this process for the <code>interests</code> variable which is a long <code>list of tuples</code> (see above). We&rsquo;ll convert to data frame, then join with <code>users_friendships_2</code> to get a longer data frame with <code>interests</code> as one of the columns (<em>note</em> : picture is cut for space):</p>
 <p><img src="./interests.png" alt="png"></p>
-<p>The nice thing about <strong>pandas</strong> is that once you have all your data <em>joined</em> together in a data frame, you can <strong>query</strong> the data.</p>
+<p>The nice thing about <strong>pandas</strong> is that once you have all your data <strong>joined</strong> together in a data frame, you can <strong>query</strong> the data.</p>
 <p>For example, I may want to see all users have an interest in &ldquo;Big Data&rdquo;:</p>
 <p><img src="./big_data.png" alt="png"></p>
 <p>Previously, we would have had to create a function that returns a <code>list comprehension</code>:</p>
@@ -922,6 +910,33 @@ num_friends_by_id = pd.DataFrame(num_friends_by_id, columns = ['id', 'num_friend
             
 data_scientists_who_like(&quot;Big Data&quot;)
 </code></pre>
+<p>The data frame has other advantages, you could also query columns on multiple conditions, here are two ways to query multiple topics:</p>
+<pre><code class="language-python">
+# Option One: Use .query()
+user_friendship_topics.query('topic == &quot;machine learning&quot; | topic == &quot;regression&quot; | topic == &quot;decision trees&quot; | topic == &quot;libsvm&quot;')
+
+# Option Two: Use .isin()
+user_friendship_topics[user_friendship_topics['topic'].isin([&quot;machine learning&quot;, &quot;regression&quot;, &quot;decision trees&quot;, &quot;libsvm&quot;])]
+
+</code></pre>
+<p>Both options return this data frame:</p>
+<p><img src="./multi_condition.png" alt="png"></p>
+<p>By querying the data frame, we learned:</p>
+<ul>
+<li>all users interested in these four topics</li>
+<li>users that have interests in common with Thor</li>
+<li>(if needed) the <code>num_friends</code> that each user has</li>
+</ul>
+<p>You can also find out the most popular topics within this network:</p>
+<pre><code class="language-python"># groupby topic, tally(count), then reset_index(), then sort
+user_friendship_topics.groupby(['topic']).count().reset_index().sort_values('id', ascending=False)
+</code></pre>
+<p>You can even <code>groupby</code> two columns (name &amp; topic) to see topic of interests listed by each user:</p>
+<pre><code class="language-python">user_friendship_topics.groupby(['name', 'topic']).count()
+</code></pre>
+<p><img src="./user_by_topic.png" alt="png"></p>
+<p>Hopefully you&rsquo;re convinced that <strong>data frames</strong> are a powerful supplement to the more familiar operations in Python like <strong>for-loops</strong> and/or <strong>list comprehensions</strong>; that both are worth knowing well to manipulate data in a variety of formats. (e.g., to access JSON data, Python dictionaries are 
+<a href="https://www.freecodecamp.org/news/python-read-json-file-how-to-load-json-from-a-file-and-parse-dumps/" target="_blank" rel="noopener">ideal</a>).</p>
 
     </div>
 
@@ -944,7 +959,7 @@ data_scientists_who_like(&quot;Big Data&quot;)
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=/post/list-to-df/&amp;text=An%20alternative%20to%20for-loops" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/post/list-to-df/&amp;text=Supplementing%20for-loops%20with%20data%20frames" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -957,7 +972,7 @@ data_scientists_who_like(&quot;Big Data&quot;)
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=/post/list-to-df/&amp;t=An%20alternative%20to%20for-loops" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/post/list-to-df/&amp;t=Supplementing%20for-loops%20with%20data%20frames" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -970,7 +985,7 @@ data_scientists_who_like(&quot;Big Data&quot;)
       
       
       <li>
-        <a href="mailto:?subject=An%20alternative%20to%20for-loops&amp;body=/post/list-to-df/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Supplementing%20for-loops%20with%20data%20frames&amp;body=/post/list-to-df/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -983,7 +998,7 @@ data_scientists_who_like(&quot;Big Data&quot;)
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=/post/list-to-df/&amp;title=An%20alternative%20to%20for-loops" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/post/list-to-df/&amp;title=Supplementing%20for-loops%20with%20data%20frames" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -996,7 +1011,7 @@ data_scientists_who_like(&quot;Big Data&quot;)
       
       
       <li>
-        <a href="whatsapp://send?text=An%20alternative%20to%20for-loops%20/post/list-to-df/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="whatsapp://send?text=Supplementing%20for-loops%20with%20data%20frames%20/post/list-to-df/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -1009,7 +1024,7 @@ data_scientists_who_like(&quot;Big Data&quot;)
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=/post/list-to-df/&amp;title=An%20alternative%20to%20for-loops" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/post/list-to-df/&amp;title=Supplementing%20for-loops%20with%20data%20frames" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>

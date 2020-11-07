@@ -10,40 +10,26 @@ image:
   focal_point: ""
 lastMod: "2020-11-07T00:00:00Z"
 projects: []
-subtitle: Solving data problems in multiple ways
-summary: Comparing lists to dataframes 
+subtitle: Solving data problems with multiple tools
+summary: Combining for-loops, list comprehensions and data frames 
 tags: []
-title: An alternative to for-loops
+title: Supplementing for-loops with data frames
 ---
 
 
-## Lists vs. DataFrames
+## Beyond Collections and Comprehensions
 
-A couple days back I wrote a post summarizing [chapter 1 of Data Science from Scratch](https://paulapivat.com/post/dsfs_1/), which reviewed what I saw were frequently used Python data operations, namely collections and comprehensions.
+A couple days back I wrote a post summarizing how much Collections and Comprehension were used. Data was provided in the form of `lists`, either lists of `dictionaries` or `tuples`. And to answer questions *about* the data, the author often used `list comprehensions` - iterating through lists with a for-loop. I am beginning to see this as a very Python-centric way of approaching problems. 
 
-After providing a Python crash course in chapter 2, I went back to chapter 1 to examine the author's toy example establishing the narrative of a newly hired data scientist on her first day at the job. 
+As a long-time Excel, then R, user, this goes against my assumptions about data. I realize there is unstructured data and that **not** all data is tabular data. But so much of data *is* tabular I feel like it's reasonable to begin here (**note**: I'm open to other perspectives here, feel free to leave a comment below!).
 
-The author had been explicit about avoiding frameworks (i.e., Pandas, Numpy) and it was clear the author would take a pure Python approach to introducing and solving problems.
-
-I saw how much Collections and Comprehension were used. Data was provided in the form of `lists`, either lists of `dictionaries` or `tuples`. And to answer questions *about* the data, the author often used `list comprehensions` - iterating through lists with a for-loop. I am beginning to see this as a very Python-centric way of approaching problems. 
-
-I went through the toy examples and considered how the hypothetical problems were introduced and addressed (I thought it was very well done and am confident in proceeding with this book); however, there was one question I kept wondering:
-
-> What about data frames?
-
-I had imagined myself as a newly hired data scientist for the fictional company - Data Scienster - who had been given some data about the social network of data scientists and I couldn't help but wonder:
-
-> Would I really be given data stored in lists, over data frames?
-
-As a long-time Excel, then R, user, this goes against my assumptions about data. I realize there is unstructured data and that **not** all data is tabular data, I get that. But so much of data *is* tabular data I feel like it's reasonable to *begin* here (**note**: I'm open to other perspectives here, feel free to leave a comment below!).
-
-In any case, I had this **incredible itch** to go back to that chapter and ask:
+In any case, I had this **itch** to go back to that chapter and ask:
 
 > How would I approach the same problem using data frames? 
 
-So that's what this post is about. You can reference these previous post for context; also keep in mind, this is a brief detour and deviation from Joel Grus' book (for example, I'll be using [pandas](https://pandas.pydata.org/) here and a [jupyter notebook](https://jupyter.org/) here, both of which are avoided in the book). I plan on continuing with the book, but **data frames** are too much apart of how I *think* about data to ignore for a whole book.
+So that's what this post is about. You can reference these [previous post](https://paulapivat.com/post/dsfs_1/) for context; also keep in mind, this is a brief detour and deviation from Joel Grus' book (for example, I'll be using [pandas](https://pandas.pydata.org/) here and a [jupyter notebook](https://jupyter.org/) here, both of which are not covered in the book). 
 
-For review, here's the data you, dear reader, are given as a newly hired data scientist at Data Scienster&trade; 
+For review, here's the data you are given as a newly hired data scientist at Data Scienster&trade; 
 
 ```python
 
@@ -95,8 +81,6 @@ Given just these pieces of data, we can create **functions**, use **for-loops** 
 
 However, the chapter ends with lists, functions and comprehension. What about **storing data in data frames?**
 
-I contend that you could answer the above questions with data frames, and I found myself wanting to combine all three pieces of data into **one** data frame. 
-
 First we'll store `users` as a data frame:
 
 ```python
@@ -110,7 +94,7 @@ Just visually, a `data frame` looks different from a `list of dictionaries`:
 
 ![png](./list_to_df.png)
 
-Your mileage may vary, but *I make sense of the data* very differently when I'm looking at a list vs a data frame. Old habits die hard and **rows and columns** are ingrained in me. But I digress. 
+Your mileage may vary, but *I make sense of the data* very differently when I'm looking at a list vs a data frame. **Rows and columns** are ingrained in how I think about data. 
 
 Next, we're given a `list of tuples` representing friendship pairs and we proceed to turn that into a `dictionary` by using a `dictionary comprehension`:
 
@@ -197,11 +181,11 @@ Once joined with `users_friendships` using the `merge` function, we get (`users_
 
 By now you're familiar with the process. We have a Python **collection**, generally a `list` of `dictionaries` or `tuples` and we want to convert them to a `data frame`. 
 
-We'll repeat this process for the `interests` variable which is a long `list of tuples` (see above). We'll convert to data frame, then join with `users_friendships_2` to get a longer data frame with `interests` as one of the columns (note: picture is cut for space):
+We'll repeat this process for the `interests` variable which is a long `list of tuples` (see above). We'll convert to data frame, then join with `users_friendships_2` to get a longer data frame with `interests` as one of the columns (*note* : picture is cut for space):
 
 ![png](./interests.png)
 
-The nice thing about **pandas** is that once you have all your data *joined* together in a data frame, you can **query** the data. 
+The nice thing about **pandas** is that once you have all your data **joined** together in a data frame, you can **query** the data. 
 
 For example, I may want to see all users have an interest in "Big Data":
 
@@ -218,9 +202,42 @@ def data_scientists_who_like(target_interest):
             
 data_scientists_who_like("Big Data")
 ```
+The data frame has other advantages, you could also query columns on multiple conditions, here are two ways to query multiple topics:
 
+```python
 
+# Option One: Use .query()
+user_friendship_topics.query('topic == "machine learning" | topic == "regression" | topic == "decision trees" | topic == "libsvm"')
 
+# Option Two: Use .isin()
+user_friendship_topics[user_friendship_topics['topic'].isin(["machine learning", "regression", "decision trees", "libsvm"])]
+
+```
+Both options return this data frame:
+
+![png](./multi_condition.png)
+
+By querying the data frame, we learned:
+- all users interested in these four topics
+- users that have interests in common with Thor
+- (if needed) the `num_friends` that each user has
+
+You can also find out the most popular topics within this network:
+
+```python
+# groupby topic, tally(count), then reset_index(), then sort
+user_friendship_topics.groupby(['topic']).count().reset_index().sort_values('id', ascending=False)
+```
+
+You can even `groupby` two columns (name & topic) to see topic of interests listed by each user:
+
+```python
+user_friendship_topics.groupby(['name', 'topic']).count()
+```
+
+![png](./user_by_topic.png)
+
+Hopefully you're convinced that **data frames** are a powerful supplement to the more familiar operations in Python like **for-loops** and/or **list comprehensions**; that both are worth knowing well to manipulate data in a variety of formats. (e.g., to access JSON data, Python dictionaries are [ideal](https://www.freecodecamp.org/news/python-read-json-file-how-to-load-json-from-a-file-and-parse-dumps/)).
 
 
 
