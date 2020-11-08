@@ -13,7 +13,7 @@ projects: []
 subtitle: Solving data problems with multiple tools
 summary: Combining for-loops, list comprehensions and data frames 
 tags: []
-title: Supplementing for-loops with data frames
+title: Supplementing lists with data frames
 ---
 
 
@@ -21,7 +21,7 @@ title: Supplementing for-loops with data frames
 
 A couple days back I wrote a post summarizing how much Collections and Comprehension were used. Data was provided in the form of `lists`, either lists of `dictionaries` or `tuples`. And to answer questions *about* the data, the author often used `list comprehensions` - iterating through lists with a for-loop. I am beginning to see this as a very Python-centric way of approaching problems. 
 
-As a long-time Excel, then R, user, this goes against my assumptions about data. I realize there is unstructured data and that **not** all data is tabular data. But so much of data *is* tabular I feel like it's reasonable to begin here (**note**: I'm open to other perspectives here, feel free to leave a comment below!).
+While **not** all data is tabular, so much of it *is* so its reasonable to assume that, more often that not, you'll be dealing with spreadsheet-like tabular data (**note**: I'm open to other perspectives here, feel free to leave a comment below!).
 
 In any case, I had this **itch** to go back to that chapter and ask:
 

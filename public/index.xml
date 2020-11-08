@@ -1064,13 +1064,13 @@ hist(x)
     </item>
     
     <item>
-      <title>Supplementing for-loops with data frames</title>
+      <title>Supplementing lists with data frames</title>
       <link>/post/list-to-df/</link>
       <pubDate>Sat, 07 Nov 2020 00:00:00 +0000</pubDate>
       <guid>/post/list-to-df/</guid>
       <description>&lt;h2 id=&#34;beyond-collections-and-comprehensions&#34;&gt;Beyond Collections and Comprehensions&lt;/h2&gt;
 &lt;p&gt;A couple days back I wrote a post summarizing how much Collections and Comprehension were used. Data was provided in the form of &lt;code&gt;lists&lt;/code&gt;, either lists of &lt;code&gt;dictionaries&lt;/code&gt; or &lt;code&gt;tuples&lt;/code&gt;. And to answer questions &lt;em&gt;about&lt;/em&gt; the data, the author often used &lt;code&gt;list comprehensions&lt;/code&gt; - iterating through lists with a for-loop. I am beginning to see this as a very Python-centric way of approaching problems.&lt;/p&gt;
-&lt;p&gt;As a long-time Excel, then R, user, this goes against my assumptions about data. I realize there is unstructured data and that &lt;strong&gt;not&lt;/strong&gt; all data is tabular data. But so much of data &lt;em&gt;is&lt;/em&gt; tabular I feel like it&amp;rsquo;s reasonable to begin here (&lt;strong&gt;note&lt;/strong&gt;: I&amp;rsquo;m open to other perspectives here, feel free to leave a comment below!).&lt;/p&gt;
+&lt;p&gt;While &lt;strong&gt;not&lt;/strong&gt; all data is tabular, so much of it &lt;em&gt;is&lt;/em&gt; so its reasonable to assume that, more often that not, you&amp;rsquo;ll be dealing with spreadsheet-like tabular data (&lt;strong&gt;note&lt;/strong&gt;: I&amp;rsquo;m open to other perspectives here, feel free to leave a comment below!).&lt;/p&gt;
 &lt;p&gt;In any case, I had this &lt;strong&gt;itch&lt;/strong&gt; to go back to that chapter and ask:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;How would I approach the same problem using data frames?&lt;/p&gt;
