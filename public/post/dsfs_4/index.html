@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    4 min read
+    5 min read
   </span>
   
 
@@ -777,16 +777,11 @@
 <p>We also create the <strong>dot product</strong> of two vectors or the <em>sum of their component wise product</em>, and this is is the generalize version of the <strong>sum of squares</strong>. At this point, we have enough to implement the <strong>Euclidean distance</strong>. Let&rsquo;s take a look at the code:</p>
 <h4 id="example-vectors">Example Vectors</h4>
 <p>Vectors are simply a list of numbers:</p>
-<pre><code class="language-python">height_weight_age = [70,
-                    170,
-                    40]
+<pre><code class="language-python">height_weight_age = [70,170,40]
 
-grades = [95,
-          80,
-          75,
-          62]
+grades = [95,80,75,62]
 </code></pre>
-<h4 id="add">Add</h4>
+<h3 id="add">Add</h3>
 <p>You&rsquo;ll <em>note</em> that we do <strong>type annotation</strong> on our code throughout. This is a convention advocated by the author (and as a newcomer to Python, I like the idea of being explicit about data type for a function&rsquo;s input and output).</p>
 <pre><code class="language-python">from typing import List
 
@@ -799,7 +794,9 @@ def add(v: Vector, w: Vector) -&gt; Vector:
     
 assert add([1,2,3], [4,5,6]) == [5,7,9]
 </code></pre>
-<h4 id="subtract">Subtract</h4>
+<p>Here&rsquo;s another view of what&rsquo;s going on with the <code>add</code> function:</p>
+<p><img src="./add.png" alt="add"></p>
+<h3 id="subtract">Subtract</h3>
 <pre><code class="language-python">def subtract(v: Vector, w: Vector) -&gt; Vector:
     &quot;&quot;&quot;Subtracts corresponding elements&quot;&quot;&quot;
     assert len(v) == len(w), &quot;vectors must be the same length&quot;
@@ -807,7 +804,9 @@ assert add([1,2,3], [4,5,6]) == [5,7,9]
     
 assert subtract([5,7,9], [4,5,6]) == [1,2,3]
 </code></pre>
-<h4 id="componentwise-sum">Componentwise Sum</h4>
+<p>This is pretty much the same as the previous:</p>
+<p><img src="./subtract.png" alt="subtract"></p>
+<h3 id="componentwise-sum">Componentwise Sum</h3>
 <pre><code class="language-python">def vector_sum(vectors: List[Vector]) -&gt; Vector:
     &quot;&quot;&quot;Sum all corresponding elements (componentwise sum)&quot;&quot;&quot;
     # Check that vectors is not empty
@@ -821,14 +820,19 @@ assert subtract([5,7,9], [4,5,6]) == [1,2,3]
             
 assert vector_sum([[1,2], [3,4], [5,6], [7,8]]) == [16,20]
 </code></pre>
-<h4 id="multiply-vector-with-a-number">Multiply Vector with a Number</h4>
+<p>Here, a <code>list</code> of vectors becomes <em>one</em> vector. If you go back to the <code>add</code> function, it takes <strong>two</strong> vectors, so if we tried to give it four vectors, we&rsquo;d get a <code>TypeError</code>. So we wrap four vectors in a <code>list</code> and provide <em>that</em> as the argument for <code>vector_sum</code>:</p>
+<p><img src="./vector_sum.png" alt="vector_sum"></p>
+<h3 id="multiply-vector-with-a-number">Multiply Vector with a Number</h3>
 <pre><code class="language-python">def scalar_multiply(c: float, v: Vector) -&gt; Vector:
     &quot;&quot;&quot;Multiplies every element by c&quot;&quot;&quot;
     return [c * v_i for v_i in v]
     
 assert scalar_multiply(2, [2,4,6]) == [4,8,12]
 </code></pre>
-<h4 id="componentwise-mean">Componentwise Mean</h4>
+<p>One number is multiplied with <em>all</em> numbers in the vector, with the vector retaining its length:</p>
+<p><img src="./multiply.png" alt="multiply"></p>
+<h3 id="componentwise-mean">Componentwise Mean</h3>
+<p>This is similar to componentwise sum (see above); a list of vectors becomes one vector.</p>
 <pre><code class="language-python">def vector_mean(vectors: List[Vector]) -&gt; Vector: 
     &quot;&quot;&quot;Computes the element-wise average&quot;&quot;&quot;
     n = len(vectors)
@@ -836,7 +840,7 @@ assert scalar_multiply(2, [2,4,6]) == [4,8,12]
     
 assert vector_mean([ [1,2], [3,4], [5,6] ]) == [3,4]
 </code></pre>
-<h4 id="dot-product">Dot Product</h4>
+<h3 id="dot-product">Dot Product</h3>
 <pre><code class="language-python">def dot(v: Vector, w: Vector) -&gt; float:
     &quot;&quot;&quot;Computes v_1 * w_1 + ... + v_n * w_n&quot;&quot;&quot;
     assert len(v) == len(w), &quot;vectors must be the same length&quot;
@@ -844,6 +848,8 @@ assert vector_mean([ [1,2], [3,4], [5,6] ]) == [3,4]
     
 assert dot([1,2,3], [4,5,6]) == 32
 </code></pre>
+<p>Here we multiply the elements, then sum their results. Two vectors becomes a single number (<code>float</code>):</p>
+<p><img src="./dot_product.png" alt="dot_product"></p>
 <h3 id="sum-of-squares">Sum of Squares</h3>
 <pre><code class="language-python">def sum_of_squares(v: Vector) -&gt; float:
     &quot;&quot;&quot;Returns v_1 * v_1 + ... + v_n * v_n&quot;&quot;&quot;
@@ -851,6 +857,8 @@ assert dot([1,2,3], [4,5,6]) == 32
     
 assert sum_of_squares([1,2,3]) == 14
 </code></pre>
+<p>In fact, <code>sum_of_squares</code> is a special case of <strong>dot product</strong>:</p>
+<p><img src="./sum_of_squares.png" alt="sum_of_squares"></p>
 <h3 id="magnitude">Magnitude</h3>
 <pre><code class="language-python">def magnitude(v: Vector) -&gt; float:
     &quot;&quot;&quot;Returns  the magnitude (or length) of v&quot;&quot;&quot;
@@ -858,16 +866,29 @@ assert sum_of_squares([1,2,3]) == 14
     
 assert magnitude([3,4]) == 5
 </code></pre>
+<p>With <code>magnitude</code> we square root the <code>sum_of_squares</code>. This is none other than the 
+<a href="https://en.wikipedia.org/wiki/Pythagorean_theorem" target="_blank" rel="noopener">pythagorean theorem</a>.</p>
+<p><img src="./magnitude.png" alt="magnitude"></p>
 <h3 id="squared-distance">Squared Distance</h3>
 <pre><code class="language-python">def squared_distance(v: Vector, w: Vector) -&gt; float:
     &quot;&quot;&quot;Computes (v_1 - w_1) ** 2 + ... + (v_n - w_n) ** 2&quot;&quot;&quot;
     return sum_of_squares(subtract(v,w))
 </code></pre>
-<h3 id="distance">Distance</h3>
-<pre><code class="language-python">def distance(v: Vector, w: Vector) -&gt; float:
+<p>This is the distance <em>between</em> two vectors, <em>squared</em>.</p>
+<p><img src="./squared_distance.png" alt="squared_distance"></p>
+<h3 id="euclidean-distance">(Euclidean) Distance</h3>
+<pre><code class="language-python">import math
+
+def distance(v: Vector, w: Vector) -&gt; float:
     &quot;&quot;&quot;Also computes the distance between v and w&quot;&quot;&quot;
-    return magnitude(subtract(v,w))
+    return math.sqrt(squared_distance(v,w))
 </code></pre>
+<p>Finally, we square root the <code>squared_distance</code> to get the (euclidean) distance:</p>
+<p><img src="./distance_vectors.png" alt="distance_vectors"></p>
+<h3 id="summary">Summary</h3>
+<p>We literally built from scratch, albeit with some help from Python&rsquo;s <code>math</code> module, the blocks needed for essential functions that we&rsquo;ll expect to use later, namely: the <code>sum_of_squares</code> and <code>distance</code>.</p>
+<p>It&rsquo;s pretty cool to see these foundational concepts set us up to understand more complex machine learning algorithms like <strong>regression</strong>, <strong>k-nearest neighbors (classification)</strong>, <strong>k-means (clustering)</strong> and even touch on the <strong>pythagorean theorem</strong>.</p>
+<p>We&rsquo;ll examine matrices next.</p>
 
     </div>
 

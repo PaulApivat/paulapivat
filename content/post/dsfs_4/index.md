@@ -45,17 +45,12 @@ We also create the **dot product** of two vectors or the *sum of their component
 Vectors are simply a list of numbers:
 
 ```python
-height_weight_age = [70,
-                    170,
-                    40]
+height_weight_age = [70,170,40]
 
-grades = [95,
-          80,
-          75,
-          62]
+grades = [95,80,75,62]
 ```
 
-#### Add
+### Add
 
 You'll *note* that we do **type annotation** on our code throughout. This is a convention advocated by the author (and as a newcomer to Python, I like the idea of being explicit about data type for a function's input and output). 
 
@@ -71,8 +66,11 @@ def add(v: Vector, w: Vector) -> Vector:
     
 assert add([1,2,3], [4,5,6]) == [5,7,9]
 ```
+Here's another view of what's going on with the `add` function:
 
-#### Subtract
+![add](./add.png)
+
+### Subtract
 
 ```python
 def subtract(v: Vector, w: Vector) -> Vector:
@@ -82,8 +80,11 @@ def subtract(v: Vector, w: Vector) -> Vector:
     
 assert subtract([5,7,9], [4,5,6]) == [1,2,3]
 ```
+This is pretty much the same as the previous:
 
-#### Componentwise Sum
+![subtract](./subtract.png)
+
+### Componentwise Sum
 
 ```python
 def vector_sum(vectors: List[Vector]) -> Vector:
@@ -99,8 +100,11 @@ def vector_sum(vectors: List[Vector]) -> Vector:
             
 assert vector_sum([[1,2], [3,4], [5,6], [7,8]]) == [16,20]
 ```
+Here, a `list` of vectors becomes *one* vector. If you go back to the `add` function, it takes **two** vectors, so if we tried to give it four vectors, we'd get a `TypeError`. So we wrap four vectors in a `list` and provide *that* as the argument for `vector_sum`:
 
-#### Multiply Vector with a Number
+![vector_sum](./vector_sum.png)
+
+### Multiply Vector with a Number
 
 ```python
 def scalar_multiply(c: float, v: Vector) -> Vector:
@@ -109,8 +113,14 @@ def scalar_multiply(c: float, v: Vector) -> Vector:
     
 assert scalar_multiply(2, [2,4,6]) == [4,8,12]
 ```
+One number is multiplied with *all* numbers in the vector, with the vector retaining its length:
 
-#### Componentwise Mean
+![multiply](./multiply.png)
+
+
+### Componentwise Mean
+
+This is similar to componentwise sum (see above); a list of vectors becomes one vector.
 
 ```python
 def vector_mean(vectors: List[Vector]) -> Vector: 
@@ -121,7 +131,8 @@ def vector_mean(vectors: List[Vector]) -> Vector:
 assert vector_mean([ [1,2], [3,4], [5,6] ]) == [3,4]
 ```
 
-#### Dot Product
+
+### Dot Product
 
 ```python
 def dot(v: Vector, w: Vector) -> float:
@@ -131,6 +142,9 @@ def dot(v: Vector, w: Vector) -> float:
     
 assert dot([1,2,3], [4,5,6]) == 32
 ```
+Here we multiply the elements, then sum their results. Two vectors becomes a single number (`float`):
+
+![dot_product](./dot_product.png)
 
 ### Sum of Squares
 
@@ -141,6 +155,10 @@ def sum_of_squares(v: Vector) -> float:
     
 assert sum_of_squares([1,2,3]) == 14
 ```
+In fact, `sum_of_squares` is a special case of **dot product**:
+
+![sum_of_squares](./sum_of_squares.png)
+
 ### Magnitude
 
 ```python
@@ -150,6 +168,10 @@ def magnitude(v: Vector) -> float:
     
 assert magnitude([3,4]) == 5
 ```
+With `magnitude` we square root the `sum_of_squares`. This is none other than the [pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem). 
+
+![magnitude](./magnitude.png)
+
 
 ### Squared Distance 
 
@@ -158,11 +180,30 @@ def squared_distance(v: Vector, w: Vector) -> float:
     """Computes (v_1 - w_1) ** 2 + ... + (v_n - w_n) ** 2"""
     return sum_of_squares(subtract(v,w))
 ```
+This is the distance *between* two vectors, *squared*.
 
-### Distance
+![squared_distance](./squared_distance.png)
+
+### (Euclidean) Distance
 
 ```python
+import math
+
 def distance(v: Vector, w: Vector) -> float:
     """Also computes the distance between v and w"""
-    return magnitude(subtract(v,w))
+    return math.sqrt(squared_distance(v,w))
 ```
+
+Finally, we square root the `squared_distance` to get the (euclidean) distance:
+
+![distance_vectors](./distance_vectors.png)
+
+### Summary
+
+We literally built from scratch, albeit with some help from Python's `math` module, the blocks needed for essential functions that we'll expect to use later, namely: the `sum_of_squares` and `distance`.
+
+It's pretty cool to see these foundational concepts set us up to understand more complex machine learning algorithms like **regression**, **k-nearest neighbors (classification)**, **k-means (clustering)** and even touch on the **pythagorean theorem**. 
+
+We'll examine matrices next. 
+
+

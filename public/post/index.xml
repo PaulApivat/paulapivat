@@ -37,16 +37,11 @@
 &lt;p&gt;We also create the &lt;strong&gt;dot product&lt;/strong&gt; of two vectors or the &lt;em&gt;sum of their component wise product&lt;/em&gt;, and this is is the generalize version of the &lt;strong&gt;sum of squares&lt;/strong&gt;. At this point, we have enough to implement the &lt;strong&gt;Euclidean distance&lt;/strong&gt;. Let&amp;rsquo;s take a look at the code:&lt;/p&gt;
 &lt;h4 id=&#34;example-vectors&#34;&gt;Example Vectors&lt;/h4&gt;
 &lt;p&gt;Vectors are simply a list of numbers:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;height_weight_age = [70,
-                    170,
-                    40]
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;height_weight_age = [70,170,40]
 
-grades = [95,
-          80,
-          75,
-          62]
+grades = [95,80,75,62]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;add&#34;&gt;Add&lt;/h4&gt;
+&lt;h3 id=&#34;add&#34;&gt;Add&lt;/h3&gt;
 &lt;p&gt;You&amp;rsquo;ll &lt;em&gt;note&lt;/em&gt; that we do &lt;strong&gt;type annotation&lt;/strong&gt; on our code throughout. This is a convention advocated by the author (and as a newcomer to Python, I like the idea of being explicit about data type for a function&amp;rsquo;s input and output).&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from typing import List
 
@@ -59,7 +54,9 @@ def add(v: Vector, w: Vector) -&amp;gt; Vector:
     
 assert add([1,2,3], [4,5,6]) == [5,7,9]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;subtract&#34;&gt;Subtract&lt;/h4&gt;
+&lt;p&gt;Here&amp;rsquo;s another view of what&amp;rsquo;s going on with the &lt;code&gt;add&lt;/code&gt; function:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./add.png&#34; alt=&#34;add&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;subtract&#34;&gt;Subtract&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def subtract(v: Vector, w: Vector) -&amp;gt; Vector:
     &amp;quot;&amp;quot;&amp;quot;Subtracts corresponding elements&amp;quot;&amp;quot;&amp;quot;
     assert len(v) == len(w), &amp;quot;vectors must be the same length&amp;quot;
@@ -67,7 +64,9 @@ assert add([1,2,3], [4,5,6]) == [5,7,9]
     
 assert subtract([5,7,9], [4,5,6]) == [1,2,3]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;componentwise-sum&#34;&gt;Componentwise Sum&lt;/h4&gt;
+&lt;p&gt;This is pretty much the same as the previous:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./subtract.png&#34; alt=&#34;subtract&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;componentwise-sum&#34;&gt;Componentwise Sum&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def vector_sum(vectors: List[Vector]) -&amp;gt; Vector:
     &amp;quot;&amp;quot;&amp;quot;Sum all corresponding elements (componentwise sum)&amp;quot;&amp;quot;&amp;quot;
     # Check that vectors is not empty
@@ -81,14 +80,19 @@ assert subtract([5,7,9], [4,5,6]) == [1,2,3]
             
 assert vector_sum([[1,2], [3,4], [5,6], [7,8]]) == [16,20]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;multiply-vector-with-a-number&#34;&gt;Multiply Vector with a Number&lt;/h4&gt;
+&lt;p&gt;Here, a &lt;code&gt;list&lt;/code&gt; of vectors becomes &lt;em&gt;one&lt;/em&gt; vector. If you go back to the &lt;code&gt;add&lt;/code&gt; function, it takes &lt;strong&gt;two&lt;/strong&gt; vectors, so if we tried to give it four vectors, we&amp;rsquo;d get a &lt;code&gt;TypeError&lt;/code&gt;. So we wrap four vectors in a &lt;code&gt;list&lt;/code&gt; and provide &lt;em&gt;that&lt;/em&gt; as the argument for &lt;code&gt;vector_sum&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./vector_sum.png&#34; alt=&#34;vector_sum&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;multiply-vector-with-a-number&#34;&gt;Multiply Vector with a Number&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def scalar_multiply(c: float, v: Vector) -&amp;gt; Vector:
     &amp;quot;&amp;quot;&amp;quot;Multiplies every element by c&amp;quot;&amp;quot;&amp;quot;
     return [c * v_i for v_i in v]
     
 assert scalar_multiply(2, [2,4,6]) == [4,8,12]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;componentwise-mean&#34;&gt;Componentwise Mean&lt;/h4&gt;
+&lt;p&gt;One number is multiplied with &lt;em&gt;all&lt;/em&gt; numbers in the vector, with the vector retaining its length:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./multiply.png&#34; alt=&#34;multiply&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;componentwise-mean&#34;&gt;Componentwise Mean&lt;/h3&gt;
+&lt;p&gt;This is similar to componentwise sum (see above); a list of vectors becomes one vector.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def vector_mean(vectors: List[Vector]) -&amp;gt; Vector: 
     &amp;quot;&amp;quot;&amp;quot;Computes the element-wise average&amp;quot;&amp;quot;&amp;quot;
     n = len(vectors)
@@ -96,7 +100,7 @@ assert scalar_multiply(2, [2,4,6]) == [4,8,12]
     
 assert vector_mean([ [1,2], [3,4], [5,6] ]) == [3,4]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;dot-product&#34;&gt;Dot Product&lt;/h4&gt;
+&lt;h3 id=&#34;dot-product&#34;&gt;Dot Product&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def dot(v: Vector, w: Vector) -&amp;gt; float:
     &amp;quot;&amp;quot;&amp;quot;Computes v_1 * w_1 + ... + v_n * w_n&amp;quot;&amp;quot;&amp;quot;
     assert len(v) == len(w), &amp;quot;vectors must be the same length&amp;quot;
@@ -104,6 +108,8 @@ assert vector_mean([ [1,2], [3,4], [5,6] ]) == [3,4]
     
 assert dot([1,2,3], [4,5,6]) == 32
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here we multiply the elements, then sum their results. Two vectors becomes a single number (&lt;code&gt;float&lt;/code&gt;):&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./dot_product.png&#34; alt=&#34;dot_product&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;sum-of-squares&#34;&gt;Sum of Squares&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def sum_of_squares(v: Vector) -&amp;gt; float:
     &amp;quot;&amp;quot;&amp;quot;Returns v_1 * v_1 + ... + v_n * v_n&amp;quot;&amp;quot;&amp;quot;
@@ -111,6 +117,8 @@ assert dot([1,2,3], [4,5,6]) == 32
     
 assert sum_of_squares([1,2,3]) == 14
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In fact, &lt;code&gt;sum_of_squares&lt;/code&gt; is a special case of &lt;strong&gt;dot product&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./sum_of_squares.png&#34; alt=&#34;sum_of_squares&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;magnitude&#34;&gt;Magnitude&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def magnitude(v: Vector) -&amp;gt; float:
     &amp;quot;&amp;quot;&amp;quot;Returns  the magnitude (or length) of v&amp;quot;&amp;quot;&amp;quot;
@@ -118,16 +126,29 @@ assert sum_of_squares([1,2,3]) == 14
     
 assert magnitude([3,4]) == 5
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With &lt;code&gt;magnitude&lt;/code&gt; we square root the &lt;code&gt;sum_of_squares&lt;/code&gt;. This is none other than the 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Pythagorean_theorem&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pythagorean theorem&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./magnitude.png&#34; alt=&#34;magnitude&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;squared-distance&#34;&gt;Squared Distance&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def squared_distance(v: Vector, w: Vector) -&amp;gt; float:
     &amp;quot;&amp;quot;&amp;quot;Computes (v_1 - w_1) ** 2 + ... + (v_n - w_n) ** 2&amp;quot;&amp;quot;&amp;quot;
     return sum_of_squares(subtract(v,w))
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;distance&#34;&gt;Distance&lt;/h3&gt;
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def distance(v: Vector, w: Vector) -&amp;gt; float:
+&lt;p&gt;This is the distance &lt;em&gt;between&lt;/em&gt; two vectors, &lt;em&gt;squared&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./squared_distance.png&#34; alt=&#34;squared_distance&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;euclidean-distance&#34;&gt;(Euclidean) Distance&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import math
+
+def distance(v: Vector, w: Vector) -&amp;gt; float:
     &amp;quot;&amp;quot;&amp;quot;Also computes the distance between v and w&amp;quot;&amp;quot;&amp;quot;
-    return magnitude(subtract(v,w))
+    return math.sqrt(squared_distance(v,w))
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, we square root the &lt;code&gt;squared_distance&lt;/code&gt; to get the (euclidean) distance:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./distance_vectors.png&#34; alt=&#34;distance_vectors&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
+&lt;p&gt;We literally built from scratch, albeit with some help from Python&amp;rsquo;s &lt;code&gt;math&lt;/code&gt; module, the blocks needed for essential functions that we&amp;rsquo;ll expect to use later, namely: the &lt;code&gt;sum_of_squares&lt;/code&gt; and &lt;code&gt;distance&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s pretty cool to see these foundational concepts set us up to understand more complex machine learning algorithms like &lt;strong&gt;regression&lt;/strong&gt;, &lt;strong&gt;k-nearest neighbors (classification)&lt;/strong&gt;, &lt;strong&gt;k-means (clustering)&lt;/strong&gt; and even touch on the &lt;strong&gt;pythagorean theorem&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll examine matrices next.&lt;/p&gt;
 </description>
     </item>
     
