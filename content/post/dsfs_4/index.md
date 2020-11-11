@@ -206,4 +206,189 @@ It's pretty cool to see these foundational concepts set us up to understand more
 
 We'll examine matrices next. 
 
+## Matrices
 
+The first thing to note is that `matrices` are represented as `lists` of `lists` which is explicit with type annotation:
+
+```python
+from typing import List
+
+Matrix = List[List[float]]
+```
+You might bet wondering if a `list` of `lists` is somehow different from a `list` of `vectors` we saw previously with the `vector_sum` function. To see, I used **type annotation** to try to define the arguments *differently*.
+
+Here's the `vector_sum` function we defined previously:
+
+```python
+def vector_sum(vectors: List[Vector]) -> Vector:
+    """Sum all corresponding elements (componentwise sum)"""
+    # Check that vectors is not empty
+    assert vectors, "no vectors provided!"
+    # Check the vectorss are all the same size
+    num_elements = len(vectors[0])
+    assert all(len(v) == num_elements for v in vectors), "different sizes!"
+    # the i-th element of the result is the sum of every vector[i]
+    return [sum(vector[i] for vector in vectors)
+            for i in range(num_elements)]
+            
+assert vector_sum([[1,2], [3,4], [5,6], [7,8]]) == [16,20]
+```
+
+Here's a **new** function, `vector_sum2` defined differently with type annotation:
+
+```python
+def vector_sum2(lists: List[List[float]]) -> List:
+   """Sum all corresponding list (componentwise sum?)"""
+   assert lists, "this list is empty!"
+   # check that lists are the same size
+   num_lists = len(lists[0])
+   assert all(len(l) == num_lists for l in lists), "different sizes!"
+   # the i-th list is the sum of every list[i]
+   return [sum(l[i] for l in lists)
+           for i in range(num_lists)]
+
+assert vector_sum2([[1,2], [3,4], [5,6], [7,8]]) == [16,20]
+```
+
+I did a variety of things to see if `vector_sum` and `vector_sum2` behaved differently, but they appear to be identical:
+
+```python
+
+# both are functions
+assert callable(vector_sum) == True
+assert callable(vector_sum2) == True
+
+# when taking the same argument, they both return a list
+type(vector_sum([[1,2], [3,4], [5,6], [7,8]])) #list
+type(vector_sum2([[1,2], [3,4], [5,6], [7,8]])) #list
+
+# the same input yields the same output
+vector_sum([[1,2],[3,4]])    # [4,6]
+vector_sum2([[1,2],[3,4]])   # [4,6]
+```
+
+To keep it simple, in the context of **matrices**, you can think of **vectors** as the *rows of the matrix*.
+
+For example, if we represent the small dataset below as a **matrix**, we can think of *columns* as variables like: height, weight, age; and *each row* as a person:
+
+```python
+sample_data = [[70, 170, 40],
+               [65, 120, 26],
+               [77, 250, 19]]
+```
+By extension of **rows** and **columns**, we can write a function for the shape of a matrix. This below `shape` function takes in a matrix and returns a `tuple` with two integers, number of rows and number of columns:
+
+```python
+from typing import Tuple
+  
+def shape(A: Matrix) -> Tuple[int, int]:
+    """Returns (# of rows of A, # of columns of A)"""
+    num_rows = len(A)
+    num_cols = len(A[0]) if A else 0  # number of elements in first row
+    return num_rows, num_cols
+    
+assert shape([[1,2,3], [4,5,6]]) == (2,3) # 2 rows, 3 columns
+assert shape(sample_data) == (3,3)
+```
+
+We can actually write functions to grab either a specific *row* or a specific *columns* :
+
+```python
+Vector = List[float]
+
+# rows
+def get_row(A: Matrix, i: int) -> Vector:
+    """Returns the i-th row of A (as a Vector)"""
+    return A[i]  # A[i] is already the ith row
+
+# column
+def get_column(A: Matrix, i: int) -> Vector:
+    """Returns the j-th column of A (as a Vector)"""
+    return [A_i[j]
+            for A_i in A]
+```
+
+Now, going beyond finding the shape, rows and columns of an existing matrix, we'll also want to **create** matrices and we'll do that using **nested list comprehensions**:
+
+```python
+from typing import Callable
+
+def make_matrix(num_rows: int,
+                num_cols: int,
+                entry_fn: Callable[[int, int], float]) -> Matrix:
+    """
+    Returns a num_rows x num_cols matrix
+    whose (i,j)-th entry is entry_fn(i, j)
+    """
+    return [[entry_fn(i,j)            # given i, create a list
+            for j in range(num_cols)] # [entry_fn(i, 0), ...]
+            for i in range(num_rows)] # create one list for each i
+```
+Then we'll actually *use* the `make_matrix` function to create a special type of matrix called the `identity matrix`:
+
+```python
+def identity_matrix(n: int) -> Matrix:
+    """Returns the n x n identity matrix"""
+    return make_matrix(n, n, lambda i, j: 1 if i == j else 0)
+
+assert identity_matrix(5) == [[1, 0, 0, 0, 0],
+                              [0, 1, 0, 0, 0],
+                              [0, 0, 1, 0, 0],
+                              [0, 0, 0, 1, 0],
+                              [0, 0, 0, 0, 1]]
+```
+
+### Summary
+
+To be sure there are [other types of matrices](https://machinelearningmastery.com/introduction-to-types-of-matrices-in-linear-algebra/), but in this chapter we're only briefly exploring its construction to prime us.
+
+We know matrices can be used to represent data, each *row* in the dataset being a **vector**. Because we can also know a matrices' *column*, we'll use it to represent linear functions that **map k-dimensional vectors to n-dimensional vectors**. 
+
+Finally, matrices can also be used to map *binary relationships*. 
+
+### Flashback to Ch.1
+
+On our first day at DataScienster&trade; we were given `friendship_pairs` data:
+
+```python
+friendship_pairs = [(0,1), (0,2), (1,2), (1,3), (2,3), (3,4),
+                    (4,5), (5,6), (5,7), (6,8), (7,8), (8,9)]
+```
+
+These `friendship_pairs` can also be represented in matrix form:
+
+```python
+#            user 0  1  2  3  4  5  6  7  8  9
+friend_matrix = [[0, 1, 1, 0, 0, 0, 0, 0, 0, 0], # user 0
+                 [1, 0, 1, 1, 0, 0, 0, 0, 0, 0], # user 1
+                 [1, 1, 0, 1, 0, 0, 0, 0, 0, 0], # user 2
+                 [0, 1, 1, 0, 1, 0, 0, 0, 0, 0], # user 3
+                 [0, 0, 0, 1, 0, 1, 0, 0, 0, 0], # user 4
+                 [0, 0, 0, 0, 1, 0, 1, 1, 0, 0], # user 5
+                 [0, 0, 0, 0, 0, 1, 0, 0, 1, 0], # user 6
+                 [0, 0, 0, 0, 0, 1, 0, 0, 1, 0], # user 7
+                 [0, 0, 0, 0, 0, 0, 1, 1, 0, 1], # user 8
+                 [0, 0, 0, 0, 0, 0, 0, 0, 1, 0]] # user 9
+```
+
+This allows us to check very quickly whether two users are friends or not:
+
+```python
+assert friend_matrix[0][2] == 1, "0 and 2 are friends"
+assert friend_matrix[0][8] == 0, "0 and 8 are not friends"
+```
+
+And if we wanted to check for each user's friend, we could:
+
+```python
+friends_of_five = [i
+                  for i, is_friend in enumerate(friend_matrix[5])
+                  if is_friend]
+                  
+friends_of_zero = [i
+                   for i, is_friend in enumerate(friend_matrix[0])
+                   if is_friend]
+                   
+assert friends_of_five == [4,6,7]
+assert friends_of_zero == [1,2]
+```
