@@ -1,0 +1,1297 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Paul Apivat Hanvongse">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Building tools to describe a data and find relationships">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/dsfs_5/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#E32626">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Domine:wght@400;700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/post/dsfs_5/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="twitter:site" content="@paulapivat">
+  <meta property="twitter:creator" content="@paulapivat">
+  
+  <meta property="og:site_name" content="Paul Apivat">
+  <meta property="og:url" content="/post/dsfs_5/">
+  <meta property="og:title" content="Data Science from Scratch (ch5) - Statistics | Paul Apivat">
+  <meta property="og:description" content="Building tools to describe a data and find relationships"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-11-19T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-11-19T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/dsfs_5/"
+  },
+  "headline": "Data Science from Scratch (ch5) - Statistics",
+  
+  "datePublished": "2020-11-19T00:00:00Z",
+  "dateModified": "2020-11-19T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Paul Apivat Hanvongse"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Paul Apivat",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Building tools to describe a data and find relationships"
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Data Science from Scratch (ch5) - Statistics | Paul Apivat</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Paul Apivat</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Paul Apivat</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#"><span>Start Here</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>About</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#accomplishments"><span>News</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#gallery"><span>Viz</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/courses/"><span>Courses</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/technical_notes/"><span>Technical Notes</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Data Science from Scratch (ch5) - Statistics</h1>
+
+  
+  <p class="page-subtitle">Descriptive Statistics &amp; Correlations</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/author/paul-apivat-hanvongse/">Paul Apivat Hanvongse</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Nov 19, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h3 id="table-of-contents">Table of contents</h3>
+<h2 id="overview">Overview</h2>
+<p>This post is chapter 5 in continuation of my coverage of 
+<a href="https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/" target="_blank" rel="noopener">Data Science from Scratch by Joel Grus</a>.</p>
+<p>It should be noted upfront that everything covered in this post can be done more expediently and efficiently in libraries like 
+<a href="https://numpy.org/" target="_blank" rel="noopener">NumPy</a> as well as the 
+<a href="https://github.com/python/cpython/blob/3.9/Lib/statistics.py" target="_blank" rel="noopener">statistics module in Python</a>.</p>
+<p>The primary value of this book, and by extension this post, in my opinion, is the emphasis on <strong>learning</strong> how Python primitives can be used to build tools from the ground up.</p>
+<p>Specifically, we&rsquo;ll examine how specific features of the Python language as well as functions we built in a previous post on 
+<a href="https://paulapivat.com/post/dsfs_4/" target="_blank" rel="noopener">linear algebra</a> can be used to build tools used to <em>describe</em> data and relationships within data (aka statistics).</p>
+<p>I think this is pretty cool. Hopefully you agree.</p>
+<h4 id="example-data">Example Data</h4>
+<p>This chapter continues the narrative of you as a newly hired data scientist at DataScienster, the social network for data scientists, and your job is to <em>describe</em> how many friends members in this social network has. We have two <code>lists</code> of <code>float</code> to work with. We&rsquo;ll work with <code>num_friends</code> first, then <code>daily_minutes</code> later.</p>
+<p>I wanted this post to be self-contained, and in order to do that we&rsquo;ll have to read in a larger than average <code>list</code> of <code>floats</code>. The alternative would be to get the data directly from the book&rsquo;s 
+<a href="https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/statistics.py" target="_blank" rel="noopener">github repo (statistics.py)</a></p>
+<pre><code class="language-python">num_friends = [100.0,49,41,40,25,21,21,19,19,18,18,16,15,15,15,15,14,14,13,13,13,13,12,12,11,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8,8,8,8,8,8,8,8,8,8,8,8,8,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+
+num_friends2 = [10000.0,49,41,40,25,21,21,19,19,18,18,16,15,15,15,15,14,14,13,13,13,13,12,12,11,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8,8,8,8,8,8,8,8,8,8,8,8,8,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+
+daily_minutes = [1,68.77,51.25,52.08,38.36,44.54,57.13,51.4,41.42,31.22,34.76,54.01,38.79,47.59,49.1,27.66,41.03,36.73,48.65,28.12,46.62,35.57,32.98,35,26.07,23.77,39.73,40.57,31.65,31.21,36.32,20.45,21.93,26.02,27.34,23.49,46.94,30.5,33.8,24.23,21.4,27.94,32.24,40.57,25.07,19.42,22.39,18.42,46.96,23.72,26.41,26.97,36.76,40.32,35.02,29.47,30.2,31,38.11,38.18,36.31,21.03,30.86,36.07,28.66,29.08,37.28,15.28,24.17,22.31,30.17,25.53,19.85,35.37,44.6,17.23,13.47,26.33,35.02,32.09,24.81,19.33,28.77,24.26,31.98,25.73,24.86,16.28,34.51,15.23,39.72,40.8,26.06,35.76,34.76,16.13,44.04,18.03,19.65,32.62,35.59,39.43,14.18,35.24,40.13,41.82,35.45,36.07,43.67,24.61,20.9,21.9,18.79,27.61,27.21,26.61,29.77,20.59,27.53,13.82,33.2,25,33.1,36.65,18.63,14.87,22.2,36.81,25.53,24.62,26.25,18.21,28.08,19.42,29.79,32.8,35.99,28.32,27.79,35.88,29.06,36.28,14.1,36.63,37.49,26.9,18.58,38.48,24.48,18.95,33.55,14.24,29.04,32.51,25.63,22.22,19,32.73,15.16,13.9,27.2,32.01,29.27,33,13.74,20.42,27.32,18.23,35.35,28.48,9.08,24.62,20.12,35.26,19.92,31.02,16.49,12.16,30.7,31.22,34.65,13.13,27.51,33.2,31.57,14.1,33.42,17.44,10.12,24.42,9.82,23.39,30.93,15.03,21.67,31.09,33.29,22.61,26.89,23.48,8.38,27.81,32.35,23.84]
+
+</code></pre>
+<h2 id="describing-data">Describing Data</h2>
+<p>The <code>num_friends</code> list is a list of numbers representing &ldquo;number of friends&rdquo; a person has, so for example, one person has 100 friends. The first thing we do to describe the data is to create a bar chart plotting the number of people who have 100 friends, 49 friends, 41 friends, and so on.</p>
+<p>We first import <code>Counter</code> from <code>collections</code>. We also import <code>matplotlib.pyplot</code>.</p>
+<p>We the <code>Counter</code> collection to turn the <code>num_friends</code> list into a <code>defaultdict(int)</code>-like object mapping keys to counts. For more info, please refer to this 
+<a href="https://paulapivat.com/post/dsfs_2/#counters" target="_blank" rel="noopener">previous post</a> on the topic.</p>
+<p><code>Counter</code> is a very convenient way to count the values in num_friends. Once we use the <code>Counter</code> collection, a 
+<a href="https://docs.python.org/2/library/collections.html" target="_blank" rel="noopener">high-performance container datatype</a>, we can use methods like <code>most_common</code>.</p>
+<pre><code class="language-python">from collections import Counter
+
+import matplotlib.pyplot as plt
+
+friend_counts = Counter(num_friends)
+
+# the five most common values are: 6, 1, 4, 3 and 9 friends
+# [(6, 22), (1, 22), (4, 20), (3, 20), (9, 18)]
+friend_counts.most_common(5) 
+</code></pre>
+<p>To proceed with plotting, we&rsquo;ll use <code>friend_counts</code> to create a <code>list comprehension</code> that will loop through <code>friends_count</code> and for all <strong>keys</strong> from 0-101 (xs) and print a corresponding <strong>value</strong> (if it exists). This becomes the y-axis to <code>num_friends</code>, which is the x-axis:</p>
+<pre><code class="language-python">xs = range(101)   # largest num_friend value is 100
+ys = [friend_counts[x] for x in xs]
+plt.bar(xs, ys)
+plt.axis([0, 101, 0, 25])
+plt.title(&quot;Histogram of Friend Counts&quot;)
+plt.xlabel(&quot;# of friends&quot;)
+plt.ylabel(&quot;# of people&quot;)
+plt.show()
+</code></pre>
+<p>This produced this plot below. You can see one person with 100 friends.</p>
+<p><img src="./histo_friend_counts.png" alt="histo_friend_counts.png"></p>
+<p>You can also read more about data visualization 
+<a href="https://paulapivat.com/post/dsfs_3/" target="_blank" rel="noopener">here</a>.</p>
+<p>Alternatively, we could generate simple statistics to describe the data using built-in Python methods: len, min, max and sorted.</p>
+<pre><code class="language-python">num_points = len(num_friends) # number of data points in num_friends: 204
+largest_value = max(num_friends) # largest value in num_friends: 100
+smallest_value = min(num_friends) # smallest value in num_friends: 1
+
+sorted_values = sorted(num_friends) # sort the values in ascending order
+second_largest_value = sorted_values[-2] # second largest value from the back: 49
+</code></pre>
+<h3 id="central-tendencies">Central Tendencies</h3>
+<p>The most common way of describing a set of data is to find it&rsquo;s average, which is the sum of all the values, divided by the number of values. <em>note</em> : we&rsquo;ll continue to use type annotations.</p>
+<pre><code class="language-python">from typing import List
+
+def mean(xs: List[float]) -&gt; float:
+    return sum(xs) / len(xs)
+    
+assert 7.3333 &lt; mean(num_friends) &lt; 7.3334
+</code></pre>
+<p>However, the mean is <strong>notoriously sensitive to outliers</strong> so statisticians often supplement their analysis with other measures of central tendencies like <strong>median</strong> Because the median is the <em>middle-most value</em>, it matters whether there is an <em>even</em> or <em>odd</em> number of data points.</p>
+<p>Here we&rsquo;ll create two private functions for both situations - even and odd number of data points - in calculating the median. This first requires that we sort the data values. Then, in the case case of <em>even number</em> values, we&rsquo;ll find the two middle values and split them. In the case of <em>odd number</em> of values, we&rsquo;ll divide the <em>length</em> of the dataset by 2 (i.e., 50).</p>
+<p>Our median function will return either of the private function <code>_median_even</code> or <code>_median_odd</code> conditionally depending on if the length of a list of numbers is divisible (%2==0) by 2.</p>
+<pre><code class="language-python">
+def _median_even(xs: List[float]) -&gt; float:
+    &quot;&quot;&quot;If len(xs) is even, it's the average of the middle two elements&quot;&quot;&quot;
+    sorted_xs = sorted(xs)
+    hi_midpoint = len(xs) // 2   # e.g. length 4 =&gt; hi_midpoint 2
+    return (sorted_xs[hi_midpoint - 1] + sorted_xs[hi_midpoint]) / 2
+    
+def _median_odd(xs: List[float]) -&gt; float:
+    &quot;&quot;&quot;If len(xs) is odd, its the middle element&quot;&quot;&quot;
+    return sorted(xs)[len(xs) // 2]
+    
+def median(v: List[float]) -&gt; float:
+    &quot;&quot;&quot;Finds the 'middle-most' value of v&quot;&quot;&quot;
+    return _median_even(v) if len(v) % 2 == 0 else _median_odd(v)
+    
+assert median([1,10,2,9,5]) == 5
+assert median([1, 9, 2, 10]) == (2 + 9) / 2
+</code></pre>
+<p>Because the median is the <em>middle-most value</em>, it does not fully depend on every value in the data. For illustration, hypothetically if we have a another list <code>num_friends2</code> where one person had 10,000 friends, the <strong>mean</strong> would be much more sensitive to that change than the <strong>median</strong> would be.</p>
+<pre><code class="language-python">num_friends2 = [10000.0,49,41,40,25,21,21,19,19,18,18,16,15,15,15,15,14,14
+    ,13,13,13,13,12,12,11,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,9,9,9,9
+    ,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8,8,8,8,8,8,8,8,8,8,8,8,8,7,7,7,7,7,7,7,7,7,7
+    ,7,7,7,7,7,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5
+    ,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3
+    ,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1
+    ,1,1,1,1,1,1,1,1,1,1,1,1]
+    
+mean(num_friends2) # 7.333 =&gt; 55.86274509803921
+median(num_friends2) # 6.0 =&gt; 6.0
+
+</code></pre>
+<p>You may also used <code>quantiles</code> to describe your data. Whenever you&rsquo;ve heard &ldquo;75th percentile&rdquo;, that is a description of quantiles relative to 100. In fact, the median is the 50% of the data lies (or 50th percentile).</p>
+<p>Because <code>quantile</code> is a position from 0-100, the second argument is a float from 0.0 to 1.0. We use that float to multiply with the length of the list. Then we wrap in <code>int</code> to round down. That gives us a value that we can index a sorted xs to find the quantile.</p>
+<pre><code class="language-python">def quantile(xs: List[float], p: float) -&gt; float:
+    &quot;&quot;&quot;Returns the pth-percentile value in x&quot;&quot;&quot;
+    p_index = int(p * len(xs))  
+    return sorted(xs)[p_index]
+    
+assert quantile(num_friends, 0.10) == 1
+assert quantile(num_friends, 0.25) == 3
+assert quantile(num_friends, 0.75) == 9
+assert quantile(num_friends, 0.90) == 13
+</code></pre>
+<h3 id="dispersion">Dispersion</h3>
+<p>We&rsquo;ll examine correlations next.</p>
+<h2 id="correlation">Correlation</h2>
+<h3 id="simpsons-paradox">Simpson&rsquo;s Paradox</h3>
+<h3 id="correlation-and-causation">Correlation and Causation</h3>
+<h3 id="summary">Summary</h3>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/dsfs_5/&amp;text=Data%20Science%20from%20Scratch%20%28ch5%29%20-%20Statistics" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/dsfs_5/&amp;t=Data%20Science%20from%20Scratch%20%28ch5%29%20-%20Statistics" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Data%20Science%20from%20Scratch%20%28ch5%29%20-%20Statistics&amp;body=/post/dsfs_5/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/dsfs_5/&amp;title=Data%20Science%20from%20Scratch%20%28ch5%29%20-%20Statistics" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Data%20Science%20from%20Scratch%20%28ch5%29%20-%20Statistics%20/post/dsfs_5/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/dsfs_5/&amp;title=Data%20Science%20from%20Scratch%20%28ch5%29%20-%20Statistics" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/paul-apivat-hanvongse/avatar_hu63a07477d78c9be41fad7b90b509fc17_91571_270x270_fill_q90_lanczos_center.jpg" alt="Paul Apivat Hanvongse">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="/">Paul Apivat Hanvongse</a></h5>
+        <h6 class="card-subtitle">Self-Employed | Getwyze</h6>
+        <p class="card-text">My interests include data visualization, data analytics and data science.</p>
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/paulapivat/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/paulapivat" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    
+      <a href="/privacy/">Privacy Policy</a>
+    
+    
+       &middot; 
+      <a href="/terms/">Terms</a>
+    
+  </p>
+  
+
+  <p class="powered-by">
+    © 2020 Paul Apivat Hanvongse. All Rights Reserved.
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
