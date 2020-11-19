@@ -167,9 +167,74 @@ assert quantile(num_friends, 0.75) == 9
 assert quantile(num_friends, 0.90) == 13
 ```
 
+Finally, we have the **mode**, which looks at the most common values. First, we use the `Counter` method on our list parameter and since Counter is a subclass of `dict` we have access to methods like `values()` to find all the values and `items()` to find key value pairs. We define `max_count` to find the max value (22), then the function returns a list comprehension which loops through `counts.items()` to find the key associated with the max_count (22). That is 1 and 6, meaning twenty-two people had one or six friends. 
 
+```python
+def mode(x: List[float]) -> List[float]:
+    """Returns a list, since there might be more than one mode"""
+    counts = Counter(x)
+    max_count = max(counts.values())
+    return [x_i for x_i, count in counts.items() if count == max_count]
+    
+
+assert set(mode(num_friends)) == {1, 6}
+```
+
+Because we had already used Counter on `num_friends` previously (see `friend_counts`), we could have just called the `most_common(2)` method to get the same results:
+
+```python
+mode(num_friends) # [6, 1]
+friend_counts.most_common(2) # [(6, 22), (1, 22)]
+```
 
 ### Dispersion
+
+Aside from our data's central tendencies, we'll also want to understand it's spread or dispersion. The tools to do this are `data_range`, `variance`, `standard deviation` and `interquartile range`.
+
+Range is a straightforward max value minus min value. 
+
+Variance measures how for a [set of numbers is from their average value](https://en.wikipedia.org/wiki/Variance). What more interested, for our purpose, is how we need to borrow the functions we had previously built in the [linear algebra](https://paulapivat.com/post/dsfs_4/) post to create the variance function.
+
+If you look at its wikipedia page, **variance** is the *squared deviation* of a variable from its mean. 
+
+First, we'll need to create the `de_mean` function that takes a list of numbers and subtract from all numbers in the list, the mean value (this gives us the deviation from the mean). 
+
+Then, we'll `sum_of_squares` all those deviations, which means we'll take all the values, multiply them with itself (square it), then add the values (and divide by length of the list minus one) to get the variance.
+
+Recall that the `sum_of_squares` is a special case of the `dot` product function.
+
+```python
+# variance
+
+from typing import List
+
+Vector = List[float]
+
+# see vectors.py in chapter 4 for dot and sum_of_squares
+
+def dot(v: Vector, w: Vector) -> float:
+    """Computes v_1 * w_1 + ... + v_n * w_n"""
+    assert len(v) == len(w), "vectors must be the same length"
+    return sum(v_i * w_i for v_i, w_i in zip(v,w))
+    
+def sum_of_squares(v: Vector) -> float:
+    """Returns v_1 * v_1 + ... + v_n * v_n"""
+    return dot(v,v)
+    
+def de_mean(xs: List[float]) -> List[float]:
+    """Translate xs by subtracting its mean (so the result has mean 0)"""
+    x_bar = mean(xs)
+    return [x - x_bar for x in xs]
+    
+def variance(xs: List[float]) -> float:
+    """Almost the average squared deviation from the mean"""
+    assert len(xs) >= 2, "variance requires at least two elements"
+    n = len(xs)
+    deviations = de_mean(xs)
+    return sum_of_squares(deviations) / (n - 1)
+    
+assert 81.54 < variance(num_friends) < 81.55
+```
 
 
 

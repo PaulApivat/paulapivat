@@ -133,7 +133,61 @@ assert quantile(num_friends, 0.25) == 3
 assert quantile(num_friends, 0.75) == 9
 assert quantile(num_friends, 0.90) == 13
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, we have the &lt;strong&gt;mode&lt;/strong&gt;, which looks at the most common values. First, we use the &lt;code&gt;Counter&lt;/code&gt; method on our list parameter and since Counter is a subclass of &lt;code&gt;dict&lt;/code&gt; we have access to methods like &lt;code&gt;values()&lt;/code&gt; to find all the values and &lt;code&gt;items()&lt;/code&gt; to find key value pairs. We define &lt;code&gt;max_count&lt;/code&gt; to find the max value (22), then the function returns a list comprehension which loops through &lt;code&gt;counts.items()&lt;/code&gt; to find the key associated with the max_count (22). That is 1 and 6, meaning twenty-two people had one or six friends.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def mode(x: List[float]) -&amp;gt; List[float]:
+    &amp;quot;&amp;quot;&amp;quot;Returns a list, since there might be more than one mode&amp;quot;&amp;quot;&amp;quot;
+    counts = Counter(x)
+    max_count = max(counts.values())
+    return [x_i for x_i, count in counts.items() if count == max_count]
+    
+
+assert set(mode(num_friends)) == {1, 6}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Because we had already used Counter on &lt;code&gt;num_friends&lt;/code&gt; previously (see &lt;code&gt;friend_counts&lt;/code&gt;), we could have just called the &lt;code&gt;most_common(2)&lt;/code&gt; method to get the same results:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;mode(num_friends) # [6, 1]
+friend_counts.most_common(2) # [(6, 22), (1, 22)]
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;dispersion&#34;&gt;Dispersion&lt;/h3&gt;
+&lt;p&gt;Aside from our data&amp;rsquo;s central tendencies, we&amp;rsquo;ll also want to understand it&amp;rsquo;s spread or dispersion. The tools to do this are &lt;code&gt;data_range&lt;/code&gt;, &lt;code&gt;variance&lt;/code&gt;, &lt;code&gt;standard deviation&lt;/code&gt; and &lt;code&gt;interquartile range&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Range is a straightforward max value minus min value.&lt;/p&gt;
+&lt;p&gt;Variance measures how for a 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Variance&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;set of numbers is from their average value&lt;/a&gt;. What more interested, for our purpose, is how we need to borrow the functions we had previously built in the 
+&lt;a href=&#34;https://paulapivat.com/post/dsfs_4/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;linear algebra&lt;/a&gt; post to create the variance function.&lt;/p&gt;
+&lt;p&gt;If you look at its wikipedia page, &lt;strong&gt;variance&lt;/strong&gt; is the &lt;em&gt;squared deviation&lt;/em&gt; of a variable from its mean.&lt;/p&gt;
+&lt;p&gt;First, we&amp;rsquo;ll need to create the &lt;code&gt;de_mean&lt;/code&gt; function that takes a list of numbers and subtract from all numbers in the list, the mean value (this gives us the deviation from the mean).&lt;/p&gt;
+&lt;p&gt;Then, we&amp;rsquo;ll &lt;code&gt;sum_of_squares&lt;/code&gt; all those deviations, which means we&amp;rsquo;ll take all the values, multiply them with itself (square it), then add the values (and divide by length of the list minus one) to get the variance.&lt;/p&gt;
+&lt;p&gt;Recall that the &lt;code&gt;sum_of_squares&lt;/code&gt; is a special case of the &lt;code&gt;dot&lt;/code&gt; product function.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# variance
+
+from typing import List
+
+Vector = List[float]
+
+# see vectors.py in chapter 4 for dot and sum_of_squares
+
+def dot(v: Vector, w: Vector) -&amp;gt; float:
+    &amp;quot;&amp;quot;&amp;quot;Computes v_1 * w_1 + ... + v_n * w_n&amp;quot;&amp;quot;&amp;quot;
+    assert len(v) == len(w), &amp;quot;vectors must be the same length&amp;quot;
+    return sum(v_i * w_i for v_i, w_i in zip(v,w))
+    
+def sum_of_squares(v: Vector) -&amp;gt; float:
+    &amp;quot;&amp;quot;&amp;quot;Returns v_1 * v_1 + ... + v_n * v_n&amp;quot;&amp;quot;&amp;quot;
+    return dot(v,v)
+    
+def de_mean(xs: List[float]) -&amp;gt; List[float]:
+    &amp;quot;&amp;quot;&amp;quot;Translate xs by subtracting its mean (so the result has mean 0)&amp;quot;&amp;quot;&amp;quot;
+    x_bar = mean(xs)
+    return [x - x_bar for x in xs]
+    
+def variance(xs: List[float]) -&amp;gt; float:
+    &amp;quot;&amp;quot;&amp;quot;Almost the average squared deviation from the mean&amp;quot;&amp;quot;&amp;quot;
+    assert len(xs) &amp;gt;= 2, &amp;quot;variance requires at least two elements&amp;quot;
+    n = len(xs)
+    deviations = de_mean(xs)
+    return sum_of_squares(deviations) / (n - 1)
+    
+assert 81.54 &amp;lt; variance(num_friends) &amp;lt; 81.55
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We&amp;rsquo;ll examine correlations next.&lt;/p&gt;
 &lt;h2 id=&#34;correlation&#34;&gt;Correlation&lt;/h2&gt;
 &lt;h3 id=&#34;simpsons-paradox&#34;&gt;Simpson&amp;rsquo;s Paradox&lt;/h3&gt;

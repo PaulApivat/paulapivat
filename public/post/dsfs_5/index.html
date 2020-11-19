@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    5 min read
+    8 min read
   </span>
   
 
@@ -873,7 +873,61 @@ assert quantile(num_friends, 0.25) == 3
 assert quantile(num_friends, 0.75) == 9
 assert quantile(num_friends, 0.90) == 13
 </code></pre>
+<p>Finally, we have the <strong>mode</strong>, which looks at the most common values. First, we use the <code>Counter</code> method on our list parameter and since Counter is a subclass of <code>dict</code> we have access to methods like <code>values()</code> to find all the values and <code>items()</code> to find key value pairs. We define <code>max_count</code> to find the max value (22), then the function returns a list comprehension which loops through <code>counts.items()</code> to find the key associated with the max_count (22). That is 1 and 6, meaning twenty-two people had one or six friends.</p>
+<pre><code class="language-python">def mode(x: List[float]) -&gt; List[float]:
+    &quot;&quot;&quot;Returns a list, since there might be more than one mode&quot;&quot;&quot;
+    counts = Counter(x)
+    max_count = max(counts.values())
+    return [x_i for x_i, count in counts.items() if count == max_count]
+    
+
+assert set(mode(num_friends)) == {1, 6}
+</code></pre>
+<p>Because we had already used Counter on <code>num_friends</code> previously (see <code>friend_counts</code>), we could have just called the <code>most_common(2)</code> method to get the same results:</p>
+<pre><code class="language-python">mode(num_friends) # [6, 1]
+friend_counts.most_common(2) # [(6, 22), (1, 22)]
+</code></pre>
 <h3 id="dispersion">Dispersion</h3>
+<p>Aside from our data&rsquo;s central tendencies, we&rsquo;ll also want to understand it&rsquo;s spread or dispersion. The tools to do this are <code>data_range</code>, <code>variance</code>, <code>standard deviation</code> and <code>interquartile range</code>.</p>
+<p>Range is a straightforward max value minus min value.</p>
+<p>Variance measures how for a 
+<a href="https://en.wikipedia.org/wiki/Variance" target="_blank" rel="noopener">set of numbers is from their average value</a>. What more interested, for our purpose, is how we need to borrow the functions we had previously built in the 
+<a href="https://paulapivat.com/post/dsfs_4/" target="_blank" rel="noopener">linear algebra</a> post to create the variance function.</p>
+<p>If you look at its wikipedia page, <strong>variance</strong> is the <em>squared deviation</em> of a variable from its mean.</p>
+<p>First, we&rsquo;ll need to create the <code>de_mean</code> function that takes a list of numbers and subtract from all numbers in the list, the mean value (this gives us the deviation from the mean).</p>
+<p>Then, we&rsquo;ll <code>sum_of_squares</code> all those deviations, which means we&rsquo;ll take all the values, multiply them with itself (square it), then add the values (and divide by length of the list minus one) to get the variance.</p>
+<p>Recall that the <code>sum_of_squares</code> is a special case of the <code>dot</code> product function.</p>
+<pre><code class="language-python"># variance
+
+from typing import List
+
+Vector = List[float]
+
+# see vectors.py in chapter 4 for dot and sum_of_squares
+
+def dot(v: Vector, w: Vector) -&gt; float:
+    &quot;&quot;&quot;Computes v_1 * w_1 + ... + v_n * w_n&quot;&quot;&quot;
+    assert len(v) == len(w), &quot;vectors must be the same length&quot;
+    return sum(v_i * w_i for v_i, w_i in zip(v,w))
+    
+def sum_of_squares(v: Vector) -&gt; float:
+    &quot;&quot;&quot;Returns v_1 * v_1 + ... + v_n * v_n&quot;&quot;&quot;
+    return dot(v,v)
+    
+def de_mean(xs: List[float]) -&gt; List[float]:
+    &quot;&quot;&quot;Translate xs by subtracting its mean (so the result has mean 0)&quot;&quot;&quot;
+    x_bar = mean(xs)
+    return [x - x_bar for x in xs]
+    
+def variance(xs: List[float]) -&gt; float:
+    &quot;&quot;&quot;Almost the average squared deviation from the mean&quot;&quot;&quot;
+    assert len(xs) &gt;= 2, &quot;variance requires at least two elements&quot;
+    n = len(xs)
+    deviations = de_mean(xs)
+    return sum_of_squares(deviations) / (n - 1)
+    
+assert 81.54 &lt; variance(num_friends) &lt; 81.55
+</code></pre>
 <p>We&rsquo;ll examine correlations next.</p>
 <h2 id="correlation">Correlation</h2>
 <h3 id="simpsons-paradox">Simpson&rsquo;s Paradox</h3>
