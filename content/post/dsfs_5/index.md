@@ -193,7 +193,7 @@ Aside from our data's central tendencies, we'll also want to understand it's spr
 
 Range is a straightforward max value minus min value. 
 
-Variance measures how for a [set of numbers is from their average value](https://en.wikipedia.org/wiki/Variance). What more interested, for our purpose, is how we need to borrow the functions we had previously built in the [linear algebra](https://paulapivat.com/post/dsfs_4/) post to create the variance function.
+Variance measures how for a [set of numbers is from their average value](https://en.wikipedia.org/wiki/Variance). What's more interesting, for our purpose, is how we need to borrow the functions we had previously built in the [linear algebra](https://paulapivat.com/post/dsfs_4/) post to create the variance function.
 
 If you look at its wikipedia page, **variance** is the *squared deviation* of a variable from its mean. 
 
@@ -241,7 +241,7 @@ Because of the `sum_of_squares` portion of variance, which means its input units
 
 A more common alternative is the **standard deviation**. Here we take the variance and take it's square root using Python's math module. 
 
-With a standard deviation of 9.03, and we know the mean of `num_friends` is 7.3, anything below 7 + 9 = 16 or 7 - 9 (0 friends) friends is still *within a standard deviation of the mean*. ANd we can check by running `friend_counts` that most people are within a standard deviation of the mean. 
+With a standard deviation of 9.03, and we know the mean of `num_friends` is 7.3, anything below 7 + 9 = 16 or 7 - 9 (0 friends) friends is still *within a standard deviation of the mean*. And we can check by running `friend_counts` that most people are within a standard deviation of the mean. 
 
 On the other hand, we know that someone with 20 friends is **more than one standard deviation** away from the mean. 
 
@@ -273,7 +273,7 @@ We'll examine covariance and correlations next.
 
 ## Correlation
 
-IF variance is how much a single variable *deviates* from its mean (i.e., see `de_mean` above), then **covariance** measures how two variables vary from *their* mean. With the idea that if they co-vary the same amount, then they could be related in some way. 
+If variance is how much a single variable *deviates* from its mean (i.e., see `de_mean` above), then **covariance** measures how two variables vary from *their* mean. With the idea that if they co-vary the same amount, then they could be related in some way. 
 
 Here we'll borrow the `dot` production function we developed in the [linear algebra](https://paulapivat.com/post/dsfs_4/) post. 
 
@@ -314,6 +314,6 @@ One thing to keep in mind is **simpson's paradox** or when the relationship betw
 
 ### Summary
 
-We are just five chapters in and we can begin to see how we're building the tools *now*, that we'll use later on. Here's a pictoral summary of what we've covered in this post. 
+We are just five chapters in and we can begin to see how we're building the tools *now*, that we'll use later on. Here's a pictoral summary of what we've covered in this post and how it connects to previous posts, namely [linear algebra](https://paulapivat.com/post/dsfs_4/) and the [python crash course](https://paulapivat.com/post/dsfs_2/). 
 
-![summary](./summary.png)
+![summary](./summary.png) 

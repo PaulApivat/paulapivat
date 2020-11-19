@@ -151,7 +151,7 @@ friend_counts.most_common(2) # [(6, 22), (1, 22)]
 &lt;p&gt;Aside from our data&amp;rsquo;s central tendencies, we&amp;rsquo;ll also want to understand it&amp;rsquo;s spread or dispersion. The tools to do this are &lt;code&gt;data_range&lt;/code&gt;, &lt;code&gt;variance&lt;/code&gt;, &lt;code&gt;standard deviation&lt;/code&gt; and &lt;code&gt;interquartile range&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Range is a straightforward max value minus min value.&lt;/p&gt;
 &lt;p&gt;Variance measures how for a 
-&lt;a href=&#34;https://en.wikipedia.org/wiki/Variance&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;set of numbers is from their average value&lt;/a&gt;. What more interested, for our purpose, is how we need to borrow the functions we had previously built in the 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Variance&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;set of numbers is from their average value&lt;/a&gt;. What&amp;rsquo;s more interesting, for our purpose, is how we need to borrow the functions we had previously built in the 
 &lt;a href=&#34;https://paulapivat.com/post/dsfs_4/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;linear algebra&lt;/a&gt; post to create the variance function.&lt;/p&gt;
 &lt;p&gt;If you look at its wikipedia page, &lt;strong&gt;variance&lt;/strong&gt; is the &lt;em&gt;squared deviation&lt;/em&gt; of a variable from its mean.&lt;/p&gt;
 &lt;p&gt;First, we&amp;rsquo;ll need to create the &lt;code&gt;de_mean&lt;/code&gt; function that takes a list of numbers and subtract from all numbers in the list, the mean value (this gives us the deviation from the mean).&lt;/p&gt;
@@ -193,7 +193,7 @@ assert 81.54 &amp;lt; variance(num_friends) &amp;lt; 81.55
 &lt;p&gt;What does a variance of 81.54 mean?&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;A more common alternative is the &lt;strong&gt;standard deviation&lt;/strong&gt;. Here we take the variance and take it&amp;rsquo;s square root using Python&amp;rsquo;s math module.&lt;/p&gt;
-&lt;p&gt;With a standard deviation of 9.03, and we know the mean of &lt;code&gt;num_friends&lt;/code&gt; is 7.3, anything below 7 + 9 = 16 or 7 - 9 (0 friends) friends is still &lt;em&gt;within a standard deviation of the mean&lt;/em&gt;. ANd we can check by running &lt;code&gt;friend_counts&lt;/code&gt; that most people are within a standard deviation of the mean.&lt;/p&gt;
+&lt;p&gt;With a standard deviation of 9.03, and we know the mean of &lt;code&gt;num_friends&lt;/code&gt; is 7.3, anything below 7 + 9 = 16 or 7 - 9 (0 friends) friends is still &lt;em&gt;within a standard deviation of the mean&lt;/em&gt;. And we can check by running &lt;code&gt;friend_counts&lt;/code&gt; that most people are within a standard deviation of the mean.&lt;/p&gt;
 &lt;p&gt;On the other hand, we know that someone with 20 friends is &lt;strong&gt;more than one standard deviation&lt;/strong&gt; away from the mean.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import math
 
@@ -214,7 +214,7 @@ assert interquartile_range(num_friends) == 6
 &lt;p&gt;Now that we describe a single list of data, we&amp;rsquo;ll also want to look at potential relationship between two data sources. For example, we may have a hypothesis that the amount of time spent on the DataScienster social network is somehow related to the number of friends someone has.&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll examine covariance and correlations next.&lt;/p&gt;
 &lt;h2 id=&#34;correlation&#34;&gt;Correlation&lt;/h2&gt;
-&lt;p&gt;IF variance is how much a single variable &lt;em&gt;deviates&lt;/em&gt; from its mean (i.e., see &lt;code&gt;de_mean&lt;/code&gt; above), then &lt;strong&gt;covariance&lt;/strong&gt; measures how two variables vary from &lt;em&gt;their&lt;/em&gt; mean. With the idea that if they co-vary the same amount, then they could be related in some way.&lt;/p&gt;
+&lt;p&gt;If variance is how much a single variable &lt;em&gt;deviates&lt;/em&gt; from its mean (i.e., see &lt;code&gt;de_mean&lt;/code&gt; above), then &lt;strong&gt;covariance&lt;/strong&gt; measures how two variables vary from &lt;em&gt;their&lt;/em&gt; mean. With the idea that if they co-vary the same amount, then they could be related in some way.&lt;/p&gt;
 &lt;p&gt;Here we&amp;rsquo;ll borrow the &lt;code&gt;dot&lt;/code&gt; production function we developed in the 
 &lt;a href=&#34;https://paulapivat.com/post/dsfs_4/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;linear algebra&lt;/a&gt; post.&lt;/p&gt;
 &lt;p&gt;Moreover, we&amp;rsquo;ll examine if there&amp;rsquo;s a relationship between &lt;code&gt;num_friends&lt;/code&gt; and &lt;code&gt;daily_minutes&lt;/code&gt; and &lt;code&gt;daily_hours&lt;/code&gt; (see above).&lt;/p&gt;
@@ -245,7 +245,9 @@ assert 0.24 &amp;lt; correlation(num_friends, daily_hours) &amp;lt; 0.25
 &lt;p&gt;By dividing out the standard deviation of both input variables, correlation is always between -1 (perfect (anti) correlation) and 1 (perfect correlation). A correlation of 0.24 is relatively weak correlation (although what is considered weak, moderate, strong depends on the context of the data).&lt;/p&gt;
 &lt;p&gt;One thing to keep in mind is &lt;strong&gt;simpson&amp;rsquo;s paradox&lt;/strong&gt; or when the relationship between two variables change when accounting for a third, confounding variable. Moreover, we should interpret our correlations with what is, at this point, a cliché, &lt;strong&gt;correlation does not imply causation&lt;/strong&gt; (but a cliché for a reason).&lt;/p&gt;
 &lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
-&lt;p&gt;We are just five chapters in and we can begin to see how we&amp;rsquo;re building the tools &lt;em&gt;now&lt;/em&gt;, that we&amp;rsquo;ll use later on. Here&amp;rsquo;s a pictoral summary of what we&amp;rsquo;ve covered in this post.&lt;/p&gt;
+&lt;p&gt;We are just five chapters in and we can begin to see how we&amp;rsquo;re building the tools &lt;em&gt;now&lt;/em&gt;, that we&amp;rsquo;ll use later on. Here&amp;rsquo;s a pictoral summary of what we&amp;rsquo;ve covered in this post and how it connects to previous posts, namely 
+&lt;a href=&#34;https://paulapivat.com/post/dsfs_4/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;linear algebra&lt;/a&gt; and the 
+&lt;a href=&#34;https://paulapivat.com/post/dsfs_2/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;python crash course&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./summary.png&#34; alt=&#34;summary&#34;&gt;&lt;/p&gt;
 </description>
     </item>
