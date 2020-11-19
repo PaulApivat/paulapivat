@@ -8,7 +8,7 @@ featured: false
 image:
   caption: ""
   focal_point: ""
-lastMod: "2020-09-03T00:00:00Z"
+lastMod: "2020-11-19T00:00:00Z"
 projects: []
 subtitle: Finding beauty in the process
 summary: TidyTuesday Outtakes
@@ -29,3 +29,10 @@ Another plot with less hair:
 I call this Disco Fire:
 
 ![png](./disco_fire.png)
+
+## TidyTuesday 2020-10-13 (week 42)
+
+Dino-turn-Rorschach test
+
+![png](./density_dino.png)
+
