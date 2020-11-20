@@ -758,6 +758,12 @@
 
     <div class="article-style">
       <h3 id="table-of-contents">Table of contents</h3>
+<ul>
+<li>
+<a href="#describing">Describing Data</a></li>
+<li>
+<a href="#correlation">Finding Relationships in Data</a></li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>This post is chapter 5 in continuation of my coverage of 
 <a href="https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/" target="_blank" rel="noopener">Data Science from Scratch by Joel Grus</a>.</p>
@@ -766,7 +772,7 @@
 <a href="https://github.com/python/cpython/blob/3.9/Lib/statistics.py" target="_blank" rel="noopener">statistics module in Python</a>.</p>
 <p>The primary value of this book, and by extension this post, in my opinion, is the emphasis on <strong>learning</strong> how Python primitives can be used to build tools from the ground up.</p>
 <p>Specifically, we&rsquo;ll examine how specific features of the Python language as well as functions we built in a previous post on 
-<a href="https://paulapivat.com/post/dsfs_4/" target="_blank" rel="noopener">linear algebra</a> can be used to build tools used to <em>describe</em> data and relationships within data (aka statistics).</p>
+<a href="https://paulapivat.com/post/dsfs_4/" target="_blank" rel="noopener">linear algebra</a> can be used to build tools used to <em>describe</em> data and relationships within data (aka <strong>statistics</strong>).</p>
 <p>I think this is pretty cool. Hopefully you agree.</p>
 <h4 id="example-data">Example Data</h4>
 <p>This chapter continues the narrative of you as a newly hired data scientist at DataScienster, the social network for data scientists, and your job is to <em>describe</em> how many friends members in this social network has. We have two <code>lists</code> of <code>float</code> to work with. We&rsquo;ll work with <code>num_friends</code> first, then <code>daily_minutes</code> later.</p>
@@ -774,18 +780,17 @@
 <a href="https://github.com/joelgrus/data-science-from-scratch/blob/master/scratch/statistics.py" target="_blank" rel="noopener">github repo (statistics.py)</a></p>
 <pre><code class="language-python">num_friends = [100.0,49,41,40,25,21,21,19,19,18,18,16,15,15,15,15,14,14,13,13,13,13,12,12,11,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8,8,8,8,8,8,8,8,8,8,8,8,8,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 
-
 daily_minutes = [1,68.77,51.25,52.08,38.36,44.54,57.13,51.4,41.42,31.22,34.76,54.01,38.79,47.59,49.1,27.66,41.03,36.73,48.65,28.12,46.62,35.57,32.98,35,26.07,23.77,39.73,40.57,31.65,31.21,36.32,20.45,21.93,26.02,27.34,23.49,46.94,30.5,33.8,24.23,21.4,27.94,32.24,40.57,25.07,19.42,22.39,18.42,46.96,23.72,26.41,26.97,36.76,40.32,35.02,29.47,30.2,31,38.11,38.18,36.31,21.03,30.86,36.07,28.66,29.08,37.28,15.28,24.17,22.31,30.17,25.53,19.85,35.37,44.6,17.23,13.47,26.33,35.02,32.09,24.81,19.33,28.77,24.26,31.98,25.73,24.86,16.28,34.51,15.23,39.72,40.8,26.06,35.76,34.76,16.13,44.04,18.03,19.65,32.62,35.59,39.43,14.18,35.24,40.13,41.82,35.45,36.07,43.67,24.61,20.9,21.9,18.79,27.61,27.21,26.61,29.77,20.59,27.53,13.82,33.2,25,33.1,36.65,18.63,14.87,22.2,36.81,25.53,24.62,26.25,18.21,28.08,19.42,29.79,32.8,35.99,28.32,27.79,35.88,29.06,36.28,14.1,36.63,37.49,26.9,18.58,38.48,24.48,18.95,33.55,14.24,29.04,32.51,25.63,22.22,19,32.73,15.16,13.9,27.2,32.01,29.27,33,13.74,20.42,27.32,18.23,35.35,28.48,9.08,24.62,20.12,35.26,19.92,31.02,16.49,12.16,30.7,31.22,34.65,13.13,27.51,33.2,31.57,14.1,33.42,17.44,10.12,24.42,9.82,23.39,30.93,15.03,21.67,31.09,33.29,22.61,26.89,23.48,8.38,27.81,32.35,23.84]
 
 daily_hours = [dm / 60 for dm in daily_minutes]
 </code></pre>
-<h2 id="describing-data">Describing Data</h2>
+<h2 id="describing">Describing</h2>
 <p>The <code>num_friends</code> list is a list of numbers representing &ldquo;number of friends&rdquo; a person has, so for example, one person has 100 friends. The first thing we do to describe the data is to create a bar chart plotting the number of people who have 100 friends, 49 friends, 41 friends, and so on.</p>
-<p>We first import <code>Counter</code> from <code>collections</code>. We also import <code>matplotlib.pyplot</code>.</p>
-<p>We the <code>Counter</code> collection to turn the <code>num_friends</code> list into a <code>defaultdict(int)</code>-like object mapping keys to counts. For more info, please refer to this 
-<a href="https://paulapivat.com/post/dsfs_2/#counters" target="_blank" rel="noopener">previous post</a> on the topic.</p>
-<p><code>Counter</code> is a very convenient way to count the values in num_friends. Once we use the <code>Counter</code> collection, a 
-<a href="https://docs.python.org/2/library/collections.html" target="_blank" rel="noopener">high-performance container datatype</a>, we can use methods like <code>most_common</code>.</p>
+<p>We&rsquo;ll import <code>Counter</code> from <code>collections</code> and import <code>matplotlib.pyplot</code>.</p>
+<p>We&rsquo;ll use <code>Counter</code> to turn <code>num_friends</code> list into a <code>defaultdict(int)</code>-like object mapping keys to counts. For more info, please refer to this 
+<a href="https://paulapivat.com/post/dsfs_2/#counters" target="_blank" rel="noopener">previous post</a> on the Counters.</p>
+<p>Once we use the <code>Counter</code> collection, a 
+<a href="https://docs.python.org/2/library/collections.html" target="_blank" rel="noopener">high-performance container datatype</a>, we can use methods like <code>most_common</code> to find the keys with the most common values. Here we see that the five most common <em>number of friends</em> are 6, 1, 4, 3 and 9, respectively.</p>
 <pre><code class="language-python">from collections import Counter
 
 import matplotlib.pyplot as plt
@@ -797,8 +802,8 @@ friend_counts = Counter(num_friends)
 friend_counts.most_common(5) 
 </code></pre>
 <p>To proceed with plotting, we&rsquo;ll use <code>friend_counts</code> to create a <code>list comprehension</code> that will loop through <code>friends_count</code> and for all <strong>keys</strong> from 0-101 (xs) and print a corresponding <strong>value</strong> (if it exists). This becomes the y-axis to <code>num_friends</code>, which is the x-axis:</p>
-<pre><code class="language-python">xs = range(101)   # largest num_friend value is 100
-ys = [friend_counts[x] for x in xs]
+<pre><code class="language-python">xs = range(101)                     # x-axis: largest num_friend value is 100
+ys = [friend_counts[x] for x in xs] # y-axis
 plt.bar(xs, ys)
 plt.axis([0, 101, 0, 25])
 plt.title(&quot;Histogram of Friend Counts&quot;)
@@ -806,11 +811,11 @@ plt.xlabel(&quot;# of friends&quot;)
 plt.ylabel(&quot;# of people&quot;)
 plt.show()
 </code></pre>
-<p>This produced this plot below. You can see one person with 100 friends.</p>
+<p>Here is the plot below. You can see one person with 100 friends.</p>
 <p><img src="./histo_friend_counts.png" alt="histo_friend_counts.png"></p>
 <p>You can also read more about data visualization 
 <a href="https://paulapivat.com/post/dsfs_3/" target="_blank" rel="noopener">here</a>.</p>
-<p>Alternatively, we could generate simple statistics to describe the data using built-in Python methods: len, min, max and sorted.</p>
+<p>Alternatively, we could generate simple statistics to describe the data using built-in Python methods: <code>len</code>, <code>min</code>, <code>max</code> and <code>sorted</code>.</p>
 <pre><code class="language-python">num_points = len(num_friends) # number of data points in num_friends: 204
 largest_value = max(num_friends) # largest value in num_friends: 100
 smallest_value = min(num_friends) # smallest value in num_friends: 1
@@ -819,7 +824,7 @@ sorted_values = sorted(num_friends) # sort the values in ascending order
 second_largest_value = sorted_values[-2] # second largest value from the back: 49
 </code></pre>
 <h3 id="central-tendencies">Central Tendencies</h3>
-<p>The most common way of describing a set of data is to find it&rsquo;s average, which is the sum of all the values, divided by the number of values. <em>note</em> : we&rsquo;ll continue to use type annotations.</p>
+<p>The most common way of describing a set of data is to find it&rsquo;s <strong>mean</strong>, which is the sum of all the values, divided by the number of values. <em>note</em> : we&rsquo;ll continue to use type annotations. In my opinion, it helps you be a more deliberate and mindful Python programmer.</p>
 <pre><code class="language-python">from typing import List
 
 def mean(xs: List[float]) -&gt; float:
@@ -827,11 +832,10 @@ def mean(xs: List[float]) -&gt; float:
     
 assert 7.3333 &lt; mean(num_friends) &lt; 7.3334
 </code></pre>
-<p>However, the mean is <strong>notoriously sensitive to outliers</strong> so statisticians often supplement their analysis with other measures of central tendencies like <strong>median</strong> Because the median is the <em>middle-most value</em>, it matters whether there is an <em>even</em> or <em>odd</em> number of data points.</p>
-<p>Here we&rsquo;ll create two private functions for both situations - even and odd number of data points - in calculating the median. This first requires that we sort the data values. Then, in the case case of <em>even number</em> values, we&rsquo;ll find the two middle values and split them. In the case of <em>odd number</em> of values, we&rsquo;ll divide the <em>length</em> of the dataset by 2 (i.e., 50).</p>
+<p>However, the mean is <strong>notoriously sensitive to outliers</strong> so statisticians often supplement with other measures of central tendencies like <strong>median</strong>. Because the median is the <em>middle-most value</em>, it matters whether there is an <em>even</em> or <em>odd</em> number of data points.</p>
+<p>Here, we&rsquo;ll create two private functions for both situations - even and odd number of data points - in calculating the median. First, we&rsquo;ll sort the data values. Then, for <em>even number</em> values, we&rsquo;ll find the two middle values and split them. For <em>odd number</em> of values, we&rsquo;ll divide the <em>length</em> of the dataset by 2 (i.e., 50).</p>
 <p>Our median function will return either of the private function <code>_median_even</code> or <code>_median_odd</code> conditionally depending on if the length of a list of numbers is divisible (%2==0) by 2.</p>
-<pre><code class="language-python">
-def _median_even(xs: List[float]) -&gt; float:
+<pre><code class="language-python">def _median_even(xs: List[float]) -&gt; float:
     &quot;&quot;&quot;If len(xs) is even, it's the average of the middle two elements&quot;&quot;&quot;
     sorted_xs = sorted(xs)
     hi_midpoint = len(xs) // 2   # e.g. length 4 =&gt; hi_midpoint 2
@@ -857,12 +861,12 @@ assert median([1, 9, 2, 10]) == (2 + 9) / 2
     ,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1
     ,1,1,1,1,1,1,1,1,1,1,1,1]
     
-mean(num_friends2) # 7.333 =&gt; 55.86274509803921
-median(num_friends2) # 6.0 =&gt; 6.0
+mean(num_friends2)   # more sensitive to outliers: 7.333 =&gt; 55.86274509803921
+median(num_friends2) # less sensitive to outliers: 6.0 =&gt; 6.0
 
 </code></pre>
-<p>You may also used <code>quantiles</code> to describe your data. Whenever you&rsquo;ve heard &ldquo;75th percentile&rdquo;, that is a description of quantiles relative to 100. In fact, the median is the 50% of the data lies (or 50th percentile).</p>
-<p>Because <code>quantile</code> is a position from 0-100, the second argument is a float from 0.0 to 1.0. We use that float to multiply with the length of the list. Then we wrap in <code>int</code> to round down. That gives us a value that we can index a sorted xs to find the quantile.</p>
+<p>You may also used <code>quantiles</code> to describe your data. Whenever you&rsquo;ve heard &ldquo;X percentile&rdquo;, that is a description of quantiles relative to 100. In fact, the median is the 50th percentile (where 50% of the data lies below this point and 50% lies above).</p>
+<p>Because <code>quantile</code> is a position from 0-100, the second argument is a float from 0.0 to 1.0. We&rsquo;ll use that float to multiply with the length of the list. Then we&rsquo;ll wrap in <code>int</code> to create an integer index which we&rsquo;ll use on a sorted xs to find the quantile.</p>
 <pre><code class="language-python">def quantile(xs: List[float], p: float) -&gt; float:
     &quot;&quot;&quot;Returns the pth-percentile value in x&quot;&quot;&quot;
     p_index = int(p * len(xs))  
@@ -873,7 +877,8 @@ assert quantile(num_friends, 0.25) == 3
 assert quantile(num_friends, 0.75) == 9
 assert quantile(num_friends, 0.90) == 13
 </code></pre>
-<p>Finally, we have the <strong>mode</strong>, which looks at the most common values. First, we use the <code>Counter</code> method on our list parameter and since Counter is a subclass of <code>dict</code> we have access to methods like <code>values()</code> to find all the values and <code>items()</code> to find key value pairs. We define <code>max_count</code> to find the max value (22), then the function returns a list comprehension which loops through <code>counts.items()</code> to find the key associated with the max_count (22). That is 1 and 6, meaning twenty-two people had one or six friends.</p>
+<p>Finally, we have the <strong>mode</strong>, which looks at the most common values. First, we use the <code>Counter</code> method on our list parameter and since Counter is a subclass of <code>dict</code> we have access to methods like <code>values()</code> to find all the values and <code>items()</code> to find key value pairs.</p>
+<p>We define <code>max_count</code> to find the max value (22), then the function returns a list comprehension which loops through <code>counts.items()</code> to find the key associated with the max_count (22). That is 1 and 6, meaning twenty-two people (the <strong>mode</strong>) had one or six friends.</p>
 <pre><code class="language-python">def mode(x: List[float]) -&gt; List[float]:
     &quot;&quot;&quot;Returns a list, since there might be more than one mode&quot;&quot;&quot;
     counts = Counter(x)
@@ -890,7 +895,7 @@ friend_counts.most_common(2) # [(6, 22), (1, 22)]
 <h3 id="dispersion">Dispersion</h3>
 <p>Aside from our data&rsquo;s central tendencies, we&rsquo;ll also want to understand it&rsquo;s spread or dispersion. The tools to do this are <code>data_range</code>, <code>variance</code>, <code>standard deviation</code> and <code>interquartile range</code>.</p>
 <p>Range is a straightforward max value minus min value.</p>
-<p>Variance measures how for a 
+<p>Variance measures how far a 
 <a href="https://en.wikipedia.org/wiki/Variance" target="_blank" rel="noopener">set of numbers is from their average value</a>. What&rsquo;s more interesting, for our purpose, is how we need to borrow the functions we had previously built in the 
 <a href="https://paulapivat.com/post/dsfs_4/" target="_blank" rel="noopener">linear algebra</a> post to create the variance function.</p>
 <p>If you look at its wikipedia page, <strong>variance</strong> is the <em>squared deviation</em> of a variable from its mean.</p>
@@ -928,11 +933,11 @@ def variance(xs: List[float]) -&gt; float:
     
 assert 81.54 &lt; variance(num_friends) &lt; 81.55
 </code></pre>
-<p>Because of the <code>sum_of_squares</code> portion of variance, which means its input units are squared, then added, it can be harder to interpret. For example, we have a <code>num_friends</code> with values ranging from 0 to 100.</p>
+<p>The <strong>variance</strong> is <code>sum_of_squares</code> deviations, which can be tricky to interpret. For example, we have a <code>num_friends</code> with values ranging from 0 to 100.</p>
 <blockquote>
 <p>What does a variance of 81.54 mean?</p>
 </blockquote>
-<p>A more common alternative is the <strong>standard deviation</strong>. Here we take the variance and take it&rsquo;s square root using Python&rsquo;s math module.</p>
+<p>A more common alternative is the <strong>standard deviation</strong>. Here we take the square root of the variance using Python&rsquo;s <code>math</code> module.</p>
 <p>With a standard deviation of 9.03, and we know the mean of <code>num_friends</code> is 7.3, anything below 7 + 9 = 16 or 7 - 9 (0 friends) friends is still <em>within a standard deviation of the mean</em>. And we can check by running <code>friend_counts</code> that most people are within a standard deviation of the mean.</p>
 <p>On the other hand, we know that someone with 20 friends is <strong>more than one standard deviation</strong> away from the mean.</p>
 <pre><code class="language-python">import math
@@ -954,7 +959,7 @@ assert interquartile_range(num_friends) == 6
 <p>Now that we describe a single list of data, we&rsquo;ll also want to look at potential relationship between two data sources. For example, we may have a hypothesis that the amount of time spent on the DataScienster social network is somehow related to the number of friends someone has.</p>
 <p>We&rsquo;ll examine covariance and correlations next.</p>
 <h2 id="correlation">Correlation</h2>
-<p>If variance is how much a single variable <em>deviates</em> from its mean (i.e., see <code>de_mean</code> above), then <strong>covariance</strong> measures how two variables vary from <em>their</em> mean. With the idea that if they co-vary the same amount, then they could be related in some way.</p>
+<p>If variance is how much a <em>single</em> set of numbers deviates from its mean (i.e., see <code>de_mean</code> above), then <strong>covariance</strong> measures how two sets of numbers vary from <em>their</em> means. With the idea that if they co-vary the same amount, then they could be related.</p>
 <p>Here we&rsquo;ll borrow the <code>dot</code> production function we developed in the 
 <a href="https://paulapivat.com/post/dsfs_4/" target="_blank" rel="noopener">linear algebra</a> post.</p>
 <p>Moreover, we&rsquo;ll examine if there&rsquo;s a relationship between <code>num_friends</code> and <code>daily_minutes</code> and <code>daily_hours</code> (see above).</p>
@@ -969,7 +974,7 @@ assert 22.42 / 60 &lt; covariance(num_friends, daily_hours) &lt; 22.43 / 60
 <blockquote>
 <p>What does that mean? Is that considered a strong relationship?</p>
 </blockquote>
-<p>A more intuitive measure would be <strong>correlation</strong>:</p>
+<p>A more intuitive measure would be a <strong>correlation</strong>:</p>
 <pre><code class="language-python">def correlation(xs: List[float], ys: List[float]) -&gt; float:
     &quot;&quot;&quot;Measures how much xs and ys vary in tandem about their means&quot;&quot;&quot;
     stdev_x = standard_deviation(xs)
@@ -983,12 +988,14 @@ assert 0.24 &lt; correlation(num_friends, daily_minutes) &lt; 0.25
 assert 0.24 &lt; correlation(num_friends, daily_hours) &lt; 0.25
 </code></pre>
 <p>By dividing out the standard deviation of both input variables, correlation is always between -1 (perfect (anti) correlation) and 1 (perfect correlation). A correlation of 0.24 is relatively weak correlation (although what is considered weak, moderate, strong depends on the context of the data).</p>
-<p>One thing to keep in mind is <strong>simpson&rsquo;s paradox</strong> or when the relationship between two variables change when accounting for a third, confounding variable. Moreover, we should interpret our correlations with what is, at this point, a cliché, <strong>correlation does not imply causation</strong> (but a cliché for a reason).</p>
+<p>One thing to keep in mind is <strong>simpson&rsquo;s paradox</strong> or when the relationship between two variables change when accounting for a third, <strong>confounding</strong> variable. Moreover, we should keep this cliché in mind (it&rsquo;s a cliché for a reason): <strong>correlation does not imply causation</strong>.</p>
 <h3 id="summary">Summary</h3>
-<p>We are just five chapters in and we can begin to see how we&rsquo;re building the tools <em>now</em>, that we&rsquo;ll use later on. Here&rsquo;s a pictoral summary of what we&rsquo;ve covered in this post and how it connects to previous posts, namely 
+<p>We are just five chapters in and we can begin to see how we&rsquo;re building the tools <em>now</em>, that we&rsquo;ll use later on. Here&rsquo;s a visual summary of what we&rsquo;ve covered in this post and how it connects to previous posts, namely 
 <a href="https://paulapivat.com/post/dsfs_4/" target="_blank" rel="noopener">linear algebra</a> and the 
 <a href="https://paulapivat.com/post/dsfs_2/" target="_blank" rel="noopener">python crash course</a>.</p>
 <p><img src="./summary.png" alt="summary"></p>
+<p>For more content on data science, machine learning, R, Python, SQL and more, 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
     </div>
 
