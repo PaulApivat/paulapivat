@@ -12,7 +12,7 @@ lastMod: "2020-11-19T00:00:00Z"
 projects: []
 subtitle: Descriptive Statistics & Correlations
 summary: Building tools to describe a data and find relationships
-tags: ["Python"]
+tags: ["Python", "Data Science"]
 title: Data Science from Scratch (ch5) - Statistics
 ---
 

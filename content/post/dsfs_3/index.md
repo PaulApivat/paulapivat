@@ -12,7 +12,7 @@ lastMod: "2020-11-05T00:00:00Z"
 projects: []
 subtitle: Data Visualization with Matplotlib
 summary: Visualizing Data in Python
-tags: []
+tags: ["Python", "Data Science"]
 title: Making sense of matplotlib 
 ---
 

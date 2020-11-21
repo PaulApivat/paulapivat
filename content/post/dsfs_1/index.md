@@ -12,7 +12,7 @@ lastMod: "2020-11-03T00:00:00Z"
 projects: []
 subtitle: Frequently Used Python Operations 
 summary: Problem solving in Python
-tags: []
+tags: ["Python", "Data Science"]
 title: Data Science from Scratch (ch1)
 ---
 

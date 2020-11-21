@@ -12,7 +12,7 @@ lastMod: "2020-10-29T00:00:00Z"
 projects: []
 subtitle: Python crash course
 summary: Survey of python features relevant for Data Science
-tags: []
+tags: ["Python", "Data Science"]
 title: Data Science from Scratch (ch2)
 ---
 

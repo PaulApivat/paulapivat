@@ -12,7 +12,7 @@ lastMod: "2020-11-10T00:00:00Z"
 projects: []
 subtitle: Vectors & Matrices
 summary: Building tools for working with vectors and matrices from scratch
-tags: []
+tags: ["Python", "Data Science"]
 title: Data Science from Scratch (ch4) - Linear Algebra
 ---
 
