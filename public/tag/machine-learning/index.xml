@@ -5,12 +5,39 @@
     <link>/tag/machine-learning/</link>
       <atom:link href="/tag/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     <description>Machine Learning</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Sat, 10 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Sat, 21 Nov 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Machine Learning</title>
       <link>/tag/machine-learning/</link>
     </image>
+    
+    <item>
+      <title>End-to-End Projects</title>
+      <link>/post/end_to_end/</link>
+      <pubDate>Sat, 21 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>/post/end_to_end/</guid>
+      <description>&lt;h2 id=&#34;2021-goals&#34;&gt;2021 Goals&lt;/h2&gt;
+&lt;p&gt;One of my goals for 2021 is to build up a portfolio of end-to-end machine learning projects. In this post, I&amp;rsquo;ll keep a running list of resources for inspiration:&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://www.kdnuggets.com/2020/10/guide-authentic-data-science-portfolio-project.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Science Portfolio Projects: A Step-by-Step Guide&lt;/a&gt; (by 
+&lt;a href=&#34;https://www.linkedin.com/in/felix-vemmer/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Felix Vemmer&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;This is a clear step-by-step guide. I like the emphasis on web scraping which is where I need to focus my skills on next.&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;bit.ly/berkeleyfsdl&#34;&gt;Full Stack Deep Learning (at Berkeley)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This looks to be a promising course that covers: &amp;ldquo;a promising experiment to a shipped product: project structure, useful tooling, data management, best practices for deployment, social responsibility, and finding a job or starting a venture&amp;rdquo;. The course is &lt;strong&gt;entirely online&lt;/strong&gt;. See this 
+&lt;a href=&#34;https://twitter.com/full_stack_dl/status/1329477077733609480&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;tweet thread&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://madewithml.com/courses/applied-ml-in-production/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Applied ML in Production&lt;/a&gt; by 
+&lt;a href=&#34;https://twitter.com/GokuMohandas&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Goku Mohandas&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This aims to be a &amp;ldquo;guide and code-driven case study on MLOps for software engineers, data scientists and product managers&amp;hellip;developing an end-to-end ML feature, from product &amp;ndash;&amp;gt; ML &amp;ndash;&amp;gt; production, with open source tools&amp;rdquo;. Sounds very promising.&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://end-to-end-machine-learning.teachable.com/p/complete-course-library-full-end-to-end-machine-learning-catalog&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;End-to-End Machine Learning Course Catalog&lt;/a&gt; by 
+&lt;a href=&#34;https://twitter.com/_brohrer_&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Brandon Rohrer&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Machine learning as a service</title>
