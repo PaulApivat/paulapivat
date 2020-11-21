@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: My interests include data visualization, data analytics and data science.
+bio: My interests include data science, machine learning and R/Python programming.
 education:
   courses:
   - course: Advanced Data Science (R)
@@ -18,10 +18,9 @@ education:
     year: 2014
 email: ""
 interests:
-- Data Visualizations
-- Analytics and Statistics
-- Data Science
-- R programming
+- Data Science & Machine Learning
+- R and Python programming
+- Psychology
 organizations:
 - name: Adjunct | Thammasat University
   url: ""
@@ -46,6 +45,10 @@ user_groups:
 - Visitors
 ---
 
-I help people and organizations make data-driven decisions. My services include data cleaning, data analysis and data visualization. Pre-services include understanding business and organizational OKRs.
+I document and share everything I'm learning in Data Science / Machine Learning, programming in R and Python.
 
-Organizational psychologist turned data scientist.
+I help people and organizations make data-driven decisions. I run [Getwyze](http://getwyze.com/), a data-agency that provides services in data cleaning, analysis and visualizations. 
+
+I started in organizational psychology and have branched out to data science. 
+
+
