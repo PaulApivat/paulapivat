@@ -50,19 +50,7 @@ subtitle = ""
  css_class = ""
 +++
 
-Are you experiencing one or more of the following **problems ?**
-
-- Unsure of what data to collect
-- Want to tell a data-driven story
-- Need to present data through visualization
-
-
-I can **help** with the following:
-
-- Data Visualization
-- Data Cleaning
-- Data Analysis
-- Data Governance
+Documenting and sharing everything I learn about Data Science, Visualizations, Machine Learning, R, Python, SQL and more. 
 
 
 
