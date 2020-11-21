@@ -4,7 +4,7 @@ author: Paul Apivat Hanvongse
 date: "2020-11-16"
 slug: datasaurus
 categories: []
-tags: []
+tags: ["Data Viz", "R Markdown", "Statistics", "RStats"]
 subtitle: "A course supplement"
 summary: "Demonstrating the importance of not (just) trusting summary statistics"
 authors: []

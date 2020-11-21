@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tidyverse | Paul Apivat</title>
+    <link>/tag/tidyverse/</link>
+      <atom:link href="/tag/tidyverse/index.xml" rel="self" type="application/rss+xml" />
+    <description>Tidyverse</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Thu, 03 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>Tidyverse</title>
+      <link>/tag/tidyverse/</link>
+    </image>
+    
+    <item>
+      <title>A collection of weird pretty plots</title>
+      <link>/post/ggplot_art/</link>
+      <pubDate>Thu, 03 Sep 2020 00:00:00 +0000</pubDate>
+      <guid>/post/ggplot_art/</guid>
+      <description>&lt;h2 id=&#34;tidytuesday-2020-08-18-week-34&#34;&gt;TidyTuesday 2020-08-18 (week 34)&lt;/h2&gt;
+&lt;p&gt;In the process of exploring dendrograms, I create jheri curls :)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./plant_dendogram_mess.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Another plot with less hair:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./dendrogram_plant.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;I call this Disco Fire:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./disco_fire.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;tidytuesday-2020-10-13-week-42&#34;&gt;TidyTuesday 2020-10-13 (week 42)&lt;/h2&gt;
+&lt;p&gt;Dino-turn-Rorschach test&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./density_dino.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

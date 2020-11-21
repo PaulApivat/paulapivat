@@ -12,7 +12,7 @@ lastMod: "2020-11-19T00:00:00Z"
 projects: []
 subtitle: Finding beauty in the process
 summary: TidyTuesday Outtakes
-tags: []
+tags: ["Data Viz", "RStats", "Tidyverse"]
 title: A collection of weird pretty plots
 ---
 

@@ -12,7 +12,7 @@ lastMod: "2020-09-10T00:00:00Z"
 projects: []
 subtitle: What is considered canon?
 summary: What is Data Science canon?
-tags: []
+tags: ["Data Science"]
 title: Essential Readings in Data Science
 ---
 

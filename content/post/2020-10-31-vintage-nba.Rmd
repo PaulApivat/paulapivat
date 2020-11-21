@@ -4,7 +4,7 @@ author: Paul Apivat Hanvongse
 date: "2020-10-31"
 slug: vintage-nba
 categories: []
-tags: []
+tags: ["Data Viz", "RStats", "reactable"]
 subtitle: "A {reactable} tutorial"
 summary: "RStudio Table Competition 2020 entry in the tutorial category"
 authors: []

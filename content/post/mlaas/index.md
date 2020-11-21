@@ -12,7 +12,7 @@ lastMod: "2020-10-10T00:00:00Z"
 projects: []
 subtitle: Creating an API endpoint for your model
 summary: Connecting models to an API
-tags: []
+tags: ["Machine Learning"]
 title: Machine learning as a service
 ---
 

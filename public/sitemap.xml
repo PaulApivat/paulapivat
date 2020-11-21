@@ -163,7 +163,27 @@
   </url>
   
   <url>
+    <loc>/tag/data-viz/</loc>
+    <lastmod>2020-11-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/datasaurus/</loc>
+    <lastmod>2020-11-16T20:24:12+07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/r-markdown/</loc>
+    <lastmod>2020-11-16T20:24:12+07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/rstats/</loc>
+    <lastmod>2020-11-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/statistics/</loc>
     <lastmod>2020-11-16T20:24:12+07:00</lastmod>
   </url>
   
@@ -188,6 +208,11 @@
   </url>
   
   <url>
+    <loc>/tag/reactable/</loc>
+    <lastmod>2020-10-31T20:24:12+07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/vintage-nba/</loc>
     <lastmod>2020-10-31T20:24:12+07:00</lastmod>
   </url>
@@ -203,6 +228,11 @@
   </url>
   
   <url>
+    <loc>/tag/machine-learning/</loc>
+    <lastmod>2020-10-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/mlaas/</loc>
     <lastmod>2020-10-10T00:00:00+00:00</lastmod>
   </url>
@@ -214,6 +244,11 @@
   
   <url>
     <loc>/post/ggplot_art/</loc>
+    <lastmod>2020-11-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/tidyverse/</loc>
     <lastmod>2020-11-19T00:00:00+00:00</lastmod>
   </url>
   
@@ -234,11 +269,6 @@
   
   <url>
     <loc>/slides/wpa/</loc>
-    <lastmod>2020-06-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tag/data-viz/</loc>
     <lastmod>2020-06-24T00:00:00+00:00</lastmod>
   </url>
   
@@ -399,11 +429,6 @@
   
   <url>
     <loc>/category/r/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tag/r-markdown/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
   </url>
   

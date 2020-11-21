@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning | Paul Apivat</title>
+    <link>/tag/machine-learning/</link>
+      <atom:link href="/tag/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <description>Machine Learning</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Sat, 10 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>Machine Learning</title>
+      <link>/tag/machine-learning/</link>
+    </image>
+    
+    <item>
+      <title>Machine learning as a service</title>
+      <link>/post/mlaas/</link>
+      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>/post/mlaas/</guid>
+      <description>&lt;h2 id=&#34;preparing-api-endpoints-in-python-with-flask&#34;&gt;Preparing API endpoints in Python with Flask&lt;/h2&gt;
+&lt;p&gt;In this post, we&amp;rsquo;ll create a minimal API endpoint that allows users to make request to calculate the area of a rectangle. The following code sets up an API endpoint locally. We&amp;rsquo;ll import &lt;code&gt;Flask&lt;/code&gt;, a lightweight web application framework and &lt;code&gt;CORS&lt;/code&gt; (cross-origin resource sharing) which allows for various HTTP requests.&lt;/p&gt;
+&lt;p&gt;We have two endpoints, one basic &amp;ldquo;hello world&amp;rdquo; and the other calculate the area (i.e., width x height).&lt;/p&gt;
+&lt;p&gt;This is saved in &lt;code&gt;App.py&lt;/code&gt;. The command to run this file is &lt;code&gt;$ python3 App.py&lt;/code&gt;. The last line ensures the API is running locally on &lt;code&gt;localhost:5000&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from flask import Flask, request
+from flask_cors import CORS, cross_origin
+import joblib
+import numpy as np 
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route(&#39;/&#39;)
+def helloworld():
+    return &#39;Helloworld&#39;
+
+# Example request: http://localhost:5000/area?w=50&amp;amp;h=3
+@app.route(&#39;/area&#39;, methods=[&#39;GET&#39;])
+@cross_origin()
+def area():
+    w = float(request.values[&#39;w&#39;])
+    h = float(request.values[&#39;h&#39;])
+    return str(w * h)
+
+if __name__ == &#39;__main__&#39;:
+    app.run(host=&#39;0.0.0.0&#39;, port=5000, debug=True)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can just run &lt;code&gt;localhost:5000&lt;/code&gt; and get &lt;code&gt;Helloworld&lt;/code&gt; or make a request to get the &lt;strong&gt;area&lt;/strong&gt;, for example: &lt;code&gt;http://localhost:5000/area?w=20&amp;amp;h=33&lt;/code&gt; (this yeilds 660)&lt;/p&gt;
+&lt;h2 id=&#34;training-a-logistic-regression-classification-model&#34;&gt;Training a Logistic Regression classification model&lt;/h2&gt;
+&lt;p&gt;After setting up some API endpoints, it&amp;rsquo;s time to create a basic machine learning model. We&amp;rsquo;ll create a logistic regression model to classify flowers from the &lt;strong&gt;Iris&lt;/strong&gt; dataset. This will be created in &lt;em&gt;one&lt;/em&gt; &lt;code&gt;jupyter notebook&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll load all required libraries.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+import joblib
+import numpy as np
+import pandas as pd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, we&amp;rsquo;ll load the Iris dataset that comes with scikit learn, &lt;code&gt;sklearn&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;iris = load_iris()
+
+# assign two variables at once
+X, y = iris[&#39;data&#39;], iris[&#39;target&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We&amp;rsquo;ll reshape the data using &lt;code&gt;numpy&lt;/code&gt;, then split the data into training and validation sets.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# reshape data for logistic regression
+dataset = np.hstack((X, y.reshape(-1,1)))
+np.random.shuffle(dataset)
+
+# split data into training, validation sets
+X_train, X_test, y_train, y_test = train_test_split(dataset[:, :4],
+                                                    dataset[:, 4],
+                                                    test_size=0.2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We&amp;rsquo;ll then fit a logistic regression model by fitting the training set to the validation set.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;model = LogisticRegression()
+model.fit(X_train, y_train)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, we&amp;rsquo;ll use the model to predict on the validation data (&lt;em&gt;note&lt;/em&gt;: in a real project a distinction is made between &lt;code&gt;validation&lt;/code&gt; and &lt;code&gt;testing&lt;/code&gt; sets, but we&amp;rsquo;ll blur that distinction for this demo). You can also test the model to make a prediction on a single observation.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s also a good idea to get the &lt;code&gt;accuracy_score()&lt;/code&gt;, although it may not be ideal for classification models.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# make a prediction
+y_pred = model.predict(X_test)
+
+# get accuracy score
+accuracy_score(y_test, y_pred)
+
+# make prediction on single Iris obervation
+model.predict([[5.1, 3.5, 1.4, 0.2]])
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, we need to use &lt;code&gt;joblib&lt;/code&gt; to save an &lt;code&gt;iris.model&lt;/code&gt; to our directory, this will be used to connect to the API.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;joblib.dump(model, &#39;iris.model&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;creating-an-api-endpoint-for-the-logistic-regression-model&#34;&gt;Creating an API endpoint for the Logistic Regression model&lt;/h2&gt;
+&lt;p&gt;Back in the &lt;code&gt;App.py&lt;/code&gt; file, we&amp;rsquo;ll &lt;em&gt;add&lt;/em&gt; this section to create an endpoint, the &lt;code&gt;predict_species()&lt;/code&gt; function that loads the &lt;code&gt;iris.model&lt;/code&gt;, then sends a Post request of the four parameter values from &lt;code&gt;iris[&#39;data&#39;]&lt;/code&gt;. The &lt;code&gt;predict_species()&lt;/code&gt; function will then return one of three flower species.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@app.route(&#39;/iris&#39;, methods=[&#39;POST&#39;])
+@cross_origin()
+def predict_species():
+    model = joblib.load(&#39;iris.model&#39;)  #needs to be the correct path
+    req = request.values[&#39;param&#39;]
+    inputs = np.array(req.split(&#39;,&#39;), dtype=np.float32).reshape(1,-1)
+    predict_target = model.predict(inputs)
+    if predict_target == 0:
+        return &#39;Setosa&#39;
+    elif predict_target == 1:
+        return &#39;Versicolor&#39;
+    else:
+        return &#39;Virginica&#39;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;testing-the-api-endpoint-on-postman&#34;&gt;Testing the API endpoint on Postman&lt;/h2&gt;
+&lt;p&gt;Finally, we&amp;rsquo;ll use 
+&lt;a href=&#34;https://www.postman.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Postman&lt;/a&gt;, a platform for API development. We will &lt;strong&gt;post&lt;/strong&gt; four parameters (i.e., sepal length, sepal width, petal length and petal width) to the API endpoint and expect to receive a name back, either Setosa, Versicolor or Virginica.
+In Postman, we&amp;rsquo;ll create a new collection and a new request:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./postman.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The next step from here is to go beyond localhost and deploy the model. We&amp;rsquo;ll explore that in another post.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
