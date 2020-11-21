@@ -50,7 +50,7 @@ subtitle = ""
  css_class = ""
 +++
 
-Documenting and sharing everything I learn about Data Science, Visualizations, Machine Learning, R, Python, SQL and more. 
+Welcome to my page where I document and share everything I'm learning about Data Science, Visualizations, Machine Learning, R, Python, SQL and more. 
 
 
 

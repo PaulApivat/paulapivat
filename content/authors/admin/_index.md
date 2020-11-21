@@ -45,10 +45,8 @@ user_groups:
 - Visitors
 ---
 
-I document and share everything I'm learning in Data Science / Machine Learning, programming in R and Python.
-
 I help people and organizations make data-driven decisions. I run [Getwyze](http://getwyze.com/), a data-agency that provides services in data cleaning, analysis and visualizations. 
 
-I started in organizational psychology and have branched out to data science. 
+I started in organizational psychology and have branched out to data science. For daily updates on my data science journey, find me on [Twitter](https://twitter.com/paulapivat). 
 
 
