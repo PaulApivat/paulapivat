@@ -5,12 +5,72 @@
     <link>/tag/python/</link>
       <atom:link href="/tag/python/index.xml" rel="self" type="application/rss+xml" />
     <description>Python</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Thu, 19 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Sun, 22 Nov 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Python</title>
       <link>/tag/python/</link>
     </image>
+    
+    <item>
+      <title>Data Science from Scratch (ch6) - Probability</title>
+      <link>/post/dsfs_6/</link>
+      <pubDate>Sun, 22 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>/post/dsfs_6/</guid>
+      <description>&lt;h3 id=&#34;table-of-contents&#34;&gt;Table of contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;#challenge&#34;&gt;Challenge&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#marginal_and_joint_probabilities&#34;&gt;Marginal and Joint Probability&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#conditional_probability&#34;&gt;Conditional Probability&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#bayes_theorem&#34;&gt;Bayes&amp;rsquo; Theorem&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;h2 id=&#34;challenge&#34;&gt;Challenge&lt;/h2&gt;
+&lt;p&gt;The first challenge in this section is distinguishing between &lt;strong&gt;two&lt;/strong&gt; conditional probability statements.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the setup. We have a family with two (unknown) children with two assumptions. First, each child is equally likely to be a boy or a girl. Second, the gender of the second child is &lt;em&gt;independent&lt;/em&gt; of the gender of the first child.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Statement 1: What is the probability of the event &amp;ldquo;both children are girls&amp;rdquo; (B) conditional on the event &amp;ldquo;the older child is a girl&amp;rdquo; (G)?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The probability for statement one is roughly 50% or (1/2).&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Statement 2: What is the probability of the event &amp;ldquo;both children are girls&amp;rdquo; (B) conditional on the event &amp;ldquo;at least one of the children is a girl&amp;rdquo; (L)?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The probability for statement two is roughly 33% or (1/3).&lt;/p&gt;
+&lt;p&gt;But at first glance, they look similar.&lt;/p&gt;
+&lt;h2 id=&#34;marginal_and_joint_probabilities&#34;&gt;Marginal_and_Joint_Probabilities&lt;/h2&gt;
+&lt;p&gt;The book jumps straight to conditional probabilities, but first, we&amp;rsquo;ll have to look at &lt;strong&gt;marginal&lt;/strong&gt; and &lt;strong&gt;joint&lt;/strong&gt; probabilities. Then we&amp;rsquo;ll create a &lt;strong&gt;joint probabilities table&lt;/strong&gt; and &lt;strong&gt;sum&lt;/strong&gt; probabilities to help us figure out the differences. We&amp;rsquo;ll then &lt;em&gt;resume&lt;/em&gt; with &lt;strong&gt;conditional probabilities&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Before anything, we need to realize the situation we have is one of &lt;strong&gt;independence&lt;/strong&gt;. The gender of one child is &lt;strong&gt;independent&lt;/strong&gt; of a second child.&lt;/p&gt;
+&lt;p&gt;The intuition for this scenario will be different from a &lt;strong&gt;dependent&lt;/strong&gt; situation. For example, if we draw two cards from a deck (without replacement), the probabilities are different. The probability of drawing one King ♠️ is (4/52) and the probability of drawing a second King ♣️ is now (3/51); the probability of the second event (a second King) is &lt;em&gt;dependent&lt;/em&gt; on the result of the first draw.&lt;/p&gt;
+&lt;p&gt;Ok back to the two unknown children.&lt;/p&gt;
+&lt;p&gt;We can say the probability of the first child being either a boy or a girl is 50/50. Moreover, the probability of the second child, which is &lt;strong&gt;independent&lt;/strong&gt; of the first, is &lt;em&gt;also&lt;/em&gt; 50/50. Remember, our first assumption is that &lt;em&gt;each child is equally likely to be a boy or a girl&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s put these numbers in a table. The (1/2) probabilities shown here are called &lt;strong&gt;marginal&lt;/strong&gt; probabilities (note how they&amp;rsquo;re at the margins of the table).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./marginal.png&#34; alt=&#34;marginal&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Since we have two gender (much like two sides of a flipped coin), we can intuitively figure out &lt;em&gt;all&lt;/em&gt; possible outcomes:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;first child (Boy), second child (Boy)&lt;/li&gt;
+&lt;li&gt;first child (Boy), second child (Girl)&lt;/li&gt;
+&lt;li&gt;first child (Girl), second child (Boy)&lt;/li&gt;
+&lt;li&gt;first child (Girl), second child (Girl)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;There are &lt;em&gt;4 possible outcomes&lt;/em&gt; so the probability of getting any one of the four outcomes is (1/4). We can actually write these probabilities in the middle of the table, the &lt;strong&gt;joint probabilities&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./joint.png&#34; alt=&#34;joint&#34;&gt;&lt;/p&gt;
+&lt;p&gt;To recap, the probability of the first child being either boy or girl is 50/50, simple enough. The probability of the second child being either boy or girl is also 50/50. When put in a table, this yielded the &lt;strong&gt;marginal probability&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Now we want to know the probability of say, &amp;lsquo;first child being a boy and second child being a girl&amp;rsquo;. This is a &lt;strong&gt;joint probability&lt;/strong&gt; because is is the probability that the first child take a specific gender (boy) &lt;strong&gt;AND&lt;/strong&gt; the second child take a specific gender (girl).&lt;/p&gt;
+&lt;p&gt;If two event are &lt;strong&gt;independent&lt;/strong&gt;, and in this case they are, their &lt;strong&gt;joint probabilities&lt;/strong&gt; are the &lt;em&gt;product&lt;/em&gt; of the probabilities of &lt;strong&gt;each one happening&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The probability of the first child being a Boy (1/2) &lt;strong&gt;and&lt;/strong&gt; second child being a Girl (1/2); The product of each marginal probability is the joint probability (1/2 * 1/2 = 1/4).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./product_marginal.png&#34; alt=&#34;product_marginal&#34;&gt;&lt;/p&gt;
+&lt;p&gt;This can be repeated for the other three joint probabilities.&lt;/p&gt;
+&lt;h2 id=&#34;conditional_probability&#34;&gt;Conditional_Probability&lt;/h2&gt;
+&lt;p&gt;Now we get into &lt;strong&gt;conditional probability&lt;/strong&gt; which is the probability of one event happening (i.e., second child being a Boy or Girl) &lt;strong&gt;given that&lt;/strong&gt; or &lt;strong&gt;on conditional that&lt;/strong&gt; another event happened (i.e., first child being a Boy).&lt;/p&gt;
+&lt;h2 id=&#34;bayes_theorem&#34;&gt;Bayes_Theorem&lt;/h2&gt;
+&lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Data Science from Scratch (ch5) - Statistics</title>
