@@ -32,11 +32,11 @@ The first challenge in this section is distinguishing between **two** conditiona
 
 Here's the setup. We have a family with two (unknown) children with two assumptions. First, each child is equally likely to be a boy or a girl. Second, the gender of the second child is *independent* of the gender of the first child.
 
-> Statement 1: What is the probability of the event "both children are girls" (B) conditional on the event "the older child is a girl" (G)?
+> Challenge 1: What is the probability of the event "both children are girls" (B) conditional on the event "the older child is a girl" (G)?
 
 The probability for statement one is roughly 50% or (1/2).
 
-> Statement 2: What is the probability of the event "both children are girls" (B) conditional on the event "at least one of the children is a girl" (L)?
+> Challenge 2: What is the probability of the event "both children are girls" (B) conditional on the event "at least one of the children is a girl" (L)?
 
 The probability for statement two is roughly 33% or (1/3).
 
@@ -86,12 +86,132 @@ This can be repeated for the other three joint probabilities.
 
 Now we get into **conditional probability** which is the probability of one event happening (i.e., second child being a Boy or Girl) **given that** or **on conditional that** another event happened (i.e., first child being a Boy).
 
+At this point, it might be a good idea to get familiar with notation.
+
+A joint probability is the product of each individual event happening (assuming they are independent events). For example we might have two individual events:
+
+- P(1st Child = Boy): 1/2
+- P(2nd Child = Boy): 1/2
+
+Here is their **joint probability**:
+- P(1st Child = Boy, 2nd Child = Boy) =>
+- P(1st Child = Boy) * P(2nd Child = Boy) => 
+- (1/2 * 1/2 = 1/4)
+
+There is a relationship between **conditional** probabilities and **joint** probabilities. 
+
+Here is their **conditional probability**:
+- P(2nd Child = Boy | 1st Child = Boy) =>
+- P(1st Child = Boy, 2nd Child = Boy) / P(1st Child = Boy)
+
+Thie works out to: 
+- (1/4) / (1/2) = 1/2
+or 
+- (1/4) * (2/1) = 1/2
+
+In other words, the probability that the second child is a boy, given that the first child is a boy is still 50% (this implies that with respect to **conditional** probability, if the events are **independent** it is not different from a single event). 
+
+Now we're ready to tackle the two challenges posed at the beginning of this post.
+
+> Challenge 1: What is the probability of the event "both children are girls" (B) conditional on the event "the older child is a girl" (G)?
+
+Let's break it down. First we want the probability of the event that "both children are girls". We'll take the product of two events; the probability that the first child is a girl (1/2) and the probability that the second child is a girl (1/2). So for **both** child to be girls, 1/2 * 1/2 = 1/4
+
+- P(1st Child = Girl, 2nd Child = Girl) = 1/4
+
+Second, we want that to be **given that** the "older child is a girl". 
+
+- P(1st Child = Girl) = 1/2
+
+**Conditional probability**: 
+- P(1st Child = Girl, 2nd Child = Girl) / P(1st Child = Girl)
+- (1/4) / (1/2) = **1/2** or roughly **50%**
+
+Now let's break down the second challenge: 
+
+> Challenge 2: What is the probability of the event "both children are girls" (B) conditional on the event "at least one of the children is a girl" (L)?
+
+Again, we start with "both children are girls":
+
+- P(1st Child = Girl, 2nd Child = Girl) = 1/4
+
+Then, we have "on condition that at least one of the children is a girl". We'll reference a **joint probability table**. We see that when trying to figure out the probability that "at least one of the children is a girl", we rule out the scenario where **both** children are boys. The remaining 3 out of 4 probabilities, fit the condition. 
+
+![at least](./at_least.png)
+
+The probability of at least one children being a girl is:
+- (1/4) + (1/4) + (1/4) = 3/4
+
+So:
+- P(1st Child = Girl, 2nd Child = Girl) / P("at least one child is a girl")
+- (1/4) / (3/4) = (1/4) * (4/3) = **1/3** or roughly **33%**
+
+#### Key Take-away
+
+When two events are **independent**, their **joint probability** is the product of each event:
+- P(E,F) = P(E) * P(F)
+
+Their **conditional** probability is the **joint probability** divided by the conditional (i.e., P(F)).
+- P(E|F) = P(E,F) / P(F)
+
+And so for our two challenge scenarios, we have:
+
+Challenge 1:
+- B = probability that both children are girls
+- G = probability that the *older* children is a girl
+
+This can be stated as: P(B|G) = P(B,G) / P(G)
+
+Challenge 2:
+- B = probability that both children are girls
+- L = probability that *at least one* children is a girl
+
+This can be stated as: P(B|L) = P(B,L) / P(L)
+
+#### Python Code
+
+Now that we have an intuition and have worked out the problem on paper, we can use code to express conditional probability:
+
+```python
+import enum, random
+class Kid(enum.Enum):
+    BOY = 0
+    GIRL = 1
+    
+def random_kid() -> Kid:
+    return random.choice([Kid.BOY, Kid.GIRL])
+    
+both_girls = 0
+older_girl = 0
+either_girl = 0
+random.seed(0)
+for _ in range(10000):
+    younger = random_kid()
+    older = random_kid()
+    if older == Kid.GIRL:
+        older_girl += 1
+    if older == Kid.GIRL and younger == Kid.GIRL:
+        both_girls += 1
+    if older == Kid.GIRL or younger == Kid.GIRL:
+        either_girl += 1
+        
+print("P(both | older):", both_girls / older_girl)   # 0.5007089325501317
+print("P(both | either):", both_girls / either_girl) # 0.3311897106109325
+```
+We can see that code confirms our intuition. 
+
+We use a `for-loop` and `range(10000)` to randomly simulate 10,000 scenarios. The `random_kid` function randomly picks either a boy or girl (assumption #1). We set the following variables to start a 0, `both_girls` (both children are girls); `older_girl` (first child is a girl); and `either_girl` (at least one child is a girl). 
+
+Then, each of these variables are incremented by 1 through each of the 10,000 loops if it meets certain conditions. After we finish looping, we can call on each of the three variables to see if they match our calculations above:
+
+```python
+either_girl #7,464 / 10,000 ~ roughly 75% or 3/4 probability that there is at least one girl
+both_girls  #2,472 / 10,000 ~ roughly 25% or 1/4 probability that both children are girls
+older_girl  #4,937 / 10,000 ~ roughly 50% or 1/2 probability that the first child is a girl
+```
 
 
-
-
-
-
+We will look at Bayes Theorem next.
 
 ## Bayes_Theorem
 
