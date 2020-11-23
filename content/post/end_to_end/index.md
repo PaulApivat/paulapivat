@@ -36,6 +36,14 @@ This aims to be a "guide and code-driven case study on MLOps for software engine
 [End-to-End Machine Learning Course Catalog](https://end-to-end-machine-learning.teachable.com/p/complete-course-library-full-end-to-end-machine-learning-catalog) by [Brandon Rohrer](https://twitter.com/_brohrer_)
 
 
+[First 30 days of Machine Learning](https://twitter.com/PrasoonPratham/status/1330372876134912000)
+
+This tweet thread by [Pratham Prasoon](https://twitter.com/PrasoonPratham), as the title suggests, is for newcomers to ML, but I think by the end of the sequence (doesn't have to be 30 days) there's a Kaggle project to complete. *note*: this is not ML-in-production like some of the other resources, but Kaggle projects are great for learning. 
+
+He has another thread [worth checking out](https://twitter.com/PrasoonPratham/status/1325331515090219008).
+
+
+
 
 
 For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).
