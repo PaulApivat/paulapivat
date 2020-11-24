@@ -27,12 +27,10 @@
   
     
   
-  <meta name="description" content="Marginal Distribution with ggplot2 and ggExtra The data in this example is from the UN Statistics Division Sustainable Development Goal, Indicator 4.4.1.
-Also check out the r-graph-gallery.com for inspiration.
-Here&rsquo;s the breakdown:">
+  <meta name="description" content="Self-Employed | Getwyze">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/data_viz_tip2/">
+  <link rel="alternate" hreflang="en-us" href="/tag/probability/">
 
   
 
@@ -214,12 +212,14 @@ Here&rsquo;s the breakdown:">
   
 
   
+  <link rel="alternate" href="/tag/probability/index.xml" type="application/rss+xml" title="Paul Apivat">
+  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/data_viz_tip2/">
+  <link rel="canonical" href="/tag/probability/">
 
   
   
@@ -238,24 +238,17 @@ Here&rsquo;s the breakdown:">
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/data_viz_tip2/">
-  <meta property="og:title" content="Visualize Scatterplots with Marginal Distribution using ggExtra | Paul Apivat">
-  <meta property="og:description" content="Marginal Distribution with ggplot2 and ggExtra The data in this example is from the UN Statistics Division Sustainable Development Goal, Indicator 4.4.1.
-Also check out the r-graph-gallery.com for inspiration.
-Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/tag/probability/">
+  <meta property="og:title" content="Probability | Paul Apivat">
+  <meta property="og:description" content="Self-Employed | Getwyze"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    
-      <meta property="article:published_time" content="2020-09-02T00:00:00&#43;01:00">
-    
-    <meta property="article:modified_time" content="2020-09-02T00:00:00&#43;01:00">
+    <meta property="og:updated_time" content="2020-11-22T00:00:00&#43;00:00">
   
 
   
 
 
-
-  
 
 
   
@@ -267,7 +260,7 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
 
 
 
-  <title>Visualize Scatterplots with Marginal Distribution using ggExtra | Paul Apivat</title>
+  <title>Probability | Paul Apivat</title>
 
 </head>
 
@@ -546,7 +539,7 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
         
 
         <li class="nav-item">
-          <a class="nav-link  active" href="/technical_notes/"><span>Technical Notes</span></a>
+          <a class="nav-link " href="/technical_notes/"><span>Technical Notes</span></a>
         </li>
 
         
@@ -623,354 +616,55 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
 
   
 
-<div class="container-fluid docs">
-  <div class="row flex-xl-nowrap">
-    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
-      
 
 
 
 
 
+
+
+
+
+
+
+  
+
+  
+  
   
     
   
-
-
-
-
-<form class="docs-search d-flex align-items-center">
-  <button class="btn docs-toggle d-md-none p-0 mr-3" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
-    <span><i class="fas fa-bars"></i></span>
-  </button>
+<div class="universal-wrapper pt-3">
+  <h1>Probability</h1>
 
   
-  <input name="q" type="search" class="form-control" placeholder="Search..." autocomplete="off">
-  
-</form>
 
-<nav class="collapse docs-links" id="docs-nav">
-  
-
-  
-  
-  
-  
-  <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/">Technical Notes Overview</a>
-
-  </div>
-  
-  <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_viz_reactable/">Data Viz Tips</a>
-    <ul class="nav docs-sidenav">
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_viz_reactable/">reactable</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_viz_scale_x/">scale_x_continuous (ggplot2)</a>
-      </li>
-      
-      <li class="active">
-        <a href="/technical_notes/example_tech/data_viz_tip2/">Scatterplots &amp; Marginal Distribution</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_viz_treemapify/">Treemaps</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/data_viz_tip1/">Visualize Dendrograms</a>
-      </li>
-      
-    </ul>
-    
-
-  </div>
-  
-  <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/technical_notes1/">Example Topic</a>
-    <ul class="nav docs-sidenav">
-      
-      <li >
-        <a href="/technical_notes/example_tech/technical_notes1/">Tips 1-2</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/technical_notes2/">Tips 3-4</a>
-      </li>
-      
-    </ul>
-    
-
-  </div>
-  
-  <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/github_make_pr/">GitHub</a>
-    <ul class="nav docs-sidenav">
-      
-      <li >
-        <a href="/technical_notes/example_tech/github_make_pr/">Making a Pull Request</a>
-      </li>
-      
-    </ul>
-    
-
-  </div>
-  
-  <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/google_cloud_tip1/">Google Cloud Tips</a>
-    <ul class="nav docs-sidenav">
-      
-      <li >
-        <a href="/technical_notes/example_tech/google_cloud_tip1/">Connect BigQuery to Data Studio</a>
-      </li>
-      
-    </ul>
-    
-
-  </div>
-  
-  <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/python_tip2/">Python Tips</a>
-    <ul class="nav docs-sidenav">
-      
-      <li >
-        <a href="/technical_notes/example_tech/python_tip2/">Creating and Looping through DataFrames</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/python_tip1/">Python Setup</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/python_reproducibility/">Reproducibility in Python</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/python_virtualenv/">Virtual Environments in Python</a>
-      </li>
-      
-    </ul>
-    
-
-  </div>
-  
-  <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_tip4/">Rstats Tip</a>
-    <ul class="nav docs-sidenav">
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_tip4/">Calculating Percentiles</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_tip5/">Order of Dplyr Functions</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_tip1/">Reproducibility</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_tip3/">Tidy Data - pivot_wider</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_tip2/">Tidy Data - Spread</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_unnest/">Unnest JSON data</a>
-      </li>
-      
-    </ul>
-    
-
-  </div>
-  
-  
-</nav>
-
-    </div>
-
-    
-    <div class="d-none d-xl-block col-xl-2 docs-toc">
-      <ul class="nav toc-top">
-        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
-      </ul>
-
-      <nav id="TableOfContents">
-  <ul>
-    <li><a href="#marginal-distribution-with-ggplot2-and-ggextra">Marginal Distribution with ggplot2 and ggExtra</a></li>
-  </ul>
-</nav>
-
-      
-    </div>
-    
-
-    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
-
-      <article class="article">
-
-        <div class="docs-article-container">
-          <h1>Visualize Scatterplots with Marginal Distribution using ggExtra</h1>
-
-          <div class="article-style">
-            <h2 id="marginal-distribution-with-ggplot2-and-ggextra">Marginal Distribution with ggplot2 and ggExtra</h2>
-<p>The data in this example is from the UN 
-<a href="https://unstats.un.org/sdgs/indicators/database/" target="_blank" rel="noopener">Statistics Division</a> Sustainable Development Goal, Indicator 4.4.1.</p>
-<p>Also check out the 
-<a href="https://www.r-graph-gallery.com/277-marginal-histogram-for-ggplot2.html" target="_blank" rel="noopener">r-graph-gallery.com</a> for inspiration.</p>
-<p>Here&rsquo;s the breakdown:</p>
-<ol>
-<li>Load Packages and Libraries</li>
-</ol>
-<p>The key here is the <code>ggExtra</code> package.</p>
-<pre><code>install.packages('ggExtra')
-library(ggExtra)
-library(tidyverse)
-
-</code></pre>
-<ol start="2">
-<li>Create a basic scatter plot</li>
-</ol>
-<p>The key here is using <code>pivot_wider</code> to give all <code>Type of skill</code> their own columns. We&rsquo;ll then pick out specific columns (i.e., COPA, EMAIL, PCPR) to summarize, then plot on the x- and y- axes.</p>
-<pre><code># Basic Scatter Plot (color cluster by Gender)
-p &lt;- data %&gt;%
-    select(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
-    group_by(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
-    pivot_wider(names_from = `Type of skill`, values_from = Value) %&gt;%
-    mutate(
-        COPA = as.numeric(COPA),
-        EMAIL = as.numeric(EMAIL),
-        PCPR = as.numeric(PCPR)
-    ) %&gt;%
-    # Group by GeoAreaName, across TimePeriod, Sex
-    group_by(GeoAreaName, Sex) %&gt;%
-    summarize(
-        avg_COPA = mean(COPA, na.rm = TRUE),
-        avg_EMAIL = mean(EMAIL, na.rm = TRUE),
-        avg_PCPR = mean(PCPR, na.rm = TRUE)
-    ) %&gt;%
-    ungroup() %&gt;%
-    ggplot(aes(x = avg_PCPR, y = avg_EMAIL, color = Sex)) + 
-    geom_point()
-</code></pre>
-<ol start="3">
-<li>Use <code>ggMarginal()</code> to create the marginal distribution along the side of the scatter plots. This is a function from the <code>ggExtra</code> package.</li>
-</ol>
-<pre><code># Scatter Plot with Marginal Distribution
-ggMarginal(p, type = 'histogram')
-</code></pre>
-<p>This particular chart is especially useful to highlight different distributions.</p>
-
-          </div>
-
-          
-
-
-
-          
-          <div class="article-widget">
-            
-<div class="post-nav">
-  
-  
-  
-  <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_viz_treemapify/" rel="next">GGPlot Flavored Treemaps</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
-    <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip4/" rel="prev">Calculating 25th, 50th and 75th Percentile of Column Values</a>
-  </div>
   
 </div>
 
-          </div>
-          
-        </div>
-
-        <div class="body-footer">
-          <p>Last updated on Sep 2, 2020</p>
-
-          
 
 
-
-
+<div class="universal-wrapper">
+  
 
   
   
-
-<p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/data_viz_tip2.md">
-    <i class="fas fa-pen pr-2"></i>Edit this page
-  </a>
-</p>
-
-
-
-
-          
-
-
-          
-  
-  
-
-
-        </div>
-
-      </article>
-
-      <footer class="site-footer">
-  
-  <p class="powered-by">
-    
-      <a href="/privacy/">Privacy Policy</a>
     
     
-       &middot; 
-      <a href="/terms/">Terms</a>
     
-  </p>
+    <div>
+      <h2><a href="/post/dsfs_6/" >Data Science from Scratch (ch6) - Probability</a></h2>
+      <div class="article-style">
+        
+          Gaining an intuition for probability using Python
+        
+      </div>
+    </div>
   
 
-  <p class="powered-by">
-    © 2020 Paul Apivat Hanvongse. All Rights Reserved.
-  </p>
-
-  
   
 
-
-
-
-
-
-  <p class="powered-by">
-    Powered by the
-    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
-    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
-
-    
-  </p>
-</footer>
-
-
-    </main>
-  </div>
 </div>
-
 
       
 
@@ -1029,11 +723,6 @@ ggMarginal(p, type = 'histogram')
 
     
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js" integrity="sha256-pB/deHc9CGfFpJRjC43imB29Rse8tak+5eXqntO94ck=" crossorigin="anonymous"></script>
-    <script>
-      anchors.add();
-    </script>
-    
 
     
     
@@ -1089,6 +778,51 @@ ggMarginal(p, type = 'histogram')
 
 
   
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    
+      <a href="/privacy/">Privacy Policy</a>
+    
+    
+       &middot; 
+      <a href="/terms/">Terms</a>
+    
+  </p>
+  
+
+  <p class="powered-by">
+    © 2020 Paul Apivat Hanvongse. All Rights Reserved.
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
   
 
   

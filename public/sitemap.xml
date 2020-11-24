@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/technical_notes/example_tech/github_make_pr/</loc>
+    <lastmod>2020-11-24T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/technical_notes/example_tech/python_virtualenv/</loc>
     <lastmod>2020-10-22T00:00:00+01:00</lastmod>
   </url>
@@ -15,11 +20,6 @@
   <url>
     <loc>/technical_notes/example_tech/python_reproducibility/</loc>
     <lastmod>2020-09-10T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/technical_notes/example_tech/google_cloud_tip1-copy/</loc>
-    <lastmod>2020-09-05T00:00:00+01:00</lastmod>
   </url>
   
   <url>
@@ -133,6 +133,11 @@
   </url>
   
   <url>
+    <loc>/technical_notes/</loc>
+    <lastmod>2020-11-24T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/authors/</loc>
     <lastmod>2020-11-22T00:00:00+00:00</lastmod>
   </url>
@@ -158,7 +163,17 @@
   </url>
   
   <url>
+    <loc>/tag/probability/</loc>
+    <lastmod>2020-11-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tag/python/</loc>
+    <lastmod>2020-11-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/statistics/</loc>
     <lastmod>2020-11-22T00:00:00+00:00</lastmod>
   </url>
   
@@ -203,11 +218,6 @@
   </url>
   
   <url>
-    <loc>/tag/statistics/</loc>
-    <lastmod>2020-11-16T20:24:12+07:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/post/dsfs_4/</loc>
     <lastmod>2020-11-10T00:00:00+00:00</lastmod>
   </url>
@@ -240,11 +250,6 @@
   <url>
     <loc>/post/dsfs_2/</loc>
     <lastmod>2020-10-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/technical_notes/</loc>
-    <lastmod>2020-10-22T00:00:00+01:00</lastmod>
   </url>
   
   <url>

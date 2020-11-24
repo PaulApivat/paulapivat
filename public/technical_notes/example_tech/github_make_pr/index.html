@@ -27,12 +27,10 @@
   
     
   
-  <meta name="description" content="Marginal Distribution with ggplot2 and ggExtra The data in this example is from the UN Statistics Division Sustainable Development Goal, Indicator 4.4.1.
-Also check out the r-graph-gallery.com for inspiration.
-Here&rsquo;s the breakdown:">
+  <meta name="description" content="Quick Guide for contributing to another code base by making a pull request  Identify a project you want to contribute to on GitHub Fork that project Clone it to your local machine*  note : Do not clone in another directory that was already cloned from another repo.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/data_viz_tip2/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/github_make_pr/">
 
   
 
@@ -219,7 +217,7 @@ Here&rsquo;s the breakdown:">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/data_viz_tip2/">
+  <link rel="canonical" href="/technical_notes/example_tech/github_make_pr/">
 
   
   
@@ -238,17 +236,15 @@ Here&rsquo;s the breakdown:">
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/data_viz_tip2/">
-  <meta property="og:title" content="Visualize Scatterplots with Marginal Distribution using ggExtra | Paul Apivat">
-  <meta property="og:description" content="Marginal Distribution with ggplot2 and ggExtra The data in this example is from the UN Statistics Division Sustainable Development Goal, Indicator 4.4.1.
-Also check out the r-graph-gallery.com for inspiration.
-Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/github_make_pr/">
+  <meta property="og:title" content="Making a Pull Request on a GitHub Repo | Paul Apivat">
+  <meta property="og:description" content="Quick Guide for contributing to another code base by making a pull request  Identify a project you want to contribute to on GitHub Fork that project Clone it to your local machine*  note : Do not clone in another directory that was already cloned from another repo."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-09-02T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2020-11-24T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-09-02T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-11-24T00:00:00&#43;01:00">
   
 
   
@@ -267,7 +263,7 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
 
 
 
-  <title>Visualize Scatterplots with Marginal Distribution using ggExtra | Paul Apivat</title>
+  <title>Making a Pull Request on a GitHub Repo | Paul Apivat</title>
 
 </head>
 
@@ -673,7 +669,7 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
         <a href="/technical_notes/example_tech/rstats_viz_scale_x/">scale_x_continuous (ggplot2)</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/data_viz_tip2/">Scatterplots &amp; Marginal Distribution</a>
       </li>
       
@@ -711,7 +707,7 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
     <a class="docs-toc-link" href="/technical_notes/example_tech/github_make_pr/">GitHub</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/github_make_pr/">Making a Pull Request</a>
       </li>
       
@@ -804,7 +800,7 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#marginal-distribution-with-ggplot2-and-ggextra">Marginal Distribution with ggplot2 and ggExtra</a></li>
+    <li><a href="#quick-guide-for-contributing-to-another-code-base-by-making-a-pull-request">Quick Guide for contributing to another code base by making a pull request</a></li>
   </ul>
 </nav>
 
@@ -817,56 +813,44 @@ Here&rsquo;s the breakdown:"><meta property="og:image" content="/images/icon_hu0
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Visualize Scatterplots with Marginal Distribution using ggExtra</h1>
+          <h1>Making a Pull Request on a GitHub Repo</h1>
 
           <div class="article-style">
-            <h2 id="marginal-distribution-with-ggplot2-and-ggextra">Marginal Distribution with ggplot2 and ggExtra</h2>
-<p>The data in this example is from the UN 
-<a href="https://unstats.un.org/sdgs/indicators/database/" target="_blank" rel="noopener">Statistics Division</a> Sustainable Development Goal, Indicator 4.4.1.</p>
-<p>Also check out the 
-<a href="https://www.r-graph-gallery.com/277-marginal-histogram-for-ggplot2.html" target="_blank" rel="noopener">r-graph-gallery.com</a> for inspiration.</p>
-<p>Here&rsquo;s the breakdown:</p>
+            <h2 id="quick-guide-for-contributing-to-another-code-base-by-making-a-pull-request">Quick Guide for contributing to another code base by making a pull request</h2>
 <ol>
-<li>Load Packages and Libraries</li>
+<li>Identify a project you want to contribute to on GitHub</li>
+<li>Fork that project</li>
+<li>Clone it to your local machine*</li>
 </ol>
-<p>The key here is the <code>ggExtra</code> package.</p>
-<pre><code>install.packages('ggExtra')
-library(ggExtra)
-library(tidyverse)
-
-</code></pre>
-<ol start="2">
-<li>Create a basic scatter plot</li>
+<p><strong>note</strong> : Do not clone in another directory that was <em>already</em> cloned from another repo. For example, when I cloned 
+<a href="https://github.com/PaulApivat/pytalentsolution" target="_blank" rel="noopener">pytalentsolution</a> on my local machine, I initially cloned it <em>inside</em> Saku directory, which was <em>itself</em> a clone of an already-existing-repo. The correct way was to create a <em>new</em> directory for pytalentsolution.</p>
+<ol start="4">
+<li>Make a new branch</li>
 </ol>
-<p>The key here is using <code>pivot_wider</code> to give all <code>Type of skill</code> their own columns. We&rsquo;ll then pick out specific columns (i.e., COPA, EMAIL, PCPR) to summarize, then plot on the x- and y- axes.</p>
-<pre><code># Basic Scatter Plot (color cluster by Gender)
-p &lt;- data %&gt;%
-    select(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
-    group_by(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
-    pivot_wider(names_from = `Type of skill`, values_from = Value) %&gt;%
-    mutate(
-        COPA = as.numeric(COPA),
-        EMAIL = as.numeric(EMAIL),
-        PCPR = as.numeric(PCPR)
-    ) %&gt;%
-    # Group by GeoAreaName, across TimePeriod, Sex
-    group_by(GeoAreaName, Sex) %&gt;%
-    summarize(
-        avg_COPA = mean(COPA, na.rm = TRUE),
-        avg_EMAIL = mean(EMAIL, na.rm = TRUE),
-        avg_PCPR = mean(PCPR, na.rm = TRUE)
-    ) %&gt;%
-    ungroup() %&gt;%
-    ggplot(aes(x = avg_PCPR, y = avg_EMAIL, color = Sex)) + 
-    geom_point()
-</code></pre>
-<ol start="3">
-<li>Use <code>ggMarginal()</code> to create the marginal distribution along the side of the scatter plots. This is a function from the <code>ggExtra</code> package.</li>
+<ul>
+<li>4a: <code>cd</code> into directory of the cloned repo</li>
+<li>4b: use <code>git branch</code> to confirm you&rsquo;re on the <code>*master</code> branch</li>
+<li>4c: use <code>git checkout -b name_of_new_branch</code></li>
+<li>4d: use <code>git branch</code> to check that you&rsquo;re on <code>name_of_new_branch</code></li>
+</ul>
+<ol start="5">
+<li>
+<p>Make changes</p>
+</li>
+<li>
+<p>Push it back to your repo</p>
+</li>
 </ol>
-<pre><code># Scatter Plot with Marginal Distribution
-ggMarginal(p, type = 'histogram')
-</code></pre>
-<p>This particular chart is especially useful to highlight different distributions.</p>
+<p><strong>note</strong> : You&rsquo;ll get a message <code>git push remote --</code> use this instead of the traditional <code>git push</code></p>
+<ol start="7">
+<li>(Go back to the forked repo in GitHub) Click the <strong>Compare &amp; Pull Request</strong> button.</li>
+</ol>
+<ul>
+<li>add a description to changes made in the pull request</li>
+</ul>
+<ol start="8">
+<li>Click <strong>Create pull request</strong> to open a new pull request</li>
+</ol>
 
           </div>
 
@@ -882,15 +866,8 @@ ggMarginal(p, type = 'histogram')
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_viz_treemapify/" rel="next">GGPlot Flavored Treemaps</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip4/" rel="prev">Calculating 25th, 50th and 75th Percentile of Column Values</a>
+    <a href="/technical_notes/example_tech/python_virtualenv/" rel="prev">Setting up Conda Virtual Env and IPython</a>
   </div>
   
 </div>
@@ -900,7 +877,7 @@ ggMarginal(p, type = 'histogram')
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Sep 2, 2020</p>
+          <p>Last updated on Nov 24, 2020</p>
 
           
 
@@ -912,7 +889,7 @@ ggMarginal(p, type = 'histogram')
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/data_viz_tip2.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/github_make_pr.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

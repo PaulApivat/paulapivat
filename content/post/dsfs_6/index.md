@@ -12,7 +12,7 @@ lastMod: "2020-11-22T00:00:00Z"
 projects: []
 subtitle: Conditional Probability & Bayes Theorem
 summary: Gaining an intuition for probability using Python
-tags: ["Python", "Data Science"]
+tags: ["Python", "Data Science", "Probability", "Statistics"]
 title: Data Science from Scratch (ch6) - Probability
 ---
 
