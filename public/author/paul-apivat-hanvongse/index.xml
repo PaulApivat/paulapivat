@@ -162,6 +162,7 @@ def random_kid() -&amp;gt; Kid:
 both_girls = 0
 older_girl = 0
 either_girl = 0
+
 random.seed(0)
 for _ in range(10000):
     younger = random_kid()
@@ -212,6 +213,12 @@ older_girl  #4,937 / 10,000 ~ roughly 50% or 1/2 probability that the first chil
 &lt;p&gt;
 &lt;a href=&#34;https://end-to-end-machine-learning.teachable.com/p/complete-course-library-full-end-to-end-machine-learning-catalog&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;End-to-End Machine Learning Course Catalog&lt;/a&gt; by 
 &lt;a href=&#34;https://twitter.com/_brohrer_&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Brandon Rohrer&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://twitter.com/PrasoonPratham/status/1330372876134912000&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;First 30 days of Machine Learning&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This tweet thread by 
+&lt;a href=&#34;https://twitter.com/PrasoonPratham&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Pratham Prasoon&lt;/a&gt;, as the title suggests, is for newcomers to ML, but I think by the end of the sequence (doesn&amp;rsquo;t have to be 30 days) there&amp;rsquo;s a Kaggle project to complete. &lt;em&gt;note&lt;/em&gt;: this is not ML-in-production like some of the other resources, but Kaggle projects are great for learning.&lt;/p&gt;
+&lt;p&gt;He has another thread 
+&lt;a href=&#34;https://twitter.com/PrasoonPratham/status/1325331515090219008&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;worth checking out&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>

@@ -153,6 +153,35 @@ rolls
     
     <item>
       <title>Connecting BigQuery to Google Data Studio [Basic Setup]</title>
+      <link>/technical_notes/example_tech/google_cloud_tip1-copy/</link>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/google_cloud_tip1-copy/</guid>
+      <description>&lt;h2 id=&#34;steps-for-connecting-bigquery-to-data-studio&#34;&gt;Steps for Connecting BigQuery to Data Studio&lt;/h2&gt;
+&lt;p&gt;This note outlines the basic steps required to generate charts in Google Data Studio, specifically pulling data from BigQuery.&lt;/p&gt;
+&lt;h1 id=&#34;bigquery&#34;&gt;BigQuery&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;The starting point is to generate a query in BigQuery&lt;/li&gt;
+&lt;li&gt;Once a query is created, click &lt;strong&gt;Save Results&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;In the pop-up window, a prompt: &amp;ldquo;choose where to save the results data from the query&amp;rdquo;, save result as BigQuery Table&lt;/li&gt;
+&lt;li&gt;Set project name (i.e., jobsbot)&lt;/li&gt;
+&lt;li&gt;Set dataset name (i.e., internalmongo)&lt;/li&gt;
+&lt;li&gt;Create table name, for the specific query (i.e., jobfieldname_ranking)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;google-data-studio&#34;&gt;Google Data Studio&lt;/h1&gt;
+&lt;ol start=&#34;7&#34;&gt;
+&lt;li&gt;Click Add Data&lt;/li&gt;
+&lt;li&gt;Find BigQuery in Google Connectors&lt;/li&gt;
+&lt;li&gt;Locate saved query table (see above) (i.e., My Projects &amp;gt; jobsbot (project) &amp;gt; internalmongo (dataset) &amp;gt; jobfieldname_ranking (table/specific query))&lt;/li&gt;
+&lt;li&gt;Click Add&lt;/li&gt;
+&lt;li&gt;Select &amp;lsquo;Add a Chart&amp;rsquo; (note: could be Table or Chart style)&lt;/li&gt;
+&lt;li&gt;Optional: copy/paste Table to create a companion Chart for table&lt;/li&gt;
+&lt;li&gt;Select Table; in Data Menu, select Metric, &amp;lsquo;Add Metric&amp;rsquo; to swap out generic default Report Count (for more informative data generated from the query)&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Connecting BigQuery to Google Data Studio [Basic Setup]</title>
       <link>/technical_notes/example_tech/google_cloud_tip1/</link>
       <pubDate>Sat, 05 Sep 2020 00:00:00 +0100</pubDate>
       <guid>/technical_notes/example_tech/google_cloud_tip1/</guid>
@@ -1213,6 +1242,7 @@ def random_kid() -&amp;gt; Kid:
 both_girls = 0
 older_girl = 0
 either_girl = 0
+
 random.seed(0)
 for _ in range(10000):
     younger = random_kid()
@@ -1263,6 +1293,12 @@ older_girl  #4,937 / 10,000 ~ roughly 50% or 1/2 probability that the first chil
 &lt;p&gt;
 &lt;a href=&#34;https://end-to-end-machine-learning.teachable.com/p/complete-course-library-full-end-to-end-machine-learning-catalog&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;End-to-End Machine Learning Course Catalog&lt;/a&gt; by 
 &lt;a href=&#34;https://twitter.com/_brohrer_&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Brandon Rohrer&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://twitter.com/PrasoonPratham/status/1330372876134912000&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;First 30 days of Machine Learning&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This tweet thread by 
+&lt;a href=&#34;https://twitter.com/PrasoonPratham&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Pratham Prasoon&lt;/a&gt;, as the title suggests, is for newcomers to ML, but I think by the end of the sequence (doesn&amp;rsquo;t have to be 30 days) there&amp;rsquo;s a Kaggle project to complete. &lt;em&gt;note&lt;/em&gt;: this is not ML-in-production like some of the other resources, but Kaggle projects are great for learning.&lt;/p&gt;
+&lt;p&gt;He has another thread 
+&lt;a href=&#34;https://twitter.com/PrasoonPratham/status/1325331515090219008&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;worth checking out&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>

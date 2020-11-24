@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Creating and Looping through List of Tuples If you come to Python from R, it&rsquo;s not immediately obvious how Lists, Dictionaries, Tuples, Series, then Loops help you do the things you can do in R.">
+  <meta name="description" content="Steps for Connecting BigQuery to Data Studio This note outlines the basic steps required to generate charts in Google Data Studio, specifically pulling data from BigQuery.
+BigQuery  The starting point is to generate a query in BigQuery Once a query is created, click Save Results In the pop-up window, a prompt: &ldquo;choose where to save the results data from the query&rdquo;, save result as BigQuery Table Set project name (i.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_tip2/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/google_cloud_tip1-copy/">
 
   
 
@@ -217,7 +218,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/python_tip2/">
+  <link rel="canonical" href="/technical_notes/example_tech/google_cloud_tip1-copy/">
 
   
   
@@ -236,15 +237,16 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/python_tip2/">
-  <meta property="og:title" content="Creating and Looping through DataFrames | Paul Apivat">
-  <meta property="og:description" content="Creating and Looping through List of Tuples If you come to Python from R, it&rsquo;s not immediately obvious how Lists, Dictionaries, Tuples, Series, then Loops help you do the things you can do in R."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/google_cloud_tip1-copy/">
+  <meta property="og:title" content="Connecting BigQuery to Google Data Studio [Basic Setup] | Paul Apivat">
+  <meta property="og:description" content="Steps for Connecting BigQuery to Data Studio This note outlines the basic steps required to generate charts in Google Data Studio, specifically pulling data from BigQuery.
+BigQuery  The starting point is to generate a query in BigQuery Once a query is created, click Save Results In the pop-up window, a prompt: &ldquo;choose where to save the results data from the query&rdquo;, save result as BigQuery Table Set project name (i."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-09-23T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2020-09-05T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-09-23T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-09-05T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +265,7 @@
 
 
 
-  <title>Creating and Looping through DataFrames | Paul Apivat</title>
+  <title>Connecting BigQuery to Google Data Studio [Basic Setup] | Paul Apivat</title>
 
 </head>
 
@@ -707,7 +709,7 @@
     <a class="docs-toc-link" href="/technical_notes/example_tech/google_cloud_tip1-copy/">Google Cloud Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/google_cloud_tip1-copy/">Connect BigQuery to Data Studio</a>
       </li>
       
@@ -720,7 +722,7 @@
     <a class="docs-toc-link" href="/technical_notes/example_tech/python_tip2/">Python Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/python_tip2/">Creating and Looping through DataFrames</a>
       </li>
       
@@ -787,7 +789,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#creating-and-looping-through-list-of-tuples">Creating and Looping through List of Tuples</a></li>
+    <li><a href="#steps-for-connecting-bigquery-to-data-studio">Steps for Connecting BigQuery to Data Studio</a></li>
   </ul>
 </nav>
 
@@ -800,59 +802,30 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Creating and Looping through DataFrames</h1>
+          <h1>Connecting BigQuery to Google Data Studio [Basic Setup]</h1>
 
           <div class="article-style">
-            <h2 id="creating-and-looping-through-list-of-tuples">Creating and Looping through List of Tuples</h2>
-<p>If you come to Python from R, it&rsquo;s not immediately obvious how Lists, Dictionaries, Tuples, Series, then Loops help you do the things you can do in R.</p>
-<p>You can begin to connect the dots when you see that Lists of Tuples are the building blocks of DataFrames - available in both languages to handle tidy (tabular) data.</p>
-<h1 id="lists">Lists</h1>
-<p>Lists are ordered and mutable collection of data. Below are lists of strings and integers.</p>
-<pre><code>name_list = ['paul', 'apivat', 'marvin', 'pim', 'milin']
-int_list = [3,4,5,2,5,6,7,5]
-</code></pre>
-<h1 id="tuples">Tuples</h1>
-<p>Tuples, also collections, are ordered and immutable. But more related to the handling of data, tuples can be converted to DataFrames (using the Pandas library). Below, the List of Tuples (data) is converted into a DataFrame.</p>
-<pre><code>import pandas as pd
-
-data = [
-    ('r1', 'c1', 11, 11),
-    ('r1', 'c2', 12, 12),
-    ('r2', 'c1', 21, 21),
-    ('r2', 'c2', 22, 22)
-]
-
-df = pd.DataFrame(data, columns=['R_Number', 'C_Number', 'Avg', 'Std'])
-</code></pre>
-<h1 id="loops">Loops</h1>
-<p>You can loop through lists of strings and integers.</p>
-<pre><code>int_list = [3,4,5,2,5,6,7,5]
-
-for num in int_list:
-    print(num)
-    
-name_list = ['paul', 'apivat', 'marvin', 'pim', 'milin']
-
-for name in name_list:
-    print(name)
-</code></pre>
-<h1 id="looping-through-list-of-tuples-dataframe">Looping through List of Tuples (DataFrame)</h1>
-<p>Just like you can loop through <em>any</em> collection, you can loop through a list of tuples - which means you can loop through DataFrames.</p>
-<pre><code># Looping through column names
-df = pd.DataFrame(data, columns=['R_Number', 'C_Number', 'Avg', 'Std'])
-
-for col_names in df:
-    print(col_names)
-    
-# Looping through a specific column
-for items in df['R_Number']:
-    print(items)
-    
-# Looping through a specific row
-for items in df.iloc[1]:
-    print(items)
-</code></pre>
-<p>That&rsquo;s the basic connection between python fundamental data structures and for-loop operations and data science.</p>
+            <h2 id="steps-for-connecting-bigquery-to-data-studio">Steps for Connecting BigQuery to Data Studio</h2>
+<p>This note outlines the basic steps required to generate charts in Google Data Studio, specifically pulling data from BigQuery.</p>
+<h1 id="bigquery">BigQuery</h1>
+<ol>
+<li>The starting point is to generate a query in BigQuery</li>
+<li>Once a query is created, click <strong>Save Results</strong></li>
+<li>In the pop-up window, a prompt: &ldquo;choose where to save the results data from the query&rdquo;, save result as BigQuery Table</li>
+<li>Set project name (i.e., jobsbot)</li>
+<li>Set dataset name (i.e., internalmongo)</li>
+<li>Create table name, for the specific query (i.e., jobfieldname_ranking)</li>
+</ol>
+<h1 id="google-data-studio">Google Data Studio</h1>
+<ol start="7">
+<li>Click Add Data</li>
+<li>Find BigQuery in Google Connectors</li>
+<li>Locate saved query table (see above) (i.e., My Projects &gt; jobsbot (project) &gt; internalmongo (dataset) &gt; jobfieldname_ranking (table/specific query))</li>
+<li>Click Add</li>
+<li>Select &lsquo;Add a Chart&rsquo; (note: could be Table or Chart style)</li>
+<li>Optional: copy/paste Table to create a companion Chart for table</li>
+<li>Select Table; in Data Menu, select Metric, &lsquo;Add Metric&rsquo; to swap out generic default Report Count (for more informative data generated from the query)</li>
+</ol>
 
           </div>
 
@@ -869,14 +842,14 @@ for items in df.iloc[1]:
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/python_virtualenv/" rel="next">Setting up Conda Virtual Env and IPython</a>
+    <a href="/technical_notes/example_tech/python_reproducibility/" rel="next">Random Numbers &amp; Reproducibility in Python</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_reproducibility/" rel="prev">Random Numbers &amp; Reproducibility in Python</a>
+    <a href="/technical_notes/example_tech/google_cloud_tip1/" rel="prev">Connecting BigQuery to Google Data Studio [Basic Setup]</a>
   </div>
   
 </div>
@@ -886,7 +859,7 @@ for items in df.iloc[1]:
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Sep 23, 2020</p>
+          <p>Last updated on Sep 5, 2020</p>
 
           
 
@@ -898,7 +871,7 @@ for items in df.iloc[1]:
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_tip2.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/google_cloud_tip1%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

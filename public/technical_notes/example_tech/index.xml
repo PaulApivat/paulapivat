@@ -153,6 +153,35 @@ rolls
     
     <item>
       <title>Connecting BigQuery to Google Data Studio [Basic Setup]</title>
+      <link>/technical_notes/example_tech/google_cloud_tip1-copy/</link>
+      <pubDate>Sat, 05 Sep 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/google_cloud_tip1-copy/</guid>
+      <description>&lt;h2 id=&#34;steps-for-connecting-bigquery-to-data-studio&#34;&gt;Steps for Connecting BigQuery to Data Studio&lt;/h2&gt;
+&lt;p&gt;This note outlines the basic steps required to generate charts in Google Data Studio, specifically pulling data from BigQuery.&lt;/p&gt;
+&lt;h1 id=&#34;bigquery&#34;&gt;BigQuery&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;The starting point is to generate a query in BigQuery&lt;/li&gt;
+&lt;li&gt;Once a query is created, click &lt;strong&gt;Save Results&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;In the pop-up window, a prompt: &amp;ldquo;choose where to save the results data from the query&amp;rdquo;, save result as BigQuery Table&lt;/li&gt;
+&lt;li&gt;Set project name (i.e., jobsbot)&lt;/li&gt;
+&lt;li&gt;Set dataset name (i.e., internalmongo)&lt;/li&gt;
+&lt;li&gt;Create table name, for the specific query (i.e., jobfieldname_ranking)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;google-data-studio&#34;&gt;Google Data Studio&lt;/h1&gt;
+&lt;ol start=&#34;7&#34;&gt;
+&lt;li&gt;Click Add Data&lt;/li&gt;
+&lt;li&gt;Find BigQuery in Google Connectors&lt;/li&gt;
+&lt;li&gt;Locate saved query table (see above) (i.e., My Projects &amp;gt; jobsbot (project) &amp;gt; internalmongo (dataset) &amp;gt; jobfieldname_ranking (table/specific query))&lt;/li&gt;
+&lt;li&gt;Click Add&lt;/li&gt;
+&lt;li&gt;Select &amp;lsquo;Add a Chart&amp;rsquo; (note: could be Table or Chart style)&lt;/li&gt;
+&lt;li&gt;Optional: copy/paste Table to create a companion Chart for table&lt;/li&gt;
+&lt;li&gt;Select Table; in Data Menu, select Metric, &amp;lsquo;Add Metric&amp;rsquo; to swap out generic default Report Count (for more informative data generated from the query)&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Connecting BigQuery to Google Data Studio [Basic Setup]</title>
       <link>/technical_notes/example_tech/google_cloud_tip1/</link>
       <pubDate>Sat, 05 Sep 2020 00:00:00 +0100</pubDate>
       <guid>/technical_notes/example_tech/google_cloud_tip1/</guid>
