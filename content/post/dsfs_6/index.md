@@ -32,11 +32,11 @@ The first challenge in this section is distinguishing between **two** conditiona
 
 Here's the setup. We have a family with two (unknown) children with two assumptions. First, each child is equally likely to be a boy or a girl. Second, the gender of the second child is *independent* of the gender of the first child.
 
-> Challenge 1: What is the probability of the event "both children are girls" (B) conditional on the event "the older child is a girl" (G)?
+> Outcome 1: What is the probability of the event "both children are girls" (B) conditional on the event "the older child is a girl" (G)?
 
 The probability for statement one is roughly 50% or (1/2).
 
-> Challenge 2: What is the probability of the event "both children are girls" (B) conditional on the event "at least one of the children is a girl" (L)?
+> Outcome 2: What is the probability of the event "both children are girls" (B) conditional on the event "at least one of the children is a girl" (L)?
 
 The probability for statement two is roughly 33% or (1/3).
 
@@ -215,6 +215,86 @@ older_girl  #4,937 / 10,000 ~ roughly 50% or 1/2 probability that the first chil
 We will look at Bayes Theorem next.
 
 ## Bayes_Theorem
+
+Previously, we established an understanding of **conditional** probability, but building up with **marginal** and **joint** probabilities. We explored the conditional probabilities of two outcomes:
+
+
+> Outcome 1: What is the probability of the event "both children are girls" (B) conditional on the event "the older child is a girl" (G)?
+
+The probability for outcome one is roughly 50% or (1/2).
+
+> Outcome 2: What is the probability of the event "both children are girls" (B) conditional on the event "at least one of the children is a girl" (L)?
+
+The probability for outcome two is roughly 33% or (1/3).
+
+**Bayes' Theorem** is simply *an alternate* way of calculating conditional probability.
+
+Previously, we used the **joint** probability to calculate the **conditional** probability. 
+
+### Outcome 1
+
+Here's the conditional probability for outcome 1, using a joint probability:
+
+- P(B|G) = P(1st Child = Girl, 2nd Child = Girl) / P(1st Child = Girl)
+- P(B|G) = P(B,G) / P(G) 
+- P(B|G) =  (1/4) / (1/2) = **1/2** or roughly **50%**
+
+Here's an alternate way to calculate the conditional probability (**without** joint probability):
+
+- P(B|G) = P(G|B) * P(B) / P(G)
+- P(B|G) = 1 * (1/4) / (1/2)
+- P(B|G) = (1/4) * (2/1) 
+- P(B|G) = 1/2 = **50%**
+
+The **reverse** conditional probability, can also be calculated, without joint probability:
+
+> What is the probability of the older child being a girl, given that both children are girls? 
+
+**note**: sometimes the answer appears obvious when you write it out, but we'll continue with the notation. 
+
+- P(G|B) = P(B|G) * P(G) / P(B)
+- P(G|B) = (1/2) * (1/2) / (1/4)
+- P(G|B) = (1/4) / (1/4)
+- P(G|B) = 1 = **100%**
+
+It shouldn't be too surprising that it is a **certainty** (probability = 1) that the older child is a girl, **given that** both children are girls. 
+
+We can point out two additional observations / rules:
+
+1. Joint probabilities are **symmetrical**: P(B,G) == P(G,B)
+2. Conditional probabilities are **not symmetrical**: P(B|G) != P(G|B)
+
+### Bayes' Theorem: Outcome 1
+
+**Bayes Theorem** is a way of calculating conditional probability without the joint probability, as we saw above. 
+
+Sometimes, we may not have P(B), the demoninator above. Bayes' Theorem provides a way to derive the P(B), in cases where we don't have it:
+
+- P(B) = P(B|G) * P(G) +  P(B|not G) * P(not G)
+- P(B) = (1/2) * (1/2) +  (0) * (1/2)
+- P(B) = (1/4)
+
+**note**: the probability of *both* children being girls when the older child is **not** a girl is zero. 
+
+Here's the way **Bayes' Theorem** is often stated, using the alternative calculation of P(B):
+
+- P(G|B) = P(B|G) * P(G) / ( P(B|G) * P(G)  +  P(B|not G) * P(not G) )
+- P(G|B) = (1/2) * (1/2) / (1/4)
+- P(G|B) = 1 
+
+Let's try the reverse, also using Bayes Theorem:
+
+- P(B|G) = P(G|B) * P(B) / ( P(G|B) * P(B) +  P(G|not B) * P(not B) )
+- P(B|G) = (1) * (1/4)  /  (  (1) * (1/4) +  #TBD
+
+*note*: key is figuring out P(G|not B)
+
+
+
+
+
+
+
 
 
 
