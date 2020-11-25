@@ -8,7 +8,7 @@ featured: false
 image:
   caption: ""
   focal_point: ""
-lastMod: "2020-11-21T00:00:00Z"
+lastMod: "2020-11-25T00:00:00Z"
 projects: []
 subtitle: Resources for projects and portfolio building
 summary: A collection of inspiration for my own projects
@@ -43,6 +43,96 @@ This tweet thread by [Pratham Prasoon](https://twitter.com/PrasoonPratham), as t
 He has another thread [worth checking out](https://twitter.com/PrasoonPratham/status/1325331515090219008).
 
 
+[Suggested Project from Jan Giacomelli](https://twitter.com/jangiacomelli/status/1331170945738760192) 
+
+This is a pretty 🔥 thread. He suggests:
+
+1. Build an expense tracker CLI app:
+
+Each expensee should have the following: title (string), amount(float), created_at(date), tags(list of strings)
+
+2 Add Database
+
+Instead of storing/reading in/from TXT file, start using SQLite. Write script to copy all of the existing expenses from TXT file to database. Don't use ORM at this point.
+
+3. Start using Classes
+
+Represent expense with class Expense having attributes: title(string), amount(float), created_at(date), tags(list of strings).
+
+Represent Database with class ExpenseRepository with methods: save, get_by_id, list, delete
+
+4. Re-write App to use Commands and Queries
+
+Each command/query is a class with method execute.
+At initialization you need to provide all required data for execution.
+
+Commands: AddExpense, EditExpense
+Queries: GetById, ListAll
+
+See this post on [Modern Test-Driven Development in Python](https://testdriven.io/blog/modern-tdd/)
+
+5. Add Tests
+
+Add tests for commands and queries
+
+Example:
+GIVEN Valid data
+WHEN execute method is called on AddExpense command
+THEN record is created in database with same attributes as provided
+
+See this post on [Modern Test-Driven Development in Python](https://testdriven.io/blog/modern-tdd/)
+
+6. Flask
+
+Use Flask to build the web application for your expense tracker.
+Reuse commands and queries inside views
+Use Jinja2 for HTML templating
+Add integration tests for endpoints
+
+7. PostgreSQL
+
+Start using PostgreSQL instead of SQLite.
+You should only edit ExpenseRepository.
+Create script to copy all existing data from SQLite to Postgres
+
+8. Authentication
+
+Add sign up and login to your Flask application
+Protect endpoints for expenses to allow only logged in users to use them
+Allow user to only see own expenses.
+
+9. Dockerize and Deploy
+
+Dockerize your Flask application
+Deploy to Heroku (don't use DB in docker, use it on Heroku)
+
+See this post on [Dockerizing Flask with Postgres, Gunicorn and Nginx](https://testdriven.io/blog/dockerizing-flask-with-postgres-gunicorn-and-nginx/)
+
+10. Start using your application for real
+
+Start tracking your expenses
+Even the most little ones
+Don't forget to add them daily
+
+11. Data Analysis
+
+Use Pandas and Matplotlib to analyze your expenses
+Check frequency, check biggest amount, smallest amount, average amount, most frequent amount and most used tags...
+
+Draw plots: Number of expenses per day, amount spent per day
+
+12. ML
+
+Build model which will predict tags based on the title of expense
+Use your existing records
+Although your data set is small, try to build model as precise as possible
+
+13. Congratulate yourself
+
+Don't forget to write a blog post for each of these steps.
+Don't forget to share your code in a public git repository (GitHub)
+Don't forget to tweet it out
+Don't forget to add all the skills to LinkedIn
 
 
 

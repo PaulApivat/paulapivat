@@ -219,6 +219,90 @@ older_girl  #4,937 / 10,000 ~ roughly 50% or 1/2 probability that the first chil
 &lt;a href=&#34;https://twitter.com/PrasoonPratham&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Pratham Prasoon&lt;/a&gt;, as the title suggests, is for newcomers to ML, but I think by the end of the sequence (doesn&amp;rsquo;t have to be 30 days) there&amp;rsquo;s a Kaggle project to complete. &lt;em&gt;note&lt;/em&gt;: this is not ML-in-production like some of the other resources, but Kaggle projects are great for learning.&lt;/p&gt;
 &lt;p&gt;He has another thread 
 &lt;a href=&#34;https://twitter.com/PrasoonPratham/status/1325331515090219008&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;worth checking out&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://twitter.com/jangiacomelli/status/1331170945738760192&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Suggested Project from Jan Giacomelli&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This is a pretty 🔥 thread. He suggests:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Build an expense tracker CLI app:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Each expensee should have the following: title (string), amount(float), created_at(date), tags(list of strings)&lt;/p&gt;
+&lt;p&gt;2 Add Database&lt;/p&gt;
+&lt;p&gt;Instead of storing/reading in/from TXT file, start using SQLite. Write script to copy all of the existing expenses from TXT file to database. Don&amp;rsquo;t use ORM at this point.&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Start using Classes&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Represent expense with class Expense having attributes: title(string), amount(float), created_at(date), tags(list of strings).&lt;/p&gt;
+&lt;p&gt;Represent Database with class ExpenseRepository with methods: save, get_by_id, list, delete&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Re-write App to use Commands and Queries&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Each command/query is a class with method execute.
+At initialization you need to provide all required data for execution.&lt;/p&gt;
+&lt;p&gt;Commands: AddExpense, EditExpense
+Queries: GetById, ListAll&lt;/p&gt;
+&lt;p&gt;See this post on 
+&lt;a href=&#34;https://testdriven.io/blog/modern-tdd/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Modern Test-Driven Development in Python&lt;/a&gt;&lt;/p&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Add Tests&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Add tests for commands and queries&lt;/p&gt;
+&lt;p&gt;Example:
+GIVEN Valid data
+WHEN execute method is called on AddExpense command
+THEN record is created in database with same attributes as provided&lt;/p&gt;
+&lt;p&gt;See this post on 
+&lt;a href=&#34;https://testdriven.io/blog/modern-tdd/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Modern Test-Driven Development in Python&lt;/a&gt;&lt;/p&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;Flask&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Use Flask to build the web application for your expense tracker.
+Reuse commands and queries inside views
+Use Jinja2 for HTML templating
+Add integration tests for endpoints&lt;/p&gt;
+&lt;ol start=&#34;7&#34;&gt;
+&lt;li&gt;PostgreSQL&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Start using PostgreSQL instead of SQLite.
+You should only edit ExpenseRepository.
+Create script to copy all existing data from SQLite to Postgres&lt;/p&gt;
+&lt;ol start=&#34;8&#34;&gt;
+&lt;li&gt;Authentication&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Add sign up and login to your Flask application
+Protect endpoints for expenses to allow only logged in users to use them
+Allow user to only see own expenses.&lt;/p&gt;
+&lt;ol start=&#34;9&#34;&gt;
+&lt;li&gt;Dockerize and Deploy&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Dockerize your Flask application
+Deploy to Heroku (don&amp;rsquo;t use DB in docker, use it on Heroku)&lt;/p&gt;
+&lt;p&gt;See this post on 
+&lt;a href=&#34;https://testdriven.io/blog/dockerizing-flask-with-postgres-gunicorn-and-nginx/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Dockerizing Flask with Postgres, Gunicorn and Nginx&lt;/a&gt;&lt;/p&gt;
+&lt;ol start=&#34;10&#34;&gt;
+&lt;li&gt;Start using your application for real&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Start tracking your expenses
+Even the most little ones
+Don&amp;rsquo;t forget to add them daily&lt;/p&gt;
+&lt;ol start=&#34;11&#34;&gt;
+&lt;li&gt;Data Analysis&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Use Pandas and Matplotlib to analyze your expenses
+Check frequency, check biggest amount, smallest amount, average amount, most frequent amount and most used tags&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Draw plots: Number of expenses per day, amount spent per day&lt;/p&gt;
+&lt;ol start=&#34;12&#34;&gt;
+&lt;li&gt;ML&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Build model which will predict tags based on the title of expense
+Use your existing records
+Although your data set is small, try to build model as precise as possible&lt;/p&gt;
+&lt;ol start=&#34;13&#34;&gt;
+&lt;li&gt;Congratulate yourself&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Don&amp;rsquo;t forget to write a blog post for each of these steps.
+Don&amp;rsquo;t forget to share your code in a public git repository (GitHub)
+Don&amp;rsquo;t forget to tweet it out
+Don&amp;rsquo;t forget to add all the skills to LinkedIn&lt;/p&gt;
 &lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>

@@ -244,7 +244,7 @@
     
       <meta property="article:published_time" content="2020-11-21T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2020-11-21T00:00:00&#43;00:00">
+    <meta property="article:modified_time" content="2020-11-25T00:00:00&#43;00:00">
   
 
   
@@ -273,7 +273,7 @@
   "headline": "End-to-End Projects",
   
   "datePublished": "2020-11-21T00:00:00Z",
-  "dateModified": "2020-11-21T00:00:00Z",
+  "dateModified": "2020-11-25T00:00:00Z",
   
   "author": {
     "@type": "Person",
@@ -711,8 +711,10 @@
     
     
       
+          Last updated on
+      
     
-    Nov 21, 2020
+    Nov 25, 2020
   </span>
   
 
@@ -721,7 +723,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    2 min read
+    4 min read
   </span>
   
 
@@ -780,6 +782,90 @@
 <a href="https://twitter.com/PrasoonPratham" target="_blank" rel="noopener">Pratham Prasoon</a>, as the title suggests, is for newcomers to ML, but I think by the end of the sequence (doesn&rsquo;t have to be 30 days) there&rsquo;s a Kaggle project to complete. <em>note</em>: this is not ML-in-production like some of the other resources, but Kaggle projects are great for learning.</p>
 <p>He has another thread 
 <a href="https://twitter.com/PrasoonPratham/status/1325331515090219008" target="_blank" rel="noopener">worth checking out</a>.</p>
+<p>
+<a href="https://twitter.com/jangiacomelli/status/1331170945738760192" target="_blank" rel="noopener">Suggested Project from Jan Giacomelli</a></p>
+<p>This is a pretty 🔥 thread. He suggests:</p>
+<ol>
+<li>Build an expense tracker CLI app:</li>
+</ol>
+<p>Each expensee should have the following: title (string), amount(float), created_at(date), tags(list of strings)</p>
+<p>2 Add Database</p>
+<p>Instead of storing/reading in/from TXT file, start using SQLite. Write script to copy all of the existing expenses from TXT file to database. Don&rsquo;t use ORM at this point.</p>
+<ol start="3">
+<li>Start using Classes</li>
+</ol>
+<p>Represent expense with class Expense having attributes: title(string), amount(float), created_at(date), tags(list of strings).</p>
+<p>Represent Database with class ExpenseRepository with methods: save, get_by_id, list, delete</p>
+<ol start="4">
+<li>Re-write App to use Commands and Queries</li>
+</ol>
+<p>Each command/query is a class with method execute.
+At initialization you need to provide all required data for execution.</p>
+<p>Commands: AddExpense, EditExpense
+Queries: GetById, ListAll</p>
+<p>See this post on 
+<a href="https://testdriven.io/blog/modern-tdd/" target="_blank" rel="noopener">Modern Test-Driven Development in Python</a></p>
+<ol start="5">
+<li>Add Tests</li>
+</ol>
+<p>Add tests for commands and queries</p>
+<p>Example:
+GIVEN Valid data
+WHEN execute method is called on AddExpense command
+THEN record is created in database with same attributes as provided</p>
+<p>See this post on 
+<a href="https://testdriven.io/blog/modern-tdd/" target="_blank" rel="noopener">Modern Test-Driven Development in Python</a></p>
+<ol start="6">
+<li>Flask</li>
+</ol>
+<p>Use Flask to build the web application for your expense tracker.
+Reuse commands and queries inside views
+Use Jinja2 for HTML templating
+Add integration tests for endpoints</p>
+<ol start="7">
+<li>PostgreSQL</li>
+</ol>
+<p>Start using PostgreSQL instead of SQLite.
+You should only edit ExpenseRepository.
+Create script to copy all existing data from SQLite to Postgres</p>
+<ol start="8">
+<li>Authentication</li>
+</ol>
+<p>Add sign up and login to your Flask application
+Protect endpoints for expenses to allow only logged in users to use them
+Allow user to only see own expenses.</p>
+<ol start="9">
+<li>Dockerize and Deploy</li>
+</ol>
+<p>Dockerize your Flask application
+Deploy to Heroku (don&rsquo;t use DB in docker, use it on Heroku)</p>
+<p>See this post on 
+<a href="https://testdriven.io/blog/dockerizing-flask-with-postgres-gunicorn-and-nginx/" target="_blank" rel="noopener">Dockerizing Flask with Postgres, Gunicorn and Nginx</a></p>
+<ol start="10">
+<li>Start using your application for real</li>
+</ol>
+<p>Start tracking your expenses
+Even the most little ones
+Don&rsquo;t forget to add them daily</p>
+<ol start="11">
+<li>Data Analysis</li>
+</ol>
+<p>Use Pandas and Matplotlib to analyze your expenses
+Check frequency, check biggest amount, smallest amount, average amount, most frequent amount and most used tags&hellip;</p>
+<p>Draw plots: Number of expenses per day, amount spent per day</p>
+<ol start="12">
+<li>ML</li>
+</ol>
+<p>Build model which will predict tags based on the title of expense
+Use your existing records
+Although your data set is small, try to build model as precise as possible</p>
+<ol start="13">
+<li>Congratulate yourself</li>
+</ol>
+<p>Don&rsquo;t forget to write a blog post for each of these steps.
+Don&rsquo;t forget to share your code in a public git repository (GitHub)
+Don&rsquo;t forget to tweet it out
+Don&rsquo;t forget to add all the skills to LinkedIn</p>
 <p>For more content on data science, machine learning, R, Python, SQL and more, 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
