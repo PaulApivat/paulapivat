@@ -266,7 +266,7 @@ We can point out two additional observations / rules:
 
 ### Bayes' Theorem: Outcome 1
 
-**Bayes Theorem** is a way of calculating conditional probability without the joint probability, as we saw above. 
+**Bayes Theorem** is a way of calculating conditional probability *without* the joint probability, as we saw above. 
 
 Sometimes, we may not have P(B), the demoninator above. Bayes' Theorem provides a way to derive the P(B), in cases where we don't have it:
 
@@ -282,10 +282,7 @@ Here's the way **Bayes' Theorem** is often stated, using the alternative calcula
 - P(G|B) = (1/2) * (1/2) / (1/4)
 - P(G|B) = 1 
 
-Let's try the reverse, also using Bayes Theorem:
 
-- P(B|G) = P(G|B) * P(B) / ( P(G|B) * P(B) +  P(G|not B) * P(not B) )
-- P(B|G) = (1) * (1/4)  /  (  (1) * (1/4) +  #TBD
 
 *note*: key is figuring out P(G|not B)
 

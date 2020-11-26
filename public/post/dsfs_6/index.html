@@ -969,7 +969,7 @@ older_girl  #4,937 / 10,000 ~ roughly 50% or 1/2 probability that the first chil
 <li>Conditional probabilities are <strong>not symmetrical</strong>: P(B|G) != P(G|B)</li>
 </ol>
 <h3 id="bayes-theorem-outcome-1">Bayes&rsquo; Theorem: Outcome 1</h3>
-<p><strong>Bayes Theorem</strong> is a way of calculating conditional probability without the joint probability, as we saw above.</p>
+<p><strong>Bayes Theorem</strong> is a way of calculating conditional probability <em>without</em> the joint probability, as we saw above.</p>
 <p>Sometimes, we may not have P(B), the demoninator above. Bayes&rsquo; Theorem provides a way to derive the P(B), in cases where we don&rsquo;t have it:</p>
 <ul>
 <li>P(B) = P(B|G) * P(G) +  P(B|not G) * P(not G)</li>
@@ -982,11 +982,6 @@ older_girl  #4,937 / 10,000 ~ roughly 50% or 1/2 probability that the first chil
 <li>P(G|B) = P(B|G) * P(G) / ( P(B|G) * P(G)  +  P(B|not G) * P(not G) )</li>
 <li>P(G|B) = (1/2) * (1/2) / (1/4)</li>
 <li>P(G|B) = 1</li>
-</ul>
-<p>Let&rsquo;s try the reverse, also using Bayes Theorem:</p>
-<ul>
-<li>P(B|G) = P(G|B) * P(B) / ( P(G|B) * P(B) +  P(G|not B) * P(not B) )</li>
-<li>P(B|G) = (1) * (1/4)  /  (  (1) * (1/4) +  #TBD</li>
 </ul>
 <p><em>note</em>: key is figuring out P(G|not B)</p>
 <p>For more content on data science, machine learning, R, Python, SQL and more, 
