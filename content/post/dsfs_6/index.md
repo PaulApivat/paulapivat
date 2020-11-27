@@ -250,6 +250,12 @@ Here's the conditional probability for outcome 1, using a joint probability:
 - P(B|G) = P(B,G) / P(G) 
 - P(B|G) =  (1/4) / (1/2) = **1/2** or roughly **50%**
 
+Technically, we *can't* use joint probability because the two events are *not independent*. 
+
+To clarify, the probability of the older child being a certain gender and the probability of the younger child being a certain gender *is* independent, but `P(B|G)` the 'probability of *both* child being a girl' and 'the probability of the older child being a girl' are *not independent*; and hence we express it as a *conditional* probability.
+
+So, the joint probability of `P(B,G)` is just event B,`P(B)`. 
+
 Here's an alternate way to calculate the conditional probability (**without** joint probability):
 
 - `P(B|G) = P(G|B) * P(B) / P(G)`  **This is Bayes Theorem**
@@ -345,7 +351,7 @@ The probability for outcome two is roughly 33% or (1/3).
 
 We'll go through the same process as above. 
 
-We could use **joint** probability to calculate the **conditional** probability:
+We could use **joint** probability to calculate the **conditional** probability. As with the previous outcome, the joint probability of `P(B,G)` is just event B,`P(B)`. 
 
 - P(B|L) = P(B,L) / P(L) = 1/3 
 
@@ -368,6 +374,25 @@ Then, we can use `P(L)` in the way Bayes' Theorem is commonly expressed, when we
 - P(B|L) =  1 * (1/4) / (3/4)
 - P(B|L) = 1/3
 
+Now that we've gone through the calculation for two conditional probabilities, `P(B|G)` and `P(B|L)`, using Bayes Theorem, and implemented code for one of the scenarios, let's take a step back and assess what this *means*. 
+
+### Bayesian Terminology
+
+I think its useful to understand that probability in general shines when we want to describe uncertainty and that Bayes' Theorem allows us to quantify how much the data we observe, should change our beliefs.
+
+![png](./bayes_table.png)
+
+We have two **posteriors**, `P(B|G)` and `P(B|L)`, both with equal **priors** and **likelihood**, but with *different* **evidence**.
+
+Said differently, we want to know the 'probability that both children are girls`, given *different* conditions. 
+
+In the first case, our condition is 'the first child is a girl' and in the second case, our condition is '*at least one* of the child is a girl'. The question is which condition will increase the probability that **both** children are girls? 
+
+Bayes' Theorem allows us to update our belief about the probability in these two cases, as we incorporate varied data into our framework.
+
+What the calculations tell us is that the **evidence** that 'one child is a girl' increases the probability that **both** children are girls *more than* the other **evidence** that 'at least one child is a girl' increases that probability. 
+
+And our beliefs should be updated accordingly. 
 
 
 
