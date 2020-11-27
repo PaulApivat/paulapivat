@@ -100,22 +100,24 @@ Here is their **joint probability**:
 
 There is a relationship between **conditional** probabilities and **joint** probabilities. 
 
-Here is their **conditional probability**:
-- P(2nd Child = Boy | 1st Child = Boy) =>
-- P(1st Child = Boy, 2nd Child = Boy) / P(1st Child = Boy)
+- P(1st Child = Boy | 2nd Child = Boy) = P(1st Child = Boy, 2nd Child = Boy) / P(2nd Child = Boy)
+
+Namely, the **conditional** probability is equal to the **joint** probability divided by the conditional.
+
 
 Thie works out to: 
-- (1/4) / (1/2) = 1/2
+- P(1st Child = Boy | 2nd Child = Boy) = (1/4) / (1/2) 
 or 
-- (1/4) * (2/1) = 1/2
+- (1/4) * (2/1) 
+= 1/2
 
-In other words, the probability that the second child is a boy, given that the first child is a boy is still 50% (this implies that with respect to **conditional** probability, if the events are **independent** it is not different from a single event). 
+In other words, the probability that the second child is a boy, given that the first child is a boy is *still* 50% (this implies that with respect to **conditional** probability, if the events are **independent** it is not different from a single event). 
 
 Now we're ready to tackle the two challenges posed at the beginning of this post.
 
 > Challenge 1: What is the probability of the event "both children are girls" (B) conditional on the event "the older child is a girl" (G)?
 
-Let's break it down. First we want the probability of the event that "both children are girls". We'll take the product of two events; the probability that the first child is a girl (1/2) and the probability that the second child is a girl (1/2). So for **both** child to be girls, 1/2 * 1/2 = 1/4
+Let's break it down. First we want the probability of the event that "both children are girls". We'll take the product of two events; the probability that the first child is a girl (1/2) and the probability that the second child is a girl (1/2). So the  **joint probability of both** child being girls is 1/2 * 1/2 = 1/4
 
 - P(1st Child = Girl, 2nd Child = Girl) = 1/4
 
@@ -124,8 +126,10 @@ Second, we want that to be **given that** the "older child is a girl".
 - P(1st Child = Girl) = 1/2
 
 **Conditional probability**: 
-- P(1st Child = Girl, 2nd Child = Girl) / P(1st Child = Girl)
-- (1/4) / (1/2) = **1/2** or roughly **50%**
+- P(Both Child = Girls | 1st Child = Girl) = P(1st Child = Girl, 2nd Child = Girl) / P(1st Child = Girl)
+
+- P(Both Child = Girls | 1st Child = Girl) = (1/4) / (1/2) 
+- (1/4) * (2/1) = **1/2** or roughly **50%**
 
 Now let's break down the second challenge: 
 
@@ -142,9 +146,14 @@ Then, we have "on condition that at least one of the children is a girl". We'll 
 The probability of at least one children being a girl is:
 - (1/4) + (1/4) + (1/4) = 3/4
 
-So:
-- P(1st Child = Girl, 2nd Child = Girl) / P("at least one child is a girl")
-- (1/4) / (3/4) = (1/4) * (4/3) = **1/3** or roughly **33%**
+So (introducing notation):
+
+- P(B) = "probability of both child being girls" (i.e., 1st Child = Girl, 2nd Child = Girl)
+- P(L) = "probability of at least one child being a girl"
+
+
+- P(B|L) = P(B,L) / P(L)
+- P(B|L) = (1/4) / (3/4) = (1/4) * (4/3) = **1/3** or roughly **33%**
 
 #### Key Take-away
 
@@ -235,64 +244,61 @@ Previously, we used the **joint** probability to calculate the **conditional** p
 
 Here's the conditional probability for outcome 1, using a joint probability:
 
-- P(B|G) = P(1st Child = Girl, 2nd Child = Girl) / P(1st Child = Girl)
+- P(G) = 'Probability that first child is a girl' (1/2)
+- P(B) = 'Probability that both children are girls' (1/4)
+
 - P(B|G) = P(B,G) / P(G) 
 - P(B|G) =  (1/4) / (1/2) = **1/2** or roughly **50%**
 
 Here's an alternate way to calculate the conditional probability (**without** joint probability):
 
-- P(B|G) = P(G|B) * P(B) / P(G)
+- `P(B|G) = P(G|B) * P(B) / P(G)`  **This is Bayes Theorem**
 - P(B|G) = 1 * (1/4) / (1/2)
 - P(B|G) = (1/4) * (2/1) 
 - P(B|G) = 1/2 = **50%**
 
-The **reverse** conditional probability, can also be calculated, without joint probability:
+**note**: P(G|B) is 'the probability that the first child is a girl, given that **both** children are girls is a certainty (1.0)'
+
+The **reverse conditional probability**, can also be calculated, without joint probability:
 
 > What is the probability of the older child being a girl, given that both children are girls? 
 
-**note**: sometimes the answer appears obvious when you write it out, but we'll continue with the notation. 
 
-- P(G|B) = P(B|G) * P(G) / P(B)
+- `P(G|B) = P(B|G) * P(G) / P(B)`  **This is Bayes Theorem (reverse case)**
 - P(G|B) = (1/2) * (1/2) / (1/4)
 - P(G|B) = (1/4) / (1/4)
 - P(G|B) = 1 = **100%**
 
-It shouldn't be too surprising that it is a **certainty** (probability = 1) that the older child is a girl, **given that** both children are girls. 
+This is consistent with what we already derived above, namely that P(G|B) is a **certainty** (probability = 1.0), that the older child is a girl, **given that** both children are girls. 
 
 We can point out two additional observations / rules:
 
-1. Joint probabilities are **symmetrical**: P(B,G) == P(G,B)
+1. While, joint probabilities are **symmetrical**: P(B,G) == P(G,B),
 2. Conditional probabilities are **not symmetrical**: P(B|G) != P(G|B)
 
-### Bayes' Theorem: Outcome 1
+### Bayes' Theorem: Alternative Expression
 
-**Bayes Theorem** is a way of calculating conditional probability *without* the joint probability, as we saw above. 
+**Bayes Theorem** is a way of calculating conditional probability *without* the joint probability, summarized here:
 
-Sometimes, we may not have P(B), the demoninator above. Bayes' Theorem provides a way to derive the P(B), in cases where we don't have it:
+- `P(B|G) = P(G|B) * P(B) / P(G)`  **This is Bayes Theorem**
+- `P(G|B) = P(B|G) * P(G) / P(B)`  **This is Bayes Theorem (reverse case)**
 
-- P(B) = P(B|G) * P(G) +  P(B|not G) * P(not G)
-- P(B) = (1/2) * (1/2) +  (0) * (1/2)
-- P(B) = (1/4)
+You'll note that `P(G)` is the denominator in the former, and `P(B)` is the denominator in the latter. 
 
-**note**: the probability of *both* children being girls when the older child is **not** a girl is zero. 
+> What if, for some reasons, we don't have access to the denominator? 
 
-Here's the way **Bayes' Theorem** is often stated, using the alternative calculation of P(B):
+We would use the `NOT` operator:
 
-- P(G|B) = P(B|G) * P(G) / ( P(B|G) * P(G)  +  P(B|not G) * P(not G) )
-- P(G|B) = (1/2) * (1/2) / (1/4)
-- P(G|B) = 1 
+- P(G) = P(G,B) + P(G,not B)
+- P(B) = P(B,G) + P(B,not G)
 
+Therefore, the alternative expression of Bayes Theorem for the probability of both children being girls, given that the first child is a girl ( P(B|G) ) is:
 
-
-*note*: key is figuring out P(G|not B)
-
-
-
-
-
-
-
-
+- P(B|G) = P(G|B) * P(B) / ( P(G|B) * P(B) + P(G|not B) * P(not B) )
+- P(B|G) =     1 * 1/4 / (1 * 1/4 + 1/3 * 3/4)
+- P(B|G) =  1/4  /  (1/4 + 3/12)
+- P(B|G) =  1/4  /  2/4  =  1/4 * 4/2
+- P(B|G) =  1/2 or roughly **50%**
 
 
 
