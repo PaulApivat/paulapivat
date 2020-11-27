@@ -287,7 +287,7 @@ You'll note that `P(G)` is the denominator in the former, and `P(B)` is the deno
 
 > What if, for some reasons, we don't have access to the denominator? 
 
-We would use the `NOT` operator:
+We could derive both `P(G)` and `P(B)` in another way using the `NOT` operator:
 
 - P(G) = P(G,B) + P(G,not B)
 - P(B) = P(B,G) + P(B,not G)
