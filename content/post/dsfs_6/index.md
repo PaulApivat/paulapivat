@@ -292,13 +292,50 @@ We would use the `NOT` operator:
 - P(G) = P(G,B) + P(G,not B)
 - P(B) = P(B,G) + P(B,not G)
 
-Therefore, the alternative expression of Bayes Theorem for the probability of both children being girls, given that the first child is a girl ( P(B|G) ) is:
+Therefore, the alternative expression of Bayes Theorem for the probability of *both* children being girls, given that the first child is a girl ( P(B|G) ) is:
 
 - P(B|G) = P(G|B) * P(B) / ( P(G|B) * P(B) + P(G|not B) * P(not B) )
 - P(B|G) =     1 * 1/4 / (1 * 1/4 + 1/3 * 3/4)
 - P(B|G) =  1/4  /  (1/4 + 3/12)
 - P(B|G) =  1/4  /  2/4  =  1/4 * 4/2
 - P(B|G) =  1/2 or roughly **50%**
+
+We can check the result in code:
+
+```python
+def bayes_theorem(p_b, p_g_given_b, p_g_given_not_b):
+   # calculate P(not B)
+   not_b = 1 - p_b
+   # calculate P(G)
+   p_g = p_g_given_b * p_b + p_g_given_not_b * not_b
+   # calculate P(B|G)
+   p_b_given_g = (p_g_given_b * p_b) / p_g
+   return p_b_given_g
+   
+#P(B)
+p_b = 1/4
+
+# P(G|B)
+p_g_given_b = 1
+
+# P(G|notB)
+p_g_given_not_b = 1/3
+
+# calculate P(B|G)
+result = bayes_theorem(p_b, p_g_given_b, p_g_given_not_b)
+
+# print result
+print('P(B|G) = %.2f%%' % (result * 100))
+```
+
+For the probability that the first child is a girl, given that *both* children are girls ( P(G|B) ) is:
+
+- P(G|B) = P(B|G) * P(G) / ( P(G|B) * P(G) + P(B|not G) * P(not G) )
+- P(G|B) =   1/2 * 1/2  / ((1/2 * 1/2) + (0 * 1/2))
+- P(G|B) =  1/4  /  1/4
+- P(G|B) = 1 
+
+Moreover, we can now move onto double checking our work in Python code:
 
 
 
