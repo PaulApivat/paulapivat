@@ -289,8 +289,8 @@ You'll note that `P(G)` is the denominator in the former, and `P(B)` is the deno
 
 We could derive both `P(G)` and `P(B)` in another way using the `NOT` operator:
 
-- P(G) = P(G,B) + P(G,not B)
-- P(B) = P(B,G) + P(B,not G)
+- P(G) = P(G,B) + P(G,not B) = P(G|B) * P(B) + P(G|not B) * P(not B)
+- P(B) = P(B,G) + P(B,not G) = P(B|G) * P(G) + P(B|not G) * P(not G)
 
 Therefore, the alternative expression of Bayes Theorem for the probability of *both* children being girls, given that the first child is a girl ( P(B|G) ) is:
 
@@ -335,7 +335,40 @@ For the probability that the first child is a girl, given that *both* children a
 - P(G|B) =  1/4  /  1/4
 - P(G|B) = 1 
 
-Moreover, we can now move onto double checking our work in Python code:
+Let's unpack Outcome 2.
+
+### Outcome 2
+
+> Outcome 2: What is the probability of the event "both children are girls" (B) conditional on the event "at least one of the children is a girl" (L)?
+
+The probability for outcome two is roughly 33% or (1/3).
+
+We'll go through the same process as above. 
+
+We could use **joint** probability to calculate the **conditional** probability:
+
+- P(B|L) = P(B,L) / P(L) = 1/3 
+
+Or, we could use Bayes' Theorem to figure out the **conditional** probability **without joint** probability:
+
+- P(B|L) = P(L|B) * P(B) / P(L) 
+- P(B|L) =  (1 * 1/4) / (3/4)
+- P(B|L) = 1/3
+
+And, if there's no `P(L)`, we can calculate that indirectly, also using Bayes' Theorem:
+
+- P(L) = P(L|B) * P(B) + P(L|not B) * P(not B)
+- P(L) =  1 * (1/4) + (2/3) * (3/4)
+- P(L) =  (1/4) + (2/4)
+- P(L) = 3/4
+
+Then, we can use `P(L)` in the way Bayes' Theorem is commonly expressed, when we don't have the denominator:
+
+- P(B|L) = P(L|B) * P(B) / ( P(L|B) * P(B) + P(L|not B) * P(not B) )
+- P(B|L) =  1 * (1/4) / (3/4)
+- P(B|L) = 1/3
+
+
 
 
 
