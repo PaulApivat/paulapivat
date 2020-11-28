@@ -404,5 +404,9 @@ When we look at the probability table for outcome two, `P(B|L)`, we can see how 
 
 ![outcome_two](./outcome_two.png)
 
+This is part of an ongoing series documenting my progress through Data Science from Scratch by Joel Grus:
+
+![png](./conditional_prob_ch6.png)
+
 
 For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).
