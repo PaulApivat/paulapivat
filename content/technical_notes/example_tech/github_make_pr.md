@@ -4,7 +4,7 @@ draft: false
 linktitle: Making a Pull Request
 menu:
   example_tech:
-    parent: GitHub
+    parent: Git & GitHub
     weight: 1
 title: Making a Pull Request on a GitHub Repo
 toc: true
