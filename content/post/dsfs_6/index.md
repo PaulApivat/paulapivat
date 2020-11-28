@@ -265,7 +265,7 @@ Here's an alternate way to calculate the conditional probability (**without** jo
 
 **note**: P(G|B) is 'the probability that the first child is a girl, given that **both** children are girls is a certainty (1.0)'
 
-The **reverse conditional probability**, can also be calculated, without joint probability:
+The **reverse** conditional probability, can also be calculated, without joint probability:
 
 > What is the probability of the older child being a girl, given that both children are girls? 
 
@@ -390,12 +390,19 @@ In the first case, our condition is 'the first child is a girl' and in the secon
 
 Bayes' Theorem allows us to update our belief about the probability in these two cases, as we incorporate varied data into our framework.
 
-What the calculations tell us is that the **evidence** that 'one child is a girl' increases the probability that **both** children are girls *more than* the other **evidence** that 'at least one child is a girl' increases that probability. 
+What the calculations tell us is that the **evidence** that 'one child is a girl' increases the probability that **both** children are girls *more than* the other piece of **evidence** that 'at least one child is a girl' increases that probability. 
 
 And our beliefs should be updated accordingly. 
 
+At the end of the day, understanding conditional probability (and Bayes Theorem) comes down to **counting**. For our hypothetical scenarios, we only need one hand:
 
+When we look at the probability table for outcome one, `P(B|G)`, we can see how the posterior probability comes out to 1/2:
 
+![outcome_one](./outcome_one.png)
+
+When we look at the probability table for outcome two, `P(B|L)`, we can see how the posterior probability comes out to 1/3:
+
+![outcome_two](./outcome_two.png)
 
 
 For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).
