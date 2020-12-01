@@ -22,6 +22,7 @@ title: Data Science from Scratch (ch6) - Probability
 - [Marginal and Joint Probability](#marginal_and_joint_probabilities)
 - [Conditional Probability](#conditional_probability)
 - [Bayes' Theorem](#bayes_theorem)
+- [Applying Bayes' Theorem](#applying_bayes_theorem)
 
 
 ## Overview
@@ -407,6 +408,148 @@ When we look at the probability table for outcome two, `P(B|L)`, we can see how 
 This is part of an ongoing series documenting my progress through Data Science from Scratch by Joel Grus:
 
 ![png](./conditional_prob_ch6.png)
+
+## Applying_Bayes_Theorem
+
+Now that we have a basic understanding of Bayes Theorem, let's extend the application to a slightly more complex example. This section was inspired by this [tweet](https://twitter.com/3blue1brown/status/1333121058824613889?s=20) from Grant Sanderson (of [3Blue1Brown fame](https://www.youtube.com/watch?v=HZGCoVF3YvM)):
+
+![grant_tweet](./grant_tweet.png)
+
+This is a classic application of Bayes Theorem - the **medical diagnostic scenario**. The above tweet can be re-stated:
+
+> What is the probability of you *actually having the disease*, given that you tested positive?
+
+This happens to be even more relevant as we're living through a generational pandemic. 
+
+Let's start off with a conceptual understanding, using the tools we learned previously. First, we have to keep in mind **testing** and **actually having the disease** are **not independent** events. Therefore, we will use **conditional probability** to express their joint outcomes. 
+
+The intuitive visual to illustrate this is the **tree diagram**:
+
+![initial_tree](./initial_tree.png)
+
+The initial given information contains the information in the tree.
+
+- P(D): Probability of having the disease (covid-19)
+- P(P): Probability of testing positive
+- *P(D|P): Our objective is to find the probability of having the disease, given a positive test
+
+- 1 in 1,000 actively have covid-19, P(D), this implies...
+- 999 in 1,000 do **not** actively have covid-19, P(not D)
+
+- 1% or 0.01 false positive (given)
+- 10% or 0.1 false negative (given)
+
+The **false positive** is when you *don't* have the disease, but your test (in error) shows up positive. **False negative** is when you *have* the disease, but your test (in error) shows up negative. We are provided this information and have to calculate other values to fill in the tree. 
+
+We know that all possible events have to add up to 1, so if 1 in 1,000 actively have the disease, we know that 999 in 1,000 do not have it. If the false negative is 10%, then the **true positive** is 90%. If the false positive is 1%, then the **true negative** is 99%. From our calculations, the tree can be updated:
+
+![second_tree](./second_tree.png)
+
+Now that we've filled out the tree, we can use **Bayes' Theorem** to find `P(D|P)`. Here's Bayes' Theorem that we discussed in the previous section. We have Bayes' Theorem, the denominator, probability of testing positive `P(P)` and the *second* version of Bayes Theorem in cases were we *do not know* the probability of testing positive (as in the present case):
+
+![bayes1](./bayes1.png)
+
+Then we can plug-in the denominator to get the alternative version of Bayes' Theorem:
+
+![bayes2](./bayes2.png)
+
+Here's how the numbers add up:
+
+- P(D|P) = P(P|D) * P(D) / P(P|D) * P(D) + P(P|not D) * P(not D)
+- P(D|P) = 0.9 * 0.001 / 0.9 * 0.001 + 0.01 * 0.999
+- P(D|P) = 0.0009 / 0.0009 + 0.00999
+- P(D|P) = 0.0009 / 0.01089
+- P(D|P) ~ 0.08264 or 8.26%
+
+Interestingly, [Andrej Karpathy](https://twitter.com/karpathy) actually [responded in the thread](https://twitter.com/karpathy/status/1333217287155847169?s=20) and provided an intuitive way to arrive at the same result using Python.
+
+Here's his code (with added comments):
+
+```python
+from random import random, seed
+seed(0)
+
+pop = 10000000 # 10M people
+counts = {}
+
+for i in range(pop):
+    has_covid = i % 1000 == 0 # one in 1,000 people have covid (priors or prevalence of disease)
+    # The major assumption is that every person gets tested regardless of any symptoms
+    if has_covid:                  # Has disease
+        tests_positive = True      # True positive
+        if random() < 0.1:     
+            tests_positive = False # False negative
+    else:                          # Does not have disease
+        tests_positive = False     # True negative
+        if random() < 0.01:    
+            tests_positive = True  # False positive
+    outcome = (has_covid, tests_positive)
+    counts[outcome] = counts.get(outcome, 0) + 1
+    
+for (has_covid, tested_positive), n in counts.items():
+    print('has covid: %6s, tests positive: %6s, count: %d' % (has_covid, tested_positive, n))
+    
+n_positive = counts[(True, True)] + counts[(False, True)]
+
+print('number of people who tested positive:', n_positive)
+print('probability that a test-positive person actually has covid: %.2f' % (100.0 * counts[(True, True)] / n_positive), )
+```
+
+We first build a hypothetical population of 10 million. If the **prior** or **prevalence** of disease is 1 in 1,000, a population of 10 million should find 10000 people with covid. You can see how this works with this short snippet:
+
+```python
+pop = 10000000
+counts = 0
+
+for i in range(pop):
+    has_covid = i % 1000 == 0
+    if has_covid:
+        counts = counts + 1
+print(counts, "people have the disease in a population of 10 million")
+```
+Nested in the `for-loop` are `if-statements` that segment the population (10M) into one of four categories True Positive, False Negative, True Negative, False Positive. Each category is counted and stored in a `dict` called `counts`. Then another `for-loop` is used to loop through this dictionary to print out all the categories:
+
+```python
+has covid:   True, tests positive:   True, count: 9033
+has covid:  False, tests positive:  False, count: 9890133
+has covid:  False, tests positive:   True, count: 99867
+has covid:   True, tests positive:  False, count: 967
+
+number of people who tested positive: 108900
+probability that a test-positive person actually has covid: 8.29
+```
+
+Finally, we want the number of people who *have* the disease *and* tested positive (True Positive, 9033) divided by the number of people who tested positive, regardless of whether they actually have the disease (True Positive (9033) + False Positive (99867) = 108,900) and this comes out to approximately 8.29. 
+
+Although the [code](https://twitter.com/karpathy/status/1333217287155847169?s=20) was billed as "simple code to build intuition", I found that Bayes' Theorem *is* the intuition. 
+
+### What about symptoms?
+
+The key to Bayes' Theorem is that it encourages us to update our beliefs when presented with new evidence. But what if there's evidence we missed in the first place?
+
+If you look back at the [original tweet](https://twitter.com/3blue1brown/status/1333121058824613889?s=20), there are important details about symptoms that, if we wanted to be more realistic, should be accounted for. 
+
+> You feel fatigued and have a slight sore throat.
+
+Here, instead of assuming that prevalence of the disease (1 in 1,000 people have covid-19) is the prior, we might ask what probability that someone who is symptomatic has the disease? 
+
+Let's suppose we change from 1 in 1,000 to 1 in 100. We could change just one line of code (while everything else remains the same):
+
+```python
+for i in range(pop):
+    has_covid = i % 100 == 0 # update info: 1/1000 have covid, but 1/100 with symptoms have covid
+```
+
+The probability that someone with a positive test actually has the disease jumps from 8.29% to 47.61%
+
+```python
+has covid:   True, tests positive:   True, count: 180224
+has covid:  False, tests positive:  False, count: 19601715
+has covid:  False, tests positive:   True, count: 198285
+has covid:   True, tests positive:  False, count: 19776
+number of people who tested positive: 378509
+probability that a test-positive person with symptoms actually has covid: 47.61
+```
 
 
 For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).

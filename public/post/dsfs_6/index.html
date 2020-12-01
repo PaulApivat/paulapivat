@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    14 min read
+    19 min read
   </span>
   
 
@@ -767,6 +767,8 @@
 <a href="#conditional_probability">Conditional Probability</a></li>
 <li>
 <a href="#bayes_theorem">Bayes&rsquo; Theorem</a></li>
+<li>
+<a href="#applying_bayes_theorem">Applying Bayes&rsquo; Theorem</a></li>
 </ul>
 <h2 id="overview">Overview</h2>
 <h2 id="challenge">Challenge</h2>
@@ -1099,6 +1101,132 @@ print('P(B|G) = %.2f%%' % (result * 100))
 <p><img src="./outcome_two.png" alt="outcome_two"></p>
 <p>This is part of an ongoing series documenting my progress through Data Science from Scratch by Joel Grus:</p>
 <p><img src="./conditional_prob_ch6.png" alt="png"></p>
+<h2 id="applying_bayes_theorem">Applying_Bayes_Theorem</h2>
+<p>Now that we have a basic understanding of Bayes Theorem, let&rsquo;s extend the application to a slightly more complex example. This section was inspired by this 
+<a href="https://twitter.com/3blue1brown/status/1333121058824613889?s=20" target="_blank" rel="noopener">tweet</a> from Grant Sanderson (of 
+<a href="https://www.youtube.com/watch?v=HZGCoVF3YvM" target="_blank" rel="noopener">3Blue1Brown fame</a>):</p>
+<p><img src="./grant_tweet.png" alt="grant_tweet"></p>
+<p>This is a classic application of Bayes Theorem - the <strong>medical diagnostic scenario</strong>. The above tweet can be re-stated:</p>
+<blockquote>
+<p>What is the probability of you <em>actually having the disease</em>, given that you tested positive?</p>
+</blockquote>
+<p>This happens to be even more relevant as we&rsquo;re living through a generational pandemic.</p>
+<p>Let&rsquo;s start off with a conceptual understanding, using the tools we learned previously. First, we have to keep in mind <strong>testing</strong> and <strong>actually having the disease</strong> are <strong>not independent</strong> events. Therefore, we will use <strong>conditional probability</strong> to express their joint outcomes.</p>
+<p>The intuitive visual to illustrate this is the <strong>tree diagram</strong>:</p>
+<p><img src="./initial_tree.png" alt="initial_tree"></p>
+<p>The initial given information contains the information in the tree.</p>
+<ul>
+<li>
+<p>P(D): Probability of having the disease (covid-19)</p>
+</li>
+<li>
+<p>P(P): Probability of testing positive</p>
+</li>
+<li>
+<p>*P(D|P): Our objective is to find the probability of having the disease, given a positive test</p>
+</li>
+<li>
+<p>1 in 1,000 actively have covid-19, P(D), this implies&hellip;</p>
+</li>
+<li>
+<p>999 in 1,000 do <strong>not</strong> actively have covid-19, P(not D)</p>
+</li>
+<li>
+<p>1% or 0.01 false positive (given)</p>
+</li>
+<li>
+<p>10% or 0.1 false negative (given)</p>
+</li>
+</ul>
+<p>The <strong>false positive</strong> is when you <em>don&rsquo;t</em> have the disease, but your test (in error) shows up positive. <strong>False negative</strong> is when you <em>have</em> the disease, but your test (in error) shows up negative. We are provided this information and have to calculate other values to fill in the tree.</p>
+<p>We know that all possible events have to add up to 1, so if 1 in 1,000 actively have the disease, we know that 999 in 1,000 do not have it. If the false negative is 10%, then the <strong>true positive</strong> is 90%. If the false positive is 1%, then the <strong>true negative</strong> is 99%. From our calculations, the tree can be updated:</p>
+<p><img src="./second_tree.png" alt="second_tree"></p>
+<p>Now that we&rsquo;ve filled out the tree, we can use <strong>Bayes&rsquo; Theorem</strong> to find <code>P(D|P)</code>. Here&rsquo;s Bayes&rsquo; Theorem that we discussed in the previous section. We have Bayes&rsquo; Theorem, the denominator, probability of testing positive <code>P(P)</code> and the <em>second</em> version of Bayes Theorem in cases were we <em>do not know</em> the probability of testing positive (as in the present case):</p>
+<p><img src="./bayes1.png" alt="bayes1"></p>
+<p>Then we can plug-in the denominator to get the alternative version of Bayes&rsquo; Theorem:</p>
+<p><img src="./bayes2.png" alt="bayes2"></p>
+<p>Here&rsquo;s how the numbers add up:</p>
+<ul>
+<li>P(D|P) = P(P|D) * P(D) / P(P|D) * P(D) + P(P|not D) * P(not D)</li>
+<li>P(D|P) = 0.9 * 0.001 / 0.9 * 0.001 + 0.01 * 0.999</li>
+<li>P(D|P) = 0.0009 / 0.0009 + 0.00999</li>
+<li>P(D|P) = 0.0009 / 0.01089</li>
+<li>P(D|P) ~ 0.08264 or 8.26%</li>
+</ul>
+<p>Interestingly, 
+<a href="https://twitter.com/karpathy" target="_blank" rel="noopener">Andrej Karpathy</a> actually 
+<a href="https://twitter.com/karpathy/status/1333217287155847169?s=20" target="_blank" rel="noopener">responded in the thread</a> and provided an intuitive way to arrive at the same result using Python.</p>
+<p>Here&rsquo;s his code (with added comments):</p>
+<pre><code class="language-python">from random import random, seed
+seed(0)
+
+pop = 10000000 # 10M people
+counts = {}
+
+for i in range(pop):
+    has_covid = i % 1000 == 0 # one in 1,000 people have covid (priors or prevalence of disease)
+    # The major assumption is that every person gets tested regardless of any symptoms
+    if has_covid:                  # Has disease
+        tests_positive = True      # True positive
+        if random() &lt; 0.1:     
+            tests_positive = False # False negative
+    else:                          # Does not have disease
+        tests_positive = False     # True negative
+        if random() &lt; 0.01:    
+            tests_positive = True  # False positive
+    outcome = (has_covid, tests_positive)
+    counts[outcome] = counts.get(outcome, 0) + 1
+    
+for (has_covid, tested_positive), n in counts.items():
+    print('has covid: %6s, tests positive: %6s, count: %d' % (has_covid, tested_positive, n))
+    
+n_positive = counts[(True, True)] + counts[(False, True)]
+
+print('number of people who tested positive:', n_positive)
+print('probability that a test-positive person actually has covid: %.2f' % (100.0 * counts[(True, True)] / n_positive), )
+</code></pre>
+<p>We first build a hypothetical population of 10 million. If the <strong>prior</strong> or <strong>prevalence</strong> of disease is 1 in 1,000, a population of 10 million should find 10000 people with covid. You can see how this works with this short snippet:</p>
+<pre><code class="language-python">pop = 10000000
+counts = 0
+
+for i in range(pop):
+    has_covid = i % 1000 == 0
+    if has_covid:
+        counts = counts + 1
+print(counts, &quot;people have the disease in a population of 10 million&quot;)
+</code></pre>
+<p>Nested in the <code>for-loop</code> are <code>if-statements</code> that segment the population (10M) into one of four categories True Positive, False Negative, True Negative, False Positive. Each category is counted and stored in a <code>dict</code> called <code>counts</code>. Then another <code>for-loop</code> is used to loop through this dictionary to print out all the categories:</p>
+<pre><code class="language-python">has covid:   True, tests positive:   True, count: 9033
+has covid:  False, tests positive:  False, count: 9890133
+has covid:  False, tests positive:   True, count: 99867
+has covid:   True, tests positive:  False, count: 967
+
+number of people who tested positive: 108900
+probability that a test-positive person actually has covid: 8.29
+</code></pre>
+<p>Finally, we want the number of people who <em>have</em> the disease <em>and</em> tested positive (True Positive, 9033) divided by the number of people who tested positive, regardless of whether they actually have the disease (True Positive (9033) + False Positive (99867) = 108,900) and this comes out to approximately 8.29.</p>
+<p>Although the 
+<a href="https://twitter.com/karpathy/status/1333217287155847169?s=20" target="_blank" rel="noopener">code</a> was billed as &ldquo;simple code to build intuition&rdquo;, I found that Bayes&rsquo; Theorem <em>is</em> the intuition.</p>
+<h3 id="what-about-symptoms">What about symptoms?</h3>
+<p>The key to Bayes&rsquo; Theorem is that it encourages us to update our beliefs when presented with new evidence. But what if there&rsquo;s evidence we missed in the first place?</p>
+<p>If you look back at the 
+<a href="https://twitter.com/3blue1brown/status/1333121058824613889?s=20" target="_blank" rel="noopener">original tweet</a>, there are important details about symptoms that, if we wanted to be more realistic, should be accounted for.</p>
+<blockquote>
+<p>You feel fatigued and have a slight sore throat.</p>
+</blockquote>
+<p>Here, instead of assuming that prevalence of the disease (1 in 1,000 people have covid-19) is the prior, we might ask what probability that someone who is symptomatic has the disease?</p>
+<p>Let&rsquo;s suppose we change from 1 in 1,000 to 1 in 100. We could change just one line of code (while everything else remains the same):</p>
+<pre><code class="language-python">for i in range(pop):
+    has_covid = i % 100 == 0 # update info: 1/1000 have covid, but 1/100 with symptoms have covid
+</code></pre>
+<p>The probability that someone with a positive test actually has the disease jumps from 8.29% to 47.61%</p>
+<pre><code class="language-python">has covid:   True, tests positive:   True, count: 180224
+has covid:  False, tests positive:  False, count: 19601715
+has covid:  False, tests positive:   True, count: 198285
+has covid:   True, tests positive:  False, count: 19776
+number of people who tested positive: 378509
+probability that a test-positive person with symptoms actually has covid: 47.61
+</code></pre>
 <p>For more content on data science, machine learning, R, Python, SQL and more, 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
