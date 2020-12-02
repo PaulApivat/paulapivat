@@ -1605,6 +1605,7 @@ has covid:   True, tests positive:  False, count: 19776
 number of people who tested positive: 378509
 probability that a test-positive person with symptoms actually has covid: 47.61
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Thus, being sympotomatic means our &lt;strong&gt;priors&lt;/strong&gt; should be adjusted and our &lt;strong&gt;beliefs&lt;/strong&gt; about the likelihood that a positive test means we have the disease (&lt;code&gt;P(D|P)&lt;/code&gt;) should be updated accordingly (in this case, it goes way up).&lt;/p&gt;
 &lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
