@@ -649,7 +649,7 @@ plt.show()
 ```
 ### Cumulative Distribution Function
 
-While the probability mass function can tell us the probability of each discrete event (i.e., TT, FF, FT, and TF) we can also represent the same information as a **cumulative distribution function** which allows us to see how the probability changes as add events together.
+While the probability mass function can tell us the probability of each discrete event (i.e., TT, FF, FT, and TF) we can also represent the same information as a **cumulative distribution function** which allows us to see how the probability changes as we add events together.
 
 The cumulative distribution function simply adds the probability from the previous row in a `DataFrame` in a cumulative fashion, like in the column `probability2`:
 
@@ -667,7 +667,7 @@ This chart tells us that the probability of getting both TT and FF (True, True =
 
 More often than not, you'll be interested in *continuous* distributions and you can see better see how the **cumulative distribution function** works.
 
-You're probably familiar with the bell shaped curve or the *normal distribution*, defined solely by its mean (mu) and standard deviation (sigma). If you have a normal distribution of probability values, the average would be 0 and the standard deviation would be 1. 
+You're probably familiar with the bell shaped curve or the *normal distribution*, defined solely by its mean (mu) and standard deviation (sigma). If you have a **standard normal distribution** of probability values, the average would be 0 and the standard deviation would be 1. 
 
 ![1_normal](./1_normal.png)
 

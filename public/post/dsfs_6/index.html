@@ -1299,7 +1299,7 @@ plt.title(&quot;Probability Mass Function&quot;)
 plt.show()
 </code></pre>
 <h3 id="cumulative-distribution-function">Cumulative Distribution Function</h3>
-<p>While the probability mass function can tell us the probability of each discrete event (i.e., TT, FF, FT, and TF) we can also represent the same information as a <strong>cumulative distribution function</strong> which allows us to see how the probability changes as add events together.</p>
+<p>While the probability mass function can tell us the probability of each discrete event (i.e., TT, FF, FT, and TF) we can also represent the same information as a <strong>cumulative distribution function</strong> which allows us to see how the probability changes as we add events together.</p>
 <p>The cumulative distribution function simply adds the probability from the previous row in a <code>DataFrame</code> in a cumulative fashion, like in the column <code>probability2</code>:</p>
 <p><img src="./cdf_df.png" alt="cdf_df.png"></p>
 <p>We use the <code>cumsum()</code> function to create the <code>cumsum</code> column which is simply adding the <code>item_counts</code>, with each successive row. When we create the corresponding probability column, <code>probability2</code>, it gets larger until we reach 1.0.</p>
@@ -1308,7 +1308,7 @@ plt.show()
 <p>This chart tells us that the probability of getting both TT and FF (True, True = True Positive, and False, False = True Negative) is 88.6% which indicates that 11.4% (100 - 88.6) of the time, the diagnostic test will let us down.</p>
 <h3 id="normal-distribution">Normal Distribution</h3>
 <p>More often than not, you&rsquo;ll be interested in <em>continuous</em> distributions and you can see better see how the <strong>cumulative distribution function</strong> works.</p>
-<p>You&rsquo;re probably familiar with the bell shaped curve or the <em>normal distribution</em>, defined solely by its mean (mu) and standard deviation (sigma). If you have a normal distribution of probability values, the average would be 0 and the standard deviation would be 1.</p>
+<p>You&rsquo;re probably familiar with the bell shaped curve or the <em>normal distribution</em>, defined solely by its mean (mu) and standard deviation (sigma). If you have a <strong>standard normal distribution</strong> of probability values, the average would be 0 and the standard deviation would be 1.</p>
 <p><img src="./1_normal.png" alt="1_normal"></p>
 <p>Code:</p>
 <pre><code class="language-python">import math

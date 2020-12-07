@@ -559,7 +559,7 @@ plt.title(&amp;quot;Probability Mass Function&amp;quot;)
 plt.show()
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;cumulative-distribution-function&#34;&gt;Cumulative Distribution Function&lt;/h3&gt;
-&lt;p&gt;While the probability mass function can tell us the probability of each discrete event (i.e., TT, FF, FT, and TF) we can also represent the same information as a &lt;strong&gt;cumulative distribution function&lt;/strong&gt; which allows us to see how the probability changes as add events together.&lt;/p&gt;
+&lt;p&gt;While the probability mass function can tell us the probability of each discrete event (i.e., TT, FF, FT, and TF) we can also represent the same information as a &lt;strong&gt;cumulative distribution function&lt;/strong&gt; which allows us to see how the probability changes as we add events together.&lt;/p&gt;
 &lt;p&gt;The cumulative distribution function simply adds the probability from the previous row in a &lt;code&gt;DataFrame&lt;/code&gt; in a cumulative fashion, like in the column &lt;code&gt;probability2&lt;/code&gt;:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./cdf_df.png&#34; alt=&#34;cdf_df.png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;We use the &lt;code&gt;cumsum()&lt;/code&gt; function to create the &lt;code&gt;cumsum&lt;/code&gt; column which is simply adding the &lt;code&gt;item_counts&lt;/code&gt;, with each successive row. When we create the corresponding probability column, &lt;code&gt;probability2&lt;/code&gt;, it gets larger until we reach 1.0.&lt;/p&gt;
@@ -568,7 +568,7 @@ plt.show()
 &lt;p&gt;This chart tells us that the probability of getting both TT and FF (True, True = True Positive, and False, False = True Negative) is 88.6% which indicates that 11.4% (100 - 88.6) of the time, the diagnostic test will let us down.&lt;/p&gt;
 &lt;h3 id=&#34;normal-distribution&#34;&gt;Normal Distribution&lt;/h3&gt;
 &lt;p&gt;More often than not, you&amp;rsquo;ll be interested in &lt;em&gt;continuous&lt;/em&gt; distributions and you can see better see how the &lt;strong&gt;cumulative distribution function&lt;/strong&gt; works.&lt;/p&gt;
-&lt;p&gt;You&amp;rsquo;re probably familiar with the bell shaped curve or the &lt;em&gt;normal distribution&lt;/em&gt;, defined solely by its mean (mu) and standard deviation (sigma). If you have a normal distribution of probability values, the average would be 0 and the standard deviation would be 1.&lt;/p&gt;
+&lt;p&gt;You&amp;rsquo;re probably familiar with the bell shaped curve or the &lt;em&gt;normal distribution&lt;/em&gt;, defined solely by its mean (mu) and standard deviation (sigma). If you have a &lt;strong&gt;standard normal distribution&lt;/strong&gt; of probability values, the average would be 0 and the standard deviation would be 1.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./1_normal.png&#34; alt=&#34;1_normal&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Code:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import math
