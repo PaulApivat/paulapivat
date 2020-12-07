@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    19 min read
+    23 min read
   </span>
   
 
@@ -769,6 +769,8 @@
 <a href="#bayes_theorem">Bayes&rsquo; Theorem</a></li>
 <li>
 <a href="#applying_bayes_theorem">Applying Bayes&rsquo; Theorem</a></li>
+<li>
+<a href="#distributions">Distributions</a></li>
 </ul>
 <h2 id="overview">Overview</h2>
 <h2 id="challenge">Challenge</h2>
@@ -1228,6 +1230,82 @@ number of people who tested positive: 378509
 probability that a test-positive person with symptoms actually has covid: 47.61
 </code></pre>
 <p>Thus, being symptomatic means our <strong>priors</strong> should be adjusted and our <strong>beliefs</strong> about the likelihood that a positive test means we have the disease (<code>P(D|P)</code>) should be updated accordingly (in this case, it goes way up).</p>
+<h3 id="take-aways">Take Aways</h3>
+<p>Hypothetically, if we have family or friends living in an area where 1 in 1,000 people have covid-19 and they (god forbid) got tested and got a positive result, you could tell them that their probability of actually having the disease, given a positive test was around 8.26–8.29%.</p>
+<p>However, what’s useful about the Bayesian approach is that it encourages us to incorporate new information and update our beliefs accordingly. So if we find out our family or friend is also <em>symptomatic</em>, we could advise them of the higher probability (~47.61%).</p>
+<p>Finally, we may also advise our family/friends to get tested <strong>again</strong>, because as much as test-positive person would hope they got a ‘false positive’, chances are low. And even lower, is getting a false positive <em>twice</em>.</p>
+<p><img src="./second_test.png" alt="second_test"></p>
+<h2 id="distributions">Distributions</h2>
+<p>In this post, we&rsquo;ll cover various distributions. This is a broad topic so we&rsquo;ll sample some topics to get a feel for it. Borrowing from the previous post, we&rsquo;ll chart our medical diagnostic outcomes.</p>
+<p>You&rsquo;ll recall that each outcome is the combination of whether someone has a disease, <code>P(D)</code>, or not, <code>P(not D)</code>. Then, they&rsquo;re given a diagnostic test that returns positive, <code>P(P)</code> or negative, <code>P(not P)</code>.</p>
+<p>These are discrete outcomes so they can be represented with the <strong>probability mass function</strong>, as opposed to a <strong>probability density function</strong>, which represent a continuous distribution.</p>
+<p>Let&rsquo;s take another <em>hypothetical</em> scenario of a city where 1 in 10 people have a disease and a diagnostic test has a True Positive of 95% and True Negative of 90%. The probability that a test-positive person <em>actually</em> having the disease is 46.50%.</p>
+<p>Here&rsquo;s the code:</p>
+<pre><code class="language-python">from random import random, seed
+
+seed(0)
+pop = 1000  # 1000 people
+counts = {}
+for i in range(pop):
+    has_disease = i % 10 == 0  # one in 10 people have disease
+    # assuming that every person gets tested regardless of any symptoms
+    if has_disease:
+        tests_positive = True       # True Positive  95%
+        if random() &lt; 0.05:
+            tests_positive = False  # False Negative 5%
+    else:
+        tests_positive = False      # True Negative  90%
+        if random() &lt; 0.1:
+            tests_positive = True   # False Positive 10%
+    outcome = (has_disease, tests_positive)
+    counts[outcome] = counts.get(outcome, 0) + 1
+
+for (has_disease, tested_positive), n in counts.items():
+    print('Has Disease: %6s, Test Positive: %6s, count: %d' %
+          (has_disease, tested_positive, n))
+
+n_positive = counts[(True, True)] + counts[(False, True)]
+print('Number of people who tested positive:', n_positive)
+print('Probability that a test-positive person actually has disease: %.2f' %
+      (100.0 * counts[(True, True)] / n_positive),)
+</code></pre>
+<p>Given the probability that someone has the disease (1 in 10), also called the &lsquo;prior&rsquo; in Bayesian terms. We modeled four scenarios where people were given a diagnostic test. Again, the big assumption here is that people get randomly tested. With the true positive and true negative rates stated above, here are the outcomes:</p>
+<p><img src="./hypothetical_outcome.png" alt="hypothetical_outcome"></p>
+<h3 id="probability-mass-function">Probability Mass Function</h3>
+<p>Given these discrete events, we can chart a <strong>probability mass function</strong>, also known as 
+<a href="https://en.wikipedia.org/wiki/Probability_mass_function" target="_blank" rel="noopener">discrete density function</a>. We&rsquo;ll import <code>pandas</code> to help us create <code>DataFrames</code> and <code>matplotlib</code> to chart the <strong>probability mass function</strong>.</p>
+<p>We first need to turn the counts of events into a <code>DataFrame</code> and change the column to <code>item_counts</code>. Then, we&rsquo;ll calculate the probability of each event by dividing the count by the total number of people in our hypothetical city (i.e., population: 1000).</p>
+<p><strong>Optional</strong>: Create another column with abbreviations for test outcome (i.e., &ldquo;True True&rdquo; becomes &ldquo;TT&rdquo;). We&rsquo;ll call this column <code>item2</code>.</p>
+<pre><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.DataFrame.from_dict(counts, orient='index')
+df = df.rename(columns={0: 'item_counts'})
+df['probability'] = df['item_counts']/1000
+df['item2'] = ['TT', 'FF', 'FT', 'TF']
+</code></pre>
+<p>Here is the <code>DataFrame</code> we have so far:</p>
+<p><img src="./pmf_df.png" alt="pmf_df"></p>
+<p>You&rsquo;ll note that the numbers in the <code>probability</code> column adds up to 1.0 and that the <code>item_counts</code> numbers are the same as the count above when we had calculated the probability of a test-positive person actually having the disease.</p>
+<p>We&rsquo;ll use a simple bar chart to chart out the diagnostic probabilities and this is how we&rsquo;d visually represent the probability mass function - probabilities of each discrete event.</p>
+<p><img src="./prob_mass_function.png" alt="prob_mass_function.png"></p>
+<p>Here&rsquo;s the code:</p>
+<pre><code class="language-python">df = pd.DataFrame.from_dict(counts, orient='index')
+df = df.rename(columns={0: 'item_counts'})
+df['probability'] = df['item_counts']/1000
+df['item2'] = ['TT', 'FF', 'FT', 'TF']
+plt.bar(df['item2'], df['probability'])
+plt.title(&quot;Probability Mass Function&quot;)
+plt.show()
+</code></pre>
+<h3 id="cumulative-distribution-function">Cumulative Distribution Function</h3>
+<p>While the probability mass function can tell us the probability of each discrete event (i.e., TT, FF, FT, and TF) we can also represent the same information as a <strong>cumulative distribution function</strong> which allows us to see how the probability changes as we move from left to right of the graph.</p>
+<p>The cumulative distribution function simply adds the probability from the previous row in a <code>DataFrame</code> in a cumulative fashion, like in the column <code>probability2</code>:</p>
+<p><img src="./cdf_df.png" alt="cdf_df.png"></p>
+<p>We use the <code>cumsum()</code> function to create the <code>cumsum</code> column which is simply adding the <code>item_counts</code>, with each successive row. When we create the corresponding probability column, <code>probability2</code>, it gets larger until we reach 1.0.</p>
+<p>Here&rsquo;s the chart:</p>
+<p><img src="./cum_distri_function.png" alt="cum_distri_function"></p>
+<p>This chart tells us that the probability of getting both TT and FF (True, True = True Positive, and False, False = True Negative) is 88.6% which indicates that 11.4% (100 - 88.6) of the time, the diagnostic test will let us down.</p>
 <p>For more content on data science, machine learning, R, Python, SQL and more, 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
