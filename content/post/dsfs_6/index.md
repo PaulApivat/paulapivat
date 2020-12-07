@@ -565,7 +565,7 @@ Finally, we may also advise our family/friends to get tested **again**, because 
 
 ## Distributions
 
-In this post, we'll cover various distributions. This is a broad topic so we'll sample some topics to get a feel for it. Borrowing from the previous post, we'll chart our medical diagnostic outcomes.
+In this post, we'll cover various distributions. This is a broad topic so we'll sample a few concepts to get a feel for it. Borrowing from the previous post, we'll chart our medical diagnostic outcomes.
 
 You'll recall that each outcome is the combination of whether someone has a disease, `P(D)`, or not, `P(not D)`. Then, they're given a diagnostic test that returns positive, `P(P)` or negative, `P(not P)`. 
 
@@ -632,7 +632,7 @@ Here is the `DataFrame` we have so far:
 
 You'll note that the numbers in the `probability` column adds up to 1.0 and that the `item_counts` numbers are the same as the count above when we had calculated the probability of a test-positive person actually having the disease. 
 
-We'll use a simple bar chart to chart out the diagnostic probabilities and this is how we'd visually represent the probability mass function - probabilities of each discrete event.
+We'll use a simple bar chart to chart out the diagnostic probabilities and this is how we'd visually represent the probability mass function - probabilities of each discrete event; each 'discrete event' is a conditional (e.g., probability that someone has a positive test, given that they *have* the disease - TT or probability that someone has a negative test, given that they *don't have* the disease - FF, and so on).
 
 ![prob_mass_function.png](./prob_mass_function.png)
 
@@ -649,7 +649,7 @@ plt.show()
 ```
 ### Cumulative Distribution Function
 
-While the probability mass function can tell us the probability of each discrete event (i.e., TT, FF, FT, and TF) we can also represent the same information as a **cumulative distribution function** which allows us to see how the probability changes as we move from left to right of the graph.
+While the probability mass function can tell us the probability of each discrete event (i.e., TT, FF, FT, and TF) we can also represent the same information as a **cumulative distribution function** which allows us to see how the probability changes as add events together.
 
 The cumulative distribution function simply adds the probability from the previous row in a `DataFrame` in a cumulative fashion, like in the column `probability2`:
 
@@ -662,6 +662,52 @@ Here's the chart:
 ![cum_distri_function](./cum_distri_function.png)
 
 This chart tells us that the probability of getting both TT and FF (True, True = True Positive, and False, False = True Negative) is 88.6% which indicates that 11.4% (100 - 88.6) of the time, the diagnostic test will let us down. 
+
+### Normal Distribution
+
+More often than not, you'll be interested in *continuous* distributions and you can see better see how the **cumulative distribution function** works.
+
+You're probably familiar with the bell shaped curve or the *normal distribution*, defined solely by its mean (mu) and standard deviation (sigma). If you have a normal distribution of probability values, the average would be 0 and the standard deviation would be 1. 
+
+![1_normal](./1_normal.png)
+
+Code:
+
+```python
+import math
+SQRT_TWO_PI = math.sqrt(2 * math.pi)
+
+def normal_pdf(x: float, mu: float = 0, sigma: float = 1) -> float:
+    return (math.exp(-(x-mu) ** 2 / 2 / sigma ** 2) / (SQRT_TWO_PI * sigma))
+    
+# plot
+xs = [x / 10.0 for x in range(-50, 50)]
+plt.plot(xs, [normal_pdf(x, sigma=1) for x in xs], '-', label='mu=0, sigma=1')
+plt.show()
+```
+
+With the **standard normal distribution** curve, you see the average probability is around 0.4. But if you add up the area under the curve (i.e., all probabilities of every possible outcome), you would get 1.0, just like with the medical diagnostic example.
+
+And if you split the bell in half, then flip over the left half, you'll (visually) get the **cumulative distribution function**:
+
+![1_cumu](./1_cumu.png)
+
+Code:
+
+```python
+import math
+
+def normal_cdf(x: float, mu: float = 0, sigma: float = 1) -> float:
+    return (1 + math.erf((x - mu) / math.sqrt(2) / sigma)) / 2
+    
+# plot
+xs = [x / 10.0 for x in range(-50, 50)]
+plt.plot(xs, [normal_cdf(x, sigma=1) for x in xs], '-', label='mu=0,sigma=1')
+```
+
+In both cases, the area under the curve for the **standard normal distribution** and the **cumulative distribution function** is 1.0, thus summing the probabilities of all events is one. 
+
+
 
 
 For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).

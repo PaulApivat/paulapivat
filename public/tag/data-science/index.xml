@@ -496,7 +496,7 @@ probability that a test-positive person with symptoms actually has covid: 47.61
 &lt;p&gt;Finally, we may also advise our family/friends to get tested &lt;strong&gt;again&lt;/strong&gt;, because as much as test-positive person would hope they got a ‘false positive’, chances are low. And even lower, is getting a false positive &lt;em&gt;twice&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./second_test.png&#34; alt=&#34;second_test&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;distributions&#34;&gt;Distributions&lt;/h2&gt;
-&lt;p&gt;In this post, we&amp;rsquo;ll cover various distributions. This is a broad topic so we&amp;rsquo;ll sample some topics to get a feel for it. Borrowing from the previous post, we&amp;rsquo;ll chart our medical diagnostic outcomes.&lt;/p&gt;
+&lt;p&gt;In this post, we&amp;rsquo;ll cover various distributions. This is a broad topic so we&amp;rsquo;ll sample a few concepts to get a feel for it. Borrowing from the previous post, we&amp;rsquo;ll chart our medical diagnostic outcomes.&lt;/p&gt;
 &lt;p&gt;You&amp;rsquo;ll recall that each outcome is the combination of whether someone has a disease, &lt;code&gt;P(D)&lt;/code&gt;, or not, &lt;code&gt;P(not D)&lt;/code&gt;. Then, they&amp;rsquo;re given a diagnostic test that returns positive, &lt;code&gt;P(P)&lt;/code&gt; or negative, &lt;code&gt;P(not P)&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;These are discrete outcomes so they can be represented with the &lt;strong&gt;probability mass function&lt;/strong&gt;, as opposed to a &lt;strong&gt;probability density function&lt;/strong&gt;, which represent a continuous distribution.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s take another &lt;em&gt;hypothetical&lt;/em&gt; scenario of a city where 1 in 10 people have a disease and a diagnostic test has a True Positive of 95% and True Negative of 90%. The probability that a test-positive person &lt;em&gt;actually&lt;/em&gt; having the disease is 46.50%.&lt;/p&gt;
@@ -547,7 +547,7 @@ df[&#39;item2&#39;] = [&#39;TT&#39;, &#39;FF&#39;, &#39;FT&#39;, &#39;TF&#39;]
 &lt;p&gt;Here is the &lt;code&gt;DataFrame&lt;/code&gt; we have so far:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./pmf_df.png&#34; alt=&#34;pmf_df&#34;&gt;&lt;/p&gt;
 &lt;p&gt;You&amp;rsquo;ll note that the numbers in the &lt;code&gt;probability&lt;/code&gt; column adds up to 1.0 and that the &lt;code&gt;item_counts&lt;/code&gt; numbers are the same as the count above when we had calculated the probability of a test-positive person actually having the disease.&lt;/p&gt;
-&lt;p&gt;We&amp;rsquo;ll use a simple bar chart to chart out the diagnostic probabilities and this is how we&amp;rsquo;d visually represent the probability mass function - probabilities of each discrete event.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll use a simple bar chart to chart out the diagnostic probabilities and this is how we&amp;rsquo;d visually represent the probability mass function - probabilities of each discrete event; each &amp;lsquo;discrete event&amp;rsquo; is a conditional (e.g., probability that someone has a positive test, given that they &lt;em&gt;have&lt;/em&gt; the disease - TT or probability that someone has a negative test, given that they &lt;em&gt;don&amp;rsquo;t have&lt;/em&gt; the disease - FF, and so on).&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./prob_mass_function.png&#34; alt=&#34;prob_mass_function.png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the code:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;df = pd.DataFrame.from_dict(counts, orient=&#39;index&#39;)
@@ -559,13 +559,43 @@ plt.title(&amp;quot;Probability Mass Function&amp;quot;)
 plt.show()
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;cumulative-distribution-function&#34;&gt;Cumulative Distribution Function&lt;/h3&gt;
-&lt;p&gt;While the probability mass function can tell us the probability of each discrete event (i.e., TT, FF, FT, and TF) we can also represent the same information as a &lt;strong&gt;cumulative distribution function&lt;/strong&gt; which allows us to see how the probability changes as we move from left to right of the graph.&lt;/p&gt;
+&lt;p&gt;While the probability mass function can tell us the probability of each discrete event (i.e., TT, FF, FT, and TF) we can also represent the same information as a &lt;strong&gt;cumulative distribution function&lt;/strong&gt; which allows us to see how the probability changes as add events together.&lt;/p&gt;
 &lt;p&gt;The cumulative distribution function simply adds the probability from the previous row in a &lt;code&gt;DataFrame&lt;/code&gt; in a cumulative fashion, like in the column &lt;code&gt;probability2&lt;/code&gt;:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./cdf_df.png&#34; alt=&#34;cdf_df.png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;We use the &lt;code&gt;cumsum()&lt;/code&gt; function to create the &lt;code&gt;cumsum&lt;/code&gt; column which is simply adding the &lt;code&gt;item_counts&lt;/code&gt;, with each successive row. When we create the corresponding probability column, &lt;code&gt;probability2&lt;/code&gt;, it gets larger until we reach 1.0.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the chart:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./cum_distri_function.png&#34; alt=&#34;cum_distri_function&#34;&gt;&lt;/p&gt;
 &lt;p&gt;This chart tells us that the probability of getting both TT and FF (True, True = True Positive, and False, False = True Negative) is 88.6% which indicates that 11.4% (100 - 88.6) of the time, the diagnostic test will let us down.&lt;/p&gt;
+&lt;h3 id=&#34;normal-distribution&#34;&gt;Normal Distribution&lt;/h3&gt;
+&lt;p&gt;More often than not, you&amp;rsquo;ll be interested in &lt;em&gt;continuous&lt;/em&gt; distributions and you can see better see how the &lt;strong&gt;cumulative distribution function&lt;/strong&gt; works.&lt;/p&gt;
+&lt;p&gt;You&amp;rsquo;re probably familiar with the bell shaped curve or the &lt;em&gt;normal distribution&lt;/em&gt;, defined solely by its mean (mu) and standard deviation (sigma). If you have a normal distribution of probability values, the average would be 0 and the standard deviation would be 1.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./1_normal.png&#34; alt=&#34;1_normal&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import math
+SQRT_TWO_PI = math.sqrt(2 * math.pi)
+
+def normal_pdf(x: float, mu: float = 0, sigma: float = 1) -&amp;gt; float:
+    return (math.exp(-(x-mu) ** 2 / 2 / sigma ** 2) / (SQRT_TWO_PI * sigma))
+    
+# plot
+xs = [x / 10.0 for x in range(-50, 50)]
+plt.plot(xs, [normal_pdf(x, sigma=1) for x in xs], &#39;-&#39;, label=&#39;mu=0, sigma=1&#39;)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With the &lt;strong&gt;standard normal distribution&lt;/strong&gt; curve, you see the average probability is around 0.4. But if you add up the area under the curve (i.e., all probabilities of every possible outcome), you would get 1.0, just like with the medical diagnostic example.&lt;/p&gt;
+&lt;p&gt;And if you split the bell in half, then flip over the left half, you&amp;rsquo;ll (visually) get the &lt;strong&gt;cumulative distribution function&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./1_cumu.png&#34; alt=&#34;1_cumu&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import math
+
+def normal_cdf(x: float, mu: float = 0, sigma: float = 1) -&amp;gt; float:
+    return (1 + math.erf((x - mu) / math.sqrt(2) / sigma)) / 2
+    
+# plot
+xs = [x / 10.0 for x in range(-50, 50)]
+plt.plot(xs, [normal_cdf(x, sigma=1) for x in xs], &#39;-&#39;, label=&#39;mu=0,sigma=1&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In both cases, the area under the curve for the &lt;strong&gt;standard normal distribution&lt;/strong&gt; and the &lt;strong&gt;cumulative distribution function&lt;/strong&gt; is 1.0, thus summing the probabilities of all events is one.&lt;/p&gt;
 &lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
