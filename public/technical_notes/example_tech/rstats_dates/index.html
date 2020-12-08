@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Setting up a barebones table with {reactable} There are several packages to style your tables. This note will help you get setup with a basic table using the reactable package. With just a few lines of code, you can have a table with pagination and column sorting.">
+  <meta name="description" content="Changing Date formats with Lubridate For every data visualization project that involves using dates on one of the axes, I always find myself having to re-format the date so that visualization &ldquo;works&rdquo;.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_viz_reactable/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_dates/">
 
   
 
@@ -217,7 +217,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_viz_reactable/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_dates/">
 
   
   
@@ -236,15 +236,15 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_viz_reactable/">
-  <meta property="og:title" content="Styling tables with reactable | Paul Apivat">
-  <meta property="og:description" content="Setting up a barebones table with {reactable} There are several packages to style your tables. This note will help you get setup with a basic table using the reactable package. With just a few lines of code, you can have a table with pagination and column sorting."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_dates/">
+  <meta property="og:title" content="Formating Dates with Lubridate | Paul Apivat">
+  <meta property="og:description" content="Changing Date formats with Lubridate For every data visualization project that involves using dates on one of the axes, I always find myself having to re-format the date so that visualization &ldquo;works&rdquo;."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-09-25T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2020-12-08T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-09-25T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-12-08T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +263,7 @@
 
 
 
-  <title>Styling tables with reactable | Paul Apivat</title>
+  <title>Formating Dates with Lubridate | Paul Apivat</title>
 
 </head>
 
@@ -661,7 +661,7 @@
     <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_viz_reactable/">Data Viz Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_viz_reactable/">reactable</a>
       </li>
       
@@ -766,7 +766,7 @@
         <a href="/technical_notes/example_tech/rstats_tip4/">Calculating Percentiles</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/rstats_dates/">Format Dates</a>
       </li>
       
@@ -808,11 +808,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#setting-up-a-barebones-table-with-reactable">Setting up a barebones table with {reactable}</a></li>
-    <li><a href="#sample-tibble">Sample Tibble</a></li>
-    <li><a href="#load-libraries">Load Libraries</a></li>
-    <li><a href="#basic-table">Basic Table</a></li>
-    <li><a href="#adding-bar-charts-for-each-row">Adding Bar Charts for Each Row</a></li>
+    <li><a href="#changing-date-formats-with-lubridate">Changing Date formats with Lubridate</a></li>
   </ul>
 </nav>
 
@@ -825,114 +821,24 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Styling tables with reactable</h1>
+          <h1>Formating Dates with Lubridate</h1>
 
           <div class="article-style">
-            <h2 id="setting-up-a-barebones-table-with-reactable">Setting up a barebones table with {reactable}</h2>
-<p>There are several <code>packages</code> to style your tables. This note will help you get setup with a basic table using the <code>reactable</code> package. With just a few lines of code, you can have a table with pagination and column sorting.</p>
-<p>The data for this note comes from 
-<a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-22/readme.md" target="_blank" rel="noopener">TidyTuesday 2020-09-22, &ldquo;Himalayan Climbers&rdquo;</a>.</p>
-<p>This note assumes that data has been wrangled and in <code>tibble</code> form, ready to be styled into a table.</p>
-<h2 id="sample-tibble">Sample Tibble</h2>
-<p>Here, I&rsquo;ve saved my tibble of 20 rows and 3 columns in <code>df</code>.</p>
-<pre><code>&gt; df
-
-# A tibble: 20 x 3
-   peak            attempts fail_rate
-   &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;
- 1 Everest            21813     0.54 
- 2 Cho Oyu             8890     0.570
- 3 Ama Dablam          8406     0.479
- 4 Manaslu             4593     0.621
- 5 Dhaulagiri I        2592     0.789
- 6 Makalu              2405     0.764
- 7 Lhotse              2379     0.638
- 8 Baruntse            2190     0.708
- 9 Pumori              1780     0.706
-10 Annapurna I         1669     0.821
-11 Kangchenjunga       1385     0.682
-12 Himlung Himal       1308     0.573
-13 Annapurna IV         812     0.845
-14 Putha Hiunchuli      738     0.599
-15 Tilicho              670     0.781
-16 Tukuche              462     0.753
-17 Jannu                339     0.782
-18 Langtang Lirung      338     0.84 
-19 Makalu II            322     0.758
-20 Nuptse               303     0.934
-
-</code></pre>
-<h2 id="load-libraries">Load Libraries</h2>
+            <h2 id="changing-date-formats-with-lubridate">Changing Date formats with Lubridate</h2>
+<p>For every data visualization project that involves using <code>dates</code> on one of the axes, I always find myself having to re-format the date so that visualization &ldquo;works&rdquo;.</p>
+<p>Here&rsquo;s a workflow that is recommended at the <strong>start</strong> of any data visualization project.</p>
 <pre><code>library(tidyverse)
-library(reactable)
-library(htmltools)
+library(lubridate) # handling dates
 
-</code></pre>
-<h2 id="basic-table">Basic Table</h2>
-<p>The amazing thing is, with just this one line, you have a barebones table with <strong>pagination</strong> (with 20 rows, it shows 10 at a time; this can be adjusted) and  <strong>sorting</strong> for both columns.</p>
-<p>You can check out the rest of the repo 
-<a href="https://github.com/PaulApivat/tidytuesday/blob/master/2020/himalaya/exploratory.R" target="_blank" rel="noopener">here</a></p>
-<pre><code>reactable(df)
-</code></pre>
-<h2 id="adding-bar-charts-for-each-row">Adding Bar Charts for Each Row</h2>
-<p>Of course, bare bones is not much to look at, so adding bar charts is essential for visually communicating quantities and percentages. However, you&rsquo;ll need to use the <code>htmltools</code> package to begin adding <code>div</code> to your chart.</p>
-<pre><code># Bar Charts can be added with a function 
-
-bar_chart &lt;- function(label, width = &quot;100%&quot;, height = &quot;14px&quot;, fill = &quot;#00bfc4&quot;, background = NULL){
-    bar &lt;- div(style = list(background = fill, width = width, height = height))
-    chart &lt;- div(style = list(flexGrow = 1, marginLeft = &quot;6px&quot;, background = background), bar)
-    div(style = list(display = &quot;flex&quot;, alignItems = &quot;center&quot;), label, chart)
-}
-
-
-# The bar_chart function is then inserted into the numeric columns
-
-reactable(
-    df,
-    defaultSorted = &quot;attempts&quot;,
-    columns = list(
-        peak = colDef(
-            name = &quot;Peaks&quot;
-        ),
-        attempts = colDef(
-            name = &quot;Attempts (#)&quot;,
-            defaultSortOrder = &quot;desc&quot;,
-            #format = colFormat(separators = TRUE),
-            
-            # Render Bar charts using a custom cell render function
-            cell = function(value){
-                width &lt;- paste0(value * 100 / max(df$attempts), &quot;%&quot;)
-                # Add thousands separators
-                value &lt;- format(value, big.mark = &quot;,&quot;)
-                # Fix each label using the width of the widest number (incl. thousands separators)
-                value &lt;- format(value, width = 9, justify = 'right')
-                bar_chart(value, width = width, fill = &quot;#3fc1c9&quot;)
-            },
-            # And left-align the columns
-            align = &quot;left&quot;,
-            # Use the operating system's default monospace font, and
-            # preserve the white space to prevent it from being collapsed by default
-            style = list(fontFamily = &quot;monospace&quot;, whiteSpace = &quot;pre&quot;)
-        ),
-        fail_rate = colDef(
-            name = &quot;Fail (%)&quot;,
-            defaultSortOrder = &quot;desc&quot;,
-            #format = colFormat(percent = TRUE, digits = 1)
-            
-            # Render Bar charts using a custom cell render function
-            cell = function(value){
-                # Format as percentage with 1 decimal place
-                value &lt;- paste0(format(value * 100, nsmall = 1), &quot;%&quot;)
-                # Fix width here to align single and double-digit percentages
-                value &lt;- format(value, width = 5, justify = &quot;right&quot;)
-                bar_chart(value, width = value, fill = &quot;#fc5185&quot;, background = &quot;#e1e1e1&quot;)
-            },
-            # And left-align the columns
-            align = &quot;left&quot;,
-            style = list(fontFamily = &quot;monospace&quot;, whiteSpace = &quot;pre&quot;)
-        )
-    )
-)
+df %&gt;%
+    # handling date first
+    mutate(
+        date = original_date_variable %&gt;% ymd(),
+        year = date %&gt;% year(),
+        month = date %&gt;% month(),
+        day = date %&gt;% day(),
+        year_month = make_datetime(year, month) # combine year &amp; month
+    ) 
 </code></pre>
 
           </div>
@@ -950,14 +856,14 @@ reactable(
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_unnest/" rel="next">Reading and manipulating nested data</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_viz_scale_x/" rel="prev">Decimals to Integers</a>
+    <a href="/technical_notes/example_tech/rstats_unnest/" rel="prev">Reading and manipulating nested data</a>
   </div>
   
 </div>
@@ -967,7 +873,7 @@ reactable(
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Sep 25, 2020</p>
+          <p>Last updated on Dec 8, 2020</p>
 
           
 
@@ -979,7 +885,7 @@ reactable(
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_viz_reactable.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_dates.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

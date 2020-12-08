@@ -328,6 +328,30 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Formating Dates with Lubridate</title>
+      <link>/technical_notes/example_tech/rstats_dates/</link>
+      <pubDate>Tue, 08 Dec 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_dates/</guid>
+      <description>&lt;h2 id=&#34;changing-date-formats-with-lubridate&#34;&gt;Changing Date formats with Lubridate&lt;/h2&gt;
+&lt;p&gt;For every data visualization project that involves using &lt;code&gt;dates&lt;/code&gt; on one of the axes, I always find myself having to re-format the date so that visualization &amp;ldquo;works&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a workflow that is recommended at the &lt;strong&gt;start&lt;/strong&gt; of any data visualization project.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;library(tidyverse)
+library(lubridate) # handling dates
+
+df %&amp;gt;%
+    # handling date first
+    mutate(
+        date = original_date_variable %&amp;gt;% ymd(),
+        year = date %&amp;gt;% year(),
+        month = date %&amp;gt;% month(),
+        day = date %&amp;gt;% day(),
+        year_month = make_datetime(year, month) # combine year &amp;amp; month
+    ) 
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Reading and manipulating nested data</title>
       <link>/technical_notes/example_tech/rstats_unnest/</link>
       <pubDate>Sun, 11 Oct 2020 00:00:00 +0100</pubDate>
