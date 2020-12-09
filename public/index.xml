@@ -1155,6 +1155,98 @@ hist(x)
     </item>
     
     <item>
+      <title>Statistics &amp; Probability in Code</title>
+      <link>/post/statistics_probability/</link>
+      <pubDate>Wed, 09 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/post/statistics_probability/</guid>
+      <description>&lt;h3 id=&#34;table-of-contents&#34;&gt;Table of contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;#permutations&#34;&gt;Permutations&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Itertools&lt;/code&gt; are a core set of fast, memory efficient tools for creating iterators for efficient looping (read the 
+&lt;a href=&#34;https://docs.python.org/3/library/itertools.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;documentation&lt;/a&gt; here).&lt;/p&gt;
+&lt;h2 id=&#34;permutations&#34;&gt;Permutations&lt;/h2&gt;
+&lt;p&gt;One (of many) uses for &lt;code&gt;itertools&lt;/code&gt; is to create a &lt;code&gt;permutations()&lt;/code&gt; function that will return all possible combinations of items in a list.&lt;/p&gt;
+&lt;p&gt;I was working on a project that involved user funnels with different stages and we were wondering how many different &amp;ldquo;paths&amp;rdquo; a user &lt;em&gt;could&lt;/em&gt; take, so this was naturally a good fit for using &lt;strong&gt;permutations&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;In our hypothetical example, we&amp;rsquo;re looking at a funnel with three stages for a total of 6 permutations. Here&amp;rsquo;s the formula:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./permutation_formula.png&#34; alt=&#34;permutation_formula&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Now it&amp;rsquo;s likely that if you&amp;rsquo;re using a sales/marketing funnel of some sort, you&amp;rsquo;ll have in mind what your funnel would look like so you may not want all possible paths, but if you do, read on.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the 
+&lt;a href=&#34;https://docs.python.org/3.6/library/itertools.html#itertools.permutations&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;documentation&lt;/a&gt;. We&amp;rsquo;ll break down the code to better understand what&amp;rsquo;s going on in this function.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll start off with the &lt;code&gt;iterable&lt;/code&gt; which is a &lt;code&gt;list&lt;/code&gt; with three strings. The &lt;code&gt;permutations&lt;/code&gt; function takes in two parameters, the &lt;code&gt;iterable&lt;/code&gt; and &lt;code&gt;r&lt;/code&gt; which is the number of items from the list that we&amp;rsquo;re interested in finding the combination of. If we have three items in the list, we generally want to find &lt;em&gt;all possible&lt;/em&gt; combinations of those three items.&lt;/p&gt;
+&lt;p&gt;Here is the code, and subsequent breakdown:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# list of length 3
+list1 = [&#39;stage 1&#39;, &#39;stage 2&#39;, &#39;stage 3&#39;]
+
+# iterable is the list
+# r = number of items from the list to find combinations of
+
+
+def permutations(iterable, r=None):
+    &amp;quot;&amp;quot;&amp;quot;Find all possible order of a list of elements&amp;quot;&amp;quot;&amp;quot;
+    # permutations(&#39;ABCD&#39;,2)--&amp;gt; AB AC AD BA BC BD CA CB CD DA DB DC
+    # permutations(range(3))--&amp;gt; 012 021 102 120 201 210
+    # permutations(list1, 3)--&amp;gt; ...6 permutations
+    pool = tuple(iterable)
+    n = len(pool)
+    r = n if r is None else r
+    if r &amp;gt; n:
+        return
+    indices = list(range(n))                     # [0, 1, 2]
+    cycles = list(range(n, n-r, -1))             # [3, 2, 1]
+    yield tuple(pool[i] for i in indices[:r])
+    while n:
+        for i in reversed(range(r)):
+            cycles[i] -= 1
+            if cycles[i] == 0:
+                indices[i:] = indices[i+1:] + indices[i:i+1]
+                cycles[i] = n - i
+            else:
+                j = cycles[i]
+                indices[i], indices[-j] = indices[-j], indices[i]
+                yield tuple(pool[i] for i in indices[:r])
+                break
+        else:
+            return
+
+
+#permutations(list1, 3)
+perm = permutations(list1, 3)
+count = 0
+
+for p in perm:
+    count += 1
+    print(p)
+print(&amp;quot;there are:&amp;quot;, count, &amp;quot;permutations.&amp;quot;)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The first thing we do is take the &lt;code&gt;iterable&lt;/code&gt; input parameter is turn it from a &lt;code&gt;list&lt;/code&gt; into a &lt;code&gt;tuple&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;pool = tuple(iterable)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There are several reasons to do this. First, &lt;code&gt;tuples&lt;/code&gt; are &lt;em&gt;faster&lt;/em&gt; than &lt;code&gt;lists&lt;/code&gt;; the &lt;code&gt;permutations()&lt;/code&gt; function will do several operations to the input so changing it to a &lt;code&gt;tuple&lt;/code&gt; allows faster operations and because &lt;code&gt;tuples&lt;/code&gt; are &lt;em&gt;immutatble&lt;/em&gt;, we can do a bunch of different operations without fear that we might &lt;em&gt;inadvertently&lt;/em&gt; change the list.&lt;/p&gt;
+&lt;p&gt;We then create &lt;code&gt;n&lt;/code&gt; from the length of &lt;code&gt;pool&lt;/code&gt; (in our case it&amp;rsquo;s 3) and the additional &lt;code&gt;r&lt;/code&gt; parameter, which defaults to &lt;code&gt;None&lt;/code&gt; is also 3 as we&amp;rsquo;re interested in seeing &lt;strong&gt;all combinations&lt;/strong&gt; of a list of four elements.&lt;/p&gt;
+&lt;p&gt;We also have a line that ensures that &lt;code&gt;r&lt;/code&gt; can never be greater than the number of elements in it &lt;code&gt;iterable&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;if r &amp;gt; n:
+    return
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next, we create &lt;code&gt;indices&lt;/code&gt; and &lt;code&gt;cycles&lt;/code&gt;. Indices are basically the index of each item, starting with 0 to 2, for three items. Cycles uses &lt;code&gt;range(n, n-r, -1)&lt;/code&gt;, which in our case is &lt;code&gt;range(3, 3-3, -1)&lt;/code&gt;; this means &lt;strong&gt;start&lt;/strong&gt; at three and &lt;strong&gt;end&lt;/strong&gt; at zero, in -1 &lt;strong&gt;steps&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The next chunk of code is a &lt;code&gt;while-loop&lt;/code&gt; that will continue for the length of the list, &lt;code&gt;n&lt;/code&gt; (note the &lt;code&gt;break&lt;/code&gt; at the bottom to exit out of this loop).&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;for i in reversed(range(r))&lt;/code&gt; will do a reverse loop through the indices, for example&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for i in reversed(range(3)):
+     print(i)
+
+2
+1
+0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Data Science from Scratch (ch6) - Probability</title>
       <link>/post/dsfs_6/</link>
       <pubDate>Sun, 22 Nov 2020 00:00:00 +0000</pubDate>
