@@ -768,6 +768,8 @@
 <h2 id="permutations">Permutations</h2>
 <p>One (of many) uses for <code>itertools</code> is to create a <code>permutations()</code> function that will return all possible combinations of items in a list.</p>
 <p>I was working on a project that involved user funnels with different stages and we were wondering how many different &ldquo;paths&rdquo; a user <em>could</em> take, so this was naturally a good fit for using <strong>permutations</strong>.</p>
+<p><img src="./sample_funnel.png" alt="sample_funnel">
+<em>Sample Funnel</em></p>
 <p>In our hypothetical example, we&rsquo;re looking at a funnel with three stages for a total of 6 permutations. Here&rsquo;s the formula:</p>
 <p><img src="./permutation_formula.png" alt="permutation_formula"></p>
 <p>Now it&rsquo;s likely that if you&rsquo;re using a sales/marketing funnel of some sort, you&rsquo;ll have in mind what your funnel would look like so you may not want all possible paths, but if you do, read on.</p>
@@ -870,6 +872,7 @@ print(&quot;there are:&quot;, count, &quot;permutations.&quot;)
 </code></pre>
 <p>Here is our result:</p>
 <p><img src="./permutations.png" alt="permutations"></p>
+<p>Permutations can be useful when you have varied user journeys through your product and you want to figure out all the possible paths. With this short python script, you can easily print out all options for consideration.</p>
 <p>For more content on data science, machine learning, R, Python, SQL and more, 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 

@@ -30,6 +30,9 @@ One (of many) uses for `itertools` is to create a `permutations()` function that
 
 I was working on a project that involved user funnels with different stages and we were wondering how many different "paths" a user *could* take, so this was naturally a good fit for using **permutations**. 
 
+![sample_funnel](./sample_funnel.png)
+*Sample Funnel*
+
 In our hypothetical example, we're looking at a funnel with three stages for a total of 6 permutations. Here's the formula:
 
 ![permutation_formula](./permutation_formula.png)
@@ -161,6 +164,8 @@ print("there are:", count, "permutations.")
 Here is our result:
 
 ![permutations](./permutations.png)
+
+Permutations can be useful when you have varied user journeys through your product and you want to figure out all the possible paths. With this short python script, you can easily print out all options for consideration.
 
 
 For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).

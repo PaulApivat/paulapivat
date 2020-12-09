@@ -1170,6 +1170,8 @@ hist(x)
 &lt;h2 id=&#34;permutations&#34;&gt;Permutations&lt;/h2&gt;
 &lt;p&gt;One (of many) uses for &lt;code&gt;itertools&lt;/code&gt; is to create a &lt;code&gt;permutations()&lt;/code&gt; function that will return all possible combinations of items in a list.&lt;/p&gt;
 &lt;p&gt;I was working on a project that involved user funnels with different stages and we were wondering how many different &amp;ldquo;paths&amp;rdquo; a user &lt;em&gt;could&lt;/em&gt; take, so this was naturally a good fit for using &lt;strong&gt;permutations&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./sample_funnel.png&#34; alt=&#34;sample_funnel&#34;&gt;
+&lt;em&gt;Sample Funnel&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;In our hypothetical example, we&amp;rsquo;re looking at a funnel with three stages for a total of 6 permutations. Here&amp;rsquo;s the formula:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./permutation_formula.png&#34; alt=&#34;permutation_formula&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Now it&amp;rsquo;s likely that if you&amp;rsquo;re using a sales/marketing funnel of some sort, you&amp;rsquo;ll have in mind what your funnel would look like so you may not want all possible paths, but if you do, read on.&lt;/p&gt;
@@ -1272,6 +1274,7 @@ print(&amp;quot;there are:&amp;quot;, count, &amp;quot;permutations.&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Here is our result:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./permutations.png&#34; alt=&#34;permutations&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Permutations can be useful when you have varied user journeys through your product and you want to figure out all the possible paths. With this short python script, you can easily print out all options for consideration.&lt;/p&gt;
 &lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
