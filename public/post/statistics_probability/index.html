@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    4 min read
+    5 min read
   </span>
   
 
@@ -786,7 +786,7 @@ def permutations(iterable, r=None):
     &quot;&quot;&quot;Find all possible order of a list of elements&quot;&quot;&quot;
     # permutations('ABCD',2)--&gt; AB AC AD BA BC BD CA CB CD DA DB DC
     # permutations(range(3))--&gt; 012 021 102 120 201 210
-    # permutations(list1, 3)--&gt; ...6 permutations
+    # permutations(list1, 6)--&gt; ...720 permutations
     pool = tuple(iterable)
     n = len(pool)
     r = n if r is None else r
@@ -795,6 +795,7 @@ def permutations(iterable, r=None):
     indices = list(range(n))                     # [0, 1, 2]
     cycles = list(range(n, n-r, -1))             # [3, 2, 1]
     yield tuple(pool[i] for i in indices[:r])
+    print(&quot;Now entering while-loop \n&quot;)
     while n:
         for i in reversed(range(r)):
             cycles[i] -= 1
@@ -805,12 +806,17 @@ def permutations(iterable, r=None):
                 j = cycles[i]
                 indices[i], indices[-j] = indices[-j], indices[i]
                 yield tuple(pool[i] for i in indices[:r])
+                print(&quot;indices[:r]&quot;, indices[:r])
+                print(&quot;pool[i]:&quot;, tuple(pool[i] for i in indices[:r]))
+                print(&quot;n:&quot;, n)
                 break
         else:
+            print(&quot;return:&quot;)
             return
 
 
-#permutations(list1, 3)
+#permutations(list1, 6)
+
 perm = permutations(list1, 3)
 count = 0
 
@@ -824,21 +830,46 @@ print(&quot;there are:&quot;, count, &quot;permutations.&quot;)
 <pre><code class="language-python">pool = tuple(iterable)
 </code></pre>
 <p>There are several reasons to do this. First, <code>tuples</code> are <em>faster</em> than <code>lists</code>; the <code>permutations()</code> function will do several operations to the input so changing it to a <code>tuple</code> allows faster operations and because <code>tuples</code> are <em>immutatble</em>, we can do a bunch of different operations without fear that we might <em>inadvertently</em> change the list.</p>
-<p>We then create <code>n</code> from the length of <code>pool</code> (in our case it&rsquo;s 3) and the additional <code>r</code> parameter, which defaults to <code>None</code> is also 3 as we&rsquo;re interested in seeing <strong>all combinations</strong> of a list of four elements.</p>
-<p>We also have a line that ensures that <code>r</code> can never be greater than the number of elements in it <code>iterable</code>.</p>
+<p>We then create <code>n</code> from the length of <code>pool</code> (in our case it&rsquo;s 3) and the additional <code>r</code> parameter, which defaults to <code>None</code> is also 3 as we&rsquo;re interested in seeing <strong>all combinations</strong> of a list of three elements.</p>
+<p>We also have a line that ensures that <code>r</code> can never be greater than the number of elements in the <code>iterable</code> (list).</p>
 <pre><code class="language-python">if r &gt; n:
     return
 </code></pre>
 <p>Next, we create <code>indices</code> and <code>cycles</code>. Indices are basically the index of each item, starting with 0 to 2, for three items. Cycles uses <code>range(n, n-r, -1)</code>, which in our case is <code>range(3, 3-3, -1)</code>; this means <strong>start</strong> at three and <strong>end</strong> at zero, in -1 <strong>steps</strong>.</p>
 <p>The next chunk of code is a <code>while-loop</code> that will continue for the length of the list, <code>n</code> (note the <code>break</code> at the bottom to exit out of this loop).</p>
-<p>The <code>for i in reversed(range(r))</code> will do a reverse loop through the indices, for example</p>
-<pre><code class="language-python">for i in reversed(range(3)):
-     print(i)
-
-2
-1
-0
+<p>After each <code>if-else</code> cycle, a new set of <code>indices</code> are created, which then gets looped through with <code>pool</code>, the interable parameter input, which changes the order of the elements in the list.</p>
+<p>You&rsquo;ll note in the commented code above, <code>cycles</code> start off at [3,2,1] and <code>indices</code> start off at [0,1,2]. Each loop through the code changes the <code>indices</code> where <code>indices[i:]</code> successively gets longer [2], then [1,2], then [1,2,3]. While <code>cycles</code> changes as it trends toward [1,1,1], which point the code breaks out of the loop.</p>
+<pre><code class="language-python">while n:
+        for i in reversed(range(r)):
+            cycles[i] -= 1
+            if cycles[i] == 0:
+                indices[i:] = indices[i+1:] + indices[i:i+1]
+                cycles[i] = n - i
+            else:
+                j = cycles[i]
+                indices[i], indices[-j] = indices[-j], indices[i]
+                yield tuple(pool[i] for i in indices[:r])
+                print(&quot;indices[:r]&quot;, indices[:r])
+                print(&quot;pool[i]:&quot;, tuple(pool[i] for i in indices[:r]))
+                print(&quot;n:&quot;, n)
+                break
+        else:
+            print(&quot;return:&quot;)
 </code></pre>
+<p>The <code>permutations(iterable, r)</code> function actually creates a <code>generator</code> so we need to loop through it again to print out all the permutations of the list.</p>
+<pre><code class="language-python">&lt;generator object permutations at 0x7fe19400fdd0&gt;
+</code></pre>
+<p>We add another for-loop at the bottom to print out all the permutations:</p>
+<pre><code class="language-python">perm = permutations(list1, 3)
+count = 0
+
+for p in perm:
+    count += 1
+    print(p)
+print(&quot;there are:&quot;, count, &quot;permutations.&quot;)
+</code></pre>
+<p>Here is our result:</p>
+<p><img src="./permutations.png" alt="permutations"></p>
 <p>For more content on data science, machine learning, R, Python, SQL and more, 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
