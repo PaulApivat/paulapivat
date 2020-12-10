@@ -39,9 +39,11 @@ In our hypothetical example, we're looking at a funnel with three stages for a t
 
 
 
-Now it's likely that if you're using a sales/marketing funnel of some sort, you'll have in mind what your funnel would look like so you may not want all possible paths, but if you do, read on.
+If you're using a sales/marketing funnel, you'll have in mind what your funnel would look like so you may **not** want all possible paths, but if you're interested in exploring potentially *overlooked* paths, read on.
 
-Here's the [documentation](https://docs.python.org/3.6/library/itertools.html#itertools.permutations). We'll break down the code to better understand what's going on in this function.
+Here's the python [documentation](https://docs.python.org/3.6/library/itertools.html#itertools.permutations) for `itertools`, and `permutations` specifically. We'll break down the code to better understand what's going on in this function.
+
+**note:** I found a clearer alternative after the fact. Feel free to skip to the final section below, although there is value in comparing the two versions. 
 
 We'll start off with the `iterable` which is a `list` with three strings. The `permutations` function takes in two parameters, the `iterable` and `r` which is the number of items from the list that we're interested in finding the combination of. If we have three items in the list, we generally want to find *all possible* combinations of those three items.
 
@@ -106,7 +108,7 @@ The first thing we do is take the `iterable` input parameter is turn it from a `
 pool = tuple(iterable)
 ```
 
-There are several reasons to do this. First, `tuples` are *faster* than `lists`; the `permutations()` function will do several operations to the input so changing it to a `tuple` allows faster operations and because `tuples` are *immutatble*, we can do a bunch of different operations without fear that we might *inadvertently* change the list. 
+There are several reasons to do this. First, `tuples` are *faster* than `lists`; the `permutations()` function will do several operations to the input so changing it to a `tuple` allows faster operations and because `tuples` are *immutable*, we can do a bunch of different operations without fear that we might *inadvertently* change the list. 
 
 We then create `n` from the length of `pool` (in our case it's 3) and the additional `r` parameter, which defaults to `None` is also 3 as we're interested in seeing **all combinations** of a list of three elements. 
 
@@ -165,7 +167,35 @@ Here is our result:
 
 ![permutations](./permutations.png)
 
+### A Clearer Alternative
+
+As is often the case, there is a better way I found in retrospect from [this stack overflow](https://stackoverflow.com/questions/104420/how-to-generate-all-permutations-of-a-list) (h/t to [Eric O Lebigot](https://twitter.com/lebigot)):
+
+```python
+def all_perms(elements):
+    if len(elements) <= 1:
+        yield elements  # Only permutation possible = no permutation
+    else:
+        # Iteration over the first element in the result permutation:
+        for (index, first_elmt) in enumerate(elements):
+            other_elmts = elements[:index] + elements[index+1:]
+            for permutation in all_perms(other_elmts):
+                yield [first_elmt] + permutation
+```
+
+The `enumerate` built-in function obviates the need to separately create `cycles` and `indices`. The local variable `other_elmts` separates the other elements in the list from the `first_elmt`, then the second for-loop recursively finds the permutation of the other elements before adding with the `first_elmt` on the final line, yielding all possible permutations of a list. As with the previous case, the result of this function is a `generator` which requires looping through and printing the permutations.
+
+I found this much easier to digest than the documentation version. 
+
 Permutations can be useful when you have varied user journeys through your product and you want to figure out all the possible paths. With this short python script, you can easily print out all options for consideration.
+
+### Take Aways
+
+From the perspective of a user funnel, **permutations** allow us to explore all possible *paths* a user might take. For our hypothetical example, a three-step funnel yields six possible paths a user could navigate from start to finish. 
+
+Knowing permutations should also **give us pause** when deciding whether to add another "step" to a funnel. Going from a three-step funnel to a four-step funnel increases the number of possible paths from six to 24 - a quadruple increase. 
+
+Not only does this increase **friction** between your user and the 'end goal' (conversion), whatever that may be for your product, but it also increases complexity (and potentially confusion) in the user experience. 
 
 
 For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).

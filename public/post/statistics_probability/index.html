@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    5 min read
+    6 min read
   </span>
   
 
@@ -772,9 +772,10 @@
 <em>Sample Funnel</em></p>
 <p>In our hypothetical example, we&rsquo;re looking at a funnel with three stages for a total of 6 permutations. Here&rsquo;s the formula:</p>
 <p><img src="./permutation_formula.png" alt="permutation_formula"></p>
-<p>Now it&rsquo;s likely that if you&rsquo;re using a sales/marketing funnel of some sort, you&rsquo;ll have in mind what your funnel would look like so you may not want all possible paths, but if you do, read on.</p>
-<p>Here&rsquo;s the 
-<a href="https://docs.python.org/3.6/library/itertools.html#itertools.permutations" target="_blank" rel="noopener">documentation</a>. We&rsquo;ll break down the code to better understand what&rsquo;s going on in this function.</p>
+<p>If you&rsquo;re using a sales/marketing funnel, you&rsquo;ll have in mind what your funnel would look like so you may <strong>not</strong> want all possible paths, but if you&rsquo;re interested in exploring potentially <em>overlooked</em> paths, read on.</p>
+<p>Here&rsquo;s the python 
+<a href="https://docs.python.org/3.6/library/itertools.html#itertools.permutations" target="_blank" rel="noopener">documentation</a> for <code>itertools</code>, and <code>permutations</code> specifically. We&rsquo;ll break down the code to better understand what&rsquo;s going on in this function.</p>
+<p><strong>note:</strong> I found a clearer alternative after the fact. Feel free to skip to the final section below, although there is value in comparing the two versions.</p>
 <p>We&rsquo;ll start off with the <code>iterable</code> which is a <code>list</code> with three strings. The <code>permutations</code> function takes in two parameters, the <code>iterable</code> and <code>r</code> which is the number of items from the list that we&rsquo;re interested in finding the combination of. If we have three items in the list, we generally want to find <em>all possible</em> combinations of those three items.</p>
 <p>Here is the code, and subsequent breakdown:</p>
 <pre><code class="language-python"># list of length 3
@@ -831,7 +832,7 @@ print(&quot;there are:&quot;, count, &quot;permutations.&quot;)
 <p>The first thing we do is take the <code>iterable</code> input parameter is turn it from a <code>list</code> into a <code>tuple</code>.</p>
 <pre><code class="language-python">pool = tuple(iterable)
 </code></pre>
-<p>There are several reasons to do this. First, <code>tuples</code> are <em>faster</em> than <code>lists</code>; the <code>permutations()</code> function will do several operations to the input so changing it to a <code>tuple</code> allows faster operations and because <code>tuples</code> are <em>immutatble</em>, we can do a bunch of different operations without fear that we might <em>inadvertently</em> change the list.</p>
+<p>There are several reasons to do this. First, <code>tuples</code> are <em>faster</em> than <code>lists</code>; the <code>permutations()</code> function will do several operations to the input so changing it to a <code>tuple</code> allows faster operations and because <code>tuples</code> are <em>immutable</em>, we can do a bunch of different operations without fear that we might <em>inadvertently</em> change the list.</p>
 <p>We then create <code>n</code> from the length of <code>pool</code> (in our case it&rsquo;s 3) and the additional <code>r</code> parameter, which defaults to <code>None</code> is also 3 as we&rsquo;re interested in seeing <strong>all combinations</strong> of a list of three elements.</p>
 <p>We also have a line that ensures that <code>r</code> can never be greater than the number of elements in the <code>iterable</code> (list).</p>
 <pre><code class="language-python">if r &gt; n:
@@ -872,7 +873,27 @@ print(&quot;there are:&quot;, count, &quot;permutations.&quot;)
 </code></pre>
 <p>Here is our result:</p>
 <p><img src="./permutations.png" alt="permutations"></p>
+<h3 id="a-clearer-alternative">A Clearer Alternative</h3>
+<p>As is often the case, there is a better way I found in retrospect from 
+<a href="https://stackoverflow.com/questions/104420/how-to-generate-all-permutations-of-a-list" target="_blank" rel="noopener">this stack overflow</a> (h/t to 
+<a href="https://twitter.com/lebigot" target="_blank" rel="noopener">Eric O Lebigot</a>):</p>
+<pre><code class="language-python">def all_perms(elements):
+    if len(elements) &lt;= 1:
+        yield elements  # Only permutation possible = no permutation
+    else:
+        # Iteration over the first element in the result permutation:
+        for (index, first_elmt) in enumerate(elements):
+            other_elmts = elements[:index] + elements[index+1:]
+            for permutation in all_perms(other_elmts):
+                yield [first_elmt] + permutation
+</code></pre>
+<p>The <code>enumerate</code> built-in function obviates the need to separately create <code>cycles</code> and <code>indices</code>. The local variable <code>other_elmts</code> separates the other elements in the list from the <code>first_elmt</code>, then the second for-loop recursively finds the permutation of the other elements before adding with the <code>first_elmt</code> on the final line, yielding all possible permutations of a list. As with the previous case, the result of this function is a <code>generator</code> which requires looping through and printing the permutations.</p>
+<p>I found this much easier to digest than the documentation version.</p>
 <p>Permutations can be useful when you have varied user journeys through your product and you want to figure out all the possible paths. With this short python script, you can easily print out all options for consideration.</p>
+<h3 id="take-aways">Take Aways</h3>
+<p>From the perspective of a user funnel, <strong>permutations</strong> allow us to explore all possible <em>paths</em> a user might take. For our hypothetical example, a three-step funnel yields six possible paths a user could navigate from start to finish.</p>
+<p>Knowing permutations should also <strong>give us pause</strong> when deciding whether to add another &ldquo;step&rdquo; to a funnel. Going from a three-step funnel to a four-step funnel increases the number of possible paths from six to 24 - a quadruple increase.</p>
+<p>Not only does this increase <strong>friction</strong> between your user and the &lsquo;end goal&rsquo; (conversion), whatever that may be for your product, but it also increases complexity (and potentially confusion) in the user experience.</p>
 <p>For more content on data science, machine learning, R, Python, SQL and more, 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 

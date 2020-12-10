@@ -32,9 +32,10 @@
 &lt;em&gt;Sample Funnel&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;In our hypothetical example, we&amp;rsquo;re looking at a funnel with three stages for a total of 6 permutations. Here&amp;rsquo;s the formula:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./permutation_formula.png&#34; alt=&#34;permutation_formula&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Now it&amp;rsquo;s likely that if you&amp;rsquo;re using a sales/marketing funnel of some sort, you&amp;rsquo;ll have in mind what your funnel would look like so you may not want all possible paths, but if you do, read on.&lt;/p&gt;
-&lt;p&gt;Here&amp;rsquo;s the 
-&lt;a href=&#34;https://docs.python.org/3.6/library/itertools.html#itertools.permutations&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;documentation&lt;/a&gt;. We&amp;rsquo;ll break down the code to better understand what&amp;rsquo;s going on in this function.&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;re using a sales/marketing funnel, you&amp;rsquo;ll have in mind what your funnel would look like so you may &lt;strong&gt;not&lt;/strong&gt; want all possible paths, but if you&amp;rsquo;re interested in exploring potentially &lt;em&gt;overlooked&lt;/em&gt; paths, read on.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the python 
+&lt;a href=&#34;https://docs.python.org/3.6/library/itertools.html#itertools.permutations&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;documentation&lt;/a&gt; for &lt;code&gt;itertools&lt;/code&gt;, and &lt;code&gt;permutations&lt;/code&gt; specifically. We&amp;rsquo;ll break down the code to better understand what&amp;rsquo;s going on in this function.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;note:&lt;/strong&gt; I found a clearer alternative after the fact. Feel free to skip to the final section below, although there is value in comparing the two versions.&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll start off with the &lt;code&gt;iterable&lt;/code&gt; which is a &lt;code&gt;list&lt;/code&gt; with three strings. The &lt;code&gt;permutations&lt;/code&gt; function takes in two parameters, the &lt;code&gt;iterable&lt;/code&gt; and &lt;code&gt;r&lt;/code&gt; which is the number of items from the list that we&amp;rsquo;re interested in finding the combination of. If we have three items in the list, we generally want to find &lt;em&gt;all possible&lt;/em&gt; combinations of those three items.&lt;/p&gt;
 &lt;p&gt;Here is the code, and subsequent breakdown:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# list of length 3
@@ -91,7 +92,7 @@ print(&amp;quot;there are:&amp;quot;, count, &amp;quot;permutations.&amp;quot;)
 &lt;p&gt;The first thing we do is take the &lt;code&gt;iterable&lt;/code&gt; input parameter is turn it from a &lt;code&gt;list&lt;/code&gt; into a &lt;code&gt;tuple&lt;/code&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;pool = tuple(iterable)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;There are several reasons to do this. First, &lt;code&gt;tuples&lt;/code&gt; are &lt;em&gt;faster&lt;/em&gt; than &lt;code&gt;lists&lt;/code&gt;; the &lt;code&gt;permutations()&lt;/code&gt; function will do several operations to the input so changing it to a &lt;code&gt;tuple&lt;/code&gt; allows faster operations and because &lt;code&gt;tuples&lt;/code&gt; are &lt;em&gt;immutatble&lt;/em&gt;, we can do a bunch of different operations without fear that we might &lt;em&gt;inadvertently&lt;/em&gt; change the list.&lt;/p&gt;
+&lt;p&gt;There are several reasons to do this. First, &lt;code&gt;tuples&lt;/code&gt; are &lt;em&gt;faster&lt;/em&gt; than &lt;code&gt;lists&lt;/code&gt;; the &lt;code&gt;permutations()&lt;/code&gt; function will do several operations to the input so changing it to a &lt;code&gt;tuple&lt;/code&gt; allows faster operations and because &lt;code&gt;tuples&lt;/code&gt; are &lt;em&gt;immutable&lt;/em&gt;, we can do a bunch of different operations without fear that we might &lt;em&gt;inadvertently&lt;/em&gt; change the list.&lt;/p&gt;
 &lt;p&gt;We then create &lt;code&gt;n&lt;/code&gt; from the length of &lt;code&gt;pool&lt;/code&gt; (in our case it&amp;rsquo;s 3) and the additional &lt;code&gt;r&lt;/code&gt; parameter, which defaults to &lt;code&gt;None&lt;/code&gt; is also 3 as we&amp;rsquo;re interested in seeing &lt;strong&gt;all combinations&lt;/strong&gt; of a list of three elements.&lt;/p&gt;
 &lt;p&gt;We also have a line that ensures that &lt;code&gt;r&lt;/code&gt; can never be greater than the number of elements in the &lt;code&gt;iterable&lt;/code&gt; (list).&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;if r &amp;gt; n:
@@ -132,7 +133,27 @@ print(&amp;quot;there are:&amp;quot;, count, &amp;quot;permutations.&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Here is our result:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./permutations.png&#34; alt=&#34;permutations&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;a-clearer-alternative&#34;&gt;A Clearer Alternative&lt;/h3&gt;
+&lt;p&gt;As is often the case, there is a better way I found in retrospect from 
+&lt;a href=&#34;https://stackoverflow.com/questions/104420/how-to-generate-all-permutations-of-a-list&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this stack overflow&lt;/a&gt; (h/t to 
+&lt;a href=&#34;https://twitter.com/lebigot&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Eric O Lebigot&lt;/a&gt;):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def all_perms(elements):
+    if len(elements) &amp;lt;= 1:
+        yield elements  # Only permutation possible = no permutation
+    else:
+        # Iteration over the first element in the result permutation:
+        for (index, first_elmt) in enumerate(elements):
+            other_elmts = elements[:index] + elements[index+1:]
+            for permutation in all_perms(other_elmts):
+                yield [first_elmt] + permutation
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;enumerate&lt;/code&gt; built-in function obviates the need to separately create &lt;code&gt;cycles&lt;/code&gt; and &lt;code&gt;indices&lt;/code&gt;. The local variable &lt;code&gt;other_elmts&lt;/code&gt; separates the other elements in the list from the &lt;code&gt;first_elmt&lt;/code&gt;, then the second for-loop recursively finds the permutation of the other elements before adding with the &lt;code&gt;first_elmt&lt;/code&gt; on the final line, yielding all possible permutations of a list. As with the previous case, the result of this function is a &lt;code&gt;generator&lt;/code&gt; which requires looping through and printing the permutations.&lt;/p&gt;
+&lt;p&gt;I found this much easier to digest than the documentation version.&lt;/p&gt;
 &lt;p&gt;Permutations can be useful when you have varied user journeys through your product and you want to figure out all the possible paths. With this short python script, you can easily print out all options for consideration.&lt;/p&gt;
+&lt;h3 id=&#34;take-aways&#34;&gt;Take Aways&lt;/h3&gt;
+&lt;p&gt;From the perspective of a user funnel, &lt;strong&gt;permutations&lt;/strong&gt; allow us to explore all possible &lt;em&gt;paths&lt;/em&gt; a user might take. For our hypothetical example, a three-step funnel yields six possible paths a user could navigate from start to finish.&lt;/p&gt;
+&lt;p&gt;Knowing permutations should also &lt;strong&gt;give us pause&lt;/strong&gt; when deciding whether to add another &amp;ldquo;step&amp;rdquo; to a funnel. Going from a three-step funnel to a four-step funnel increases the number of possible paths from six to 24 - a quadruple increase.&lt;/p&gt;
+&lt;p&gt;Not only does this increase &lt;strong&gt;friction&lt;/strong&gt; between your user and the &amp;lsquo;end goal&amp;rsquo; (conversion), whatever that may be for your product, but it also increases complexity (and potentially confusion) in the user experience.&lt;/p&gt;
 &lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
