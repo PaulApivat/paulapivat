@@ -12,7 +12,7 @@ lastMod: "2020-12-09T00:00:00Z"
 projects: []
 subtitle: Exploring Statistics & Probability Concepts Using Code
 summary: Learning Statistics and Probability Concepts through Code Snippets
-tags: ["Python", "Data Science", "Probability", "Statistics", "R"]
+tags: ["Python", "Data Science", "Probability", "Statistics"]
 title: Statistics & Probability in Code
 ---
 
@@ -24,7 +24,7 @@ title: Statistics & Probability in Code
 
 `Itertools` are a core set of fast, memory efficient tools for creating iterators for efficient looping (read the [documentation](https://docs.python.org/3/library/itertools.html) here). 
 
-## Permutations
+## Itertools Permutations
 
 One (of many) uses for `itertools` is to create a `permutations()` function that will return all possible combinations of items in a list. 
 
@@ -167,7 +167,7 @@ Here is our result:
 
 ![permutations](./permutations.png)
 
-### A Clearer Alternative
+### A Clearer Alternative: Permutation Using Recursion
 
 As is often the case, there is a better way I found in retrospect from [this stack overflow](https://stackoverflow.com/questions/104420/how-to-generate-all-permutations-of-a-list) (h/t to [Eric O Lebigot](https://twitter.com/lebigot)):
 

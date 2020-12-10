@@ -1167,7 +1167,7 @@ hist(x)
 &lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Itertools&lt;/code&gt; are a core set of fast, memory efficient tools for creating iterators for efficient looping (read the 
 &lt;a href=&#34;https://docs.python.org/3/library/itertools.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;documentation&lt;/a&gt; here).&lt;/p&gt;
-&lt;h2 id=&#34;permutations&#34;&gt;Permutations&lt;/h2&gt;
+&lt;h2 id=&#34;itertools-permutations&#34;&gt;Itertools Permutations&lt;/h2&gt;
 &lt;p&gt;One (of many) uses for &lt;code&gt;itertools&lt;/code&gt; is to create a &lt;code&gt;permutations()&lt;/code&gt; function that will return all possible combinations of items in a list.&lt;/p&gt;
 &lt;p&gt;I was working on a project that involved user funnels with different stages and we were wondering how many different &amp;ldquo;paths&amp;rdquo; a user &lt;em&gt;could&lt;/em&gt; take, so this was naturally a good fit for using &lt;strong&gt;permutations&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./sample_funnel.png&#34; alt=&#34;sample_funnel&#34;&gt;
@@ -1275,7 +1275,7 @@ print(&amp;quot;there are:&amp;quot;, count, &amp;quot;permutations.&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Here is our result:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./permutations.png&#34; alt=&#34;permutations&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;a-clearer-alternative&#34;&gt;A Clearer Alternative&lt;/h3&gt;
+&lt;h3 id=&#34;a-clearer-alternative-permutation-using-recursion&#34;&gt;A Clearer Alternative: Permutation Using Recursion&lt;/h3&gt;
 &lt;p&gt;As is often the case, there is a better way I found in retrospect from 
 &lt;a href=&#34;https://stackoverflow.com/questions/104420/how-to-generate-all-permutations-of-a-list&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this stack overflow&lt;/a&gt; (h/t to 
 &lt;a href=&#34;https://twitter.com/lebigot&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Eric O Lebigot&lt;/a&gt;):&lt;/p&gt;

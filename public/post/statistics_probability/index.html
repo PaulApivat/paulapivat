@@ -765,7 +765,7 @@
 <h2 id="overview">Overview</h2>
 <p><code>Itertools</code> are a core set of fast, memory efficient tools for creating iterators for efficient looping (read the 
 <a href="https://docs.python.org/3/library/itertools.html" target="_blank" rel="noopener">documentation</a> here).</p>
-<h2 id="permutations">Permutations</h2>
+<h2 id="itertools-permutations">Itertools Permutations</h2>
 <p>One (of many) uses for <code>itertools</code> is to create a <code>permutations()</code> function that will return all possible combinations of items in a list.</p>
 <p>I was working on a project that involved user funnels with different stages and we were wondering how many different &ldquo;paths&rdquo; a user <em>could</em> take, so this was naturally a good fit for using <strong>permutations</strong>.</p>
 <p><img src="./sample_funnel.png" alt="sample_funnel">
@@ -873,7 +873,7 @@ print(&quot;there are:&quot;, count, &quot;permutations.&quot;)
 </code></pre>
 <p>Here is our result:</p>
 <p><img src="./permutations.png" alt="permutations"></p>
-<h3 id="a-clearer-alternative">A Clearer Alternative</h3>
+<h3 id="a-clearer-alternative-permutation-using-recursion">A Clearer Alternative: Permutation Using Recursion</h3>
 <p>As is often the case, there is a better way I found in retrospect from 
 <a href="https://stackoverflow.com/questions/104420/how-to-generate-all-permutations-of-a-list" target="_blank" rel="noopener">this stack overflow</a> (h/t to 
 <a href="https://twitter.com/lebigot" target="_blank" rel="noopener">Eric O Lebigot</a>):</p>
@@ -912,8 +912,6 @@ print(&quot;there are:&quot;, count, &quot;permutations.&quot;)
   <a class="badge badge-light" href="/tag/probability/">Probability</a>
   
   <a class="badge badge-light" href="/tag/python/">Python</a>
-  
-  <a class="badge badge-light" href="/tag/r/">R</a>
   
   <a class="badge badge-light" href="/tag/statistics/">Statistics</a>
   
