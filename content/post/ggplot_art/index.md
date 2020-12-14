@@ -8,7 +8,7 @@ featured: false
 image:
   caption: ""
   focal_point: ""
-lastMod: "2020-11-19T00:00:00Z"
+lastMod: "2020-12-14T00:00:00Z"
 projects: []
 subtitle: Finding beauty in the process
 summary: TidyTuesday Outtakes
@@ -35,4 +35,14 @@ I call this Disco Fire:
 Dino-turn-Rorschach test
 
 ![png](./density_dino.png)
+
+## TidyTuesday 2020-12-08 (week 50)
+
+Sunburst (BBC's 100 Influential Women 2020)
+
+![women_bbc_sunburst](./women_bbc_sunburst.png)
+
+Circular Packing (experimental)
+
+![circular](./circular.png)
 
