@@ -202,6 +202,70 @@ def normal_probability_outside(lo: float,
 normal_probability_outside(490, 520, 500, 15.8113)
 ```
 
+In addition to the above, we may also be interested in finding (symmetric) intervals around the mean that account for a *certain level of likelihood*, for example, 60% probability centered around the mean. 
+
+For this operation we would use the `inverse_normal_cdf`:
+
+```python
+def inverse_normal_cdf(p: float,
+                       mu: float = 0,
+                       sigma: float = 1,
+                       tolerance: float = 0.00001) -> float:
+    """Find approximate inverse using binary search"""
+    # if not standard, compute standard and rescale
+    if mu != 0 or sigma != 1:
+        return mu + sigma * inverse_normal_cdf(p, tolerance=tolerance)
+    low_z = -10.0     # normal_cdf(-10) is (very close to) 0
+    hi_z = 10.0       # normal_cdf(10) is (very close to) 1
+    while hi_z - low_z > tolerance:
+        mid_z = (low_z + hi_z) / 2      # Consider the midpoint
+        mid_p = normal_cdf(mid_z)       # and the CDF's value there
+        if mid_p < p:
+            low_z = mid_z               # Midpoint too low, search above it
+        else:
+            hi_z = mid_z                # Midpoint too high, search below it
+    return mid_z
+```
+
+First we'd have to find the cutoffs where the upper and lower tails each contain 20% of the probability. We calculate `normal_upper_bound` and `normal_lower_bound` and use thoe to calculate the `normal_two_sided_bounds`.
+
+```python
+def normal_upper_bound(probability: float,
+                       mu: float = 0,
+                       sigma: float = 1) -> float:
+    """Returns the z for which P(Z <= z) = probability"""
+    return inverse_normal_cdf(probability, mu, sigma)
+
+
+def normal_lower_bound(probability: float,
+                       mu: float = 0,
+                       sigma: float = 1) -> float:
+    """Returns the z for which P(Z >= z) = probability"""
+    return inverse_normal_cdf(1 - probability, mu, sigma)
+
+
+def normal_two_sided_bounds(probability: float,
+                            mu: float = 0,
+                            sigma: float = 1) -> Tuple[float, float]:
+    """
+    Returns the symmetric (about the mean) bounds
+    that contain the specified probability
+    """
+    tail_probability = (1 - probability) / 2
+    # upper bound should have tail_probability above it
+    upper_bound = normal_lower_bound(tail_probability, mu, sigma)
+    # lower bound should have tail_probability below it
+    lower_bound = normal_upper_bound(tail_probability, mu, sigma)
+    return lower_bound, upper_bound
+```
+So if we wanted to know what the cutoff points were for a 60% probability around the mean and standard deviation (`mu` = 500, `sigma` = 15.8113), it would be between 486.69 and 513.31.
+
+```python
+# (486.6927811021805, 513.3072188978196)
+normal_two_sided_bounds(0.60, 500, 15.8113)
+```
+
+
 
 
 For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).
