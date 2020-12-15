@@ -5,12 +5,109 @@
     <link>/tag/statistics/</link>
       <atom:link href="/tag/statistics/index.xml" rel="self" type="application/rss+xml" />
     <description>Statistics</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Wed, 09 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Tue, 15 Dec 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Statistics</title>
       <link>/tag/statistics/</link>
     </image>
+    
+    <item>
+      <title>Data Science from Scratch (ch7) - Hypothesis and Inference</title>
+      <link>/post/dsfs_7/</link>
+      <pubDate>Tue, 15 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/post/dsfs_7/</guid>
+      <description>&lt;h3 id=&#34;table-of-contents&#34;&gt;Table of contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;#central_limit_theorem&#34;&gt;Central Limit Theorem&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#hypothesis_testing&#34;&gt;Hypothesis Testing&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;We&amp;rsquo;ll use a classic coin-flipping example in this post because it is simple to illustrate with both &lt;strong&gt;concept&lt;/strong&gt; and &lt;strong&gt;code&lt;/strong&gt;. My goal is to tie several concepts together including (traditional) Hypothesis and Inference, Estimation Theory, and Bayesian Inference. All using the same coin-flipping example.&lt;/p&gt;
+&lt;h2 id=&#34;central_limit_theorem&#34;&gt;Central_Limit_Theorem&lt;/h2&gt;
+&lt;p&gt;Terms like &amp;ldquo;null&amp;rdquo; and &amp;ldquo;alternative&amp;rdquo; hypothesis are used quite frequently, so let&amp;rsquo;s set some context. The &amp;ldquo;null&amp;rdquo; is the &lt;strong&gt;default&lt;/strong&gt; position. The &amp;ldquo;alternative&amp;rdquo;, alt for short, is something we&amp;rsquo;re &lt;em&gt;comparing to&lt;/em&gt; the default (null).&lt;/p&gt;
+&lt;p&gt;The classic coin-flipping exercise is to test the &lt;em&gt;fairness&lt;/em&gt; off a coin. If a coin is fair, it&amp;rsquo;ll land on heads 50% of the time (and tails 50% of the time). Let&amp;rsquo;s translate into hypothesis testing language:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Null Hypothesis&lt;/strong&gt;: Probability of landing on Heads = 0.5.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Alt Hypothesis&lt;/strong&gt;: Probability of landing on Heads != 0.5.&lt;/p&gt;
+&lt;p&gt;Each coin flip is a &lt;strong&gt;Bernoulli trial&lt;/strong&gt;, which is an experiment with two outcomes - outcome 1, &amp;ldquo;success&amp;rdquo;, (probability &lt;em&gt;p&lt;/em&gt;) and outcome 0, &amp;ldquo;fail&amp;rdquo; (probability &lt;em&gt;p - 1&lt;/em&gt;). The reason it&amp;rsquo;s a Bernoulli trial is because there are only two outcome with a coin flip (heads or tails). Read more about 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Bernoulli_trial&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Bernoulli here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the code for a single Bernoulli Trial:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def bernoulli_trial(p: float) -&amp;gt; int:
+    &amp;quot;&amp;quot;&amp;quot;Returns 1 with probability p and 0 with probability 1-p&amp;quot;&amp;quot;&amp;quot;
+    return 1 if random.random() &amp;lt; p else 0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When you &lt;strong&gt;sum the independent Bernoulli trials&lt;/strong&gt;, you get a &lt;strong&gt;Binomial(n,p)&lt;/strong&gt; random variable, a variable whose &lt;em&gt;possible&lt;/em&gt; values have a probability distribution. The &lt;strong&gt;central limit theorem&lt;/strong&gt; says as &lt;strong&gt;n&lt;/strong&gt; or the &lt;em&gt;number&lt;/em&gt; of independent Bernoulli trials get large, the Binomial distribution approaches a normal distribution.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the code for when you sum all the Bernoulli Trials to get a Binomial random variable:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def binomial(n: int, p: float) -&amp;gt; int:
+    &amp;quot;&amp;quot;&amp;quot;Returns the sum of n bernoulli(p) trials&amp;quot;&amp;quot;&amp;quot;
+    return sum(bernoulli_trial(p) for _ in range(n))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: A single &amp;lsquo;success&amp;rsquo; in a Bernoulli trial is &amp;lsquo;x&amp;rsquo;. Summing up all those x&amp;rsquo;s into X, is a Binomial random variable. Success doesn&amp;rsquo;t imply desirability, nor does &amp;ldquo;failure&amp;rdquo; imply undesirability. They&amp;rsquo;re just terms to count the cases we&amp;rsquo;re looking for (i.e., number of heads in multiple coin flips to assess a coin&amp;rsquo;s fairness).&lt;/p&gt;
+&lt;p&gt;Given that our &lt;strong&gt;null&lt;/strong&gt; is (p = 0.5) and &lt;strong&gt;alt&lt;/strong&gt; is (p != 0.5), we can run some independent bernoulli trials, then sum them up to get a binomial random variable.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./independent_coin_flips.png&#34; alt=&#34;independent_coin_flips&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Each &lt;code&gt;bernoulli_trial&lt;/code&gt; is an experiment with either 0 or 1 as outcomes. The &lt;code&gt;binomial&lt;/code&gt; function sums up &lt;strong&gt;n&lt;/strong&gt; bernoulli(0.5) trails. We ran both twice and got different results. Each bernoulli experiment can be a success(1) or fial(0); summing up into a binomial random variable means we&amp;rsquo;re taking the probability p(0.5) &lt;em&gt;that a coin flips head&lt;/em&gt; and we ran the experiment 1000 times to get a random binomial variable.&lt;/p&gt;
+&lt;p&gt;The first 1000 flips we got 510. The second 1000 flips we got 495. We can repeat this process many times to get a &lt;em&gt;distribution&lt;/em&gt;. We can plot this distribution to reinforce our understanding. To this we&amp;rsquo;ll use &lt;code&gt;binomial_histogram&lt;/code&gt; function. This function picks points from a Binomial(n,p) random variable and plots their histogram.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from collections import Counter
+import matplotlib.pyplot as plt
+
+def normal_cdf(x: float, mu: float = 0, sigma: float = 1) -&amp;gt; float:
+    return (1 + math.erf((x - mu) / math.sqrt(2) / sigma)) / 2
+    
+
+def binomial_histogram(p: float, n: int, num_points: int) -&amp;gt; None:
+    &amp;quot;&amp;quot;&amp;quot;Picks points from a Binomial(n, p) and plots their histogram&amp;quot;&amp;quot;&amp;quot;
+    data = [binomial(n, p) for _ in range(num_points)]
+    # use a bar chart to show the actual binomial samples
+    histogram = Counter(data)
+    plt.bar([x - 0.4 for x in histogram.keys()],
+            [v / num_points for v in histogram.values()],
+            0.8,
+            color=&#39;0.75&#39;)
+    mu = p * n
+    sigma = math.sqrt(n * p * (1 - p))
+    # use a line chart to show the normal approximation
+    xs = range(min(data), max(data) + 1)
+    ys = [normal_cdf(i + 0.5, mu, sigma) -
+          normal_cdf(i - 0.5, mu, sigma) for i in xs]
+    plt.plot(xs, ys)
+    plt.title(&amp;quot;Binomial Distribution vs. Normal Approximation&amp;quot;)
+    plt.show()
+
+# call function   
+binomial_histogram(0.5, 1000, 10000)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This plot is then rendered:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./binomial_coin_fairness.png&#34; alt=&#34;binomial_coin_fairness&#34;&gt;&lt;/p&gt;
+&lt;p&gt;What we did was sum up independent &lt;code&gt;bernoulli_trial&lt;/code&gt;(s) of 1,000 coin flips, where the probability of head is p = 0.5, to create a &lt;code&gt;binomial&lt;/code&gt; random variable. We then repeated this a large number of times (N = 10,000), then plotted a histogram of the distribution of all binomial random variables. And because we did it so many times, it approximates the standard normal distribution (smooth bell shape curve).&lt;/p&gt;
+&lt;p&gt;Just to demonstrate how this works, we can generate several &lt;code&gt;binomial&lt;/code&gt; random variables:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./several_binomial.png&#34; alt=&#34;several_binomial&#34;&gt;&lt;/p&gt;
+&lt;p&gt;If we do this 10,000 times, we&amp;rsquo;ll generate the above histogram. You&amp;rsquo;ll notice that because we are testing whether the coin is fair, the probability of heads (success) &lt;em&gt;should&lt;/em&gt; be at 0.5 and, from 1,000 coin flips, the &lt;strong&gt;mean&lt;/strong&gt;(&lt;code&gt;mu&lt;/code&gt;) should be a 500.&lt;/p&gt;
+&lt;p&gt;We have another function that can help us calculate &lt;code&gt;normal_approximation_to_binomial&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import random
+from typing import Tuple
+import math
+
+
+def normal_approximation_to_binomial(n: int, p: float) -&amp;gt; Tuple[float, float]:
+    &amp;quot;&amp;quot;&amp;quot;Return mu and sigma corresponding to a Binomial(n, p)&amp;quot;&amp;quot;&amp;quot;
+    mu = p * n
+    sigma = math.sqrt(p * (1 - p) * n)
+    return mu, sigma
+    
+# call function
+# (500.0, 15.811388300841896)
+normal_approximation_to_binomial(1000, 0.5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When calling the function with our parameters, we get a mean &lt;code&gt;mu&lt;/code&gt; of 500 (from 1000 coin flips) and a standard deviation &lt;code&gt;sigma&lt;/code&gt; of 15.8114. Which means that 68% of the time, the binomial random variable will be 500 +/- 15.8114 and 95% of the time it&amp;rsquo;ll be 500 +/- 31.6228 (see 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;68-95-99.7 rule&lt;/a&gt;)&lt;/p&gt;
+&lt;h2 id=&#34;hypothesis_testing&#34;&gt;Hypothesis_Testing&lt;/h2&gt;
+&lt;p&gt;Now that we have seen the results of our &amp;ldquo;coin fairness&amp;rdquo; experiment plotted on a binomial distribution (approximately normal), we will be, for the purpose of testing our hypothesis, be interested in the probability of its realized value (binomial random variable) lies &lt;strong&gt;within or outside a particular interval&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Statistics &amp; Probability in Code</title>
