@@ -1321,7 +1321,7 @@ normal_probability_outside(490, 520, 500, 15.8113)
             hi_z = mid_z                # Midpoint too high, search below it
     return mid_z
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;First we&amp;rsquo;d have to find the cutoffs where the upper and lower tails each contain 20% of the probability. We calculate &lt;code&gt;normal_upper_bound&lt;/code&gt; and &lt;code&gt;normal_lower_bound&lt;/code&gt; and use thoe to calculate the &lt;code&gt;normal_two_sided_bounds&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;First we&amp;rsquo;d have to find the cutoffs where the upper and lower tails each contain 20% of the probability. We calculate &lt;code&gt;normal_upper_bound&lt;/code&gt; and &lt;code&gt;normal_lower_bound&lt;/code&gt; and use those to calculate the &lt;code&gt;normal_two_sided_bounds&lt;/code&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def normal_upper_bound(probability: float,
                        mu: float = 0,
                        sigma: float = 1) -&amp;gt; float:
@@ -1350,9 +1350,51 @@ def normal_two_sided_bounds(probability: float,
     lower_bound = normal_upper_bound(tail_probability, mu, sigma)
     return lower_bound, upper_bound
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;So if we wanted to know what the cutoff points were for a 60% probability around the mean and standard deviation (&lt;code&gt;mu&lt;/code&gt; = 500, &lt;code&gt;sigma&lt;/code&gt; = 15.8113), it would be between 486.69 and 513.31.&lt;/p&gt;
+&lt;p&gt;So if we wanted to know what the cutoff points were for a 60% probability around the mean and standard deviation (&lt;code&gt;mu&lt;/code&gt; = 500, &lt;code&gt;sigma&lt;/code&gt; = 15.8113), it would be between &lt;strong&gt;486.69 and 513.31&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Said differently, this means roughly 60% of the time, we can expect the binomial random variable to fall between 486 and 513.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# (486.6927811021805, 513.3072188978196)
 normal_two_sided_bounds(0.60, 500, 15.8113)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;significance-and-power&#34;&gt;Significance and Power&lt;/h3&gt;
+&lt;p&gt;Now that we have a handle on the binomial normal distribution, thresholds (left and right of the mean), and cut-off points, we want to make a &lt;strong&gt;decision about significance&lt;/strong&gt;. Probably the most important part of &lt;em&gt;statistical significance&lt;/em&gt; is that it is a decision to be made, not a standard that is externally set.&lt;/p&gt;
+&lt;p&gt;Significance is a decision about how willing we are to make a &lt;em&gt;type 1&lt;/em&gt; error (false positive), which we explored in a 
+&lt;a href=&#34;https://paulapivat.com/post/dsfs_6/#applying_bayes_theorem&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;previous post&lt;/a&gt;. The convention is to set it to a 5% or 1% willingness to make a type 1 error. Suppose we say 5%.&lt;/p&gt;
+&lt;p&gt;We would say that out of 1000 flips, 95% of the time, we&amp;rsquo;d get between 469 and 531 heads on a &amp;ldquo;fair coin&amp;rdquo; and 5% of the time, outside of this 469-531 range.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# (469.0104394712448, 530.9895605287552)
+normal_two_sided_bounds(0.95, 500, 15.8113)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If we recall our hypotheses:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Null Hypothesis&lt;/strong&gt;: Probability of landing on Heads = 0.5 (fair coin)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Alt Hypothesis&lt;/strong&gt;: Probability of landing on Heads != 0.5 (unfair coin)&lt;/p&gt;
+&lt;p&gt;Each binomial distribution (test) that consist of a 1000 bernoulli trials, each &lt;em&gt;test&lt;/em&gt; where the number of heads falls outside the range of 469-531, we&amp;rsquo;ll &lt;strong&gt;reject the null&lt;/strong&gt; that the coin is fair. And we&amp;rsquo;ll be wrong (false positive), 5% of the time. It&amp;rsquo;s a false positive when we &lt;strong&gt;incorrectly reject&lt;/strong&gt; the null hypothesis, when it&amp;rsquo;s actually true.&lt;/p&gt;
+&lt;p&gt;We also want to avoid making a type-2 error (false negative), where we &lt;strong&gt;fail to reject&lt;/strong&gt; the null hypothesis, when it&amp;rsquo;s actually false.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Its important to keep in mind that terms like &lt;em&gt;significance&lt;/em&gt; and &lt;em&gt;power&lt;/em&gt; are used to describe &lt;strong&gt;tests&lt;/strong&gt;, in our case, the test of whether a coin is fair or not. Each test is the sum of 1,000 independent bernoulli trials.&lt;/p&gt;
+&lt;p&gt;For a &amp;ldquo;test&amp;rdquo; that has a 95% significance, we&amp;rsquo;ll assume that out of a 1,000 coin flips, it&amp;rsquo;ll land on heads between 469-531 times and we&amp;rsquo;ll determine the coin is fair. For the 5% of the time it lands outside of this range, we&amp;rsquo;ll determine the coin to be &amp;ldquo;unfair&amp;rdquo;, but we&amp;rsquo;ll be wrong because it actually is fair.&lt;/p&gt;
+&lt;p&gt;To calculate the power of the test, we&amp;rsquo;ll take the assumed &lt;code&gt;mu&lt;/code&gt; and &lt;code&gt;sigma&lt;/code&gt; with a 95% bounds (based on the assumption that the probability of the coin landing on heads is 0.5 or 50% - a fair coin). We&amp;rsquo;ll determine the lower and upper bounds:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;lo, hi = normal_two_sided_bounds(0.95, mu_0, sigma_0)
+lo # 469.01026640487555
+hi # 530.9897335951244
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And if the coin was &lt;em&gt;actually unfair&lt;/em&gt;, we should reject the null, but we fail to. Let&amp;rsquo;s suppose the actual probability that the coin lands on heads is 55% (slightly biased towards head):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;mu_1, sigma_1 = normal_approximation_to_binomial(1000, 0.55)
+mu_1    # 550.0
+sigma_1 # 15.732132722552274
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using the same range 469 - 531, where the coin is assumed &amp;lsquo;fair&amp;rsquo; with &lt;code&gt;mu&lt;/code&gt; at 500 and &lt;code&gt;sigma&lt;/code&gt; at 15.8113.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./95sig_binomial.png&#34; alt=&#34;95sig_binomial&#34;&gt;&lt;/p&gt;
+&lt;p&gt;If the coin, in fact, had a biased towards head (p = 0.55), the distribution would shift right, but if our 95% significance test remains the same:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./type2_error.png&#34; alt=&#34;type2_error&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The probability of making a type-2 error is 11.345%. This is the probability that we&amp;rsquo;re see that the coin&amp;rsquo;s distribution is within the previous interval 469-531, thinking we should accept the null hypothesis (that the coin is fair), but in actuality, failing to see that the distribution has shifted to the coin having a &lt;em&gt;bias&lt;/em&gt; towards heads.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# 0.11345199870463285
+type_2_probability = normal_probability_between(lo, hi, mu_1, sigma_1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The other way to see this is to find the threshold for 531, in the &lt;em&gt;new&lt;/em&gt; &lt;code&gt;mu&lt;/code&gt; and &lt;code&gt;sigma&lt;/code&gt; (new distribution):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# 0.11357762975476304
+normal_probability_below(531, mu_1, sigma_1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So the probability of making a type-2 error or the probability that the &lt;em&gt;new&lt;/em&gt; distribution falls below 531 is approximately 11.3%.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;power&lt;/strong&gt; to detect this type-2 error is 1 - 0.113 or&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;power = 1 - type_2_probability # 0.8865480012953671
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
