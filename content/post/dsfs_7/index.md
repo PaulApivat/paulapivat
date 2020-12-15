@@ -132,6 +132,76 @@ When calling the function with our parameters, we get a mean `mu` of 500 (from 1
 
 Now that we have seen the results of our "coin fairness" experiment plotted on a binomial distribution (approximately normal), we will be, for the purpose of testing our hypothesis, be interested in the probability of its realized value (binomial random variable) lies **within or outside a particular interval**.
 
+This means we'll be interested in questions like:
+
+- What's the probability that the binomial(n,p) is below a threshold?
+- Above a threshold?
+- Between an interval?
+- Outside an interval? 
+
+First, the `normal_cdf` (normal cummulative distribution function), which we learned in a [previous post](https://paulapivat.com/post/dsfs_6/#distributions), *is* the probability of a variable being *below* a certain threshold. 
+
+```python
+normal_probability_below = normal_cdf
+
+# probability that binomal random variable, mu = 500, sigma = 15.8113, is below 490
+
+# 0.26354347477247553
+normal_probability_below(490, 500, 15.8113)
+```
+
+On the other hand, the `normal_probability_above` would be 1 - 0.2635 = 0.7365:
+
+```python
+def normal_probability_above(lo: float,
+                             mu: float = 0,
+                             sigma: float = 1) -> float:
+    """The probability that an N(mu, sigma) is greater than lo."""
+    return 1 - normal_cdf(lo, mu, sigma)
+    
+# 0.7364565252275245
+normal_probability_above(490, 500, 15.8113)
+```
+
+To make sense of this we need to recall the binomal distribution, that approximates the normal distribution, but we'll draw a vertical line at 490.
+
+![binomial_vline](./binomial_vline.png)
+
+We're asking, given the binomal distribution with `mu` 500 and `sigma` at 15.8113, what is the probability that a binomal random variable falls below the threshold (left of the line); the answer is approximately 26% and correspondingly falling above the threshold (right of the line), is approximately 74%. 
+
+### Between interval
+
+We may also wonder what the probability of a binomial random variable **falling between 490 and 520**:
+
+![binomial_2_vline](./binomial_2_vline.png)
+
+Here is the function to calculate this probability and it comes out to approximately 63%. *note*: Bear in mind the full area under the curve is 1.0 or 100%. 
+
+```python
+def normal_probability_between(lo: float,
+                               hi: float,
+                               mu: float = 0,
+                               sigma: float = 1) -> float:
+    """The probability that an N(mu, sigma) is between lo and hi."""
+    return normal_cdf(hi, mu, sigma) - normal_cdf(lo, mu, sigma)
+
+# 0.6335061861416337
+normal_probability_between(490, 520, 500, 15.8113)
+```
+Finally, the area outside of the interval should be 1 - 0.6335 = 0.3665:
+
+```python
+def normal_probability_outside(lo: float,
+                               hi: float,
+                               mu: float = 0,
+                               sigma: float = 1) -> float:
+    """The probability that an N(mu, sigma) is not between lo and hi."""
+    return 1 - normal_probability_between(lo, hi, mu, sigma)
+    
+# 0.3664938138583663
+normal_probability_outside(490, 520, 500, 15.8113)
+```
+
 
 
 For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).

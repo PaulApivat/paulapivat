@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    5 min read
+    7 min read
   </span>
   
 
@@ -844,6 +844,60 @@ normal_approximation_to_binomial(1000, 0.5)
 <a href="https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule" target="_blank" rel="noopener">68-95-99.7 rule</a>)</p>
 <h2 id="hypothesis_testing">Hypothesis_Testing</h2>
 <p>Now that we have seen the results of our &ldquo;coin fairness&rdquo; experiment plotted on a binomial distribution (approximately normal), we will be, for the purpose of testing our hypothesis, be interested in the probability of its realized value (binomial random variable) lies <strong>within or outside a particular interval</strong>.</p>
+<p>This means we&rsquo;ll be interested in questions like:</p>
+<ul>
+<li>What&rsquo;s the probability that the binomial(n,p) is below a threshold?</li>
+<li>Above a threshold?</li>
+<li>Between an interval?</li>
+<li>Outside an interval?</li>
+</ul>
+<p>First, the <code>normal_cdf</code> (normal cummulative distribution function), which we learned in a 
+<a href="https://paulapivat.com/post/dsfs_6/#distributions" target="_blank" rel="noopener">previous post</a>, <em>is</em> the probability of a variable being <em>below</em> a certain threshold.</p>
+<pre><code class="language-python">normal_probability_below = normal_cdf
+
+# probability that binomal random variable, mu = 500, sigma = 15.8113, is below 490
+
+# 0.26354347477247553
+normal_probability_below(490, 500, 15.8113)
+</code></pre>
+<p>On the other hand, the <code>normal_probability_above</code> would be 1 - 0.2635 = 0.7365:</p>
+<pre><code class="language-python">def normal_probability_above(lo: float,
+                             mu: float = 0,
+                             sigma: float = 1) -&gt; float:
+    &quot;&quot;&quot;The probability that an N(mu, sigma) is greater than lo.&quot;&quot;&quot;
+    return 1 - normal_cdf(lo, mu, sigma)
+    
+# 0.7364565252275245
+normal_probability_above(490, 500, 15.8113)
+</code></pre>
+<p>To make sense of this we need to recall the binomal distribution, that approximates the normal distribution, but we&rsquo;ll draw a vertical line at 490.</p>
+<p><img src="./binomial_vline.png" alt="binomial_vline"></p>
+<p>We&rsquo;re asking, given the binomal distribution with <code>mu</code> 500 and <code>sigma</code> at 15.8113, what is the probability that a binomal random variable falls below the threshold (left of the line); the answer is approximately 26% and correspondingly falling above the threshold (right of the line), is approximately 74%.</p>
+<h3 id="between-interval">Between interval</h3>
+<p>We may also wonder what the probability of a binomial random variable <strong>falling between 490 and 520</strong>:</p>
+<p><img src="./binomial_2_vline.png" alt="binomial_2_vline"></p>
+<p>Here is the function to calculate this probability and it comes out to approximately 63%. <em>note</em>: Bear in mind the full area under the curve is 1.0 or 100%.</p>
+<pre><code class="language-python">def normal_probability_between(lo: float,
+                               hi: float,
+                               mu: float = 0,
+                               sigma: float = 1) -&gt; float:
+    &quot;&quot;&quot;The probability that an N(mu, sigma) is between lo and hi.&quot;&quot;&quot;
+    return normal_cdf(hi, mu, sigma) - normal_cdf(lo, mu, sigma)
+
+# 0.6335061861416337
+normal_probability_between(490, 520, 500, 15.8113)
+</code></pre>
+<p>Finally, the area outside of the interval should be 1 - 0.6335 = 0.3665:</p>
+<pre><code class="language-python">def normal_probability_outside(lo: float,
+                               hi: float,
+                               mu: float = 0,
+                               sigma: float = 1) -&gt; float:
+    &quot;&quot;&quot;The probability that an N(mu, sigma) is not between lo and hi.&quot;&quot;&quot;
+    return 1 - normal_probability_between(lo, hi, mu, sigma)
+    
+# 0.3664938138583663
+normal_probability_outside(490, 520, 500, 15.8113)
+</code></pre>
 <p>For more content on data science, machine learning, R, Python, SQL and more, 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
