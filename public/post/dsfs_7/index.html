@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    12 min read
+    15 min read
   </span>
   
 
@@ -763,6 +763,12 @@
 <a href="#central_limit_theorem">Central Limit Theorem</a></li>
 <li>
 <a href="#hypothesis_testing">Hypothesis Testing</a></li>
+<li>
+<a href="#p_values">p-Values</a></li>
+<li>
+<a href="#confidence_intervals">Confidence Intervals</a></li>
+<li>
+<a href="#connecting_dots">Connecting dots with Python</a></li>
 </ul>
 <h2 id="overview">Overview</h2>
 <p>We&rsquo;ll use a classic coin-flipping example in this post because it is simple to illustrate with both <strong>concept</strong> and <strong>code</strong>. My goal is to tie several concepts together including (traditional) Hypothesis and Inference, Estimation Theory, and Bayesian Inference. All using the same coin-flipping example.</p>
@@ -1013,6 +1019,62 @@ normal_probability_below(531, mu_1, sigma_1)
 normal_probability_below(526, mu_1, sigma_1)
 </code></pre>
 <p>And the new (stronger) <strong>power to detect</strong> type-2 error is 1.0 - 0.064 = 0.936 or 93.6% (up from 88.7% above).</p>
+<h2 id="p_values">p_values</h2>
+<p>p-Values represent <em>another way</em> of deciding whether to accept or reject the Null Hypothesis. Instead of choosing bounds, thresholds or cut-off points, we could compute the probability, assuming the Null Hypothesis is true, that we would see a value <em>as extreme as</em> the one we just observed.</p>
+<p>Here is the code:</p>
+<pre><code class="language-python">def two_sided_p_values(x: float, mu: float = 0, sigma: float = 1) -&gt; float:
+    &quot;&quot;&quot;
+    How likely are we to see a value at least as extreme as x (in either
+    direction) if our values are from an N(mu, sigma)?
+    &quot;&quot;&quot;
+    if x &gt;= mu:
+        # x is greater than the mean, so the tail is everything greater than x
+        return 2 * normal_probability_above(x, mu, sigma)
+    else:
+        # x is less than the mean, so the tail is everything less than x
+        return 2 * normal_probability_below(x, mu, sigma)
+</code></pre>
+<p>If we wanted to compute, assuming we have a &ldquo;fair coin&rdquo; (<code>mu</code> = 500, <code>sigma</code> = 15.8113), what is the probability of seeing a value like 530? (<strong>note</strong>: We use 529.5 instead of 530 below due to 
+<a href="https://en.wikipedia.org/wiki/Continuity_correction" target="_blank" rel="noopener">continuity correction</a>)</p>
+<p>Answer: approximately 6.2%</p>
+<pre><code class="language-python"># 0.06207721579598835
+two_sided_p_values(529.5, mu_0, sigma_0)
+</code></pre>
+<p>The p-value, 6.2% is higher than our (hypothetical) 5% significance, so we don&rsquo;t reject the null. On the other hand, if X was slightly more extreme, 532, the probability of seeing that value would be approximately 4.3%, which is less than 5% significance, so we would reject the null.</p>
+<pre><code class="language-python"># 0.04298479507085862
+two_sided_p_values(532, mu_0, sigma_0)
+</code></pre>
+<p>For one-sided tests, we would use the <code>normal_probability_above</code> and <code>normal_probability_below</code> functions created above:</p>
+<pre><code class="language-python">upper_p_value = normal_probability_above
+lower_p_value = normal_probability_below
+</code></pre>
+<p>Under the <code>two_sided_p_values</code> test, the extreme value of 529.5 had a probability of 6.2% of showing up, but not low enough to reject the null hypothesis.</p>
+<p>However, with a one-sided test, <code>upper_p_value</code> for the same threshold is now 3.1% and we would reject the null hypothesis.</p>
+<pre><code class="language-python"># 0.031038607897994175
+upper_p_value(529.5, mu_0, sigma_0)
+</code></pre>
+<h2 id="confidence_intervals">Confidence_Intervals</h2>
+<p>A <em>third</em> approach to deciding whether to accept or reject the null is to use confidence intervals. We&rsquo;ll use the 530 as we did in the p-Values example.</p>
+<pre><code class="language-python">p_hat = 530/1000
+mu = p_hat
+sigma = math.sqrt(p_hat * (1 - p_hat) / 1000) # 0.015782902141241326
+
+# (0.4990660982192851, 0.560933901780715)
+normal_two_sided_bounds(0.95, mu, sigma)
+</code></pre>
+<p>The confidence interval for a coin flipping heads 530 (out 1,000) times is (0.4991, 0.5609). Since this interval <strong>contains</strong> the p = 0.5 (probability of heads 50% of the time, assuming a fair coin), we do not reject the null.</p>
+<p>If the extreme value were <em>more</em> extreme at 540, we would arrive at a different conclusion:</p>
+<pre><code class="language-python">p_hat = 540/1000
+mu = p_hat
+sigma = math.sqrt(p_hat * (1 - p_hat) / 1000)
+
+(0.5091095927295919, 0.5708904072704082)
+normal_two_sided_bounds(0.95, mu, sigma)
+</code></pre>
+<p>Here we would be 95% confident that the mean of this distribution is contained between 0.5091 and 0.5709 and this <strong>does not</strong> contain 0.500 (albiet by a slim margin), so we reject the null hypothesis that this is a fair coin.</p>
+<p><strong>note</strong>: Confidence intervals are about the <em>interval</em> not probability p. We interpret the confidence interval as, if you were to repeat the experiment many times, 95% of the time, the &ldquo;true&rdquo; parameter, in our example p = 0.5, would lie within the observed confidence interval.</p>
+<h2 id="connecting_dots">Connecting_Dots</h2>
+<p>To recap, we used python to build intuition around statistical hypothesis testing.</p>
 <p>For more content on data science, machine learning, R, Python, SQL and more, 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 

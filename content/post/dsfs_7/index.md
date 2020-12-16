@@ -20,6 +20,9 @@ title: Data Science from Scratch (ch7) - Hypothesis and Inference
 
 - [Central Limit Theorem](#central_limit_theorem)
 - [Hypothesis Testing](#hypothesis_testing)
+- [p-Values](#p_values)
+- [Confidence Intervals](#confidence_intervals)
+- [Connecting dots with Python](#connecting_dots)
 
 ## Overview
 
@@ -367,6 +370,92 @@ normal_probability_below(531, mu_1, sigma_1)
 normal_probability_below(526, mu_1, sigma_1)
 ```
 And the new (stronger) **power to detect** type-2 error is 1.0 - 0.064 = 0.936 or 93.6% (up from 88.7% above).
+
+## p_values
+
+p-Values represent *another way* of deciding whether to accept or reject the Null Hypothesis. Instead of choosing bounds, thresholds or cut-off points, we could compute the probability, assuming the Null Hypothesis is true, that we would see a value *as extreme as* the one we just observed. 
+
+Here is the code:
+
+```python
+def two_sided_p_values(x: float, mu: float = 0, sigma: float = 1) -> float:
+    """
+    How likely are we to see a value at least as extreme as x (in either
+    direction) if our values are from an N(mu, sigma)?
+    """
+    if x >= mu:
+        # x is greater than the mean, so the tail is everything greater than x
+        return 2 * normal_probability_above(x, mu, sigma)
+    else:
+        # x is less than the mean, so the tail is everything less than x
+        return 2 * normal_probability_below(x, mu, sigma)
+```
+
+If we wanted to compute, assuming we have a "fair coin" (`mu` = 500, `sigma` = 15.8113), what is the probability of seeing a value like 530? (**note**: We use 529.5 instead of 530 below due to [continuity correction](https://en.wikipedia.org/wiki/Continuity_correction))
+
+Answer: approximately 6.2%
+
+```python
+# 0.06207721579598835
+two_sided_p_values(529.5, mu_0, sigma_0)
+```
+The p-value, 6.2% is higher than our (hypothetical) 5% significance, so we don't reject the null. On the other hand, if X was slightly more extreme, 532, the probability of seeing that value would be approximately 4.3%, which is less than 5% significance, so we would reject the null.
+
+```python
+# 0.04298479507085862
+two_sided_p_values(532, mu_0, sigma_0)
+```
+For one-sided tests, we would use the `normal_probability_above` and `normal_probability_below` functions created above:
+
+```python
+upper_p_value = normal_probability_above
+lower_p_value = normal_probability_below
+```
+
+Under the `two_sided_p_values` test, the extreme value of 529.5 had a probability of 6.2% of showing up, but not low enough to reject the null hypothesis. 
+
+However, with a one-sided test, `upper_p_value` for the same threshold is now 3.1% and we would reject the null hypothesis. 
+
+```python
+# 0.031038607897994175
+upper_p_value(529.5, mu_0, sigma_0)
+```
+## Confidence_Intervals
+
+A *third* approach to deciding whether to accept or reject the null is to use confidence intervals. We'll use the 530 as we did in the p-Values example. 
+
+```python
+p_hat = 530/1000
+mu = p_hat
+sigma = math.sqrt(p_hat * (1 - p_hat) / 1000) # 0.015782902141241326
+
+# (0.4990660982192851, 0.560933901780715)
+normal_two_sided_bounds(0.95, mu, sigma)
+```
+
+The confidence interval for a coin flipping heads 530 (out 1,000) times is (0.4991, 0.5609). Since this interval **contains** the p = 0.5 (probability of heads 50% of the time, assuming a fair coin), we do not reject the null.
+
+If the extreme value were *more* extreme at 540, we would arrive at a different conclusion:
+
+```python
+p_hat = 540/1000
+mu = p_hat
+sigma = math.sqrt(p_hat * (1 - p_hat) / 1000)
+
+(0.5091095927295919, 0.5708904072704082)
+normal_two_sided_bounds(0.95, mu, sigma)
+```
+
+Here we would be 95% confident that the mean of this distribution is contained between 0.5091 and 0.5709 and this **does not** contain 0.500 (albiet by a slim margin), so we reject the null hypothesis that this is a fair coin. 
+
+**note**: Confidence intervals are about the *interval* not probability p. We interpret the confidence interval as, if you were to repeat the experiment many times, 95% of the time, the "true" parameter, in our example p = 0.5, would lie within the observed confidence interval.  
+
+## Connecting_Dots
+
+To recap, we used python to build intuition around statistical hypothesis testing. 
+
+
+
 
 
 For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).
