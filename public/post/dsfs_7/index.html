@@ -771,7 +771,7 @@
 <a href="#connecting_dots">Connecting dots with Python</a></li>
 </ul>
 <h2 id="overview">Overview</h2>
-<p>We&rsquo;ll use a classic coin-flipping example in this post because it is simple to illustrate with both <strong>concept</strong> and <strong>code</strong>. My goal is to tie several concepts together including (traditional) Hypothesis and Inference, Estimation Theory, and Bayesian Inference. All using the same coin-flipping example.</p>
+<p>This is a continuation of my progress through Data Science from Scratch by Joel Grus. We&rsquo;ll use a classic coin-flipping example in this post because it is simple to illustrate with both <strong>concept</strong> and <strong>code</strong>. The goal of this post is to connect the dots between several concepts including the Central Limit Theorem, Hypothesis Testing, p-Values and confidence intervals, using python to build our intuition.</p>
 <h2 id="central_limit_theorem">Central_Limit_Theorem</h2>
 <p>Terms like &ldquo;null&rdquo; and &ldquo;alternative&rdquo; hypothesis are used quite frequently, so let&rsquo;s set some context. The &ldquo;null&rdquo; is the <strong>default</strong> position. The &ldquo;alternative&rdquo;, alt for short, is something we&rsquo;re <em>comparing to</em> the default (null).</p>
 <p>The classic coin-flipping exercise is to test the <em>fairness</em> off a coin. If a coin is fair, it&rsquo;ll land on heads 50% of the time (and tails 50% of the time). Let&rsquo;s translate into hypothesis testing language:</p>
@@ -1074,7 +1074,10 @@ normal_two_sided_bounds(0.95, mu, sigma)
 <p>Here we would be 95% confident that the mean of this distribution is contained between 0.5091 and 0.5709 and this <strong>does not</strong> contain 0.500 (albiet by a slim margin), so we reject the null hypothesis that this is a fair coin.</p>
 <p><strong>note</strong>: Confidence intervals are about the <em>interval</em> not probability p. We interpret the confidence interval as, if you were to repeat the experiment many times, 95% of the time, the &ldquo;true&rdquo; parameter, in our example p = 0.5, would lie within the observed confidence interval.</p>
 <h2 id="connecting_dots">Connecting_Dots</h2>
-<p>To recap, we used python to build intuition around statistical hypothesis testing.</p>
+<p>We used several python functions to build intuition around statistical hypothesis testing. To higlight this &ldquo;from scratch&rdquo; aspect of the book here is a diagram tying together the various python function used in this post:</p>
+<p><img src="./connecting_dots.png" alt="connecting_dots"></p>
+<p>In the next post, we&rsquo;ll cover Gradient Descent!</p>
+<p><img src="./book_disclaimer.png" alt="book_disclaimer"></p>
 <p>For more content on data science, machine learning, R, Python, SQL and more, 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 

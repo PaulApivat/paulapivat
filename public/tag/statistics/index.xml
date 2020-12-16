@@ -31,7 +31,7 @@
 &lt;a href=&#34;#connecting_dots&#34;&gt;Connecting dots with Python&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
-&lt;p&gt;We&amp;rsquo;ll use a classic coin-flipping example in this post because it is simple to illustrate with both &lt;strong&gt;concept&lt;/strong&gt; and &lt;strong&gt;code&lt;/strong&gt;. My goal is to tie several concepts together including (traditional) Hypothesis and Inference, Estimation Theory, and Bayesian Inference. All using the same coin-flipping example.&lt;/p&gt;
+&lt;p&gt;This is a continuation of my progress through Data Science from Scratch by Joel Grus. We&amp;rsquo;ll use a classic coin-flipping example in this post because it is simple to illustrate with both &lt;strong&gt;concept&lt;/strong&gt; and &lt;strong&gt;code&lt;/strong&gt;. The goal of this post is to connect the dots between several concepts including the Central Limit Theorem, Hypothesis Testing, p-Values and confidence intervals, using python to build our intuition.&lt;/p&gt;
 &lt;h2 id=&#34;central_limit_theorem&#34;&gt;Central_Limit_Theorem&lt;/h2&gt;
 &lt;p&gt;Terms like &amp;ldquo;null&amp;rdquo; and &amp;ldquo;alternative&amp;rdquo; hypothesis are used quite frequently, so let&amp;rsquo;s set some context. The &amp;ldquo;null&amp;rdquo; is the &lt;strong&gt;default&lt;/strong&gt; position. The &amp;ldquo;alternative&amp;rdquo;, alt for short, is something we&amp;rsquo;re &lt;em&gt;comparing to&lt;/em&gt; the default (null).&lt;/p&gt;
 &lt;p&gt;The classic coin-flipping exercise is to test the &lt;em&gt;fairness&lt;/em&gt; off a coin. If a coin is fair, it&amp;rsquo;ll land on heads 50% of the time (and tails 50% of the time). Let&amp;rsquo;s translate into hypothesis testing language:&lt;/p&gt;
@@ -334,7 +334,10 @@ normal_two_sided_bounds(0.95, mu, sigma)
 &lt;p&gt;Here we would be 95% confident that the mean of this distribution is contained between 0.5091 and 0.5709 and this &lt;strong&gt;does not&lt;/strong&gt; contain 0.500 (albiet by a slim margin), so we reject the null hypothesis that this is a fair coin.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;note&lt;/strong&gt;: Confidence intervals are about the &lt;em&gt;interval&lt;/em&gt; not probability p. We interpret the confidence interval as, if you were to repeat the experiment many times, 95% of the time, the &amp;ldquo;true&amp;rdquo; parameter, in our example p = 0.5, would lie within the observed confidence interval.&lt;/p&gt;
 &lt;h2 id=&#34;connecting_dots&#34;&gt;Connecting_Dots&lt;/h2&gt;
-&lt;p&gt;To recap, we used python to build intuition around statistical hypothesis testing.&lt;/p&gt;
+&lt;p&gt;We used several python functions to build intuition around statistical hypothesis testing. To higlight this &amp;ldquo;from scratch&amp;rdquo; aspect of the book here is a diagram tying together the various python function used in this post:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./connecting_dots.png&#34; alt=&#34;connecting_dots&#34;&gt;&lt;/p&gt;
+&lt;p&gt;In the next post, we&amp;rsquo;ll cover Gradient Descent!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./book_disclaimer.png&#34; alt=&#34;book_disclaimer&#34;&gt;&lt;/p&gt;
 &lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>

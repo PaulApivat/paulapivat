@@ -26,7 +26,7 @@ title: Data Science from Scratch (ch7) - Hypothesis and Inference
 
 ## Overview
 
-We'll use a classic coin-flipping example in this post because it is simple to illustrate with both **concept** and **code**. My goal is to tie several concepts together including (traditional) Hypothesis and Inference, Estimation Theory, and Bayesian Inference. All using the same coin-flipping example. 
+This is a continuation of my progress through Data Science from Scratch by Joel Grus. We'll use a classic coin-flipping example in this post because it is simple to illustrate with both **concept** and **code**. The goal of this post is to connect the dots between several concepts including the Central Limit Theorem, Hypothesis Testing, p-Values and confidence intervals, using python to build our intuition. 
 
 ## Central_Limit_Theorem
 
@@ -452,9 +452,13 @@ Here we would be 95% confident that the mean of this distribution is contained b
 
 ## Connecting_Dots
 
-To recap, we used python to build intuition around statistical hypothesis testing. 
+We used several python functions to build intuition around statistical hypothesis testing. To higlight this "from scratch" aspect of the book here is a diagram tying together the various python function used in this post:
 
+![connecting_dots](./connecting_dots.png)
 
+In the next post, we'll cover Gradient Descent!
+
+![book_disclaimer](./book_disclaimer.png)
 
 
 
