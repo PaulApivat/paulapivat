@@ -456,7 +456,7 @@ We used several python functions to build intuition around statistical hypothesi
 
 ![connecting_dots](./connecting_dots.png)
 
-In the next post, we'll cover Gradient Descent!
+This post is part of an ongoing series where I document my progress through [Data Science from Scratch by Joel Grus](https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/). 
 
 ![book_disclaimer](./book_disclaimer.png)
 

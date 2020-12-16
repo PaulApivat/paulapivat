@@ -1478,7 +1478,8 @@ normal_two_sided_bounds(0.95, mu, sigma)
 &lt;h2 id=&#34;connecting_dots&#34;&gt;Connecting_Dots&lt;/h2&gt;
 &lt;p&gt;We used several python functions to build intuition around statistical hypothesis testing. To higlight this &amp;ldquo;from scratch&amp;rdquo; aspect of the book here is a diagram tying together the various python function used in this post:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./connecting_dots.png&#34; alt=&#34;connecting_dots&#34;&gt;&lt;/p&gt;
-&lt;p&gt;In the next post, we&amp;rsquo;ll cover Gradient Descent!&lt;/p&gt;
+&lt;p&gt;This post is part of an ongoing series where I document my progress through 
+&lt;a href=&#34;https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Science from Scratch by Joel Grus&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./book_disclaimer.png&#34; alt=&#34;book_disclaimer&#34;&gt;&lt;/p&gt;
 &lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
