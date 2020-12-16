@@ -61,9 +61,9 @@ Given that our **null** is (p = 0.5) and **alt** is (p != 0.5), we can run some 
 
 ![independent_coin_flips](./independent_coin_flips.png)
 
-Each `bernoulli_trial` is an experiment with either 0 or 1 as outcomes. The `binomial` function sums up **n** bernoulli(0.5) trails. We ran both twice and got different results. Each bernoulli experiment can be a success(1) or fial(0); summing up into a binomial random variable means we're taking the probability p(0.5) *that a coin flips head* and we ran the experiment 1000 times to get a random binomial variable. 
+Each `bernoulli_trial` is an experiment with either 0 or 1 as outcomes. The `binomial` function sums up **n** bernoulli(0.5) trails. We ran both twice and got different results. Each bernoulli experiment can be a success(1) or faill(0); summing up into a binomial random variable means we're taking the probability p(0.5) *that a coin flips head* and we ran the experiment 1,000 times to get a random binomial variable. 
 
-The first 1000 flips we got 510. The second 1000 flips we got 495. We can repeat this process many times to get a *distribution*. We can plot this distribution to reinforce our understanding. To this we'll use `binomial_histogram` function. This function picks points from a Binomial(n,p) random variable and plots their histogram.
+The first 1,000 flips we got 510. The second 1,000 flips we got 495. We can repeat this process many times to get a *distribution*. We can plot this distribution to reinforce our understanding. To this we'll use `binomial_histogram` function. This function picks points from a Binomial(n,p) random variable and plots their histogram.
 
 ```python
 from collections import Counter
@@ -126,7 +126,7 @@ def normal_approximation_to_binomial(n: int, p: float) -> Tuple[float, float]:
 # (500.0, 15.811388300841896)
 normal_approximation_to_binomial(1000, 0.5)
 ```
-When calling the function with our parameters, we get a mean `mu` of 500 (from 1000 coin flips) and a standard deviation `sigma` of 15.8114. Which means that 68% of the time, the binomial random variable will be 500 +/- 15.8114 and 95% of the time it'll be 500 +/- 31.6228 (see [68-95-99.7 rule](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule)) 
+When calling the function with our parameters, we get a mean `mu` of 500 (from 1,000 coin flips) and a standard deviation `sigma` of 15.8114. Which means that 68% of the time, the binomial random variable will be 500 +/- 15.8114 and 95% of the time it'll be 500 +/- 31.6228 (see [68-95-99.7 rule](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule)) 
 
 ## Hypothesis_Testing
 
@@ -141,6 +141,8 @@ This means we'll be interested in questions like:
 
 First, the `normal_cdf` (normal cummulative distribution function), which we learned in a [previous post](https://paulapivat.com/post/dsfs_6/#distributions), *is* the probability of a variable being *below* a certain threshold. 
 
+Here, the probability of X (success or heads for a 'fair coin') is at 0.5 (`mu` = 500, `sigma` = 15.8113), and we want to find the probability that X falls below 490, which comes out to roughly 26%
+
 ```python
 normal_probability_below = normal_cdf
 
@@ -150,7 +152,8 @@ normal_probability_below = normal_cdf
 normal_probability_below(490, 500, 15.8113)
 ```
 
-On the other hand, the `normal_probability_above` would be 1 - 0.2635 = 0.7365:
+On the other hand, the `normal_probability_above`, probability that X falls *above* 490 would be
+1 - 0.2635 = 0.7365 or roughly 74%.
 
 ```python
 def normal_probability_above(lo: float,
@@ -273,7 +276,7 @@ Now that we have a handle on the binomial normal distribution, thresholds (left 
 
 Significance is a decision about how willing we are to make a *type 1* error (false positive), which we explored in a [previous post](https://paulapivat.com/post/dsfs_6/#applying_bayes_theorem). The convention is to set it to a 5% or 1% willingness to make a type 1 error. Suppose we say 5%. 
 
-We would say that out of 1000 flips, 95% of the time, we'd get between 469 and 531 heads on a "fair coin" and 5% of the time, outside of this 469-531 range. 
+We would say that out of 1,000 coin flips, 95% of the time, we'd get between 469 and 531 heads on a "fair coin" and 5% of the time, outside of this 469-531 range. 
 
 ```python
 # (469.0104394712448, 530.9895605287552)
@@ -284,9 +287,9 @@ If we recall our hypotheses:
 
 **Null Hypothesis**: Probability of landing on Heads = 0.5 (fair coin)
 
-**Alt Hypothesis**: Probability of landing on Heads != 0.5 (unfair coin)
+**Alt Hypothesis**: Probability of landing on Heads != 0.5 (biased coin)
 
-Each binomial distribution (test) that consist of a 1000 bernoulli trials, each *test* where the number of heads falls outside the range of 469-531, we'll **reject the null** that the coin is fair. And we'll be wrong (false positive), 5% of the time. It's a false positive when we **incorrectly reject** the null hypothesis, when it's actually true. 
+Each binomial distribution (test) that consist of 1,000 bernoulli trials, each *test* where the number of heads falls outside the range of 469-531, we'll **reject the null** that the coin is fair. And we'll be wrong (false positive), 5% of the time. It's a false positive when we **incorrectly reject** the null hypothesis, when it's actually true. 
 
 We also want to avoid making a type-2 error (false negative), where we **fail to reject** the null hypothesis, when it's actually false. 
 
@@ -302,7 +305,7 @@ lo # 469.01026640487555
 hi # 530.9897335951244
 ```
 
-And if the coin was *actually unfair*, we should reject the null, but we fail to. Let's suppose the actual probability that the coin lands on heads is 55% (slightly biased towards head):
+And if the coin was *actually biased*, we should reject the null, but we fail to. Let's suppose the actual probability that the coin lands on heads is 55% ( **biased** towards head):
 
 ```python
 mu_1, sigma_1 = normal_approximation_to_binomial(1000, 0.55)
@@ -310,12 +313,12 @@ mu_1    # 550.0
 sigma_1 # 15.732132722552274
 ```
 
-Using the same range 469 - 531, where the coin is assumed 'fair' with `mu` at 500 and `sigma` at 15.8113.
+Using the same range 469 - 531, where the coin is assumed 'fair' with `mu` at 500 and `sigma` at 15.8113:
 
 ![95sig_binomial](./95sig_binomial.png)
 
 
-If the coin, in fact, had a biased towards head (p = 0.55), the distribution would shift right, but if our 95% significance test remains the same: 
+If the coin, in fact, had a bias towards head (p = 0.55), the distribution would shift right, but if our 95% significance test remains the same, we get:
 
 ![type2_error](./type2_error.png)
 
@@ -325,7 +328,8 @@ The probability of making a type-2 error is 11.345%. This is the probability tha
 # 0.11345199870463285
 type_2_probability = normal_probability_between(lo, hi, mu_1, sigma_1)
 ```
-The other way to see this is to find the threshold for 531, in the *new* `mu` and `sigma` (new distribution):
+
+The other way to arrive at this is to find the probability, under the *new* `mu` and `sigma` (new distribution), that X (number of successes) will fall *below* 531. 
 
 ```python
 # 0.11357762975476304
@@ -333,12 +337,36 @@ normal_probability_below(531, mu_1, sigma_1)
 ```
 So the probability of making a type-2 error or the probability that the *new* distribution falls below 531 is approximately 11.3%.
 
-The **power** to detect this type-2 error is 1 - 0.113 or
+The **power to detect** a type-2 error is 1.00 minus the probability of a type-2 error (1 - 0.113 = 0.887), or 88.7%.
 
 ```python
 power = 1 - type_2_probability # 0.8865480012953671
 ```
 
+Finally, we may be interested in **increasing power** to detect a type-2 error. Instead of using a `normal_two_sided_bounds` function to find the cut-off points (i.e., 469 and 531), we could use a *one-sided test* that rejects the null hypothesis ('fair coin') when X (number of heads on a coin-flip) is much larger than 500. 
+
+Here's the code, using `normal_upper_bound`:
+
+```python
+# 526.0073585242053
+hi = normal_upper_bound(0.95, mu_0, sigma_0)
+```
+
+This means shifting the upper bounds from 531 to 526, providing more probability in the upper tail. This means the probability of a type-2 error goes down from 11.3 to 6.3. 
+
+![increase_power](./increase_power.png)
+
+```python
+# previous probability of type-2 error
+# 0.11357762975476304
+normal_probability_below(531, mu_1, sigma_1)
+
+
+# new probability of type-2 error
+# 0.06356221447122662
+normal_probability_below(526, mu_1, sigma_1)
+```
+And the new (stronger) **power to detect** type-2 error is 1.0 - 0.064 = 0.936 or 93.6% (up from 88.7% above).
 
 
 For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).
