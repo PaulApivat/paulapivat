@@ -12,7 +12,9 @@ type: docs
 weight: 1
 ---
 
-## Quick Guide for contributing to another code base by making a pull request
+## Guide for contributing to another code base by making a pull request
+
+## Public Repo
 
 1. Identify a project you want to contribute to on GitHub
 2. Fork that project
@@ -38,3 +40,29 @@ weight: 1
 - add a description to changes made in the pull request 
 
 8. Click **Create pull request** to open a new pull request
+
+## Private Repo
+
+1-3. You cannot fork a private repo
+
+4. Clone directly to local machine
+
+5. `git branch -a` to see all branches in the project
+
+6. `git branch` to confirm you're on master branch
+
+6. [important] `git status` to check if ahead or behind (if behind, use `git pull` to fetch and download content from a remote repository)
+
+7. [from git master] create a **new** branch use `git checkout -b name_of_new_branch`
+
+8. Use `git branch` to make sure you're on new branch
+
+9. Make changes, then normal: git add, git commit -m "message", git push 
+
+**note** : You'll get a message `git push remote --` use this instead of the traditional `git push`
+
+10. (Go back to the forked repo in GitHub) Click the **Compare & Pull Request** button.
+
+- Add good PR description, [see here](https://www.pullrequest.com/blog/writing-a-great-pull-request-description/)
+
+11. Click **Create pull request** to open a new pull request

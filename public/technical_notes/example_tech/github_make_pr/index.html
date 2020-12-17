@@ -27,7 +27,7 @@
   
     
   
-  <meta name="description" content="Quick Guide for contributing to another code base by making a pull request  Identify a project you want to contribute to on GitHub Fork that project Clone it to your local machine*  note : Do not clone in another directory that was already cloned from another repo.">
+  <meta name="description" content="Guide for contributing to another code base by making a pull request Public Repo  Identify a project you want to contribute to on GitHub Fork that project Clone it to your local machine*  note : Do not clone in another directory that was already cloned from another repo.">
 
   
   <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/github_make_pr/">
@@ -238,7 +238,7 @@
   <meta property="og:site_name" content="Paul Apivat">
   <meta property="og:url" content="/technical_notes/example_tech/github_make_pr/">
   <meta property="og:title" content="Making a Pull Request on a GitHub Repo | Paul Apivat">
-  <meta property="og:description" content="Quick Guide for contributing to another code base by making a pull request  Identify a project you want to contribute to on GitHub Fork that project Clone it to your local machine*  note : Do not clone in another directory that was already cloned from another repo."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:description" content="Guide for contributing to another code base by making a pull request Public Repo  Identify a project you want to contribute to on GitHub Fork that project Clone it to your local machine*  note : Do not clone in another directory that was already cloned from another repo."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
@@ -808,7 +808,9 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#quick-guide-for-contributing-to-another-code-base-by-making-a-pull-request">Quick Guide for contributing to another code base by making a pull request</a></li>
+    <li><a href="#guide-for-contributing-to-another-code-base-by-making-a-pull-request">Guide for contributing to another code base by making a pull request</a></li>
+    <li><a href="#public-repo">Public Repo</a></li>
+    <li><a href="#private-repo">Private Repo</a></li>
   </ul>
 </nav>
 
@@ -824,7 +826,8 @@
           <h1>Making a Pull Request on a GitHub Repo</h1>
 
           <div class="article-style">
-            <h2 id="quick-guide-for-contributing-to-another-code-base-by-making-a-pull-request">Quick Guide for contributing to another code base by making a pull request</h2>
+            <h2 id="guide-for-contributing-to-another-code-base-by-making-a-pull-request">Guide for contributing to another code base by making a pull request</h2>
+<h2 id="public-repo">Public Repo</h2>
 <ol>
 <li>Identify a project you want to contribute to on GitHub</li>
 <li>Fork that project</li>
@@ -857,6 +860,42 @@
 <li>add a description to changes made in the pull request</li>
 </ul>
 <ol start="8">
+<li>Click <strong>Create pull request</strong> to open a new pull request</li>
+</ol>
+<h2 id="private-repo">Private Repo</h2>
+<p>1-3. You cannot fork a private repo</p>
+<ol start="4">
+<li>
+<p>Clone directly to local machine</p>
+</li>
+<li>
+<p><code>git branch -a</code> to see all branches in the project</p>
+</li>
+<li>
+<p><code>git branch</code> to confirm you&rsquo;re on master branch</p>
+</li>
+<li>
+<p>[important] <code>git status</code> to check if ahead or behind (if behind, use <code>git pull</code> to fetch and download content from a remote repository)</p>
+</li>
+<li>
+<p>[from git master] create a <strong>new</strong> branch use <code>git checkout -b name_of_new_branch</code></p>
+</li>
+<li>
+<p>Use <code>git branch</code> to make sure you&rsquo;re on new branch</p>
+</li>
+<li>
+<p>Make changes, then normal: git add, git commit -m &ldquo;message&rdquo;, git push</p>
+</li>
+</ol>
+<p><strong>note</strong> : You&rsquo;ll get a message <code>git push remote --</code> use this instead of the traditional <code>git push</code></p>
+<ol start="10">
+<li>(Go back to the forked repo in GitHub) Click the <strong>Compare &amp; Pull Request</strong> button.</li>
+</ol>
+<ul>
+<li>Add good PR description, 
+<a href="https://www.pullrequest.com/blog/writing-a-great-pull-request-description/" target="_blank" rel="noopener">see here</a></li>
+</ul>
+<ol start="11">
 <li>Click <strong>Create pull request</strong> to open a new pull request</li>
 </ol>
 
