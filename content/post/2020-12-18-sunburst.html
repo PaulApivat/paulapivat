@@ -1,0 +1,149 @@
+---
+title: "BBC Women of 2020"
+subtitle: "Visualizing women's achievement across continents with sunburstR"
+author: "Paul Apivat Hanvongse"
+date: "12/17/2020"
+output: 
+    html_document:
+        toc: true
+        toc_float: true
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="/rmarkdown-libs/sequences/sequences.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/sunburst-binding/sunburst.js"></script>
+
+
+<div id="load-libraries" class="section level2">
+<h2>Load Libraries</h2>
+<p>The two main libraries are <code>tidyverse</code> (mostly <code>dplyr</code> so you can just load that if you want) and <code>sunburstR</code>. There are other packages for sunburst plots including: <a href="https://plotly.com/r/sunburst-charts/">plotly</a> and <a href="https://github.com/didacs/ggsunburst">ggsunburst (of ggplot)</a>, but we’ll explore <a href="https://www.rdocumentation.org/packages/sunburstR/versions/2.1.5/topics/sunburst">sunburstR</a> in this post.</p>
+<pre class="r"><code>library(tidyverse)
+library(sunburstR)</code></pre>
+</div>
+<div id="load-data-explore" class="section level2">
+<h2>Load Data &amp; Explore</h2>
+<p>The data is from <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-12-08/readme.md">week 50 of TidyTuesday</a>, exploring the BBC’s top 100 influential women of 2020.</p>
+<pre class="r"><code>women &lt;- read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-12-08/women.csv&#39;)
+
+head(women)</code></pre>
+</div>
+<div id="add-continents" class="section level2">
+<h2>Add Continents</h2>
+<p>The original dataset organized 100 women by category, country, role and description. I found that for employing the sunburst plot, I would want to group countries together by continents.</p>
+<p>I manually added country names to continent vectors, then added a new column to the <code>women</code> dataframe to conditionally add continent name.</p>
+<p>We could then focus on six continents rather than 65 separate countries.</p>
+<pre class="r"><code># add continent as character vector
+asia &lt;-  c(&#39;Afghanistan&#39;, &#39;Bangladesh&#39;, &#39;China&#39;, &#39;Exiled Uighur from Ghulja (in Chinese, Yining)&#39;, &#39;Hong Kong&#39;, &#39;India&#39;, &#39;Indonesia&#39;, &#39;Iran&#39;, &#39;Iraq/UK&#39;, &#39;Japan&#39;, &#39;Kyrgyzstan&#39;, &#39;Lebanon&#39;, &#39;Malaysia&#39;, &#39;Myanmar&#39;, &#39;Nepal&#39;, &#39;Pakistan&#39;, &#39;Singapore&#39;, &#39;South Korea&#39;, &#39;Syria&#39;, &#39;Thailand&#39;, &#39;UAE&#39;, &#39;Vietnam&#39;, &#39;Yemen&#39;)
+
+south_america &lt;- c(&#39;Argentina&#39;, &#39;Brazil&#39;, &#39;Colombia&#39;, &#39;Ecuador&#39;, &#39;Peru&#39;, &#39;Venezuela&#39;)
+oceania &lt;- c(&#39;Australia&#39;)
+europe &lt;- c(&#39;Belarus&#39;, &#39;Finland&#39;, &#39;France&#39;, &#39;Germany&#39;, &#39;Italy&#39;, &#39;Netherlands&#39;, &#39;Northern Ireland&#39;, &#39;Norway&#39;, &#39;Republic of Ireland&#39;, &#39;Russia&#39;, &#39;Turkey&#39;, &#39;UK&#39;, &#39;Ukraine&#39;, &#39;Wales, UK&#39;)
+africa &lt;- c(&#39;Benin&#39;, &#39;DR Congo&#39;, &#39;Egypt&#39;, &#39;Ethiopia&#39;, &#39;Kenya&#39;, &#39;Morocco&#39;, &#39;Mozambique&#39;, &#39;Nigeria&#39;, &#39;Sierra Leone&#39;, &#39;Somalia&#39;, &#39;Somaliland&#39;, &#39;South Africa&#39;, &#39;Tanzania&#39;, &#39;Uganda&#39;, &#39;Zambia&#39;, &#39;Zimbabwe&#39;)
+north_america &lt;- c(&#39;El Salvador&#39;, &#39;Jamaica&#39;, &#39;Mexico&#39;, &#39;US&#39;)
+
+# add new column for continent
+women &lt;- women %&gt;%
+    mutate(continent = NA) 
+
+# add continents to women dataframe
+women$continent &lt;- ifelse(women$country %in% asia, &#39;Asia&#39;, women$continent)
+women$continent &lt;- ifelse(women$country %in% south_america, &#39;South America&#39;, women$continent)
+women$continent &lt;- ifelse(women$country %in% oceania, &#39;Oceania&#39;, women$continent)
+women$continent &lt;- ifelse(women$country %in% europe, &#39;Europe&#39;, women$continent)
+women$continent &lt;- ifelse(women$country %in% africa, &#39;Africa&#39;, women$continent)
+women$continent &lt;- ifelse(women$country %in% north_america, &#39;North America&#39;, women$continent)
+
+women</code></pre>
+</div>
+<div id="data-wrangling" class="section level2">
+<h2>Data Wrangling</h2>
+<p>The key to using the <code>sunburstR</code> package with this specific dataset is the wrangling that happens to filter by continents we created above. We’ll also want to get rid of dashes with <code>mutate_at</code> as dashes are structurally needed to render the sunburst plots.</p>
+<p>Below, I’ve filtered the <code>women</code> data frame into Africa and Asia (the same could be done for North and South America and Europe as well).</p>
+<p>The <strong>two most important</strong> operations here are the creation of the <code>path</code> and <code>V2</code> columns that will later be parameters for rendering the sunburst plots.</p>
+<pre class="r"><code># Filter for Africa
+africa_name &lt;- women %&gt;%
+    select(continent, category, role, name) %&gt;%
+    # remove dash within dplyr pipe
+    mutate_at(vars(3, 4), funs(gsub(&quot;-&quot;, &quot;&quot;, .))) %&gt;% 
+    filter(continent==&#39;Africa&#39;) %&gt;%
+    mutate(
+        path = paste(continent, category, role, name, sep = &quot;-&quot;)
+    ) %&gt;%
+    slice(2:100) %&gt;%
+    mutate(
+        V2 = 1
+    )</code></pre>
+<pre><code>## Warning: `funs()` is deprecated as of dplyr 0.8.0.
+## Please use a list of either functions or lambdas: 
+## 
+##   # Simple named list: 
+##   list(mean = mean, median = median)
+## 
+##   # Auto named with `tibble::lst()`: 
+##   tibble::lst(mean, median)
+## 
+##   # Using lambdas
+##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<pre class="r"><code># Filter for Asia
+asia_name &lt;- women %&gt;%
+    select(continent, category, role, name) %&gt;%
+    # remove dash within dplyr pipe
+    mutate_at(vars(3, 4), funs(gsub(&quot;-&quot;, &quot;&quot;, .))) %&gt;%
+    filter(continent==&#39;Asia&#39;) %&gt;%
+    mutate(
+        path = paste(continent, category, role, name, sep = &quot;-&quot;)
+    ) %&gt;%
+    slice(2:100) %&gt;%
+    mutate(
+        V2 = 1
+    )</code></pre>
+</div>
+<div id="sunburst-africa" class="section level2">
+<h2>Sunburst: Africa</h2>
+<p>Ultimately, I found the information best presented by continent as the <em>base</em> of the sunburst plot, followed by category, specific roles and the names of each of the 100 women honored by the BBC.</p>
+<p>Moreover, by presenting the data by continent, you can focus on just five specific color as you decide on a palette.</p>
+<p>I wouldn’t recommend trying to pick a color for each role or name; it becomes too unweildy. Just pick five colors for the two inner most rings of the sunburst plot and it’ll shuffle the rest of the colors.</p>
+<pre class="r"><code># Africa
+sunburst(data = data.frame(xtabs(V2~path, africa_name)), legend = FALSE,
+         colors = c(&quot;D99527&quot;, &quot;6F7239&quot;, &quot;CE4B3C&quot;, &quot;C8AC70&quot;, &quot;018A9D&quot;))</code></pre>
+<div class="sunburst html-widget" id="htmlwidget-1" style="width:672px;height:480px; position:relative;">
+<div>
+<div class="sunburst-main">
+<div class="sunburst-sequence"></div>
+<div class="sunburst-chart">
+<div class="sunburst-explanation" style="visibility:hidden;"></div>
+</div>
+</div>
+<div class="sunburst-sidebar">
+<input type="checkbox" class="sunburst-togglelegend" style="visibility:hidden;">Legend</input>
+<div class="sunburst-legend" style="visibility:hidden;"></div>
+</div>
+</div>
+</div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"data":{"children":[{"name":"Africa","children":[{"name":"Creativity","children":[{"name":"Artist and curator","children":[{"name":"Mulenga Kapwepwe","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Musician","children":[{"name":"Angelique Kidjo","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Rapper","children":[{"name":"Houda Abouz","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Singer/songwriter","children":[{"name":"Bulelwa Mkutukana","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Writer and filmmaker","children":[{"name":"Tsitsi Dangarembga","size":1,"colname":"X4"}],"colname":"X3"}],"colname":"X2"},{"name":"Identity","children":[{"name":"Filmmaker","children":[{"name":"Uyaiedu  IkpeEtim","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Socialjustice activist","children":[{"name":"Josina Machel","size":1,"colname":"X4"}],"colname":"X3"}],"colname":"X2"},{"name":"Knowledge","children":[{"name":"Activist","children":[{"name":"Ishtar Lakhani","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Doctor","children":[{"name":"Jemimah Kariuki","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Journalist","children":[{"name":"Douce Namwezi N'Ibamba","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Lawyer","children":[{"name":"Rebeca Gyumi","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Mental health expert","children":[{"name":"Ethelreda NakimuliMpungu","size":1,"colname":"X4"}],"colname":"X3"}],"colname":"X2"},{"name":"Leadership","children":[{"name":"Activist","children":[{"name":"Aisha Yesufu","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Campaigner","children":[{"name":"Nadeen Ashraf","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Climate activist","children":[{"name":"Vanessa Nakate","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Coptic nun","children":[{"name":"Maggie Gobran","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Environmental activist","children":[{"name":"Phyllis Omido","size":1,"colname":"X4"}],"colname":"X3"},{"name":"FGM educator","children":[{"name":"Ubah Ali","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Mayor","children":[{"name":"Yvonne AkiSawyerr","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Peace activist","children":[{"name":"Ilwad Elman","size":1,"colname":"X4"}],"colname":"X3"}],"colname":"X2"}],"colname":"X1"}],"name":"root"},"options":{"legendOrder":null,"colors":["D99527","6F7239","CE4B3C","C8AC70","018A9D"],"valueField":"size","percent":true,"count":false,"explanation":null,"breadcrumb":[],"legend":false,"sortFunction":null,"sumNodes":true}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="sunburst-asia" class="section level2">
+<h2>Sunburst: Asia</h2>
+<pre class="r"><code># Asia
+sunburst(data = data.frame(xtabs(V2~path, asia_name)), legend = FALSE,
+         colors = c(&quot;#e6e0ae&quot;, &quot;#dfbc5e&quot;, &quot;#ee6146&quot;, &quot;#d73c37&quot;, &quot;#b51f09&quot;))</code></pre>
+<div class="sunburst html-widget" id="htmlwidget-2" style="width:672px;height:480px; position:relative;">
+<div>
+<div class="sunburst-main">
+<div class="sunburst-sequence"></div>
+<div class="sunburst-chart">
+<div class="sunburst-explanation" style="visibility:hidden;"></div>
+</div>
+</div>
+<div class="sunburst-sidebar">
+<input type="checkbox" class="sunburst-togglelegend" style="visibility:hidden;">Legend</input>
+<div class="sunburst-legend" style="visibility:hidden;"></div>
+</div>
+</div>
+</div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"data":{"children":[{"name":"Asia","children":[{"name":"Creativity","children":[{"name":"Actor","children":[{"name":"Mahira Khan","size":1,"colname":"X4"},{"name":"Michelle Yeoh","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Architect","children":[{"name":"Chu Kim Duc","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Feminist activist","children":[{"name":"Nandar","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Filmmaker","children":[{"name":"Waad  alKateab","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Landscape architect","children":[{"name":"Kotchakorn Voraakhom","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Musician","children":[{"name":"Isaivani","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Sake master brewer","children":[{"name":"Miho Imada","size":1,"colname":"X4"}],"colname":"X3"}],"colname":"X2"},{"name":"Identity","children":[{"name":"Activist","children":[{"name":"Hayat Mirshad","size":1,"colname":"X4"},{"name":"Laleh Osmany","size":1,"colname":"X4"}],"colname":"X3"},{"name":"UN Women ambassador/model","children":[{"name":"Cindy Bishop","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Writer","children":[{"name":"Muyesser Abdul’ehed Hendan","size":1,"colname":"X4"}],"colname":"X3"}],"colname":"X2"},{"name":"Knowledge","children":[{"name":"Activist","children":[{"name":"Febfi Setyawati","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Computational geneticist","children":[{"name":"Pardis Sabeti","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Crematorium technician","children":[{"name":"Sapana Roka Magar","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Doctor","children":[{"name":"Leo YeeSin","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Global health leader","children":[{"name":"Sania Nishtar","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Microgrid manager","children":[{"name":"Iman Ghaleb AlHamli","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Minister for Advanced Technologies","children":[{"name":"Sarah AlAmiri","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Plant virologist","children":[{"name":"Safaa Kumari","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Public health expert","children":[{"name":"Nisreen Alwan","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Robotics team leader","children":[{"name":"Somaya Faruqi","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Teacher","children":[{"name":"Rima Sultana Rimu","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Writer","children":[{"name":"Fang Fang","size":1,"colname":"X4"}],"colname":"X3"}],"colname":"X2"},{"name":"Leadership","children":[{"name":"Athlete","children":[{"name":"Manasi Joshi","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Climate activist","children":[{"name":"Ridhima Pandey","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Disability activist","children":[{"name":"Gulnaz Zhuzbaeva","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Environmental campaigner","children":[{"name":"Salsabila Khairunnisa","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Human rights activist","children":[{"name":"Nasrin Sotoudeh","size":1,"colname":"X4"}],"colname":"X3"},{"name":"KDCA Commissioner","children":[{"name":"Jeong Eunkyeong","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Prodemocracy activist","children":[{"name":"Agnes Chow","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Protest leader","children":[{"name":"Bilkis","size":1,"colname":"X4"}],"colname":"X3"},{"name":"Student activist","children":[{"name":"Panusaya Sithijirawattanakul","size":1,"colname":"X4"}],"colname":"X3"}],"colname":"X2"}],"colname":"X1"}],"name":"root"},"options":{"legendOrder":null,"colors":["#e6e0ae","#dfbc5e","#ee6146","#d73c37","#b51f09"],"valueField":"size","percent":true,"count":false,"explanation":null,"breadcrumb":[],"legend":false,"sortFunction":null,"sumNodes":true}},"evals":[],"jsHooks":[]}</script>
+<p>And that’s it for visualizing the BBC’s top 100 influential women in 2020 with the <code>sunburstR</code> package.</p>
+<p>For more content on data science, visualization, in R and Python, <a href="https://twitter.com/paulapivat">find me on Twitter</a>.</p>
+</div>
