@@ -5,12 +5,159 @@
     <link>/tag/r-markdown/</link>
       <atom:link href="/tag/r-markdown/index.xml" rel="self" type="application/rss+xml" />
     <description>R Markdown</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Mon, 16 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Thu, 17 Dec 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>R Markdown</title>
       <link>/tag/r-markdown/</link>
     </image>
+    
+    <item>
+      <title>BBC Women of 2020</title>
+      <link>/post/sunburst/</link>
+      <pubDate>Thu, 17 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/post/sunburst/</guid>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;/rmarkdown-libs/sequences/sequences.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;/rmarkdown-libs/sunburst-binding/sunburst.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;load-libraries&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Load Libraries&lt;/h2&gt;
+&lt;p&gt;The two main libraries are &lt;code&gt;tidyverse&lt;/code&gt; (mostly &lt;code&gt;dplyr&lt;/code&gt; so you can just load that if you want) and &lt;code&gt;sunburstR&lt;/code&gt;. There are other packages for sunburst plots including: &lt;a href=&#34;https://plotly.com/r/sunburst-charts/&#34;&gt;plotly&lt;/a&gt; and &lt;a href=&#34;https://github.com/didacs/ggsunburst&#34;&gt;ggsunburst (of ggplot)&lt;/a&gt;, but we’ll explore &lt;a href=&#34;https://www.rdocumentation.org/packages/sunburstR/versions/2.1.5/topics/sunburst&#34;&gt;sunburstR&lt;/a&gt; in this post.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(sunburstR)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;load-data-explore&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Load Data &amp;amp; Explore&lt;/h2&gt;
+&lt;p&gt;The data is from &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-12-08/readme.md&#34;&gt;week 50 of TidyTuesday&lt;/a&gt;, exploring the BBC’s top 100 influential women of 2020.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;women &amp;lt;- read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-12-08/women.csv&amp;#39;)
+
+head(women)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;add-continents&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Add Continents&lt;/h2&gt;
+&lt;p&gt;The original dataset organized 100 women by category, country, role and description. I found that for employing the sunburst plot, I would want to group countries together by continents.&lt;/p&gt;
+&lt;p&gt;I manually added country names to continent vectors, then added a new column to the &lt;code&gt;women&lt;/code&gt; dataframe to conditionally add continent name.&lt;/p&gt;
+&lt;p&gt;We could then focus on six continents rather than 65 separate countries.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# add continent as character vector
+asia &amp;lt;-  c(&amp;#39;Afghanistan&amp;#39;, &amp;#39;Bangladesh&amp;#39;, &amp;#39;China&amp;#39;, &amp;#39;Exiled Uighur from Ghulja (in Chinese, Yining)&amp;#39;, &amp;#39;Hong Kong&amp;#39;, &amp;#39;India&amp;#39;, &amp;#39;Indonesia&amp;#39;, &amp;#39;Iran&amp;#39;, &amp;#39;Iraq/UK&amp;#39;, &amp;#39;Japan&amp;#39;, &amp;#39;Kyrgyzstan&amp;#39;, &amp;#39;Lebanon&amp;#39;, &amp;#39;Malaysia&amp;#39;, &amp;#39;Myanmar&amp;#39;, &amp;#39;Nepal&amp;#39;, &amp;#39;Pakistan&amp;#39;, &amp;#39;Singapore&amp;#39;, &amp;#39;South Korea&amp;#39;, &amp;#39;Syria&amp;#39;, &amp;#39;Thailand&amp;#39;, &amp;#39;UAE&amp;#39;, &amp;#39;Vietnam&amp;#39;, &amp;#39;Yemen&amp;#39;)
+
+south_america &amp;lt;- c(&amp;#39;Argentina&amp;#39;, &amp;#39;Brazil&amp;#39;, &amp;#39;Colombia&amp;#39;, &amp;#39;Ecuador&amp;#39;, &amp;#39;Peru&amp;#39;, &amp;#39;Venezuela&amp;#39;)
+oceania &amp;lt;- c(&amp;#39;Australia&amp;#39;)
+europe &amp;lt;- c(&amp;#39;Belarus&amp;#39;, &amp;#39;Finland&amp;#39;, &amp;#39;France&amp;#39;, &amp;#39;Germany&amp;#39;, &amp;#39;Italy&amp;#39;, &amp;#39;Netherlands&amp;#39;, &amp;#39;Northern Ireland&amp;#39;, &amp;#39;Norway&amp;#39;, &amp;#39;Republic of Ireland&amp;#39;, &amp;#39;Russia&amp;#39;, &amp;#39;Turkey&amp;#39;, &amp;#39;UK&amp;#39;, &amp;#39;Ukraine&amp;#39;, &amp;#39;Wales, UK&amp;#39;)
+africa &amp;lt;- c(&amp;#39;Benin&amp;#39;, &amp;#39;DR Congo&amp;#39;, &amp;#39;Egypt&amp;#39;, &amp;#39;Ethiopia&amp;#39;, &amp;#39;Kenya&amp;#39;, &amp;#39;Morocco&amp;#39;, &amp;#39;Mozambique&amp;#39;, &amp;#39;Nigeria&amp;#39;, &amp;#39;Sierra Leone&amp;#39;, &amp;#39;Somalia&amp;#39;, &amp;#39;Somaliland&amp;#39;, &amp;#39;South Africa&amp;#39;, &amp;#39;Tanzania&amp;#39;, &amp;#39;Uganda&amp;#39;, &amp;#39;Zambia&amp;#39;, &amp;#39;Zimbabwe&amp;#39;)
+north_america &amp;lt;- c(&amp;#39;El Salvador&amp;#39;, &amp;#39;Jamaica&amp;#39;, &amp;#39;Mexico&amp;#39;, &amp;#39;US&amp;#39;)
+
+# add new column for continent
+women &amp;lt;- women %&amp;gt;%
+    mutate(continent = NA) 
+
+# add continents to women dataframe
+women$continent &amp;lt;- ifelse(women$country %in% asia, &amp;#39;Asia&amp;#39;, women$continent)
+women$continent &amp;lt;- ifelse(women$country %in% south_america, &amp;#39;South America&amp;#39;, women$continent)
+women$continent &amp;lt;- ifelse(women$country %in% oceania, &amp;#39;Oceania&amp;#39;, women$continent)
+women$continent &amp;lt;- ifelse(women$country %in% europe, &amp;#39;Europe&amp;#39;, women$continent)
+women$continent &amp;lt;- ifelse(women$country %in% africa, &amp;#39;Africa&amp;#39;, women$continent)
+women$continent &amp;lt;- ifelse(women$country %in% north_america, &amp;#39;North America&amp;#39;, women$continent)
+
+women&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-wrangling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data Wrangling&lt;/h2&gt;
+&lt;p&gt;The key to using the &lt;code&gt;sunburstR&lt;/code&gt; package with this specific dataset is the wrangling that happens to filter by continents we created above. We’ll also want to get rid of dashes with &lt;code&gt;mutate_at&lt;/code&gt; as dashes are structurally needed to render the sunburst plots.&lt;/p&gt;
+&lt;p&gt;Below, I’ve filtered the &lt;code&gt;women&lt;/code&gt; data frame into Africa and Asia (the same could be done for North and South America and Europe as well).&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;two most important&lt;/strong&gt; operations here are the creation of the &lt;code&gt;path&lt;/code&gt; and &lt;code&gt;V2&lt;/code&gt; columns that will later be parameters for rendering the sunburst plots.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Filter for Africa
+africa_name &amp;lt;- women %&amp;gt;%
+    select(continent, category, role, name) %&amp;gt;%
+    # remove dash within dplyr pipe
+    mutate_at(vars(3, 4), funs(gsub(&amp;quot;-&amp;quot;, &amp;quot;&amp;quot;, .))) %&amp;gt;% 
+    filter(continent==&amp;#39;Africa&amp;#39;) %&amp;gt;%
+    mutate(
+        path = paste(continent, category, role, name, sep = &amp;quot;-&amp;quot;)
+    ) %&amp;gt;%
+    slice(2:100) %&amp;gt;%
+    mutate(
+        V2 = 1
+    )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: `funs()` is deprecated as of dplyr 0.8.0.
+## Please use a list of either functions or lambdas: 
+## 
+##   # Simple named list: 
+##   list(mean = mean, median = median)
+## 
+##   # Auto named with `tibble::lst()`: 
+##   tibble::lst(mean, median)
+## 
+##   # Using lambdas
+##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Filter for Asia
+asia_name &amp;lt;- women %&amp;gt;%
+    select(continent, category, role, name) %&amp;gt;%
+    # remove dash within dplyr pipe
+    mutate_at(vars(3, 4), funs(gsub(&amp;quot;-&amp;quot;, &amp;quot;&amp;quot;, .))) %&amp;gt;%
+    filter(continent==&amp;#39;Asia&amp;#39;) %&amp;gt;%
+    mutate(
+        path = paste(continent, category, role, name, sep = &amp;quot;-&amp;quot;)
+    ) %&amp;gt;%
+    slice(2:100) %&amp;gt;%
+    mutate(
+        V2 = 1
+    )&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sunburst-africa&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sunburst: Africa&lt;/h2&gt;
+&lt;p&gt;Ultimately, I found the information best presented by continent as the &lt;em&gt;base&lt;/em&gt; of the sunburst plot, followed by category, specific roles and the names of each of the 100 women honored by the BBC.&lt;/p&gt;
+&lt;p&gt;Moreover, by presenting the data by continent, you can focus on just five specific color as you decide on a palette.&lt;/p&gt;
+&lt;p&gt;I wouldn’t recommend trying to pick a color for each role or name; it becomes too unweildy. Just pick five colors for the two inner most rings of the sunburst plot and it’ll shuffle the rest of the colors.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Africa
+sunburst(data = data.frame(xtabs(V2~path, africa_name)), legend = FALSE,
+         colors = c(&amp;quot;D99527&amp;quot;, &amp;quot;6F7239&amp;quot;, &amp;quot;CE4B3C&amp;quot;, &amp;quot;C8AC70&amp;quot;, &amp;quot;018A9D&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;sunburst html-widget&#34; id=&#34;htmlwidget-1&#34; style=&#34;width:672px;height:480px; position:relative;&#34;&gt;
+&lt;div&gt;
+&lt;div class=&#34;sunburst-main&#34;&gt;
+&lt;div class=&#34;sunburst-sequence&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;sunburst-chart&#34;&gt;
+&lt;div class=&#34;sunburst-explanation&#34; style=&#34;visibility:hidden;&#34;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;sunburst-sidebar&#34;&gt;
+&lt;input type=&#34;checkbox&#34; class=&#34;sunburst-togglelegend&#34; style=&#34;visibility:hidden;&#34;&gt;Legend&lt;/input&gt;
+&lt;div class=&#34;sunburst-legend&#34; style=&#34;visibility:hidden;&#34;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:{&#34;children&#34;:[{&#34;name&#34;:&#34;Africa&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Creativity&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Artist and curator&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Mulenga Kapwepwe&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Musician&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Angelique Kidjo&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Rapper&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Houda Abouz&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Singer/songwriter&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Bulelwa Mkutukana&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Writer and filmmaker&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Tsitsi Dangarembga&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;}],&#34;colname&#34;:&#34;X2&#34;},{&#34;name&#34;:&#34;Identity&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Filmmaker&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Uyaiedu  IkpeEtim&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Socialjustice activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Josina Machel&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;}],&#34;colname&#34;:&#34;X2&#34;},{&#34;name&#34;:&#34;Knowledge&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Ishtar Lakhani&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Doctor&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Jemimah Kariuki&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Journalist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Douce Namwezi N&#39;Ibamba&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Lawyer&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Rebeca Gyumi&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Mental health expert&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Ethelreda NakimuliMpungu&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;}],&#34;colname&#34;:&#34;X2&#34;},{&#34;name&#34;:&#34;Leadership&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Aisha Yesufu&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Campaigner&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Nadeen Ashraf&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Climate activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Vanessa Nakate&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Coptic nun&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Maggie Gobran&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Environmental activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Phyllis Omido&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;FGM educator&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Ubah Ali&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Mayor&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Yvonne AkiSawyerr&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Peace activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Ilwad Elman&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;}],&#34;colname&#34;:&#34;X2&#34;}],&#34;colname&#34;:&#34;X1&#34;}],&#34;name&#34;:&#34;root&#34;},&#34;options&#34;:{&#34;legendOrder&#34;:null,&#34;colors&#34;:[&#34;D99527&#34;,&#34;6F7239&#34;,&#34;CE4B3C&#34;,&#34;C8AC70&#34;,&#34;018A9D&#34;],&#34;valueField&#34;:&#34;size&#34;,&#34;percent&#34;:true,&#34;count&#34;:false,&#34;explanation&#34;:null,&#34;breadcrumb&#34;:[],&#34;legend&#34;:false,&#34;sortFunction&#34;:null,&#34;sumNodes&#34;:true}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sunburst-asia&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sunburst: Asia&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Asia
+sunburst(data = data.frame(xtabs(V2~path, asia_name)), legend = FALSE,
+         colors = c(&amp;quot;#e6e0ae&amp;quot;, &amp;quot;#dfbc5e&amp;quot;, &amp;quot;#ee6146&amp;quot;, &amp;quot;#d73c37&amp;quot;, &amp;quot;#b51f09&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;sunburst html-widget&#34; id=&#34;htmlwidget-2&#34; style=&#34;width:672px;height:480px; position:relative;&#34;&gt;
+&lt;div&gt;
+&lt;div class=&#34;sunburst-main&#34;&gt;
+&lt;div class=&#34;sunburst-sequence&#34;&gt;&lt;/div&gt;
+&lt;div class=&#34;sunburst-chart&#34;&gt;
+&lt;div class=&#34;sunburst-explanation&#34; style=&#34;visibility:hidden;&#34;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;sunburst-sidebar&#34;&gt;
+&lt;input type=&#34;checkbox&#34; class=&#34;sunburst-togglelegend&#34; style=&#34;visibility:hidden;&#34;&gt;Legend&lt;/input&gt;
+&lt;div class=&#34;sunburst-legend&#34; style=&#34;visibility:hidden;&#34;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:{&#34;children&#34;:[{&#34;name&#34;:&#34;Asia&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Creativity&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Actor&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Mahira Khan&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;},{&#34;name&#34;:&#34;Michelle Yeoh&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Architect&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Chu Kim Duc&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Feminist activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Nandar&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Filmmaker&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Waad  alKateab&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Landscape architect&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Kotchakorn Voraakhom&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Musician&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Isaivani&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Sake master brewer&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Miho Imada&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;}],&#34;colname&#34;:&#34;X2&#34;},{&#34;name&#34;:&#34;Identity&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Hayat Mirshad&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;},{&#34;name&#34;:&#34;Laleh Osmany&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;UN Women ambassador/model&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Cindy Bishop&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Writer&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Muyesser Abdul’ehed Hendan&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;}],&#34;colname&#34;:&#34;X2&#34;},{&#34;name&#34;:&#34;Knowledge&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Febfi Setyawati&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Computational geneticist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Pardis Sabeti&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Crematorium technician&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Sapana Roka Magar&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Doctor&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Leo YeeSin&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Global health leader&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Sania Nishtar&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Microgrid manager&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Iman Ghaleb AlHamli&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Minister for Advanced Technologies&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Sarah AlAmiri&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Plant virologist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Safaa Kumari&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Public health expert&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Nisreen Alwan&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Robotics team leader&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Somaya Faruqi&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Teacher&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Rima Sultana Rimu&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Writer&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Fang Fang&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;}],&#34;colname&#34;:&#34;X2&#34;},{&#34;name&#34;:&#34;Leadership&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Athlete&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Manasi Joshi&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Climate activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Ridhima Pandey&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Disability activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Gulnaz Zhuzbaeva&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Environmental campaigner&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Salsabila Khairunnisa&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Human rights activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Nasrin Sotoudeh&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;KDCA Commissioner&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Jeong Eunkyeong&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Prodemocracy activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Agnes Chow&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Protest leader&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Bilkis&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;},{&#34;name&#34;:&#34;Student activist&#34;,&#34;children&#34;:[{&#34;name&#34;:&#34;Panusaya Sithijirawattanakul&#34;,&#34;size&#34;:1,&#34;colname&#34;:&#34;X4&#34;}],&#34;colname&#34;:&#34;X3&#34;}],&#34;colname&#34;:&#34;X2&#34;}],&#34;colname&#34;:&#34;X1&#34;}],&#34;name&#34;:&#34;root&#34;},&#34;options&#34;:{&#34;legendOrder&#34;:null,&#34;colors&#34;:[&#34;#e6e0ae&#34;,&#34;#dfbc5e&#34;,&#34;#ee6146&#34;,&#34;#d73c37&#34;,&#34;#b51f09&#34;],&#34;valueField&#34;:&#34;size&#34;,&#34;percent&#34;:true,&#34;count&#34;:false,&#34;explanation&#34;:null,&#34;breadcrumb&#34;:[],&#34;legend&#34;:false,&#34;sortFunction&#34;:null,&#34;sumNodes&#34;:true}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;And that’s it for visualizing the BBC’s top 100 influential women in 2020 with the &lt;code&gt;sunburstR&lt;/code&gt; package.&lt;/p&gt;
+&lt;p&gt;For more content on data science, visualization, in R and Python, &lt;a href=&#34;https://twitter.com/paulapivat&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Going beyond summary statistics</title>

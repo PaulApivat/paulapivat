@@ -1,12 +1,20 @@
 ---
-title: "BBC Women of 2020"
+title: BBC Women of 2020 
+author: Paul Apivat Hanvongse
+date: "2020-12-17"
+slug: sunburst
+categories: []
+tags: ["Data Viz", "R Markdown", "Statistics", "RStats"]
 subtitle: "Visualizing women's achievement across continents with sunburstR"
-author: "Paul Apivat Hanvongse"
-date: "12/17/2020"
-output: 
-    html_document:
-        toc: true
-        toc_float: true
+summary: "Using the {sunburstR} package to visualize nested data."
+authors: []
+lastmod: '2020-12-17T20:24:12+07:00'
+featured: no
+image:
+    caption: ''
+    focal_point: ''
+    preview_only: no
+projects: []
 ---
 
 ```{r setup, include=FALSE}
