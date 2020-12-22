@@ -13,6 +13,45 @@
     </image>
     
     <item>
+      <title>Setting up Poetry for Dependency Management</title>
+      <link>/technical_notes/example_tech/python_poetry/</link>
+      <pubDate>Tue, 22 Dec 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_poetry/</guid>
+      <description>&lt;h2 id=&#34;setting-up-poetry-for-dependency-management&#34;&gt;Setting up Poetry for Dependency Management&lt;/h2&gt;
+&lt;h4 id=&#34;poetry-install-script&#34;&gt;Poetry Install Script&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;$ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;sample-project&#34;&gt;Sample Project&lt;/h2&gt;
+&lt;h4 id=&#34;create-sample-project&#34;&gt;Create Sample Project&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;$ poetry new how-long
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;creating-virtual-environment&#34;&gt;Creating virtual environment&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; This is done only &lt;strong&gt;once&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;$ poetry config virtualenvs.in-project true
+$ poetry install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;launch-virtual-environment&#34;&gt;Launch virtual environment&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;$ poetry shell 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;uninstall-virtual-environment&#34;&gt;Uninstall virtual environment&lt;/h4&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;$ poetry env remove 3.x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;existing-project&#34;&gt;Existing Project&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Switch to master branch (if not already on)&lt;/li&gt;
+&lt;li&gt;git status&lt;/li&gt;
+&lt;li&gt;git pull&lt;/li&gt;
+&lt;li&gt;git checkout -b new_branch_name&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; Assume that &lt;code&gt;poetry config virtualenvs.in-project true&lt;/code&gt; has been run.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;$ poetry install
+$ poetry shell 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Check &lt;code&gt;python&lt;/code&gt; environment.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Writing a git commit message</title>
       <link>/technical_notes/example_tech/git_commit_message/</link>
       <pubDate>Sat, 28 Nov 2020 00:00:00 +0100</pubDate>
