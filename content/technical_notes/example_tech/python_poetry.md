@@ -17,6 +17,8 @@ weight: 1
 
 ## Setting up Poetry for Dependency Management
 
+[Poetry](https://python-poetry.org/) is python packaging and dependency management made easy.
+
 #### Poetry Install Script
 
 ```python

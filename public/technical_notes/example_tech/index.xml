@@ -18,6 +18,8 @@
       <pubDate>Tue, 22 Dec 2020 00:00:00 +0100</pubDate>
       <guid>/technical_notes/example_tech/python_poetry/</guid>
       <description>&lt;h2 id=&#34;setting-up-poetry-for-dependency-management&#34;&gt;Setting up Poetry for Dependency Management&lt;/h2&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://python-poetry.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Poetry&lt;/a&gt; is python packaging and dependency management made easy.&lt;/p&gt;
 &lt;h4 id=&#34;poetry-install-script&#34;&gt;Poetry Install Script&lt;/h4&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;$ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
 &lt;/code&gt;&lt;/pre&gt;
