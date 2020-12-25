@@ -5,12 +5,96 @@
     <link>/tag/python/</link>
       <atom:link href="/tag/python/index.xml" rel="self" type="application/rss+xml" />
     <description>Python</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Tue, 15 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Tue, 22 Dec 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Python</title>
       <link>/tag/python/</link>
     </image>
+    
+    <item>
+      <title>Gradient Descent -- Data Science from Scratch (ch8)</title>
+      <link>/post/dsfs_8/</link>
+      <pubDate>Tue, 22 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/post/dsfs_8/</guid>
+      <description>&lt;h3 id=&#34;table-of-contents&#34;&gt;Table of contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;
+&lt;a href=&#34;#overview&#34;&gt;Overview&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;
+&lt;a href=&#34;#setup&#34;&gt;Setup&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;
+&lt;a href=&#34;#gradient_descent&#34;&gt;Gradient Descent&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;
+&lt;a href=&#34;#take_away&#34;&gt;Take Away&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;In this post, we&amp;rsquo;ll explore Gradient Descent from the ground up starting conceptually, then using code to build up our intuition brick by brick.&lt;/p&gt;
+&lt;p&gt;While this post is part of an ongoing series where I document my progress through 
+&lt;a href=&#34;https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Science from Scratch by Joel Grus&lt;/a&gt;, for this post I am drawing on material from Aurélien Geron&amp;rsquo;s Hands-On Machine Learning to provide a context for why and when gradient descent is used.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; While gradient descent is introduced as a standalone topic, I find it more intuitive to reason about it within the context of a regression problem.&lt;/p&gt;
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
+&lt;p&gt;I find it helpful to start with an understanding of the context in which gradient descent is used.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll train a &lt;em&gt;linear regression model&lt;/em&gt;. Our &lt;em&gt;training data&lt;/em&gt; will only have three data points. We train the model by setting up parameters (slope &amp;amp; intercept) that best &amp;ldquo;fits&amp;rdquo; the data (i.e., best-fitting line), for example:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./best_fit_line2.png&#34; alt=&#34;best fit line2&#34;&gt;&lt;/p&gt;
+&lt;p&gt;We know the values for both &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt;, so we can calculate the slope and intercept directly through the &lt;strong&gt;normal equation&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Normal Equation
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.array([2, 4, 5])
+y = np.array([45, 85, 105])
+
+# computing Normal Equation
+x_b = np.c_[np.ones((3, 1)), x]       # add x0 = 1 to each of three instances
+theta = np.linalg.inv(x_b.T.dot(x_b)).dot(x_b.T).dot(y)
+
+# array([ 5., 20.])
+theta
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Our slope is ~20 and intercept is ~5 (&lt;code&gt;theta&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;We could also use the &lt;code&gt;LinearRegression&lt;/code&gt; class from &lt;code&gt;sklearn&lt;/code&gt; to call the least squares function directly:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Linear Regression
+
+from sklearn.linear_model import LinearRegression
+import numpy as np
+
+x = np.array([2, 4, 5])
+y = np.array([45, 85, 105])
+
+x = x.reshape(-1, 1)              # reshape because sklearn expect 2D array
+
+x_b = np.c_[np.ones((3, 1)), x]   # add x0 = 1 to each of three instances
+
+theta, residuals, rank, s = np.linalg.lstsq(x_b, y, rcond=1e-6)
+
+# array([ 5., 20.])
+print(&amp;quot;theta:&amp;quot;, theta)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This appraoch also yields the slope and intercept directly.&lt;/p&gt;
+&lt;h2 id=&#34;gradient_descent&#34;&gt;Gradient_Descent&lt;/h2&gt;
+&lt;h4 id=&#34;why-gradient-descent&#34;&gt;Why Gradient Descent?&lt;/h4&gt;
+&lt;p&gt;The &lt;strong&gt;normal equation&lt;/strong&gt; and the &lt;strong&gt;least squares&lt;/strong&gt; (linear regresion) approach can handle large training sets efficiently, but when your model has a large number of features or too many training instances to fit into memory, &lt;strong&gt;gradient descent&lt;/strong&gt; is an often used alternative.&lt;/p&gt;
+&lt;h2 id=&#34;take_away&#34;&gt;Take_Away&lt;/h2&gt;
+&lt;p&gt;In any modeling process we are &amp;ldquo;fitting&amp;rdquo; a model to the data to see which model fits better. A better fit yields better predictions. Models are evaluated by their error (also known as cost function) - the distance between the predicted value and the actual data points.&lt;/p&gt;
+&lt;p&gt;With linear regression, there are two &lt;em&gt;different&lt;/em&gt; ways of training the model. First, is to use an equation that directly computes model parameters to fit the model to the training data (while minimizing errors or &amp;lsquo;cost function&amp;rsquo;); this is the Normal Equation. Second is to use Gradient Descent.&lt;/p&gt;
+&lt;p&gt;Gradient Descent is useful you are expecting computational complexity due to the number of features or training instances.&lt;/p&gt;
+&lt;p&gt;This post is part of an ongoing series where I document my progress through 
+&lt;a href=&#34;https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Science from Scratch by Joel Grus&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./book_disclaimer.png&#34; alt=&#34;book_disclaimer&#34;&gt;&lt;/p&gt;
+&lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Data Science from Scratch (ch7) - Hypothesis and Inference</title>
