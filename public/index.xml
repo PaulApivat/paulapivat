@@ -1259,10 +1259,11 @@ hist(x)
 &lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
 &lt;p&gt;In this post, we&amp;rsquo;ll explore Gradient Descent from the ground up starting conceptually, then using code to build up our intuition brick by brick.&lt;/p&gt;
 &lt;p&gt;While this post is part of an ongoing series where I document my progress through 
-&lt;a href=&#34;https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Science from Scratch by Joel Grus&lt;/a&gt;, for this post I am drawing on material from Aurélien Geron&amp;rsquo;s Hands-On Machine Learning to provide a context for why and when gradient descent is used.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; While gradient descent is introduced as a standalone topic, I find it more intuitive to reason about it within the context of a regression problem.&lt;/p&gt;
+&lt;a href=&#34;https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data Science from Scratch by Joel Grus&lt;/a&gt;, for this post I am drawing on external sources including Aurélien Geron&amp;rsquo;s Hands-On Machine Learning to provide a context for why and when gradient descent is used.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll also be using external libraries such as &lt;code&gt;numpy&lt;/code&gt;, that are generally avoided in Data Science from Scratch, to help highlight concepts.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; While the book introduces gradient descent as a standalone topic, I find it more intuitive to reason about it within the context of a regression problem.&lt;/p&gt;
 &lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
-&lt;p&gt;I find it helpful to start with an understanding of the context in which gradient descent is used.&lt;/p&gt;
+&lt;p&gt;In any modeling exercise, there is error (because no model is perfect), and our objective is minimize the errors so that when we develop models from our training data, we&amp;rsquo;ll have some confidence that the predictions will work in testing and completely new data.&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll train a &lt;em&gt;linear regression model&lt;/em&gt;. Our &lt;em&gt;training data&lt;/em&gt; will only have three data points. We train the model by setting up parameters (slope &amp;amp; intercept) that best &amp;ldquo;fits&amp;rdquo; the data (i.e., best-fitting line), for example:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./best_fit_line2.png&#34; alt=&#34;best fit line2&#34;&gt;&lt;/p&gt;
 &lt;p&gt;We know the values for both &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt;, so we can calculate the slope and intercept directly through the &lt;strong&gt;normal equation&lt;/strong&gt;:&lt;/p&gt;
@@ -1281,8 +1282,10 @@ theta = np.linalg.inv(x_b.T.dot(x_b)).dot(x_b.T).dot(y)
 # array([ 5., 20.])
 theta
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Our slope is ~20 and intercept is ~5 (&lt;code&gt;theta&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;We could also use the &lt;code&gt;LinearRegression&lt;/code&gt; class from &lt;code&gt;sklearn&lt;/code&gt; to call the least squares function directly:&lt;/p&gt;
+&lt;p&gt;The key line is &lt;code&gt;np.linalg.inv()&lt;/code&gt; which computes the multiplicative inverse of a matrix.&lt;/p&gt;
+&lt;p&gt;Our slope is 20 and intercept is 5 (&lt;code&gt;theta&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: We could also have used the more familiar &amp;ldquo;rise over run&amp;rdquo; ((85 - 45) / (4 - 2)) or (40/2) or 20, but we want to illustrate the &lt;strong&gt;normal equation&lt;/strong&gt; which should come in handy when we go beyond the simplistic three data point example.&lt;/p&gt;
+&lt;p&gt;We could also use the &lt;code&gt;LinearRegression&lt;/code&gt; class from &lt;code&gt;sklearn&lt;/code&gt; to call the least squares (&lt;code&gt;np.linalg.lstsq()&lt;/code&gt;) function directly:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Linear Regression
 
 from sklearn.linear_model import LinearRegression
@@ -1300,10 +1303,76 @@ theta, residuals, rank, s = np.linalg.lstsq(x_b, y, rcond=1e-6)
 # array([ 5., 20.])
 print(&amp;quot;theta:&amp;quot;, theta)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This appraoch also yields the slope and intercept directly.&lt;/p&gt;
+&lt;p&gt;This appraoch also yields the slope (20) and intercept (5) directly.&lt;/p&gt;
+&lt;p&gt;Again we should note that we know the parameters of &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; in our example, but we want to see how &lt;strong&gt;learning from data&lt;/strong&gt; would work. Here&amp;rsquo;s the equation we&amp;rsquo;re working with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;y = 20 * x + 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And here&amp;rsquo;s what it looks like (intercept = 5, slope = 20)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./known_x_y.png&#34; alt=&#34;known x y&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;gradient_descent&#34;&gt;Gradient_Descent&lt;/h2&gt;
 &lt;h4 id=&#34;why-gradient-descent&#34;&gt;Why Gradient Descent?&lt;/h4&gt;
-&lt;p&gt;The &lt;strong&gt;normal equation&lt;/strong&gt; and the &lt;strong&gt;least squares&lt;/strong&gt; (linear regresion) approach can handle large training sets efficiently, but when your model has a large number of features or too many training instances to fit into memory, &lt;strong&gt;gradient descent&lt;/strong&gt; is an often used alternative.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;normal equation&lt;/strong&gt; and the &lt;strong&gt;least squares&lt;/strong&gt; (linear regresion) approach can handle large training sets efficiently, but when your model has a &lt;strong&gt;large number of features&lt;/strong&gt; or too &lt;strong&gt;many training instances&lt;/strong&gt; to fit into memory, &lt;strong&gt;gradient descent&lt;/strong&gt; is an often used alternative.&lt;/p&gt;
+&lt;p&gt;Moreover, linear least squares assume the errors have a normal distribution and the relationship in the data is linear (this is where closed-form solutions like the &lt;strong&gt;normal equation&lt;/strong&gt; excel). When the data is non-linear, an iterative solution (gradient descent) can be used.&lt;/p&gt;
+&lt;p&gt;With linear regression we seek to &lt;strong&gt;minimize the sum-of-squares&lt;/strong&gt; differences between the observed data and the predicted values (aka the error), in a &lt;strong&gt;non-iterative&lt;/strong&gt; fashion.&lt;/p&gt;
+&lt;p&gt;Similar to the regression, we are seeking to use gradient descent to find the slope and intercept that minimizes the average squared error, however we do so in an &lt;strong&gt;interative fashion&lt;/strong&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;using-gradient-descent-to-fit-a-model&#34;&gt;Using Gradient Descent to Fit a Model&lt;/h4&gt;
+&lt;p&gt;The process for gradient descent is to start with a &lt;strong&gt;random slope and intercept&lt;/strong&gt;, then compute the &lt;strong&gt;gradient&lt;/strong&gt; of the &lt;strong&gt;mean squared error&lt;/strong&gt;, while adjusting the slope/intercept (&lt;code&gt;theta&lt;/code&gt;) in the direction that continues to minimize the error. This is repeated iteratively until we find a point where errors are minimized.&lt;/p&gt;
+&lt;p&gt;As with the &lt;strong&gt;normal equation&lt;/strong&gt; and &lt;strong&gt;linear regression&lt;/strong&gt; approach above, we technically &lt;em&gt;know&lt;/em&gt; the parameters of the linear relationship between &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt;, but we&amp;rsquo;ll pretend like we don&amp;rsquo;t and need to learn from the data.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: This section builds heavily on a previous post on linear algebra. You&amp;rsquo;ll want to 
+&lt;a href=&#34;https://paulapivat.com/post/dsfs_4/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;read this post&lt;/a&gt; to get a feel for the functions used to construct the functions we see in this post.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from typing import TypeVar, List, Iterator
+import math
+import random
+import matplotlib.pyplot as plt
+from typing import Callable
+from typing import List
+import numpy as np
+
+x = np.array([2, 4, 5])
+
+# instead of putting y directly, we&#39;ll use the equation: 20 * x + 5, which is a direct representation of its relationship to x
+
+# y = np.array([45, 85, 105])   
+
+# both x and y are represented in inputs
+inputs = [(x, 20 * x + 5) for x in range(2, 6)]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;First, we&amp;rsquo;ll start with random values for the slope and intercept; we&amp;rsquo;ll also establish a learning rate, which controls how much a change in the model is warranted in response to the estimated error each time the model parameters, slope and intercept, are updated.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# 1. start with a random value for slope and intercept
+theta = [random.uniform(-1, 1), random.uniform(-1, 1)]
+
+learning_rate = 0.001
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next, we&amp;rsquo;ll compute the mean of the gradients, then adjust the slope/intercept in the direction of minimizing the gradient, which is based on the error.&lt;/p&gt;
+&lt;p&gt;You&amp;rsquo;ll note that this for-loop has 100 iterations. The more interations we go through, the more that errors are minimized and the more we approach a slope/intercept where the model &amp;ldquo;fits&amp;rdquo; the data better.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for epoch in range(100):     # start with 100
+    # compute the mean of the gradients
+    grad = vector_mean([linear_gradient(x, y, theta) for x, y in inputs])
+    # take a step in that direction
+    theta = gradient_step(theta, grad, -learning_rate)
+    print(epoch, grad, theta)
+
+slope, intercept = theta
+
+#assert 19.9 &amp;lt; slope &amp;lt; 20.1,  &amp;quot;slope should be about 20&amp;quot;
+#assert 4.9 &amp;lt; intercept &amp;lt; 5.1, &amp;quot;intercept should be about 5&amp;quot;
+print(&amp;quot;slope&amp;quot;, slope)
+print(&amp;quot;intercept&amp;quot;, intercept)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;iterative-descent&#34;&gt;Iterative Descent&lt;/h4&gt;
+&lt;p&gt;At 100 iterations, the slope is 18.87 and intercept is 4.87 and the gradient is -32.48 (error for the slope) and -8.45 (error for the intercept). These numbers suggest that we need to decrease the slope and intercept from our random starting point, but our emphasis needs to be on decreasing the slope.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./100_iterations.png&#34; alt=&#34;100 iterations&#34;&gt;&lt;/p&gt;
+&lt;p&gt;At 200 iterations, the slope is 19.97 and intercept is 4.86 and the gradient is -1.76 (error for the slope) and -0.48 (error for the intercept). Our errors have been reduced significantly.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./200_iterations.png&#34; alt=&#34;200 iterations&#34;&gt;&lt;/p&gt;
+&lt;p&gt;At 1000 iterations, the slope is 19.97 (not much difference from 200 iterations) and intercept is 5.09 and the gradients are markedly lower at -0.004 (error for the slope) and 0.02 (error for the intercept). Here the errors may not be much different from zero and we are near our optimal point.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./1000_iterations.png&#34; alt=&#34;1000 iterations&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Through this process, we can note a couple things. The sign in front of the gradient moving from -32.48 to -0.004 for the slope tells us that with each iteration, the slope should go down from where it started, randomly.&lt;/p&gt;
+&lt;p&gt;Similarly we see for the 100th and 200th iterations, the sign for the intercept was negative, suggesting that it should also go down from it&amp;rsquo;s random starting point. Howeer, at the 1000th iteration, the sign changed to positive (+ 0.02) suggesting an ever so slight increase in intercept, so it appears we found the point of minimal error for the intercept&amp;rsquo;s gradient.&lt;/p&gt;
+&lt;p&gt;In summary, the &lt;strong&gt;normal equation&lt;/strong&gt; and &lt;strong&gt;regression&lt;/strong&gt; approaches gave us a slope of 20 and intercept of 5. With gradient descent, we approached these values with each successive iterations, 1000 iterations yielding &lt;strong&gt;less error&lt;/strong&gt; than 100 or 200 iterations.&lt;/p&gt;
+&lt;h4 id=&#34;linear-algebra-foundations&#34;&gt;Linear Algebra foundations&lt;/h4&gt;
+&lt;p&gt;As mentioned above, the functions used to compute the gradients and adjust the slope/intercept build on functions we explored in 
+&lt;a href=&#34;https://paulapivat.com/post/dsfs_4/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this post&lt;/a&gt;. Here&amp;rsquo;s a visual showing how the functions we used to iteratively arrive at the slope and intercept through gradient descent was built:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./ch8_funct.png&#34; alt=&#34;ch8_funct&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;take_away&#34;&gt;Take_Away&lt;/h2&gt;
 &lt;p&gt;In any modeling process we are &amp;ldquo;fitting&amp;rdquo; a model to the data to see which model fits better. A better fit yields better predictions. Models are evaluated by their error (also known as cost function) - the distance between the predicted value and the actual data points.&lt;/p&gt;
 &lt;p&gt;With linear regression, there are two &lt;em&gt;different&lt;/em&gt; ways of training the model. First, is to use an equation that directly computes model parameters to fit the model to the training data (while minimizing errors or &amp;lsquo;cost function&amp;rsquo;); this is the Normal Equation. Second is to use Gradient Descent.&lt;/p&gt;
