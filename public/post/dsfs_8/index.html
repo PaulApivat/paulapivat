@@ -825,13 +825,13 @@ print(&quot;theta:&quot;, theta)
 <p>And here&rsquo;s what it looks like (intercept = 5, slope = 20)</p>
 <p><img src="./known_x_y.png" alt="known x y"></p>
 <h2 id="gradient_descent">Gradient_Descent</h2>
-<h4 id="why-gradient-descent">Why Gradient Descent?</h4>
-<p>The <strong>normal equation</strong> and the <strong>least squares</strong> (linear regresion) approach can handle large training sets efficiently, but when your model has a <strong>large number of features</strong> or too <strong>many training instances</strong> to fit into memory, <strong>gradient descent</strong> is an often used alternative.</p>
-<p>Moreover, linear least squares assume the errors have a normal distribution and the relationship in the data is linear (this is where closed-form solutions like the <strong>normal equation</strong> excel). When the data is non-linear, an iterative solution (gradient descent) can be used.</p>
-<p>With linear regression we seek to <strong>minimize the sum-of-squares</strong> differences between the observed data and the predicted values (aka the error), in a <strong>non-iterative</strong> fashion.</p>
+<h4 id="why">Why?</h4>
+<p>The <strong>normal equation</strong> and the <strong>least squares</strong> approach can handle large training sets efficiently, but when your model has a large number of features or too many training instances to fit into memory, <strong>gradient descent</strong> is an often used alternative.</p>
+<p>Moreover, linear least squares assume the errors have a normal distribution and the relationship in the data is linear (this is where closed-form solutions like the normal equation excel). When the data is non-linear, an iterative solution (gradient descent) can be used.</p>
+<p>With linear regression we seek to minimize the sum-of-squares differences between the observed data and the predicted values (aka the error), in a <strong>non-iterative</strong> fashion.</p>
 <p>Alternatively, we use gradient descent to find the slope and intercept that minimizes the average squared error, however, in an <strong>interative fashion</strong>.</p>
 <h4 id="using-gradient-descent-to-fit-a-model">Using Gradient Descent to Fit a Model</h4>
-<p>The process for gradient descent is to start with a <strong>random slope and intercept</strong>, then compute the <strong>gradient</strong> of the <strong>mean squared error</strong>, while adjusting the slope/intercept (<code>theta</code>) in the direction that continues to minimize the error. This is repeated iteratively until we find a point where errors are minimized.</p>
+<p>The process for gradient descent is to start with a <strong>random</strong> slope and intercept, then compute the gradient of the mean squared error, while adjusting the slope/intercept (<code>theta</code>) in the direction that continues to minimize the error. This is repeated iteratively until we find a point where errors are <em>most</em> minimized.</p>
 <p><strong>NOTE</strong>: This section builds heavily on a previous post on linear algebra. You&rsquo;ll want to 
 <a href="https://paulapivat.com/post/dsfs_4/" target="_blank" rel="noopener">read this post</a> to get a feel for the functions used to construct the functions we see in this post.</p>
 <pre><code class="language-python">from typing import TypeVar, List, Iterator
@@ -860,7 +860,7 @@ learning_rate = 0.001
 <p>Next, we&rsquo;ll compute the mean of the gradients, then adjust the slope/intercept in the direction of minimizing the gradient, which is based on the error.</p>
 <p>You&rsquo;ll note that this for-loop has 100 iterations. The more interations we go through, the more that errors are minimized and the more we approach a slope/intercept where the model &ldquo;fits&rdquo; the data better.</p>
 <p>You can see in this list, <code>[linear_gradient(x, y, theta) for x, y in inputs]</code>, that our <code>linear_gradient</code> function is applied to the known <code>x</code> and <code>y</code> values in the list of tuples, <code>inputs</code>, along with random values for slope/intercept (<code>theta</code>).</p>
-<p>We multiple each <code>x</code> value with a random value for slope, then add a random value for intercept. This yields the initial prediction. Error is the gap between the initial prediction and <em>actual</em> <code>y</code> values. We minimize the squared error by using its gradient.</p>
+<p>We multiply each <code>x</code> value with a random value for slope, then add a random value for intercept. This yields the initial prediction. Error is the gap between the initial prediction and <em>actual</em> <code>y</code> values. We minimize the squared error by using its gradient.</p>
 <pre><code class="language-python"># start with a function that determines the gradient based on the error from a single data point
 def linear_gradient(x: float, y: float, theta: Vector) -&gt; Vector:
     slope, intercept = theta
@@ -904,7 +904,7 @@ def add(v: Vector, w: Vector) -&gt; Vector:
     assert len(v) == len(w), &quot;vectors must be the same length&quot;
     return [v_i + w_i for v_i, w_i in zip(v, w)]
 </code></pre>
-<p>All this comes together in this for-loop to print out how the slope and intercept change with each iteration (we start with 100):</p>
+<p>All this comes together in this <strong>for-loop</strong> to print out how the slope and intercept change with each iteration (we start with 100):</p>
 <pre><code class="language-python">for epoch in range(100):     # start with 100 &lt;--- change this figure to try different iterations
     # compute the mean of the gradients
     grad = vector_mean([linear_gradient(x, y, theta) for x, y in inputs])
@@ -933,8 +933,9 @@ print(&quot;intercept&quot;, intercept)
 <p><img src="./ch8_funct.png" alt="ch8_funct"></p>
 <h2 id="take_away">Take_Away</h2>
 <p>Gradient descent is an optimization technique often used in machine learning and in this post, we built some intuition around how it works by applying it to a simple linear regression problem, favoring code over math (which we&rsquo;ll return to in a later post). Gradient Descent is useful if you are expecting computational complexity due to the number of features or training instances.</p>
-<p>We placed gradient descent in context, in comparison to a more analytical approach, <strong>normal equation</strong> and the <em>least square</em> method, both of which are non-iterative.</p>
-<p>Furthermore, we saw how the functions used in this post can be traced back to a previous post on linear algebra, thus giving us a big picture view of how the building blocks of data science and an intuition for areas we&rsquo;ll need to explore at a deeper, perhaps at a more mathematical, level.</p>
+<p>We placed gradient descent in context, in comparison to a more analytical approach, normal equation and the least squares method, both of which are non-iterative.</p>
+<p>Furthermore, we saw how the functions used in this post can be traced back to a previous post on 
+<a href="https://paulapivat.com/post/dsfs_4/" target="_blank" rel="noopener">linear algebra</a>, thus giving us a big picture view of how the building blocks of data science and an intuition for areas we&rsquo;ll need to explore at a deeper, perhaps at a more mathematical, level.</p>
 <p>This post is part of an ongoing series where I document my progress through 
 <a href="https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/" target="_blank" rel="noopener">Data Science from Scratch by Joel Grus</a>.</p>
 <p><img src="./book_disclaim_ch8.png" alt="book disclaim ch8"></p>
