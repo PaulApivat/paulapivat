@@ -21,7 +21,7 @@ title: Gradient Descent -- Data Science from Scratch (ch8)
 - [Overview](#overview)
 - [Setup](#setup)
 - [Gradient Descent](#gradient_descent)
-
+- [From Scratch](#from_scratch)
 - [Take Away](#take_away)
 
 
@@ -34,17 +34,17 @@ While this post is part of an ongoing series where I document my progress throug
 
 We'll also be using external libraries such as `numpy`, that are generally avoided in Data Science from Scratch, to help highlight concepts. 
 
-**NOTE:** While the book introduces gradient descent as a standalone topic, I find it more intuitive to reason about it within the context of a regression problem.
+While the book introduces gradient descent as a standalone topic, I find it more intuitive to reason about it within the context of a regression problem.
 
 ## Setup
 
-In any modeling exercise, there is error (because no model is perfect), and our objective is minimize the errors so that when we develop models from our training data, we'll have some confidence that the predictions will work in testing and completely new data.
+In any modeling task, there is error, and our objective is minimize the errors so that when we develop models from our training data, we'll have some confidence that the predictions will work in testing and completely new data.
 
-We'll train a *linear regression model*. Our *training data* will only have three data points. We train the model by setting up parameters (slope & intercept) that best "fits" the data (i.e., best-fitting line), for example:
+We'll train a *linear regression model*. Our dataset will only have three data points. To create the model, we'll setting up parameters (slope and intercept) that best "fits" the data (i.e., best-fitting line), for example:
 
 ![best fit line2](./best_fit_line2.png)
 
-We know the values for both `x` and `y`, so we can calculate the slope and intercept directly through the **normal equation**:
+We know the values for both `x` and `y`, so we can calculate the slope and intercept directly through the **normal equation**, which is the [analytical approach](http://mlwiki.org/index.php/Normal_Equation) to finding regression coefficients (slope and intercept):
 
 ```python
 # Normal Equation
@@ -64,9 +64,9 @@ theta
 ```
 The key line is `np.linalg.inv()` which computes the multiplicative inverse of a matrix.
 
-Our slope is 20 and intercept is 5 (`theta`).
+Our slope is 20 and intercept is 5 (i.e., `theta`).
 
-**NOTE**: We could also have used the more familiar "rise over run" ((85 - 45) / (4 - 2)) or (40/2) or 20, but we want to illustrate the **normal equation** which should come in handy when we go beyond the simplistic three data point example. 
+We could also have used the more familiar "rise over run" ((85 - 45) / (4 - 2)) or (40/2) or 20, but we want to illustrate the **normal equation** which should come in handy when we go beyond the simplistic three data point example. 
 
 
 We could also use the `LinearRegression` class from `sklearn` to call the least squares (`np.linalg.lstsq()`) function directly:
@@ -92,7 +92,7 @@ print("theta:", theta)
 
 This appraoch also yields the slope (20) and intercept (5) directly.
 
-Again we should note that we know the parameters of `x` and `y` in our example, but we want to see how **learning from data** would work. Here's the equation we're working with:
+We know the parameters of `x` and `y` in our example, but we want to see how **learning from data** would work. Here's the equation we're working with:
 
 ```
 y = 20 * x + 5
@@ -113,13 +113,11 @@ Moreover, linear least squares assume the errors have a normal distribution and 
 
 With linear regression we seek to **minimize the sum-of-squares** differences between the observed data and the predicted values (aka the error), in a **non-iterative** fashion. 
 
-Similar to the regression, we are seeking to use gradient descent to find the slope and intercept that minimizes the average squared error, however we do so in an **interative fashion**.
+Alternatively, we use gradient descent to find the slope and intercept that minimizes the average squared error, however, in an **interative fashion**.
 
 #### Using Gradient Descent to Fit a Model
 
 The process for gradient descent is to start with a **random slope and intercept**, then compute the **gradient** of the **mean squared error**, while adjusting the slope/intercept (`theta`) in the direction that continues to minimize the error. This is repeated iteratively until we find a point where errors are minimized. 
-
-As with the **normal equation** and **linear regression** approach above, we technically *know* the parameters of the linear relationship between `x` and `y`, but we'll pretend like we don't and need to learn from the data.
 
 **NOTE**: This section builds heavily on a previous post on linear algebra. You'll want to [read this post](https://paulapivat.com/post/dsfs_4/) to get a feel for the functions used to construct the functions we see in this post. 
 
@@ -141,7 +139,7 @@ x = np.array([2, 4, 5])
 # both x and y are represented in inputs
 inputs = [(x, 20 * x + 5) for x in range(2, 6)]
 ```
-First, we'll start with random values for the slope and intercept; we'll also establish a learning rate, which controls how much a change in the model is warranted in response to the estimated error each time the model parameters, slope and intercept, are updated. 
+First, we'll start with random values for the slope and intercept; we'll also establish a learning rate, which controls how much a change in the model is warranted in response to the estimated error each time the model parameters (slope and intercept) are updated. 
 
 ```python
 # 1. start with a random value for slope and intercept
@@ -153,8 +151,64 @@ Next, we'll compute the mean of the gradients, then adjust the slope/intercept i
 
 You'll note that this for-loop has 100 iterations. The more interations we go through, the more that errors are minimized and the more we approach a slope/intercept where the model "fits" the data better. 
 
+You can see in this list, `[linear_gradient(x, y, theta) for x, y in inputs]`, that our `linear_gradient` function is applied to the known `x` and `y` values in the list of tuples, `inputs`, along with random values for slope/intercept (`theta`).
+
+We multiple each `x` value with a random value for slope, then add a random value for intercept. This yields the initial prediction. Error is the gap between the initial prediction and *actual* `y` values. We minimize the squared error by using its gradient.
+
 ```python
-for epoch in range(100):     # start with 100
+# start with a function that determines the gradient based on the error from a single data point
+def linear_gradient(x: float, y: float, theta: Vector) -> Vector:
+    slope, intercept = theta
+    predicted = slope * x + intercept   # model prediction
+    error = (predicted - y)             # error is (predicted - actual)
+    squared_error = error ** 2          # minimize squared error
+    grad = [2 * error * x, 2 * error]   # using its gradient
+    return grad
+```
+The `linear_gradient` function along with initial parameters are then passed to `vector_mean`, which utilize `scalar_multiply` and `vector_sum`:
+
+```python
+
+def vector_mean(vectors: List[Vector]) -> Vector:
+    """Computes the element-wise average"""
+    n = len(vectors)
+    return scalar_multiply(1/n, vector_sum(vectors))
+
+def scalar_multiply(c: float, v: Vector) -> Vector:
+    """Multiplies every element by c"""
+    return [c * v_i for v_i in v]
+    
+def vector_sum(vectors: List[Vector]) -> Vector:
+    """Sum all corresponding elements (componentwise sum)"""
+    # Check that vectors is not empty
+    assert vectors, "no vectors provided!"
+    # Check the vectorss are all the same size
+    num_elements = len(vectors[0])
+    assert all(len(v) == num_elements for v in vectors), "different sizes!"
+    # the i-th element of the result is the sum of every vector[i]
+    return [sum(vector[i] for vector in vectors)
+            for i in range(num_elements)]
+```
+
+This yields the gradient. Then, each `gradient_step` is deteremined as our function adjusts the initial random `theta` values (slope/intercept) in the direction that minimizes the error. 
+
+```python
+def gradient_step(v: Vector, gradient: Vector, step_size: float) -> Vector:
+    """Moves `step_size` in the `gradient` direction from `v`"""
+    assert len(v) == len(gradient)
+    step = scalar_multiply(step_size, gradient)
+    return add(v, step)
+    
+def add(v: Vector, w: Vector) -> Vector:
+    """Adds corresponding elements"""
+    assert len(v) == len(w), "vectors must be the same length"
+    return [v_i + w_i for v_i, w_i in zip(v, w)]
+```
+
+All this comes together in this for-loop to print out how the slope and intercept change with each iteration (we start with 100):
+
+```python
+for epoch in range(100):     # start with 100 <--- change this figure to try different iterations
     # compute the mean of the gradients
     grad = vector_mean([linear_gradient(x, y, theta) for x, y in inputs])
     # take a step in that direction
@@ -183,41 +237,26 @@ At 1000 iterations, the slope is 19.97 (not much difference from 200 iterations)
 
 ![1000 iterations](./1000_iterations.png)
 
-Through this process, we can note a couple things. The sign in front of the gradient moving from -32.48 to -0.004 for the slope tells us that with each iteration, the slope should go down from where it started, randomly. 
-
-Similarly we see for the 100th and 200th iterations, the sign for the intercept was negative, suggesting that it should also go down from it's random starting point. Howeer, at the 1000th iteration, the sign changed to positive (+ 0.02) suggesting an ever so slight increase in intercept, so it appears we found the point of minimal error for the intercept's gradient. 
-
 In summary, the **normal equation** and **regression** approaches gave us a slope of 20 and intercept of 5. With gradient descent, we approached these values with each successive iterations, 1000 iterations yielding **less error** than 100 or 200 iterations. 
 
-#### Linear Algebra foundations
+## From_Scratch
 
 As mentioned above, the functions used to compute the gradients and adjust the slope/intercept build on functions we explored in [this post](https://paulapivat.com/post/dsfs_4/). Here's a visual showing how the functions we used to iteratively arrive at the slope and intercept through gradient descent was built:
 
 ![ch8_funct](./ch8_funct.png)
 
 
-
-
 ## Take_Away
 
-In any modeling process we are "fitting" a model to the data to see which model fits better. A better fit yields better predictions. Models are evaluated by their error (also known as cost function) - the distance between the predicted value and the actual data points.
+Gradient descent is an optimization technique often used in machine learning and in this post, we built some intuition around how it works by applying it to a simple linear regression problem, favoring code over math (which we'll return to in a later post). Gradient Descent is useful if you are expecting computational complexity due to the number of features or training instances.
 
-With linear regression, there are two *different* ways of training the model. First, is to use an equation that directly computes model parameters to fit the model to the training data (while minimizing errors or 'cost function'); this is the Normal Equation. Second is to use Gradient Descent. 
+We placed gradient descent in context, in comparison to a more analytical approach, **normal equation** and the *least square* method, both of which are non-iterative. 
 
-Gradient Descent is useful you are expecting computational complexity due to the number of features or training instances.
-
-
-
-
-
-
-
-
-
+Furthermore, we saw how the functions used in this post can be traced back to a previous post on linear algebra, thus giving us a big picture view of how the building blocks of data science and an intuition for areas we'll need to explore at a deeper, perhaps at a more mathematical, level.  
 
 This post is part of an ongoing series where I document my progress through [Data Science from Scratch by Joel Grus](https://joelgrus.com/2019/05/13/data-science-from-scratch-second-edition/). 
 
-![book_disclaimer](./book_disclaimer.png)
+![book disclaim ch8](./book_disclaim_ch8.png)
 
 
 
