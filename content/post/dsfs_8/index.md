@@ -113,7 +113,7 @@ Moreover, linear least squares assume the errors have a normal distribution and 
 
 With linear regression we seek to minimize the sum-of-squares differences between the observed data and the predicted values (aka the error), in a **non-iterative** fashion. 
 
-Alternatively, we use gradient descent to find the slope and intercept that minimizes the average squared error, however, in an **interative fashion**.
+Alternatively, we use gradient descent to find the slope and intercept that minimizes the average squared error, however, in an **iterative fashion**.
 
 #### Using Gradient Descent to Fit a Model
 
@@ -149,7 +149,7 @@ learning_rate = 0.001
 ```
 Next, we'll compute the mean of the gradients, then adjust the slope/intercept in the direction of minimizing the gradient, which is based on the error.
 
-You'll note that this for-loop has 100 iterations. The more interations we go through, the more that errors are minimized and the more we approach a slope/intercept where the model "fits" the data better. 
+You'll note that this for-loop has 100 iterations. The more iterations we go through, the more that errors are minimized and the more we approach a slope/intercept where the model "fits" the data better. 
 
 You can see in this list, `[linear_gradient(x, y, theta) for x, y in inputs]`, that our `linear_gradient` function is applied to the known `x` and `y` values in the list of tuples, `inputs`, along with random values for slope/intercept (`theta`).
 

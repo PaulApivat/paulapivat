@@ -829,7 +829,7 @@ print(&quot;theta:&quot;, theta)
 <p>The <strong>normal equation</strong> and the <strong>least squares</strong> approach can handle large training sets efficiently, but when your model has a large number of features or too many training instances to fit into memory, <strong>gradient descent</strong> is an often used alternative.</p>
 <p>Moreover, linear least squares assume the errors have a normal distribution and the relationship in the data is linear (this is where closed-form solutions like the normal equation excel). When the data is non-linear, an iterative solution (gradient descent) can be used.</p>
 <p>With linear regression we seek to minimize the sum-of-squares differences between the observed data and the predicted values (aka the error), in a <strong>non-iterative</strong> fashion.</p>
-<p>Alternatively, we use gradient descent to find the slope and intercept that minimizes the average squared error, however, in an <strong>interative fashion</strong>.</p>
+<p>Alternatively, we use gradient descent to find the slope and intercept that minimizes the average squared error, however, in an <strong>iterative fashion</strong>.</p>
 <h4 id="using-gradient-descent-to-fit-a-model">Using Gradient Descent to Fit a Model</h4>
 <p>The process for gradient descent is to start with a <strong>random</strong> slope and intercept, then compute the gradient of the mean squared error, while adjusting the slope/intercept (<code>theta</code>) in the direction that continues to minimize the error. This is repeated iteratively until we find a point where errors are <em>most</em> minimized.</p>
 <p><strong>NOTE</strong>: This section builds heavily on a previous post on linear algebra. You&rsquo;ll want to 
@@ -858,7 +858,7 @@ theta = [random.uniform(-1, 1), random.uniform(-1, 1)]
 learning_rate = 0.001
 </code></pre>
 <p>Next, we&rsquo;ll compute the mean of the gradients, then adjust the slope/intercept in the direction of minimizing the gradient, which is based on the error.</p>
-<p>You&rsquo;ll note that this for-loop has 100 iterations. The more interations we go through, the more that errors are minimized and the more we approach a slope/intercept where the model &ldquo;fits&rdquo; the data better.</p>
+<p>You&rsquo;ll note that this for-loop has 100 iterations. The more iterations we go through, the more that errors are minimized and the more we approach a slope/intercept where the model &ldquo;fits&rdquo; the data better.</p>
 <p>You can see in this list, <code>[linear_gradient(x, y, theta) for x, y in inputs]</code>, that our <code>linear_gradient</code> function is applied to the known <code>x</code> and <code>y</code> values in the list of tuples, <code>inputs</code>, along with random values for slope/intercept (<code>theta</code>).</p>
 <p>We multiply each <code>x</code> value with a random value for slope, then add a random value for intercept. This yields the initial prediction. Error is the gap between the initial prediction and <em>actual</em> <code>y</code> values. We minimize the squared error by using its gradient.</p>
 <pre><code class="language-python"># start with a function that determines the gradient based on the error from a single data point
