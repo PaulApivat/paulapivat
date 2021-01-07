@@ -27,11 +27,11 @@
   
     
   
-  <meta name="description" content="Data Wrangling: Does Order matter? In short, yes, it matters. But when and where?
-Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations&rsquo; Statistics Division for Sustainable Development Goals (SDG) Indicators (Goal 4, Target 4.">
+  <meta name="description" content="Setting up dotenv Files Use Case: We have sensitive API Keys and Secret Keys we don&rsquo;t want to put into version control, but we need to access.
+The best practice is to create a .">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip5/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_dotenv/">
 
   
 
@@ -218,7 +218,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip5/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_dotenv/">
 
   
   
@@ -237,16 +237,16 @@ Below are examples to highlight when function order matters and when it doesn&rs
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip5/">
-  <meta property="og:title" content="Does order of operation matter among dplyr functions? | Paul Apivat">
-  <meta property="og:description" content="Data Wrangling: Does Order matter? In short, yes, it matters. But when and where?
-Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations&rsquo; Statistics Division for Sustainable Development Goals (SDG) Indicators (Goal 4, Target 4."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_dotenv/">
+  <meta property="og:title" content="Setting dotenv to Access Sensitive API Keys | Paul Apivat">
+  <meta property="og:description" content="Setting up dotenv Files Use Case: We have sensitive API Keys and Secret Keys we don&rsquo;t want to put into version control, but we need to access.
+The best practice is to create a ."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-08-27T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-01-07T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-08-27T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-01-07T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +265,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
 
 
 
-  <title>Does order of operation matter among dplyr functions? | Paul Apivat</title>
+  <title>Setting dotenv to Access Sensitive API Keys | Paul Apivat</title>
 
 </head>
 
@@ -743,7 +743,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
         <a href="/technical_notes/example_tech/python_tip2/">Creating and Looping through DataFrames</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/python_dotenv/">dotenv in Python</a>
       </li>
       
@@ -780,7 +780,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
         <a href="/technical_notes/example_tech/rstats_dates/">Format Dates</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_tip5/">Order of Dplyr Functions</a>
       </li>
       
@@ -818,7 +818,8 @@ Below are examples to highlight when function order matters and when it doesn&rs
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#data-wrangling-does-order-matter">Data Wrangling: Does Order matter?</a></li>
+    <li><a href="#setting-up-dotenv-files">Setting up dotenv Files</a></li>
+    <li><a href="#installing-dotenv-module">Installing dotenv module</a></li>
   </ul>
 </nav>
 
@@ -831,116 +832,82 @@ Below are examples to highlight when function order matters and when it doesn&rs
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Does order of operation matter among dplyr functions?</h1>
+          <h1>Setting dotenv to Access Sensitive API Keys</h1>
 
           <div class="article-style">
-            <h2 id="data-wrangling-does-order-matter">Data Wrangling: Does Order matter?</h2>
-<p>In short, yes, it matters. But when and where?</p>
-<p>Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations&rsquo; Statistics Division for 
-<a href="https://unstats.un.org/sdgs/indicators/database/" target="_blank" rel="noopener">Sustainable Development Goals</a> (SDG) Indicators (Goal 4, Target 4.4).</p>
-<p>See also UN Statistics Wiki on 
-<a href="https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&#43;4.4.1" target="_blank" rel="noopener">Indicator 4.4.1</a>.</p>
-<pre><code># Example chain of functions to determine proportion of Thailand's population to have certain ICT skills in 2018
-
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    arrange(desc(mean_value))
+            <h2 id="setting-up-dotenv-files">Setting up dotenv Files</h2>
+<p><strong>Use Case</strong>: We have sensitive API Keys and Secret Keys we don&rsquo;t want to put into version control, but we need to access.</p>
+<p>The best practice is to create a <code>.env</code> file at the root of your project and store the keys in there, and <strong>most importantly</strong>, making sure to include <code>.env</code> in a <code>.gitignore</code> file so it <em>does not</em> get included in versioning.</p>
+<p>The challenge is to install the <code>dotenv</code> module to access the <code>load_dotenv</code> function in order to access the data in the environment variable (<code>.env</code>).</p>
+<p>First, here&rsquo;s how the structure of the directory <em>could</em> look like:</p>
+<pre><code>.
+├── .env
+└── settings.py
+└── .gitignore
+└── project_directory_1
+        └── file.py
+└── project_directory_2
+        └── another_file.py
 </code></pre>
-<p>Here, the <code>filter</code> functions are moved up to be before <code>rename</code> and <code>mutate</code>. The ordering here does <strong>not</strong> matter.</p>
-<pre><code>data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    
-    # putting filter before rename, mutate is fine
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    arrange(desc(mean_value))
-</code></pre>
-<p>Furthermore, we could even experiment with the <code>filter</code> function being before or after <code>select</code>. Here, ordering also does <strong>not</strong> matter.</p>
-<pre><code>data %&gt;%
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    arrange(desc(mean_value))
+<p>The key things to pay attention here are <code>.env</code>, <code>settings.py</code> and <code>.gitignore</code>.</p>
+<p>For the present hypothetical project, here&rsquo;s what needs to be in the <code>.gitignore</code> file:</p>
+<pre><code>#.gitignore
 
+# Environents
+.env
 </code></pre>
-<p>Here is there order <strong>does</strong> matter. When we try to move the two <code>filter</code> functions below <code>group_by</code>, <code>summarize</code> and <code>ungroup</code>, the filtering does <em>not</em> work. By the time we get to <code>filter(GeoAreaName == 'Thailand')</code> in this example, GeoAreaName has been removed because we did <em>not</em> <code>group_by</code> <code>GeoAreaName</code>, so we get an error.</p>
-<pre><code># Running this code, we'll get the ERROR: Problem with `filter()` input `..1`. x object 'GeoAreaName' not found ℹ Input `..1` is 
-# `GeoAreaName == &quot;Thailand&quot;`.
+<p>Here&rsquo;s what needs to be in <code>.env</code>. The example here is accessing Twitter API. The first time you&rsquo;re setting this up, I&rsquo;d recommend using a &ldquo;fake&rdquo; CONSUMER_KEY (aka API Key) and CONSUMER_SECRET (API Secret Key) just to test it out and make sure that it doesn&rsquo;t get inadvertently added to version control (<strong>note</strong>: see setting up <code>.gitignore</code> above).</p>
+<pre><code># you'll put your actual API Keys and Secrete Keys here
 
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    relocate(Sex, Value, GeoAreaName) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    # filter was previously here
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    # moving filter down below group_by &amp; summarize() does not work
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    arrange(desc(mean_value))
+TWITTER_CONSUMER_KEY=fakeconsumerkey
+TWITTER_CONSUMER_SECRET=fakeconsumersecret
 </code></pre>
-<p>Finally, if we want to use <code>filter</code> on the <em>results</em> of the <code>mutate</code> function, we see that order <strong>does</strong> matter. By the time we get to the final <code>filter(Value &lt; 10)</code>, the <code>Value</code> variable is no longer available to us because we did not <code>group_by</code> and <code>summarize</code> by Value (instead we created <code>mean_value</code> and <code>median_value</code>).</p>
-<pre><code>
-data %&gt;%
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    # filtering for Values less than 10 does work here
-    filter(Value &lt; 10) %&gt;%
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    arrange(desc(mean_value)) %&gt;%
-    # filter for Values less than 10 does not work down here
-    filter(Value &lt; 10)
+<p>Within the <code>settings.py</code> file, you&rsquo;ll have:</p>
+<pre><code>from dotenv import load_dotenv
+load_dotenv()
+</code></pre>
+<p>From there you&rsquo;ll go into <code>file.py</code> and use the dotenv module to access environment variables (sensitive API Keys). The example below accesses Twitter API.</p>
+<pre><code>#file.py
 
+# for python-dotenv method of access environment variables
+from twython import Twython
+import webbrowser
+import os
+import dotenv
+from dotenv import load_dotenv
+load_dotenv()
+
+###### TWITTER API ######
+
+# IMPORTANT: PLUG YOUR KEY AND SECRET IN DIRECTLY (without os.environ.get())
+CONSUMER_KEY = os.environ.get(&quot;TWITTER_CONSUMER_KEY&quot;)         # API Key
+CONSUMER_SECRET = os.environ.get(&quot;TWITTER_CONSUMER_SECRET&quot;)   # API Secret Key
+</code></pre>
+<p>Assuming everything is setup properly, you should be able to run the following code within <code>IPython</code> and have <code>CONSUMER_KEY</code> return a string:</p>
+<pre><code>import os
+import dotenv
+from dotenv import load_dotenv
+
+load_dotenv() # True
+CONSUMER_KEY = os.environ.get(&quot;TWITTER_CONSUMER_KEY&quot;)
+
+CONSUMER_KEY  # 'fakeconsumerkey'
+</code></pre>
+<h2 id="installing-dotenv-module">Installing dotenv module</h2>
+<p>This is the challenging part. I had installed <code>dotenv</code> but was unable to access it within <code>settings.py</code> and <code>file.py</code>.</p>
+<p>First, because we&rsquo;re using Python3, anything that involves <code>pip install</code> should  be <code>pip3 install</code>.</p>
+<p>I had to uninstall, then re-install <code>dotenv</code>, and what worked was following this 
+<a href="https://stackoverflow.com/questions/58943578/i-have-installed-python-dotenv-but-python-cannot-find-it" target="_blank" rel="noopener">Stack Overflow answer</a>:</p>
+<pre><code>conda install -c conda-forge python-dotenv
+</code></pre>
+<p>Sometimes having both <code>dotenv</code> and <code>python-dotenv</code> install can cause conflict. In which case, in your virtual environment, try below. Based on 
+<a href="https://stackoverflow.com/questions/58943578/i-have-installed-python-dotenv-but-python-cannot-find-it" target="_blank" rel="noopener">this answer</a>.</p>
+<pre><code>pip3 uninstall dotenv
+pip3 uninstall python-dotenv
+pip3 install python-dotenv
+</code></pre>
+<p>You&rsquo;ll know you have something working when you run the following code in the command line:</p>
+<pre><code>dotenv --version   # dotenv, version 0.15.0
 </code></pre>
 
           </div>
@@ -957,15 +924,8 @@ data %&gt;%
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_tip4/" rel="next">Calculating 25th, 50th and 75th Percentile of Column Values</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/data_viz_tip1/" rel="prev">Creating a dendrogram with R and ggraph</a>
+    <a href="/technical_notes/example_tech/python_poetry/" rel="prev">Setting up Poetry for Dependency Management</a>
   </div>
   
 </div>
@@ -975,7 +935,7 @@ data %&gt;%
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Aug 27, 2020</p>
+          <p>Last updated on Jan 7, 2021</p>
 
           
 
@@ -987,7 +947,7 @@ data %&gt;%
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip5.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_dotenv.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

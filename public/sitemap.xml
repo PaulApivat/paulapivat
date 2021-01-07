@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/technical_notes/example_tech/python_dotenv/</loc>
+    <lastmod>2021-01-07T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/technical_notes/example_tech/python_poetry/</loc>
     <lastmod>2020-12-22T00:00:00+01:00</lastmod>
   </url>
@@ -148,6 +153,11 @@
   </url>
   
   <url>
+    <loc>/technical_notes/</loc>
+    <lastmod>2021-01-07T00:00:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/authors/</loc>
     <lastmod>2020-12-22T00:00:00+00:00</lastmod>
   </url>
@@ -190,11 +200,6 @@
   <url>
     <loc>/tags/</loc>
     <lastmod>2020-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/technical_notes/</loc>
-    <lastmod>2020-12-22T00:00:00+01:00</lastmod>
   </url>
   
   <url>
