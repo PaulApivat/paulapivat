@@ -8,7 +8,7 @@ featured: false
 image:
   caption: ""
   focal_point: ""
-lastMod: "2020-12-14T00:00:00Z"
+lastMod: "2021-01-15T00:00:00Z"
 projects: []
 subtitle: Finding beauty in the process
 summary: TidyTuesday Outtakes
@@ -45,4 +45,14 @@ Sunburst (BBC's 100 Influential Women 2020)
 Circular Packing (experimental)
 
 ![circular](./circular.png)
+
+Oops, I did it again:
+
+![oops](./oops.png)
+
+This one is inspired by [Georgios Karamanis'](https://twitter.com/geokaramanis/status/1345811125678596096?s=20) #genuary submission using the {ggridges} package.
+
+This is my daughter Milin, still lovely to me :)
+
+![milin_fill_y](./milin_fill_y.png)
 
