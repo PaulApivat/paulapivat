@@ -5,12 +5,97 @@
     <link>/tag/data-science/</link>
       <atom:link href="/tag/data-science/index.xml" rel="self" type="application/rss+xml" />
     <description>Data Science</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Tue, 22 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Fri, 15 Jan 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Data Science</title>
       <link>/tag/data-science/</link>
     </image>
+    
+    <item>
+      <title>Analyzing Your Twitter Data</title>
+      <link>/post/twitter_analytics/</link>
+      <pubDate>Fri, 15 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/post/twitter_analytics/</guid>
+      <description>&lt;h3 id=&#34;table-of-contents&#34;&gt;Table of contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;#overview&#34;&gt;Overview&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#exploring_relationships&#34;&gt;Exploring Relationships&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;overview--setup&#34;&gt;Overview &amp;amp; Setup&lt;/h2&gt;
+&lt;p&gt;This post use various R libraries and functions to explore Twitter Analytics Data. The first thing to do is download data from 
+&lt;a href=&#34;https://analytics.twitter.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;analytics.twitter.com&lt;/a&gt;. The assumption here is that you&amp;rsquo;re already a Twitter user and have been using for at least 6 months.&lt;/p&gt;
+&lt;p&gt;Once there, you&amp;rsquo;ll click on the &lt;code&gt;Tweets&lt;/code&gt; tab, which should bring you to your Tweet activity with the option to Export data:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./twitter_analytics.png&#34; alt=&#34;twitter_analytics&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Once you click on &lt;code&gt;Export data&lt;/code&gt;, you&amp;rsquo;ll have choose &amp;ldquo;By day&amp;rdquo;, which provides your impressions and engagements metrics for everyday (you&amp;rsquo;ll also select the time period, in the drop down menu right next to Export data - the default is &amp;ldquo;Last 28 Days&amp;rdquo;).&lt;/p&gt;
+&lt;p&gt;For this post, I downloaded &lt;em&gt;all available&lt;/em&gt; data, which goes five months back.&lt;/p&gt;
+&lt;p&gt;After downloading, you&amp;rsquo;ll want to &lt;strong&gt;read&lt;/strong&gt; in the data and, in our case, &lt;strong&gt;combine&lt;/strong&gt; all five monthly data into one data frame, we&amp;rsquo;ll use the &lt;code&gt;readr&lt;/code&gt; package and &lt;code&gt;read_csv()&lt;/code&gt; function contained in &lt;code&gt;tidyverse&lt;/code&gt;. Then we&amp;rsquo;ll use &lt;code&gt;rbind()&lt;/code&gt; to combine five separate data frames by rows:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;library(tidyverse)
+
+# load data from September to mid-January
+df1 &amp;lt;- read_csv(&amp;quot;./daily_tweet_activity/daily_tweet_activity_metrics_paulapivat_20200901_20201001_en.csv&amp;quot;)
+df2 &amp;lt;- read_csv(&amp;quot;./daily_tweet_activity/daily_tweet_activity_metrics_paulapivat_20201001_20201101_en.csv&amp;quot;)
+df3 &amp;lt;- read_csv(&amp;quot;./daily_tweet_activity/daily_tweet_activity_metrics_paulapivat_20201101_20201201_en.csv&amp;quot;)
+df4 &amp;lt;- read_csv(&amp;quot;./daily_tweet_activity/daily_tweet_activity_metrics_paulapivat_20201201_20210101_en.csv&amp;quot;)
+df5 &amp;lt;- read_csv(&amp;quot;./daily_tweet_activity/daily_tweet_activity_metrics_paulapivat_20210101_20210112_en.csv&amp;quot;)
+
+# combining ALL five dataframes into ONE, by rows
+df &amp;lt;- rbind(df1, df2, df3, df4, df5)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;exploring_relationships&#34;&gt;Exploring_Relationships&lt;/h2&gt;
+&lt;p&gt;Twitter analytics tracks several metric that are broadly grouped under Engagements, including: retweets, replies, likes, user profile clicks, url clicks, hashtag clicks, detail expands, media views and media engagements.&lt;/p&gt;
+&lt;p&gt;There are other metrics like &amp;ldquo;app opens&amp;rdquo; and &amp;ldquo;promoted engagements&amp;rdquo;, which are services I have not used and so do not have any data available.&lt;/p&gt;
+&lt;h4 id=&#34;a-guiding-question&#34;&gt;A Guiding Question&lt;/h4&gt;
+&lt;p&gt;It&amp;rsquo;s useful to have a guiding question as it helps focus your exploration. Let&amp;rsquo;s say, I was interested in whether one of my tweets prompted a reader to click on my profile. The metric for this is &lt;code&gt;user profile clicks&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;My initial guiding question for this post is:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Which metric is most strongly related to User Profile Clicks?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You could simply use the &lt;code&gt;cor.test()&lt;/code&gt; function, which comes with base R, to go one by one between &lt;em&gt;each&lt;/em&gt; metric and User Profile Click. For example, below we calculate the correlation between three pairs of variables, User Profile Clicks and retweets, replies and likes, separately. After awhile, this can get tedious.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cor.test(x = df$`user profile clicks`, y = df$retweets)
+cor.test(x = df$`user profile clicks`, y = df$replies)
+cor.test(x = df$`user profile clicks`, y = df$likes)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A quicker way to explore the relationship between pairs of metrics throughout a dataset is to use a &lt;strong&gt;correlelogram&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Again, we&amp;rsquo;ll start with base R. You&amp;rsquo;ll want to limit the number of variables you visualize so the correlelogram doesn&amp;rsquo;t become too cluttered. Here are four variables that correlate the highest with &lt;code&gt;user profile clicks&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;df %&amp;gt;%
+    select(8, 12, 19:20, `user profile clicks`) %&amp;gt;%
+    plot(pch = 20, cex = 1.5, col=&amp;quot;#69b3a2&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s a visual:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./plot_strongest.png&#34; alt=&#34;plot_strongest&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Here are another four metrics with moderate relationships:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;df %&amp;gt;%
+    select(6:7, 10:11, `user profile clicks`) %&amp;gt;%
+    plot(pch = 20, cex = 1.5, col=&amp;quot;#69b3a2&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./plot_moderate.png&#34; alt=&#34;plot_moderate&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Visually, you can see the moderate relationship scatter plots are more dispersed, with less identifiable direction.&lt;/p&gt;
+&lt;p&gt;While base R is dependable, we can get more informative plots with the &lt;code&gt;GGally&lt;/code&gt; package. Here are the four highly correlated variables with &lt;code&gt;user profile clicks&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;library(GGally)
+
+# GGally, Strongest Related
+df %&amp;gt;%
+    select(8, 12, 19:20, `user profile clicks`) %&amp;gt;%
+    ggpairs(
+        diag = NULL,
+        title = &amp;quot;Strongest Relationships with User Profile Clicks: Sep 2020 - Jan 2021&amp;quot;,
+        axisLabels = c(&amp;quot;internal&amp;quot;),
+        xlab = &amp;quot;Value&amp;quot;
+    )
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s the correlelogram between the four most highly correlated variables with &lt;code&gt;user profile clicks&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./strongest.png&#34; alt=&#34;strongest&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Here are the moderately correlated variables with &lt;code&gt;user profile clicks&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./moderate.png&#34; alt=&#34;moderate&#34;&gt;&lt;/p&gt;
+&lt;p&gt;As you can see, not only do these provide scatter plots, but they also show the numerical values of the correlation between each pair of variables, which is much more informative than base R.&lt;/p&gt;
+&lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Gradient Descent -- Data Science from Scratch (ch8)</title>
