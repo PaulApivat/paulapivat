@@ -765,13 +765,14 @@
 <a href="#exploring_relationships">Exploring Relationships</a></li>
 </ul>
 <h2 id="overview--setup">Overview &amp; Setup</h2>
-<p>This post use various R libraries and functions to explore Twitter Analytics Data. The first thing to do is download data from 
+<p>This post uses various R libraries and functions to help you explore your Twitter Analytics Data. The first thing to do is download data from 
 <a href="https://analytics.twitter.com/" target="_blank" rel="noopener">analytics.twitter.com</a>. The assumption here is that you&rsquo;re already a Twitter user and have been using for at least 6 months.</p>
-<p>Once there, you&rsquo;ll click on the <code>Tweets</code> tab, which should bring you to your Tweet activity with the option to Export data:</p>
+<p>Once there, you&rsquo;ll click on the <code>Tweets</code> tab, which should bring you to your Tweet activity with the option to <strong>Export data</strong>:</p>
 <p><img src="./twitter_analytics.png" alt="twitter_analytics"></p>
-<p>Once you click on <code>Export data</code>, you&rsquo;ll have choose &ldquo;By day&rdquo;, which provides your impressions and engagements metrics for everyday (you&rsquo;ll also select the time period, in the drop down menu right next to Export data - the default is &ldquo;Last 28 Days&rdquo;).</p>
-<p>For this post, I downloaded <em>all available</em> data, which goes five months back.</p>
-<p>After downloading, you&rsquo;ll want to <strong>read</strong> in the data and, in our case, <strong>combine</strong> all five monthly data into one data frame, we&rsquo;ll use the <code>readr</code> package and <code>read_csv()</code> function contained in <code>tidyverse</code>. Then we&rsquo;ll use <code>rbind()</code> to combine five separate data frames by rows:</p>
+<p>Once you click on <strong>Export data</strong>, you&rsquo;ll choose &ldquo;By day&rdquo;, which provides your impressions and engagements metrics for everyday (you&rsquo;ll also select the time period, in the drop down menu right next to Export data - the default is &ldquo;Last 28 Days&rdquo;).</p>
+<p><strong>Note</strong>: The other option is to choose &ldquo;By Tweet&rdquo; and that will download the text of each Tweet along with associated metrics. We could potentially do fun text analysis with this, but we&rsquo;ll save that for another post.</p>
+<p>For this post, I downloaded all <em>available</em> data, which goes five months back.</p>
+<p>After downloading, you&rsquo;ll want to <strong>read</strong> in the data and, in our case, <strong>combine</strong> all five months into one data frame, we&rsquo;ll use the <code>readr</code> package and <code>read_csv()</code> function contained in <code>tidyverse</code>. Then we&rsquo;ll use <code>rbind()</code> to combine five data frames by rows:</p>
 <pre><code>library(tidyverse)
 
 # load data from September to mid-January
@@ -791,29 +792,30 @@ df &lt;- rbind(df1, df2, df3, df4, df5)
 <p>It&rsquo;s useful to have a guiding question as it helps focus your exploration. Let&rsquo;s say, I was interested in whether one of my tweets prompted a reader to click on my profile. The metric for this is <code>user profile clicks</code>.</p>
 <p>My initial guiding question for this post is:</p>
 <blockquote>
-<p>Which metric is most strongly related to User Profile Clicks?</p>
+<p>Which metrics are most strongly correlated with User Profile Clicks?</p>
 </blockquote>
-<p>You could simply use the <code>cor.test()</code> function, which comes with base R, to go one by one between <em>each</em> metric and User Profile Click. For example, below we calculate the correlation between three pairs of variables, User Profile Clicks and retweets, replies and likes, separately. After awhile, this can get tedious.</p>
+<p>You could simply use the <code>cor.test()</code> function, which comes with base R, to go one by one between <em>each</em> metric and <code>User Profile Click</code>. For example, below we calculate the correlation between three pairs of variables, <code>User Profile Clicks</code> and <code>retweets</code>, <code>replies</code> and <code>likes</code>, separately. After awhile, this can get tedious.</p>
 <pre><code>cor.test(x = df$`user profile clicks`, y = df$retweets)
 cor.test(x = df$`user profile clicks`, y = df$replies)
 cor.test(x = df$`user profile clicks`, y = df$likes)
 </code></pre>
 <p>A quicker way to explore the relationship between pairs of metrics throughout a dataset is to use a <strong>correlelogram</strong>.</p>
-<p>Again, we&rsquo;ll start with base R. You&rsquo;ll want to limit the number of variables you visualize so the correlelogram doesn&rsquo;t become too cluttered. Here are four variables that correlate the highest with <code>user profile clicks</code>:</p>
-<pre><code>df %&gt;%
+<p>We&rsquo;ll start with base R. You&rsquo;ll want to limit the number of variables you visualize so the correlelogram doesn&rsquo;t become too cluttered. Here are four variables that correlate the highest with <code>User Profile Clicks</code>:</p>
+<pre><code># four columns are selected along with user profile clicks to plot
+df %&gt;%
     select(8, 12, 19:20, `user profile clicks`) %&gt;%
     plot(pch = 20, cex = 1.5, col=&quot;#69b3a2&quot;)
 </code></pre>
 <p>Here&rsquo;s a visual:</p>
 <p><img src="./plot_strongest.png" alt="plot_strongest"></p>
-<p>Here are another four metrics with moderate relationships:</p>
+<p>Here are another four metrics with <em>moderate</em> relationships:</p>
 <pre><code>df %&gt;%
     select(6:7, 10:11, `user profile clicks`) %&gt;%
     plot(pch = 20, cex = 1.5, col=&quot;#69b3a2&quot;)
 </code></pre>
 <p><img src="./plot_moderate.png" alt="plot_moderate"></p>
-<p>Visually, you can see the moderate relationship scatter plots are more dispersed, with less identifiable direction.</p>
-<p>While base R is dependable, we can get more informative plots with the <code>GGally</code> package. Here are the four highly correlated variables with <code>user profile clicks</code>:</p>
+<p>Visually, you can see the moderate relationship scatter plots are more dispersed, with a less identifiable direction.</p>
+<p>While base R is dependable, we can get more informative plots with the <code>GGally</code> package. Here are the four highly correlated variables with <code>User Profile Clicks</code>:</p>
 <pre><code>library(GGally)
 
 # GGally, Strongest Related
@@ -829,9 +831,10 @@ df %&gt;%
 </code></pre>
 <p>Here&rsquo;s the correlelogram between the four most highly correlated variables with <code>user profile clicks</code>:</p>
 <p><img src="./strongest.png" alt="strongest"></p>
-<p>Here are the moderately correlated variables with <code>user profile clicks</code>:</p>
+<p>Here are the moderately correlated variables with <code>User Profile Clicks</code>:</p>
 <p><img src="./moderate.png" alt="moderate"></p>
 <p>As you can see, not only do these provide scatter plots, but they also show the numerical values of the correlation between each pair of variables, which is much more informative than base R.</p>
+<p>Now, its entirely possible that the pattern of correlation in your data is different as the initial patterns we&rsquo;re seeing here are not meant to generalize to a different dataset.</p>
 <p>For more content on data science, machine learning, R, Python, SQL and more, 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
