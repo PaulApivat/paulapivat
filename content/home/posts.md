@@ -8,7 +8,7 @@ active = true  # Activate this widget? true/false
 weight = 60  # Order that this section will appear.
 
 title = "Recent Posts"
-subtitle = "Other blogs: [Getwyze.com](http://getwyze.com/) | [dev.to](https://dev.to/paulapivat) | [hashnode](https://paulapivat.hashnode.dev/) | [medium](https://paulapivat.medium.com/)"
+subtitle = "Online Writing: [Medium](http://paulapivat.medium.com/) | [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f) | [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse) | [Hashnode](https://paulapivat.hashnode.dev/) | [dev.to](https://dev.to/paulapivat) | [getwyze](http://getwyze.com/)"
 
 [content]
   # Page type to display. E.g. post, talk, or publication.
