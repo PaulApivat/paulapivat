@@ -5,12 +5,201 @@
     <link>/post/</link>
       <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Fri, 15 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Tue, 26 Jan 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>/post/</link>
     </image>
+    
+    <item>
+      <title>How Positive are your Facebook Posts? A Quick Intro to Sentiment Analysis</title>
+      <link>/post/sentiment_analysis/</link>
+      <pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/post/sentiment_analysis/</guid>
+      <description>&lt;h3 id=&#34;table-of-contents&#34;&gt;Table of contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;#overview&#34;&gt;Overview&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#getting_data&#34;&gt;Getting Data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#tokenization&#34;&gt;Tokenization&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#normalizing_sentences&#34;&gt;Normalizing Sentences&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#frequency&#34;&gt;Frequency&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#sentiment_analysis&#34;&gt;Sentiment Analysis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;h4 id=&#34;why-sentiment-analysis&#34;&gt;Why Sentiment Analysis?&lt;/h4&gt;
+&lt;p&gt;NLP is subfield of linguistic, computer science and artificial intelligence (
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Natural_language_processing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;wiki&lt;/a&gt;), and you could spend years studying it.&lt;/p&gt;
+&lt;p&gt;Alternatively, I wanted a quick mini-dive into this domain, to a get a basic intuition for how NLP works.&lt;/p&gt;
+&lt;p&gt;The ideal dataset to work is our own social media post as we may feel connected to the data and motivated to see hidden insights.&lt;/p&gt;
+&lt;h4 id=&#34;how-well-does-facebook-know-us&#34;&gt;How well does Facebook know us?&lt;/h4&gt;
+&lt;p&gt;How much is too much?&lt;/p&gt;
+&lt;p&gt;To find out, I download 14 years of posts to apply basic &lt;strong&gt;text analysis&lt;/strong&gt; and &lt;strong&gt;pre-processing&lt;/strong&gt;. I  used &lt;code&gt;Python&lt;/code&gt; to read in &lt;code&gt;json&lt;/code&gt; data downloaded from Facebook.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll perform pre-processing tasks like tokenization, normalization, stemming and lemmatization aided by Python&amp;rsquo;s &lt;strong&gt;Natural Language Toolkit&lt;/strong&gt;, &lt;code&gt;NLTK&lt;/code&gt;. We can get a frequency of words and sentences from all posts. Finally, we&amp;rsquo;ll use the &lt;code&gt;VADER&lt;/code&gt; module (Hutto &amp;amp; Gilbert, 2014) for rule-based (or lexicon) model of &lt;strong&gt;sentiment analysis&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Then, we&amp;rsquo;ll transition our work flow to &lt;code&gt;R&lt;/code&gt; for &lt;strong&gt;data manipulation&lt;/strong&gt; and &lt;strong&gt;visualization&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;getting_data&#34;&gt;Getting_Data&lt;/h2&gt;
+&lt;p&gt;First, you&amp;rsquo;ll need to download your own Facebook data by following: Setting &amp;amp; Privacy &amp;gt; Setting &amp;gt; Your Facebook Information &amp;gt; Download Your Information &amp;gt; (select) Posts.&lt;/p&gt;
+&lt;p&gt;In the example below, I named my file &lt;code&gt;your_posts_1.json&lt;/code&gt;, but you can change this.
+To read in json, we&amp;rsquo;ll use Python&amp;rsquo;s &lt;code&gt;json&lt;/code&gt; module. I also like getting a feel for the data with &lt;code&gt;type&lt;/code&gt; and &lt;code&gt;len&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import json
+
+# load json into python, assign to &#39;data&#39;
+with open(&#39;your_posts_1.json&#39;) as file:
+    data = json.load(file)
+
+type(data)     # a list
+type(data[0])  # first object in the list: a dictionary
+len(data)      # my list contains 2166 dictionaries
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here are &lt;em&gt;all&lt;/em&gt; the libraries we use in this post:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import pandas as pd
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from nltk.stem import LancasterStemmer, WordNetLemmatizer
+from nltk.corpus import stopwords
+from nltk.probability import FreqDist
+import re
+import unicodedata
+import nltk
+import json
+import inflect
+import matplotlib.pyplot as plt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After we have our data (in &lt;code&gt;json&lt;/code&gt; format), we&amp;rsquo;ll 
+&lt;a href=&#34;https://twitter.com/paulapivat/status/1352893979897909251?s=20&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;dig through&lt;/a&gt; to get the actual &lt;strong&gt;text data&lt;/strong&gt; (our posts).&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll store this text in a list.&lt;/p&gt;
+&lt;p&gt;The code for doing this is. &lt;strong&gt;Note&lt;/strong&gt;: the &lt;code&gt;data&lt;/code&gt; key occassionally returns an empty array and we want to skip over those by checking &lt;code&gt;len(v) &amp;gt; 0&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# create empty list
+empty_lst = []
+
+# multiple nested loops to store all post in empty list
+for dct in data:
+    for k, v in dct.items():
+        if k == &#39;data&#39;:
+            if len(v) &amp;gt; 0:
+                for k_i, v_i in vee[0].items():  
+                    if k_i == &#39;post&#39;:
+                        empty_lst.append(v_i)
+
+print(&amp;quot;This is the empty list: &amp;quot;, empty_lst)
+print(&amp;quot;\nLength of list: &amp;quot;, len(empty_lst))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We now have a list of strings.&lt;/p&gt;
+&lt;h2 id=&#34;tokenization&#34;&gt;Tokenization&lt;/h2&gt;
+&lt;p&gt;We&amp;rsquo;ll loop through a list of strings (empty_lst) to tokenize each &lt;em&gt;sentence&lt;/em&gt; with &lt;code&gt;nltk.sent_tokenize()&lt;/code&gt;. This yields a list of list, we&amp;rsquo;ll need to flatten it:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# - list of list, len: 1762 (each list contain sentences)
+nested_sent_token = [nltk.sent_tokenize(lst) for lst in empty_lst]
+
+# flatten list, len: 3241
+flat_sent_token = [item for sublist in nested_sent_token for item in sublist]
+print(&amp;quot;Flatten sentence token: &amp;quot;, len(flat_sent_token))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;normalizing_sentences&#34;&gt;Normalizing_Sentences&lt;/h2&gt;
+&lt;p&gt;For context on the functions used in this section, check out this article by Matthew Mayo on 
+&lt;a href=&#34;https://www.kdnuggets.com/2018/03/text-data-preprocessing-walkthrough-python.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Text Data Preprocessing&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;First, we &lt;code&gt;remove_non_ascii(words)&lt;/code&gt; characters including: &lt;code&gt;#&lt;/code&gt;, &lt;code&gt;-&lt;/code&gt;, &lt;code&gt;&#39;&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt;, among many others. Then we&amp;rsquo;ll &lt;code&gt;to_lowercase(words)&lt;/code&gt;, &lt;code&gt;remove_punctuation(words)&lt;/code&gt;, &lt;code&gt;replace_numbers(words)&lt;/code&gt;, and &lt;code&gt;remove_stopwords(words)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Examples stopwords are: your, yours, yourself, yourselves, he, him, his, himself etc.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Remove Non-ASCII
+def remove_non_ascii(words):
+    &amp;quot;&amp;quot;&amp;quot;Remove non-ASCII character from List of tokenized words&amp;quot;&amp;quot;&amp;quot;
+    new_words = []
+    for word in words:
+        new_word = unicodedata.normalize(&#39;NFKD&#39;, word).encode(
+            &#39;ascii&#39;, &#39;ignore&#39;).decode(&#39;utf-8&#39;, &#39;ignore&#39;)
+        new_words.append(new_word)
+    return new_words
+
+
+# To LowerCase
+def to_lowercase(words):
+    &amp;quot;&amp;quot;&amp;quot;Convert all characters to lowercase from List of tokenized words&amp;quot;&amp;quot;&amp;quot;
+    new_words = []
+    for word in words:
+        new_word = word.lower()
+        new_words.append(new_word)
+    return new_words
+
+
+# Remove Punctuation , then Re-Plot Frequency Graph
+def remove_punctuation(words):
+    &amp;quot;&amp;quot;&amp;quot;Remove punctuation from list of tokenized words&amp;quot;&amp;quot;&amp;quot;
+    new_words = []
+    for word in words:
+        new_word = re.sub(r&#39;[^\w\s]&#39;, &#39;&#39;, word)
+        if new_word != &#39;&#39;:
+            new_words.append(new_word)
+    return new_words
+
+
+# Replace Numbers with Textual Representations
+def replace_numbers(words):
+    &amp;quot;&amp;quot;&amp;quot;Replace all interger occurrences in list of tokenized words with textual representation&amp;quot;&amp;quot;&amp;quot;
+    p = inflect.engine()
+    new_words = []
+    for word in words:
+        if word.isdigit():
+            new_word = p.number_to_words(word)
+            new_words.append(new_word)
+        else:
+            new_words.append(word)
+    return new_words
+
+# Remove Stopwords
+def remove_stopwords(words):
+    &amp;quot;&amp;quot;&amp;quot;Remove stop words from list of tokenized words&amp;quot;&amp;quot;&amp;quot;
+    new_words = []
+    for word in words:
+        if word not in stopwords.words(&#39;english&#39;):
+            new_words.append(word)
+    return new_words
+    
+# Combine all functions into Normalize() function
+def normalize(words):
+    words = remove_non_ascii(words)
+    words = to_lowercase(words)
+    words = remove_punctuation(words)
+    words = replace_numbers(words)
+    words = remove_stopwords(words)
+    return words
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, for this post we&amp;rsquo;re normalizing &lt;em&gt;sentences&lt;/em&gt;, rather than &lt;em&gt;words&lt;/em&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sents = normalize(flat_sent_token)
+print(&amp;quot;Length of sentences list: &amp;quot;, len(sents))   # 3194
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;frequency&#34;&gt;Frequency&lt;/h2&gt;
+&lt;p&gt;You can use the &lt;code&gt;FreqDist()&lt;/code&gt; function to get the most common sentences or words. After, you could plot a line chart for a visual comparison of the most frequent sentences.&lt;/p&gt;
+&lt;p&gt;Although simple, counting frequencies can yield some 
+&lt;a href=&#34;https://twitter.com/paulapivat/status/1353704114467729408?s=20&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;insights&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from nltk.probability import FreqDist
+
+# Find frequency of sentence
+fdist_sent = FreqDist(sents)
+fdist_sent.most_common(10)   
+
+# Plot
+fdist_sent.plot(10)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;sentiment_analysis&#34;&gt;Sentiment_Analysis&lt;/h2&gt;
+&lt;p&gt;We&amp;rsquo;ll use the &lt;code&gt;Vader&lt;/code&gt; module from &lt;code&gt;NLTK&lt;/code&gt;. Vader stands for:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Valence, Aware, Dictionary and sEntiment Reasoner.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;We are taking a &lt;strong&gt;rule-based/lexicon&lt;/strong&gt; approach to sentiment analysis because we have a fairly large dataset, but lack labelled data to build a robust training set, thus Machine Learning would &lt;strong&gt;not&lt;/strong&gt; be ideal for this task.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Hutto, C.J. &amp;amp; Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. Eighth International Conference on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Analyzing Your Twitter Data</title>
