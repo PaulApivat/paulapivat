@@ -32,6 +32,8 @@
 &lt;li&gt;
 &lt;a href=&#34;#sentiment_analysis&#34;&gt;Sentiment Analysis&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
+&lt;a href=&#34;#data_transformation&#34;&gt;Data Transformation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
 &lt;a href=&#34;#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
@@ -62,7 +64,7 @@ len(data)      # my list contains 2166 dictionaries
 &lt;p&gt;Here are &lt;em&gt;all&lt;/em&gt; the libraries we use in this post:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import pandas as pd
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from nltk.stem import LancasterStemmer, WordNetLemmatizer
+from nltk.stem import LancasterStemmer, WordNetLemmatizer      # OPTIONAL (more relevant for individual words)
 from nltk.corpus import stopwords
 from nltk.probability import FreqDist
 import re
@@ -72,6 +74,19 @@ import json
 import inflect
 import matplotlib.pyplot as plt
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://www.nltk.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Natural Language Tookkit&lt;/a&gt; This is a popular Python platform for work with human language data. Ideally for us, it has over 50 lexical resources; we&amp;rsquo;ll be using the 
+&lt;a href=&#34;https://github.com/cjhutto/vaderSentiment&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Vader Sentiment Lexicon&lt;/a&gt;, that is &lt;em&gt;specifically&lt;/em&gt; attuned to sentiments expressed in social media. Ideal for our use case. NLTK will also help with frequency count, stopwards, stemming and lemmatization.&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://docs.python.org/3/library/re.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Regex&lt;/a&gt; We&amp;rsquo;ll use regular expressions to remove punctuation.&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://docs.python.org/3/library/unicodedata.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Unicode Database&lt;/a&gt; We&amp;rsquo;ll access Unicode Database to remove non-ASCII characters.&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://docs.python.org/3/library/json.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;JSON&lt;/a&gt; We&amp;rsquo;ll use the &lt;strong&gt;json&lt;/strong&gt; module to read in json from Facebook.&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://pypi.org/project/inflect/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Inflect&lt;/a&gt; This allows us to convert numbers to words.&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://pandas.pydata.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Pandas&lt;/a&gt; This is a powerful data manipulation and data analysis tool that we&amp;rsquo;ll need when we want to save our text data into a data frame and write to csv.&lt;/p&gt;
 &lt;p&gt;After we have our data (in &lt;code&gt;json&lt;/code&gt; format), we&amp;rsquo;ll 
 &lt;a href=&#34;https://twitter.com/paulapivat/status/1352893979897909251?s=20&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;dig through&lt;/a&gt; to get the actual &lt;strong&gt;text data&lt;/strong&gt; (our posts).&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll store this text in a list.&lt;/p&gt;
@@ -93,7 +108,8 @@ print(&amp;quot;\nLength of list: &amp;quot;, len(empty_lst))
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We now have a list of strings.&lt;/p&gt;
 &lt;h2 id=&#34;tokenization&#34;&gt;Tokenization&lt;/h2&gt;
-&lt;p&gt;We&amp;rsquo;ll loop through a list of strings (empty_lst) to tokenize each &lt;em&gt;sentence&lt;/em&gt; with &lt;code&gt;nltk.sent_tokenize()&lt;/code&gt;. This yields a list of list, we&amp;rsquo;ll need to flatten it:&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll loop through a list of strings (empty_lst) to tokenize each &lt;em&gt;sentence&lt;/em&gt; with &lt;code&gt;nltk.sent_tokenize()&lt;/code&gt;. The text comes as one big blob and we want to either split into individual words or sentences. I think it&amp;rsquo;ll make more sense to try to find the sentiment of each sentence, so we&amp;rsquo;ll tokenize by sentence.&lt;/p&gt;
+&lt;p&gt;This yields a list of list, we&amp;rsquo;ll need to flatten it:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# - list of list, len: 1762 (each list contain sentences)
 nested_sent_token = [nltk.sent_tokenize(lst) for lst in empty_lst]
 
@@ -106,6 +122,8 @@ print(&amp;quot;Flatten sentence token: &amp;quot;, len(flat_sent_token))
 &lt;a href=&#34;https://www.kdnuggets.com/2018/03/text-data-preprocessing-walkthrough-python.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Text Data Preprocessing&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;First, we &lt;code&gt;remove_non_ascii(words)&lt;/code&gt; characters including: &lt;code&gt;#&lt;/code&gt;, &lt;code&gt;-&lt;/code&gt;, &lt;code&gt;&#39;&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt;, among many others. Then we&amp;rsquo;ll &lt;code&gt;to_lowercase(words)&lt;/code&gt;, &lt;code&gt;remove_punctuation(words)&lt;/code&gt;, &lt;code&gt;replace_numbers(words)&lt;/code&gt;, and &lt;code&gt;remove_stopwords(words)&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Examples stopwords are: your, yours, yourself, yourselves, he, him, his, himself etc.&lt;/p&gt;
+&lt;p&gt;All this allows us to clean up the text and have each sentence be on equal playing field.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: I think the process of normalization makes more sense at the individual word level, so we won&amp;rsquo;t actually need stemming and lemmatization for sentences.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Remove Non-ASCII
 def remove_non_ascii(words):
     &amp;quot;&amp;quot;&amp;quot;Remove non-ASCII character from List of tokenized words&amp;quot;&amp;quot;&amp;quot;
@@ -174,7 +192,7 @@ def normalize(words):
 print(&amp;quot;Length of sentences list: &amp;quot;, len(sents))   # 3194
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;frequency&#34;&gt;Frequency&lt;/h2&gt;
-&lt;p&gt;You can use the &lt;code&gt;FreqDist()&lt;/code&gt; function to get the most common sentences or words. After, you could plot a line chart for a visual comparison of the most frequent sentences.&lt;/p&gt;
+&lt;p&gt;You can use the &lt;code&gt;FreqDist()&lt;/code&gt; function to get the most common sentences. After, you could plot a line chart for a visual comparison of the most frequent sentences.&lt;/p&gt;
 &lt;p&gt;Although simple, counting frequencies can yield some 
 &lt;a href=&#34;https://twitter.com/paulapivat/status/1353704114467729408?s=20&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;insights&lt;/a&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from nltk.probability import FreqDist
@@ -191,7 +209,42 @@ fdist_sent.plot(10)
 &lt;blockquote&gt;
 &lt;p&gt;Valence, Aware, Dictionary and sEntiment Reasoner.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;We are taking a &lt;strong&gt;rule-based/lexicon&lt;/strong&gt; approach to sentiment analysis because we have a fairly large dataset, but lack labelled data to build a robust training set, thus Machine Learning would &lt;strong&gt;not&lt;/strong&gt; be ideal for this task.&lt;/p&gt;
+&lt;p&gt;We are taking a &lt;strong&gt;Rule-based/Lexicon&lt;/strong&gt; approach to sentiment analysis because we have a fairly large dataset, but lack labelled data to build a robust training set, thus Machine Learning would &lt;strong&gt;not&lt;/strong&gt; be ideal for this task.&lt;/p&gt;
+&lt;p&gt;Two empty lists are created for a specific purpose.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sentiment&lt;/code&gt; the result of the first for-loop, capturing each sentence and &lt;code&gt;sent_scores&lt;/code&gt;, which initializes the &lt;code&gt;nltk.sentiment.vader.SentimentIntensityAnalyzer&lt;/code&gt; and calculates the &lt;strong&gt;polarity_score&lt;/strong&gt; of each sentence (i.e., negative, neutral, positive). Because the polarity_score is stored in a dictionary, I&amp;rsquo;d like to split each key-value pair separately to eventually have a separate column for each: negative, neutral and positive scores.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sentiment2&lt;/code&gt; captures the result of the nested for-loop (2nd layer), where it stores each polarity and value in a list of tuples.&lt;/p&gt;
+&lt;p&gt;After the nested for-loop has appended the data for each sentence (&lt;code&gt;sentiment&lt;/code&gt;) and their respective individual polarity scores (&lt;code&gt;sentiment2&lt;/code&gt;, negative, neutral, positive), we&amp;rsquo;ll &lt;strong&gt;create data frames&lt;/strong&gt; to store these with pandas. Then, we&amp;rsquo;ll write the data frames to &lt;strong&gt;CSV&lt;/strong&gt; to transition to R.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: There is likely a more efficient way for what I&amp;rsquo;m doing here. My hacky solution is to save two CSV files and move the work flow over to R for further data manipulation and visualization. This is primarily a personal preference for handling data frames and visualizations in R, but this &lt;em&gt;can&lt;/em&gt; be done in pandas and matplotlib.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# nltk.download(&#39;vader_lexicon&#39;)
+
+sid = SentimentIntensityAnalyzer()
+
+sentiment = []
+sentiment2 = []
+
+for sent in sents:
+    sent1 = sent
+    sent_scores = sid.polarity_scores(sent1)
+    for x, y in sent_scores.items():
+        sentiment2.append((x, y))
+    sentiment.append((sent1, sent_scores))
+    # print(sentiment)
+
+# sentiment
+cols = [&#39;sentence&#39;, &#39;numbers&#39;]
+result = pd.DataFrame(sentiment, columns=cols)
+print(&amp;quot;First five rows of results: &amp;quot;, result.head())
+
+# sentiment2
+cols2 = [&#39;label&#39;, &#39;values&#39;]
+result2 = pd.DataFrame(sentiment2, columns=cols2)
+print(&amp;quot;First five rows of results2: &amp;quot;, result2.head())
+
+# save to CSV
+result.to_csv(&#39;sent_sentiment.csv&#39;, index=False)
+result2.to_csv(&#39;sent_sentiment_2.csv&#39;, index=False)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;data_transformation&#34;&gt;Data_Transformation&lt;/h2&gt;
 &lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;Hutto, C.J. &amp;amp; Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. Eighth International Conference on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.&lt;/li&gt;

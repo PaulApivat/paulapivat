@@ -24,6 +24,7 @@ title: How Positive are your Facebook Posts? A Quick Intro to Sentiment Analysis
 - [Normalizing Sentences](#normalizing_sentences)
 - [Frequency](#frequency)
 - [Sentiment Analysis](#sentiment_analysis)
+- [Data Transformation](#data_transformation)
 - [References](#references)
 
 
@@ -73,7 +74,7 @@ Here are *all* the libraries we use in this post:
 ```python
 import pandas as pd
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from nltk.stem import LancasterStemmer, WordNetLemmatizer
+from nltk.stem import LancasterStemmer, WordNetLemmatizer      # OPTIONAL (more relevant for individual words)
 from nltk.corpus import stopwords
 from nltk.probability import FreqDist
 import re
@@ -83,6 +84,18 @@ import json
 import inflect
 import matplotlib.pyplot as plt
 ```
+
+[Natural Language Tookkit](https://www.nltk.org/) This is a popular Python platform for work with human language data. Ideally for us, it has over 50 lexical resources; we'll be using the [Vader Sentiment Lexicon](https://github.com/cjhutto/vaderSentiment), that is *specifically* attuned to sentiments expressed in social media. Ideal for our use case. NLTK will also help with frequency count, stopwards, stemming and lemmatization.
+
+[Regex](https://docs.python.org/3/library/re.html) We'll use regular expressions to remove punctuation.
+
+[Unicode Database](https://docs.python.org/3/library/unicodedata.html) We'll access Unicode Database to remove non-ASCII characters.
+
+[JSON](https://docs.python.org/3/library/json.html) We'll use the **json** module to read in json from Facebook.
+
+[Inflect](https://pypi.org/project/inflect/) This allows us to convert numbers to words.
+
+[Pandas](https://pandas.pydata.org/) This is a powerful data manipulation and data analysis tool that we'll need when we want to save our text data into a data frame and write to csv.
 
 After we have our data (in `json` format), we'll [dig through](https://twitter.com/paulapivat/status/1352893979897909251?s=20) to get the actual **text data** (our posts). 
 
@@ -111,7 +124,9 @@ We now have a list of strings.
 
 ## Tokenization
 
-We'll loop through a list of strings (empty_lst) to tokenize each *sentence* with `nltk.sent_tokenize()`. This yields a list of list, we'll need to flatten it:
+We'll loop through a list of strings (empty_lst) to tokenize each *sentence* with `nltk.sent_tokenize()`. The text comes as one big blob and we want to either split into individual words or sentences. I think it'll make more sense to try to find the sentiment of each sentence, so we'll tokenize by sentence. 
+
+This yields a list of list, we'll need to flatten it:
 
 ```python
 # - list of list, len: 1762 (each list contain sentences)
@@ -129,6 +144,10 @@ For context on the functions used in this section, check out this article by Mat
 First, we `remove_non_ascii(words)` characters including: `#`, `-`, `'` and `?`, among many others. Then we'll `to_lowercase(words)`, `remove_punctuation(words)`, `replace_numbers(words)`, and `remove_stopwords(words)`. 
 
 Examples stopwords are: your, yours, yourself, yourselves, he, him, his, himself etc. 
+
+All this allows us to clean up the text and have each sentence be on equal playing field. 
+
+**NOTE**: I think the process of normalization makes more sense at the individual word level, so we won't actually need stemming and lemmatization for sentences. 
 
 ```python
 # Remove Non-ASCII
@@ -203,7 +222,7 @@ print("Length of sentences list: ", len(sents))   # 3194
 
 ## Frequency
 
-You can use the `FreqDist()` function to get the most common sentences or words. After, you could plot a line chart for a visual comparison of the most frequent sentences. 
+You can use the `FreqDist()` function to get the most common sentences. After, you could plot a line chart for a visual comparison of the most frequent sentences. 
 
 Although simple, counting frequencies can yield some [insights](https://twitter.com/paulapivat/status/1353704114467729408?s=20). 
 
@@ -224,9 +243,50 @@ We'll use the `Vader` module from `NLTK`. Vader stands for:
 
 > Valence, Aware, Dictionary and sEntiment Reasoner. 
 
-We are taking a **rule-based/lexicon** approach to sentiment analysis because we have a fairly large dataset, but lack labelled data to build a robust training set, thus Machine Learning would **not** be ideal for this task.
+We are taking a **Rule-based/Lexicon** approach to sentiment analysis because we have a fairly large dataset, but lack labelled data to build a robust training set, thus Machine Learning would **not** be ideal for this task.
 
+Two empty lists are created for a specific purpose.
 
+`sentiment` the result of the first for-loop, capturing each sentence and `sent_scores`, which initializes the `nltk.sentiment.vader.SentimentIntensityAnalyzer` and calculates the **polarity_score** of each sentence (i.e., negative, neutral, positive). Because the polarity_score is stored in a dictionary, I'd like to split each key-value pair separately to eventually have a separate column for each: negative, neutral and positive scores. 
+
+`sentiment2` captures the result of the nested for-loop (2nd layer), where it stores each polarity and value in a list of tuples. 
+
+After the nested for-loop has appended the data for each sentence (`sentiment`) and their respective individual polarity scores (`sentiment2`, negative, neutral, positive), we'll **create data frames** to store these with pandas. Then, we'll write the data frames to **CSV** to transition to R. 
+
+**NOTE**: There is likely a more efficient way for what I'm doing here. My hacky solution is to save two CSV files and move the work flow over to R for further data manipulation and visualization. This is primarily a personal preference for handling data frames and visualizations in R, but this *can* be done in pandas and matplotlib. 
+
+```python
+# nltk.download('vader_lexicon')
+
+sid = SentimentIntensityAnalyzer()
+
+sentiment = []
+sentiment2 = []
+
+for sent in sents:
+    sent1 = sent
+    sent_scores = sid.polarity_scores(sent1)
+    for x, y in sent_scores.items():
+        sentiment2.append((x, y))
+    sentiment.append((sent1, sent_scores))
+    # print(sentiment)
+
+# sentiment
+cols = ['sentence', 'numbers']
+result = pd.DataFrame(sentiment, columns=cols)
+print("First five rows of results: ", result.head())
+
+# sentiment2
+cols2 = ['label', 'values']
+result2 = pd.DataFrame(sentiment2, columns=cols2)
+print("First five rows of results2: ", result2.head())
+
+# save to CSV
+result.to_csv('sent_sentiment.csv', index=False)
+result2.to_csv('sent_sentiment_2.csv', index=False)
+```
+
+## Data_Transformation
 
 
 
