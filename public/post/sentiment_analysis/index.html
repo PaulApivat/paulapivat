@@ -237,7 +237,7 @@
   
   <meta property="og:site_name" content="Paul Apivat">
   <meta property="og:url" content="/post/sentiment_analysis/">
-  <meta property="og:title" content="How Positive are your Facebook Posts? A Quick Intro to Sentiment Analysis | Paul Apivat">
+  <meta property="og:title" content="How Positive are Your Facebook Posts? | Paul Apivat">
   <meta property="og:description" content="Using Python and R to read, pre-process, wrangle and visualize data."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
@@ -270,7 +270,7 @@
     "@type": "WebPage",
     "@id": "/post/sentiment_analysis/"
   },
-  "headline": "How Positive are your Facebook Posts? A Quick Intro to Sentiment Analysis",
+  "headline": "How Positive are Your Facebook Posts?",
   
   "datePublished": "2021-01-26T00:00:00Z",
   "dateModified": "2021-01-26T00:00:00Z",
@@ -306,7 +306,7 @@
 
 
 
-  <title>How Positive are your Facebook Posts? A Quick Intro to Sentiment Analysis | Paul Apivat</title>
+  <title>How Positive are Your Facebook Posts? | Paul Apivat</title>
 
 </head>
 
@@ -681,10 +681,10 @@
   
   
 <div class="article-container pt-3">
-  <h1>How Positive are your Facebook Posts? A Quick Intro to Sentiment Analysis</h1>
+  <h1>How Positive are Your Facebook Posts?</h1>
 
   
-  <p class="page-subtitle">Sentiment Analysis of Facebook Posts Using Python and R</p>
+  <p class="page-subtitle">Rule-based Sentiment Analysis Using Python and R</p>
   
 
   
@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    7 min read
+    10 min read
   </span>
   
 
@@ -773,6 +773,8 @@
 <a href="#sentiment_analysis">Sentiment Analysis</a></li>
 <li>
 <a href="#data_transformation">Data Transformation</a></li>
+<li>
+<a href="#visualization">Visualization</a></li>
 <li>
 <a href="#references">References</a></li>
 </ul>
@@ -953,7 +955,8 @@ fdist_sent.plot(10)
 <p>Two empty lists are created for a specific purpose.</p>
 <p><code>sentiment</code> the result of the first for-loop, capturing each sentence and <code>sent_scores</code>, which initializes the <code>nltk.sentiment.vader.SentimentIntensityAnalyzer</code> and calculates the <strong>polarity_score</strong> of each sentence (i.e., negative, neutral, positive). Because the polarity_score is stored in a dictionary, I&rsquo;d like to split each key-value pair separately to eventually have a separate column for each: negative, neutral and positive scores.</p>
 <p><code>sentiment2</code> captures the result of the nested for-loop (2nd layer), where it stores each polarity and value in a list of tuples.</p>
-<p>After the nested for-loop has appended the data for each sentence (<code>sentiment</code>) and their respective individual polarity scores (<code>sentiment2</code>, negative, neutral, positive), we&rsquo;ll <strong>create data frames</strong> to store these with pandas. Then, we&rsquo;ll write the data frames to <strong>CSV</strong> to transition to R.</p>
+<p><img src="./sentiment_2.png" alt="sentiment_2"></p>
+<p>After the nested for-loop has appended the data for each sentence (<code>sentiment</code>) and their respective individual polarity scores (<code>sentiment2</code>, negative, neutral, positive), we&rsquo;ll <strong>create data frames</strong> to store these with pandas. Then, we&rsquo;ll write the data frames to <strong>CSV</strong> to transition to R. Note that we set index to false when saving for CSV. The reason is that Python starts counting at 0, while <code>R</code> starts at 1, so these minor differences means we&rsquo;re better off re-creating the index as a separate column in <code>R</code>.</p>
 <p><strong>NOTE</strong>: There is likely a more efficient way for what I&rsquo;m doing here. My hacky solution is to save two CSV files and move the work flow over to R for further data manipulation and visualization. This is primarily a personal preference for handling data frames and visualizations in R, but this <em>can</em> be done in pandas and matplotlib.</p>
 <pre><code class="language-python"># nltk.download('vader_lexicon')
 
@@ -985,6 +988,48 @@ result.to_csv('sent_sentiment.csv', index=False)
 result2.to_csv('sent_sentiment_2.csv', index=False)
 </code></pre>
 <h2 id="data_transformation">Data_Transformation</h2>
+<p><strong>NOTE</strong>: From this point forward, we&rsquo;ll be using <code>R</code> and the <code>tidyverse</code> for data manipulation and visualization. <code>RStudio</code> is generally the IDE of choice here. We&rsquo;ll create an <code>R Script</code> to store all our data transformation and visualization process. We should be in the same directory in which the above CSV files were created with pandas.</p>
+<p>We&rsquo;ll load the two CSV files we saved and the <code>tidyverse</code> library:</p>
+<pre><code class="language-r">library(tidyverse)
+
+# load data
+df &lt;- read_csv(&quot;sent_sentiment.csv&quot;)       
+df2 &lt;- read_csv('sent_sentiment_2.csv')    
+</code></pre>
+<p>We&rsquo;ll create another column that matches the index for the first data frame (sent_sentiment.csv). I save it as <code>df1</code>, but you could overwrite the original <code>df</code> if you wanted.</p>
+<pre><code class="language-r"># create a unique identifier for each sentence
+df1 &lt;- df %&gt;%
+    mutate(row = row_number())
+</code></pre>
+<p>Then, for the second data frame (sent_sentiment_2.csv), we&rsquo;ll also create another column matching the index, but also use <code>pivot_wider</code> from the <code>tidyr</code> package. <strong>NOTE</strong>: You&rsquo;ll want to <code>group_by</code> label first, then use <code>mutate</code> to create a unique identifier.</p>
+<p>We&rsquo;ll then use <code>pivot_wider</code> to ensure that all polarity values (negative, neutral, positive) have their own columns.</p>
+<p>By creating a unique identifier using <code>mutate</code> and <code>row_number()</code>, we&rsquo;ll be able to join (<code>left_join</code>) by row.</p>
+<p>After, I save the operation to <code>df3</code> which allows me to work off a fresh new data frame for visualization.</p>
+<pre><code class="language-r"># long-to-wide for df2
+# note: first, group by label; then, create a unique identifier for each label then use pivot_wider
+
+df3 &lt;- df2 %&gt;%
+    group_by(label) %&gt;%
+    mutate(row = row_number()) %&gt;%
+    pivot_wider(names_from = label, values_from = values) %&gt;%
+    left_join(df1, by = 'row') %&gt;%
+    select(row, sentence, neg:compound, numbers) 
+</code></pre>
+<h2 id="visualization">Visualization</h2>
+<p>First, we&rsquo;ll visualize the positive and negative polarity scores separately, across all 3194 sentences (your numbers will vary).</p>
+<p><img src="./positivity_line.png" alt="positivity_line"></p>
+<p><img src="./negativity_line.png" alt="negativity_line"></p>
+<p>When I sum positive and negative scores to get a ratio, it&rsquo;s about 568:97 or around 5.8x more positive than negative according to the VADER (Valance Aware Dictionary and Sentiment Reasoner).</p>
+<p>The Vader module will take in every sentence that is inputted and assign a valence score from -1 (most negative) to 1 (most positive). We can either classify sentences as a combination of <code>pos</code> (positive), <code>neu</code> (neutral) and <code>neg</code>(negative) or as a <code>compound</code> score (i.e., normalized, weighted composite score). For more details, see 
+<a href="https://pypi.org/project/vader-sentiment/" target="_blank" rel="noopener">vader-sentiment documentation</a>.</p>
+<p>To see both positive and negative scores together (positive = blue, negative = red, neutral = black).</p>
+<p><img src="./sentiment2.png" alt="sentiment2.png"></p>
+<p>Finally, we can also use <code>histograms</code> to help us see the distribution of negative and positive sentiment among aggregated Facebook posts:</p>
+<p><img src="./patch_histo.png" alt="patch_histo"></p>
+<h4 id="summary">Summary</h4>
+<p>I downloaded 14 years worth of Facebook posts to run a rule-based sentiment analysis and visualize the results, using a combination of Python and R.</p>
+<p>I enjoyed using both Python and R for this project and I think we played to their strengths. I found parsing JSON fairly straight-forward with Python, but once we transition to data frames, I was itching to get back to R.</p>
+<p>Because we lacked labelled data, using a lexicon-approach to sentiment analysis made sense. Now that we have a label for valence scores, it&rsquo;s may be possible to take a machine learning approach to predict the valence of future posts.</p>
 <h2 id="references">References</h2>
 <ol>
 <li>Hutto, C.J. &amp; Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. Eighth International Conference on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.</li>
@@ -1029,7 +1074,7 @@ result2.to_csv('sent_sentiment_2.csv', index=False)
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=/post/sentiment_analysis/&amp;text=How%20Positive%20are%20your%20Facebook%20Posts?%20A%20Quick%20Intro%20to%20Sentiment%20Analysis" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/post/sentiment_analysis/&amp;text=How%20Positive%20are%20Your%20Facebook%20Posts?" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -1042,7 +1087,7 @@ result2.to_csv('sent_sentiment_2.csv', index=False)
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=/post/sentiment_analysis/&amp;t=How%20Positive%20are%20your%20Facebook%20Posts?%20A%20Quick%20Intro%20to%20Sentiment%20Analysis" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/post/sentiment_analysis/&amp;t=How%20Positive%20are%20Your%20Facebook%20Posts?" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -1055,7 +1100,7 @@ result2.to_csv('sent_sentiment_2.csv', index=False)
       
       
       <li>
-        <a href="mailto:?subject=How%20Positive%20are%20your%20Facebook%20Posts?%20A%20Quick%20Intro%20to%20Sentiment%20Analysis&amp;body=/post/sentiment_analysis/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=How%20Positive%20are%20Your%20Facebook%20Posts?&amp;body=/post/sentiment_analysis/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -1068,7 +1113,7 @@ result2.to_csv('sent_sentiment_2.csv', index=False)
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=/post/sentiment_analysis/&amp;title=How%20Positive%20are%20your%20Facebook%20Posts?%20A%20Quick%20Intro%20to%20Sentiment%20Analysis" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/post/sentiment_analysis/&amp;title=How%20Positive%20are%20Your%20Facebook%20Posts?" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -1081,7 +1126,7 @@ result2.to_csv('sent_sentiment_2.csv', index=False)
       
       
       <li>
-        <a href="whatsapp://send?text=How%20Positive%20are%20your%20Facebook%20Posts?%20A%20Quick%20Intro%20to%20Sentiment%20Analysis%20/post/sentiment_analysis/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="whatsapp://send?text=How%20Positive%20are%20Your%20Facebook%20Posts?%20/post/sentiment_analysis/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -1094,7 +1139,7 @@ result2.to_csv('sent_sentiment_2.csv', index=False)
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=/post/sentiment_analysis/&amp;title=How%20Positive%20are%20your%20Facebook%20Posts?%20A%20Quick%20Intro%20to%20Sentiment%20Analysis" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/post/sentiment_analysis/&amp;title=How%20Positive%20are%20Your%20Facebook%20Posts?" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>

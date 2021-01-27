@@ -1315,7 +1315,7 @@ hist(x)
     </item>
     
     <item>
-      <title>How Positive are your Facebook Posts? A Quick Intro to Sentiment Analysis</title>
+      <title>How Positive are Your Facebook Posts?</title>
       <link>/post/sentiment_analysis/</link>
       <pubDate>Tue, 26 Jan 2021 00:00:00 +0000</pubDate>
       <guid>/post/sentiment_analysis/</guid>
@@ -1335,6 +1335,8 @@ hist(x)
 &lt;a href=&#34;#sentiment_analysis&#34;&gt;Sentiment Analysis&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#data_transformation&#34;&gt;Data Transformation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#visualization&#34;&gt;Visualization&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;a href=&#34;#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -1515,7 +1517,8 @@ fdist_sent.plot(10)
 &lt;p&gt;Two empty lists are created for a specific purpose.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;sentiment&lt;/code&gt; the result of the first for-loop, capturing each sentence and &lt;code&gt;sent_scores&lt;/code&gt;, which initializes the &lt;code&gt;nltk.sentiment.vader.SentimentIntensityAnalyzer&lt;/code&gt; and calculates the &lt;strong&gt;polarity_score&lt;/strong&gt; of each sentence (i.e., negative, neutral, positive). Because the polarity_score is stored in a dictionary, I&amp;rsquo;d like to split each key-value pair separately to eventually have a separate column for each: negative, neutral and positive scores.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;sentiment2&lt;/code&gt; captures the result of the nested for-loop (2nd layer), where it stores each polarity and value in a list of tuples.&lt;/p&gt;
-&lt;p&gt;After the nested for-loop has appended the data for each sentence (&lt;code&gt;sentiment&lt;/code&gt;) and their respective individual polarity scores (&lt;code&gt;sentiment2&lt;/code&gt;, negative, neutral, positive), we&amp;rsquo;ll &lt;strong&gt;create data frames&lt;/strong&gt; to store these with pandas. Then, we&amp;rsquo;ll write the data frames to &lt;strong&gt;CSV&lt;/strong&gt; to transition to R.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./sentiment_2.png&#34; alt=&#34;sentiment_2&#34;&gt;&lt;/p&gt;
+&lt;p&gt;After the nested for-loop has appended the data for each sentence (&lt;code&gt;sentiment&lt;/code&gt;) and their respective individual polarity scores (&lt;code&gt;sentiment2&lt;/code&gt;, negative, neutral, positive), we&amp;rsquo;ll &lt;strong&gt;create data frames&lt;/strong&gt; to store these with pandas. Then, we&amp;rsquo;ll write the data frames to &lt;strong&gt;CSV&lt;/strong&gt; to transition to R. Note that we set index to false when saving for CSV. The reason is that Python starts counting at 0, while &lt;code&gt;R&lt;/code&gt; starts at 1, so these minor differences means we&amp;rsquo;re better off re-creating the index as a separate column in &lt;code&gt;R&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: There is likely a more efficient way for what I&amp;rsquo;m doing here. My hacky solution is to save two CSV files and move the work flow over to R for further data manipulation and visualization. This is primarily a personal preference for handling data frames and visualizations in R, but this &lt;em&gt;can&lt;/em&gt; be done in pandas and matplotlib.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# nltk.download(&#39;vader_lexicon&#39;)
 
@@ -1547,6 +1550,48 @@ result.to_csv(&#39;sent_sentiment.csv&#39;, index=False)
 result2.to_csv(&#39;sent_sentiment_2.csv&#39;, index=False)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;data_transformation&#34;&gt;Data_Transformation&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: From this point forward, we&amp;rsquo;ll be using &lt;code&gt;R&lt;/code&gt; and the &lt;code&gt;tidyverse&lt;/code&gt; for data manipulation and visualization. &lt;code&gt;RStudio&lt;/code&gt; is generally the IDE of choice here. We&amp;rsquo;ll create an &lt;code&gt;R Script&lt;/code&gt; to store all our data transformation and visualization process. We should be in the same directory in which the above CSV files were created with pandas.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll load the two CSV files we saved and the &lt;code&gt;tidyverse&lt;/code&gt; library:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(tidyverse)
+
+# load data
+df &amp;lt;- read_csv(&amp;quot;sent_sentiment.csv&amp;quot;)       
+df2 &amp;lt;- read_csv(&#39;sent_sentiment_2.csv&#39;)    
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We&amp;rsquo;ll create another column that matches the index for the first data frame (sent_sentiment.csv). I save it as &lt;code&gt;df1&lt;/code&gt;, but you could overwrite the original &lt;code&gt;df&lt;/code&gt; if you wanted.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# create a unique identifier for each sentence
+df1 &amp;lt;- df %&amp;gt;%
+    mutate(row = row_number())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, for the second data frame (sent_sentiment_2.csv), we&amp;rsquo;ll also create another column matching the index, but also use &lt;code&gt;pivot_wider&lt;/code&gt; from the &lt;code&gt;tidyr&lt;/code&gt; package. &lt;strong&gt;NOTE&lt;/strong&gt;: You&amp;rsquo;ll want to &lt;code&gt;group_by&lt;/code&gt; label first, then use &lt;code&gt;mutate&lt;/code&gt; to create a unique identifier.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll then use &lt;code&gt;pivot_wider&lt;/code&gt; to ensure that all polarity values (negative, neutral, positive) have their own columns.&lt;/p&gt;
+&lt;p&gt;By creating a unique identifier using &lt;code&gt;mutate&lt;/code&gt; and &lt;code&gt;row_number()&lt;/code&gt;, we&amp;rsquo;ll be able to join (&lt;code&gt;left_join&lt;/code&gt;) by row.&lt;/p&gt;
+&lt;p&gt;After, I save the operation to &lt;code&gt;df3&lt;/code&gt; which allows me to work off a fresh new data frame for visualization.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# long-to-wide for df2
+# note: first, group by label; then, create a unique identifier for each label then use pivot_wider
+
+df3 &amp;lt;- df2 %&amp;gt;%
+    group_by(label) %&amp;gt;%
+    mutate(row = row_number()) %&amp;gt;%
+    pivot_wider(names_from = label, values_from = values) %&amp;gt;%
+    left_join(df1, by = &#39;row&#39;) %&amp;gt;%
+    select(row, sentence, neg:compound, numbers) 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;visualization&#34;&gt;Visualization&lt;/h2&gt;
+&lt;p&gt;First, we&amp;rsquo;ll visualize the positive and negative polarity scores separately, across all 3194 sentences (your numbers will vary).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./positivity_line.png&#34; alt=&#34;positivity_line&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./negativity_line.png&#34; alt=&#34;negativity_line&#34;&gt;&lt;/p&gt;
+&lt;p&gt;When I sum positive and negative scores to get a ratio, it&amp;rsquo;s about 568:97 or around 5.8x more positive than negative according to the VADER (Valance Aware Dictionary and Sentiment Reasoner).&lt;/p&gt;
+&lt;p&gt;The Vader module will take in every sentence that is inputted and assign a valence score from -1 (most negative) to 1 (most positive). We can either classify sentences as a combination of &lt;code&gt;pos&lt;/code&gt; (positive), &lt;code&gt;neu&lt;/code&gt; (neutral) and &lt;code&gt;neg&lt;/code&gt;(negative) or as a &lt;code&gt;compound&lt;/code&gt; score (i.e., normalized, weighted composite score). For more details, see 
+&lt;a href=&#34;https://pypi.org/project/vader-sentiment/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;vader-sentiment documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To see both positive and negative scores together (positive = blue, negative = red, neutral = black).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./sentiment2.png&#34; alt=&#34;sentiment2.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Finally, we can also use &lt;code&gt;histograms&lt;/code&gt; to help us see the distribution of negative and positive sentiment among aggregated Facebook posts:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./patch_histo.png&#34; alt=&#34;patch_histo&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;summary&#34;&gt;Summary&lt;/h4&gt;
+&lt;p&gt;I downloaded 14 years worth of Facebook posts to run a rule-based sentiment analysis and visualize the results, using a combination of Python and R.&lt;/p&gt;
+&lt;p&gt;I enjoyed using both Python and R for this project and I think we played to their strengths. I found parsing JSON fairly straight-forward with Python, but once we transition to data frames, I was itching to get back to R.&lt;/p&gt;
+&lt;p&gt;Because we lacked labelled data, using a lexicon-approach to sentiment analysis made sense. Now that we have a label for valence scores, it&amp;rsquo;s may be possible to take a machine learning approach to predict the valence of future posts.&lt;/p&gt;
 &lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;Hutto, C.J. &amp;amp; Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. Eighth International Conference on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.&lt;/li&gt;

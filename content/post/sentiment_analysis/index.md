@@ -10,10 +10,10 @@ image:
   focal_point: ""
 lastMod: "2021-01-26T00:00:00Z"
 projects: []
-subtitle: Sentiment Analysis of Facebook Posts Using Python and R
+subtitle: Rule-based Sentiment Analysis Using Python and R
 summary: Using Python and R to read, pre-process, wrangle and visualize data.
 tags: ["R", "Data Science", "Facebook Data", "Python", "Sentiment Analysis", "Text Analysis"]
-title: How Positive are your Facebook Posts? A Quick Intro to Sentiment Analysis 
+title: How Positive are Your Facebook Posts? 
 ---
 
 ### Table of contents
@@ -25,6 +25,7 @@ title: How Positive are your Facebook Posts? A Quick Intro to Sentiment Analysis
 - [Frequency](#frequency)
 - [Sentiment Analysis](#sentiment_analysis)
 - [Data Transformation](#data_transformation)
+- [Visualization](#visualization)
 - [References](#references)
 
 
@@ -251,7 +252,10 @@ Two empty lists are created for a specific purpose.
 
 `sentiment2` captures the result of the nested for-loop (2nd layer), where it stores each polarity and value in a list of tuples. 
 
-After the nested for-loop has appended the data for each sentence (`sentiment`) and their respective individual polarity scores (`sentiment2`, negative, neutral, positive), we'll **create data frames** to store these with pandas. Then, we'll write the data frames to **CSV** to transition to R. 
+
+![sentiment_2](./sentiment_2.png)
+
+After the nested for-loop has appended the data for each sentence (`sentiment`) and their respective individual polarity scores (`sentiment2`, negative, neutral, positive), we'll **create data frames** to store these with pandas. Then, we'll write the data frames to **CSV** to transition to R. Note that we set index to false when saving for CSV. The reason is that Python starts counting at 0, while `R` starts at 1, so these minor differences means we're better off re-creating the index as a separate column in `R`. 
 
 **NOTE**: There is likely a more efficient way for what I'm doing here. My hacky solution is to save two CSV files and move the work flow over to R for further data manipulation and visualization. This is primarily a personal preference for handling data frames and visualizations in R, but this *can* be done in pandas and matplotlib. 
 
@@ -288,6 +292,73 @@ result2.to_csv('sent_sentiment_2.csv', index=False)
 
 ## Data_Transformation
 
+**NOTE**: From this point forward, we'll be using `R` and the `tidyverse` for data manipulation and visualization. `RStudio` is generally the IDE of choice here. We'll create an `R Script` to store all our data transformation and visualization process. We should be in the same directory in which the above CSV files were created with pandas. 
+
+We'll load the two CSV files we saved and the `tidyverse` library:
+
+```r
+library(tidyverse)
+
+# load data
+df <- read_csv("sent_sentiment.csv")       
+df2 <- read_csv('sent_sentiment_2.csv')    
+```
+
+We'll create another column that matches the index for the first data frame (sent_sentiment.csv). I save it as `df1`, but you could overwrite the original `df` if you wanted. 
+
+```r
+# create a unique identifier for each sentence
+df1 <- df %>%
+    mutate(row = row_number())
+```
+
+Then, for the second data frame (sent_sentiment_2.csv), we'll also create another column matching the index, but also use `pivot_wider` from the `tidyr` package. **NOTE**: You'll want to `group_by` label first, then use `mutate` to create a unique identifier. 
+
+We'll then use `pivot_wider` to ensure that all polarity values (negative, neutral, positive) have their own columns. 
+
+By creating a unique identifier using `mutate` and `row_number()`, we'll be able to join (`left_join`) by row.
+
+After, I save the operation to `df3` which allows me to work off a fresh new data frame for visualization.
+
+```r
+# long-to-wide for df2
+# note: first, group by label; then, create a unique identifier for each label then use pivot_wider
+
+df3 <- df2 %>%
+    group_by(label) %>%
+    mutate(row = row_number()) %>%
+    pivot_wider(names_from = label, values_from = values) %>%
+    left_join(df1, by = 'row') %>%
+    select(row, sentence, neg:compound, numbers) 
+```
+
+## Visualization
+
+First, we'll visualize the positive and negative polarity scores separately, across all 3194 sentences (your numbers will vary). 
+
+![positivity_line](./positivity_line.png)
+
+![negativity_line](./negativity_line.png)
+
+When I sum positive and negative scores to get a ratio, it's about 568:97 or around 5.8x more positive than negative according to the VADER (Valance Aware Dictionary and Sentiment Reasoner). 
+
+The Vader module will take in every sentence that is inputted and assign a valence score from -1 (most negative) to 1 (most positive). We can either classify sentences as a combination of `pos` (positive), `neu` (neutral) and `neg`(negative) or as a `compound` score (i.e., normalized, weighted composite score). For more details, see [vader-sentiment documentation](https://pypi.org/project/vader-sentiment/).
+
+To see both positive and negative scores together (positive = blue, negative = red, neutral = black).
+
+![sentiment2.png](./sentiment2.png)
+
+Finally, we can also use `histograms` to help us see the distribution of negative and positive sentiment among aggregated Facebook posts:
+
+![patch_histo](./patch_histo.png)
+
+#### Summary
+
+I downloaded 14 years worth of Facebook posts to run a rule-based sentiment analysis and visualize the results, using a combination of Python and R. 
+
+I enjoyed using both Python and R for this project and I think we played to their strengths. I found parsing JSON fairly straight-forward with Python, but once we transition to data frames, I was itching to get back to R. 
+
+Because we lacked labelled data, using a lexicon-approach to sentiment analysis made sense. Now that we have a label for valence scores, it's may be possible to take a machine learning approach to predict the valence of future posts. 
 
 
 ## References
