@@ -129,7 +129,7 @@ We now have a list of strings.
 
 We'll loop through our list of strings (empty_lst) to tokenize each *sentence* with `nltk.sent_tokenize()`. We want to split the text into either individual words or sentences. I think it'll make more sense to try to find the sentiment of each sentence, so we'll tokenize by sentence. 
 
-![token_list_of_strings](./token_list_of_strings)
+![token_list_of_strings](./token_list_of_strings.png)
 
 This yields a list of list, we'll need to flatten it:
 

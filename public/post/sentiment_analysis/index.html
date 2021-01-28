@@ -852,7 +852,7 @@ print(&quot;\nLength of list: &quot;, len(empty_lst))
 <p><img src="./list_of_strings.png" alt="list_of_strings"></p>
 <h2 id="tokenization">Tokenization</h2>
 <p>We&rsquo;ll loop through our list of strings (empty_lst) to tokenize each <em>sentence</em> with <code>nltk.sent_tokenize()</code>. We want to split the text into either individual words or sentences. I think it&rsquo;ll make more sense to try to find the sentiment of each sentence, so we&rsquo;ll tokenize by sentence.</p>
-<p><img src="./token_list_of_strings" alt="token_list_of_strings"></p>
+<p><img src="./token_list_of_strings.png" alt="token_list_of_strings"></p>
 <p>This yields a list of list, we&rsquo;ll need to flatten it:</p>
 <pre><code class="language-python"># - list of list, len: 1762 (each list contain sentences)
 nested_sent_token = [nltk.sent_tokenize(lst) for lst in empty_lst]
