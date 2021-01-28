@@ -148,8 +148,6 @@ Examples stopwords are: your, yours, yourself, yourselves, he, him, his, himself
 
 All this allows us to clean up the text and have each sentence be on equal playing field. 
 
-**NOTE**: I think the process of normalization makes more sense at the individual word level, so we won't actually need stemming and lemmatization for sentences. 
-
 ```python
 # Remove Non-ASCII
 def remove_non_ascii(words):
@@ -214,12 +212,14 @@ def normalize(words):
     words = remove_stopwords(words)
     return words
 ```
-However, for this post we're normalizing *sentences*, rather than *words*. 
+For this post we're normalizing *sentences*, rather than *words*. 
 
 ```python
 sents = normalize(flat_sent_token)
 print("Length of sentences list: ", len(sents))   # 3194
 ```
+
+**NOTE**: I think the process of stemming and lemmatization for makes more sense for words over sentences, so we won't use them here.
 
 ## Frequency
 

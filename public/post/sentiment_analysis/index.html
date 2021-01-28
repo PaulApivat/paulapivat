@@ -865,7 +865,6 @@ print(&quot;Flatten sentence token: &quot;, len(flat_sent_token))
 <p>First, we <code>remove_non_ascii(words)</code> characters including: <code>#</code>, <code>-</code>, <code>'</code> and <code>?</code>, among many others. Then we&rsquo;ll <code>to_lowercase(words)</code>, <code>remove_punctuation(words)</code>, <code>replace_numbers(words)</code>, and <code>remove_stopwords(words)</code>.</p>
 <p>Examples stopwords are: your, yours, yourself, yourselves, he, him, his, himself etc.</p>
 <p>All this allows us to clean up the text and have each sentence be on equal playing field.</p>
-<p><strong>NOTE</strong>: I think the process of normalization makes more sense at the individual word level, so we won&rsquo;t actually need stemming and lemmatization for sentences.</p>
 <pre><code class="language-python"># Remove Non-ASCII
 def remove_non_ascii(words):
     &quot;&quot;&quot;Remove non-ASCII character from List of tokenized words&quot;&quot;&quot;
@@ -929,10 +928,11 @@ def normalize(words):
     words = remove_stopwords(words)
     return words
 </code></pre>
-<p>However, for this post we&rsquo;re normalizing <em>sentences</em>, rather than <em>words</em>.</p>
+<p>For this post we&rsquo;re normalizing <em>sentences</em>, rather than <em>words</em>.</p>
 <pre><code class="language-python">sents = normalize(flat_sent_token)
 print(&quot;Length of sentences list: &quot;, len(sents))   # 3194
 </code></pre>
+<p><strong>NOTE</strong>: I think the process of stemming and lemmatization for makes more sense for words over sentences, so we won&rsquo;t use them here.</p>
 <h2 id="frequency">Frequency</h2>
 <p>You can use the <code>FreqDist()</code> function to get the most common sentences. After, you could plot a line chart for a visual comparison of the most frequent sentences.</p>
 <p>Although simple, counting frequencies can yield some 

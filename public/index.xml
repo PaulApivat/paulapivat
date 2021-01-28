@@ -1427,7 +1427,6 @@ print(&amp;quot;Flatten sentence token: &amp;quot;, len(flat_sent_token))
 &lt;p&gt;First, we &lt;code&gt;remove_non_ascii(words)&lt;/code&gt; characters including: &lt;code&gt;#&lt;/code&gt;, &lt;code&gt;-&lt;/code&gt;, &lt;code&gt;&#39;&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt;, among many others. Then we&amp;rsquo;ll &lt;code&gt;to_lowercase(words)&lt;/code&gt;, &lt;code&gt;remove_punctuation(words)&lt;/code&gt;, &lt;code&gt;replace_numbers(words)&lt;/code&gt;, and &lt;code&gt;remove_stopwords(words)&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Examples stopwords are: your, yours, yourself, yourselves, he, him, his, himself etc.&lt;/p&gt;
 &lt;p&gt;All this allows us to clean up the text and have each sentence be on equal playing field.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: I think the process of normalization makes more sense at the individual word level, so we won&amp;rsquo;t actually need stemming and lemmatization for sentences.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Remove Non-ASCII
 def remove_non_ascii(words):
     &amp;quot;&amp;quot;&amp;quot;Remove non-ASCII character from List of tokenized words&amp;quot;&amp;quot;&amp;quot;
@@ -1491,10 +1490,11 @@ def normalize(words):
     words = remove_stopwords(words)
     return words
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;However, for this post we&amp;rsquo;re normalizing &lt;em&gt;sentences&lt;/em&gt;, rather than &lt;em&gt;words&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;For this post we&amp;rsquo;re normalizing &lt;em&gt;sentences&lt;/em&gt;, rather than &lt;em&gt;words&lt;/em&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sents = normalize(flat_sent_token)
 print(&amp;quot;Length of sentences list: &amp;quot;, len(sents))   # 3194
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: I think the process of stemming and lemmatization for makes more sense for words over sentences, so we won&amp;rsquo;t use them here.&lt;/p&gt;
 &lt;h2 id=&#34;frequency&#34;&gt;Frequency&lt;/h2&gt;
 &lt;p&gt;You can use the &lt;code&gt;FreqDist()&lt;/code&gt; function to get the most common sentences. After, you could plot a line chart for a visual comparison of the most frequent sentences.&lt;/p&gt;
 &lt;p&gt;Although simple, counting frequencies can yield some 
