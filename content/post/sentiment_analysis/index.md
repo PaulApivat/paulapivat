@@ -36,9 +36,9 @@ title: How Positive are Your Facebook Posts?
 
 NLP is subfield of linguistic, computer science and artificial intelligence ([wiki](https://en.wikipedia.org/wiki/Natural_language_processing)), and you could spend years studying it. 
 
-However, I wanted a quick mini-dive into this domain, to a get an intuition for how NLP works. 
+However, I wanted a quick mini-dive to a get an intuition for how NLP works, and we'll do that via **sentiment analysis**, categorizing text by their polarity. While NLP is 
 
-What better dataset than our own social media post as we can't help but feel motivated to see insights about our *own* content. 
+We can't help but feel motivated to see insights about our *own* social media post, so we'll turn to a well known platform. 
 
 #### How well does Facebook know us? 
 
@@ -46,7 +46,7 @@ What better dataset than our own social media post as we can't help but feel mot
 
 To find out, I downloaded 14 years of posts to apply **text analysis** and **pre-processing**. I  used `Python` to read and download `json` data from Facebook. 
 
-We'll perform tasks such as tokenization, normalization, stemming and lemmatization aided by Python's **Natural Language Toolkit**, `NLTK`. We can also get a word/sentence frequency count of all posts. Finally, we'll use the `VADER` module (Hutto & Gilbert, 2014) for rule-based (lexicon) model of **sentiment analysis**.
+We'll perform tasks such as tokenization, normalization, stemming and lemmatization aided by Python's **Natural Language Toolkit**, `NLTK`. We can also get a sentence frequency count of all posts. Finally, we'll use the `VADER` module (Hutto & Gilbert, 2014) for rule-based (lexicon) model of **sentiment analysis**.
 
 Finally, we'll transition our work flow to `R` and the `tidyverse` for **data manipulation** and **visualization**. 
 
@@ -123,9 +123,13 @@ print("\nLength of list: ", len(empty_lst))
 
 We now have a list of strings.
 
+![list_of_strings](./list_of_strings.png)
+
 ## Tokenization
 
 We'll loop through our list of strings (empty_lst) to tokenize each *sentence* with `nltk.sent_tokenize()`. We want to split the text into either individual words or sentences. I think it'll make more sense to try to find the sentiment of each sentence, so we'll tokenize by sentence. 
+
+![token_list_of_strings](./token_list_of_strings)
 
 This yields a list of list, we'll need to flatten it:
 
@@ -147,8 +151,6 @@ First, we'll remove non-ASCII characters (`remove_non_ascii(words)`) including: 
 Example stopwords are: your, yours, yourself, yourselves, he, him, his, himself etc. 
 
 This allows us to have each sentence be on equal playing field. 
-
-**NOTE**: It turns out the `Vader` module for sentiment analysis is fully capable of analyzing sentences with punctuation, word-shape (capitalization for emphasis), slang and even utf-8 encoded emojis, so we'll run a parallel set of analyses at the end **without normalization**. 
 
 ```python
 # Remove Non-ASCII
@@ -215,6 +217,10 @@ def normalize(words):
     return words
 ```
 Here, we're normalizing *sentences*, rather than *words*. 
+
+The below screen cap gives us an idea of the difference between sentence **normalization** vs **non-normalization**.
+
+![normal_v_non](./normal_v_non.png)
 
 ```python
 sents = normalize(flat_sent_token)
@@ -366,6 +372,18 @@ To see both positive and negative scores together (positive = blue, negative = r
 Finally, we can also use `histograms` to see the distribution of negative and positive sentiment among the sentences:
 
 ![patch_histo](./patch_histo.png)
+
+#### Non-Normalized Data
+
+It turns out the `Vader` module for sentiment analysis is fully capable of analyzing sentences with punctuation, word-shape (capitalization for emphasis), slang and even utf-8 encoded emojis.
+
+So to see if there would be any difference if we implemented sentiment analysis **without normalization**.
+
+Here are the two version of data for comparison. Top for normalization and bottom for non-normalized. 
+
+![two_version](./two_version.png)
+
+While there are expected slight differences, they are only slight. 
 
 #### Summary
 

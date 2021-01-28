@@ -782,12 +782,12 @@
 <h4 id="why-sentiment-analysis">Why Sentiment Analysis?</h4>
 <p>NLP is subfield of linguistic, computer science and artificial intelligence (
 <a href="https://en.wikipedia.org/wiki/Natural_language_processing" target="_blank" rel="noopener">wiki</a>), and you could spend years studying it.</p>
-<p>However, I wanted a quick mini-dive into this domain, to a get an intuition for how NLP works.</p>
-<p>What better dataset than our own social media post as we can&rsquo;t help but feel motivated to see insights about our <em>own</em> content.</p>
+<p>However, I wanted a quick mini-dive to a get an intuition for how NLP works, and we&rsquo;ll do that via <strong>sentiment analysis</strong>, categorizing text by their polarity. While NLP is</p>
+<p>We can&rsquo;t help but feel motivated to see insights about our <em>own</em> social media post, so we&rsquo;ll turn to a well known platform.</p>
 <h4 id="how-well-does-facebook-know-us">How well does Facebook know us?</h4>
 <p><em>How much is too much?</em></p>
 <p>To find out, I downloaded 14 years of posts to apply <strong>text analysis</strong> and <strong>pre-processing</strong>. I  used <code>Python</code> to read and download <code>json</code> data from Facebook.</p>
-<p>We&rsquo;ll perform tasks such as tokenization, normalization, stemming and lemmatization aided by Python&rsquo;s <strong>Natural Language Toolkit</strong>, <code>NLTK</code>. We can also get a word/sentence frequency count of all posts. Finally, we&rsquo;ll use the <code>VADER</code> module (Hutto &amp; Gilbert, 2014) for rule-based (lexicon) model of <strong>sentiment analysis</strong>.</p>
+<p>We&rsquo;ll perform tasks such as tokenization, normalization, stemming and lemmatization aided by Python&rsquo;s <strong>Natural Language Toolkit</strong>, <code>NLTK</code>. We can also get a sentence frequency count of all posts. Finally, we&rsquo;ll use the <code>VADER</code> module (Hutto &amp; Gilbert, 2014) for rule-based (lexicon) model of <strong>sentiment analysis</strong>.</p>
 <p>Finally, we&rsquo;ll transition our work flow to <code>R</code> and the <code>tidyverse</code> for <strong>data manipulation</strong> and <strong>visualization</strong>.</p>
 <h2 id="getting_data">Getting_Data</h2>
 <p>First, you&rsquo;ll need to download your own Facebook data by following: Setting &amp; Privacy &gt; Setting &gt; Your Facebook Information &gt; Download Your Information &gt; (select) Posts.</p>
@@ -849,8 +849,10 @@ print(&quot;This is the empty list: &quot;, empty_lst)
 print(&quot;\nLength of list: &quot;, len(empty_lst))
 </code></pre>
 <p>We now have a list of strings.</p>
+<p><img src="./list_of_strings.png" alt="list_of_strings"></p>
 <h2 id="tokenization">Tokenization</h2>
 <p>We&rsquo;ll loop through our list of strings (empty_lst) to tokenize each <em>sentence</em> with <code>nltk.sent_tokenize()</code>. We want to split the text into either individual words or sentences. I think it&rsquo;ll make more sense to try to find the sentiment of each sentence, so we&rsquo;ll tokenize by sentence.</p>
+<p><img src="./token_list_of_strings" alt="token_list_of_strings"></p>
 <p>This yields a list of list, we&rsquo;ll need to flatten it:</p>
 <pre><code class="language-python"># - list of list, len: 1762 (each list contain sentences)
 nested_sent_token = [nltk.sent_tokenize(lst) for lst in empty_lst]
@@ -865,7 +867,6 @@ print(&quot;Flatten sentence token: &quot;, len(flat_sent_token))
 <p>First, we&rsquo;ll remove non-ASCII characters (<code>remove_non_ascii(words)</code>) including: <code>#</code>, <code>-</code>, <code>'</code> and <code>?</code>, among many others. Then we&rsquo;ll lowercase (<code>to_lowercase(words)</code>), remove punctuation (<code>remove_punctuation(words)</code>), replace numbers (<code>replace_numbers(words)</code>), and remove stopwords (<code>remove_stopwords(words)</code>).</p>
 <p>Example stopwords are: your, yours, yourself, yourselves, he, him, his, himself etc.</p>
 <p>This allows us to have each sentence be on equal playing field.</p>
-<p><strong>NOTE</strong>: It turns out the <code>Vader</code> module for sentiment analysis is fully capable of analyzing sentences with punctuation, word-shape (capitalization for emphasis), slang and even utf-8 encoded emojis, so we&rsquo;ll run a parallel set of analyses at the end <strong>without normalization</strong>.</p>
 <pre><code class="language-python"># Remove Non-ASCII
 def remove_non_ascii(words):
     &quot;&quot;&quot;Remove non-ASCII character from List of tokenized words&quot;&quot;&quot;
@@ -930,6 +931,8 @@ def normalize(words):
     return words
 </code></pre>
 <p>Here, we&rsquo;re normalizing <em>sentences</em>, rather than <em>words</em>.</p>
+<p>The below screen cap gives us an idea of the difference between sentence <strong>normalization</strong> vs <strong>non-normalization</strong>.</p>
+<p><img src="./normal_v_non.png" alt="normal_v_non"></p>
 <pre><code class="language-python">sents = normalize(flat_sent_token)
 print(&quot;Length of sentences list: &quot;, len(sents))   # 3194
 </code></pre>
@@ -1035,6 +1038,12 @@ df3 &lt;- df2 %&gt;%
 <p><img src="./sentiment2.png" alt="sentiment2.png"></p>
 <p>Finally, we can also use <code>histograms</code> to see the distribution of negative and positive sentiment among the sentences:</p>
 <p><img src="./patch_histo.png" alt="patch_histo"></p>
+<h4 id="non-normalized-data">Non-Normalized Data</h4>
+<p>It turns out the <code>Vader</code> module for sentiment analysis is fully capable of analyzing sentences with punctuation, word-shape (capitalization for emphasis), slang and even utf-8 encoded emojis.</p>
+<p>So to see if there would be any difference if we implemented sentiment analysis <strong>without normalization</strong>.</p>
+<p>Here are the two version of data for comparison. Top for normalization and bottom for non-normalized.</p>
+<p><img src="./two_version.png" alt="two_version"></p>
+<p>While there are expected slight differences, they are only slight.</p>
 <h4 id="summary">Summary</h4>
 <p>I downloaded 14 years worth of Facebook posts to run a rule-based sentiment analysis and visualize the results, using a combination of <code>Python</code> and <code>R</code>.</p>
 <p>I enjoyed using both for this project and sought to play to their strengths. I found parsing JSON straight-forward with Python, but once we transition to data frames, I was itching to get back to R.</p>

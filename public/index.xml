@@ -1344,12 +1344,12 @@ hist(x)
 &lt;h4 id=&#34;why-sentiment-analysis&#34;&gt;Why Sentiment Analysis?&lt;/h4&gt;
 &lt;p&gt;NLP is subfield of linguistic, computer science and artificial intelligence (
 &lt;a href=&#34;https://en.wikipedia.org/wiki/Natural_language_processing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;wiki&lt;/a&gt;), and you could spend years studying it.&lt;/p&gt;
-&lt;p&gt;However, I wanted a quick mini-dive into this domain, to a get an intuition for how NLP works.&lt;/p&gt;
-&lt;p&gt;What better dataset than our own social media post as we can&amp;rsquo;t help but feel motivated to see insights about our &lt;em&gt;own&lt;/em&gt; content.&lt;/p&gt;
+&lt;p&gt;However, I wanted a quick mini-dive to a get an intuition for how NLP works, and we&amp;rsquo;ll do that via &lt;strong&gt;sentiment analysis&lt;/strong&gt;, categorizing text by their polarity. While NLP is&lt;/p&gt;
+&lt;p&gt;We can&amp;rsquo;t help but feel motivated to see insights about our &lt;em&gt;own&lt;/em&gt; social media post, so we&amp;rsquo;ll turn to a well known platform.&lt;/p&gt;
 &lt;h4 id=&#34;how-well-does-facebook-know-us&#34;&gt;How well does Facebook know us?&lt;/h4&gt;
 &lt;p&gt;&lt;em&gt;How much is too much?&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;To find out, I downloaded 14 years of posts to apply &lt;strong&gt;text analysis&lt;/strong&gt; and &lt;strong&gt;pre-processing&lt;/strong&gt;. I  used &lt;code&gt;Python&lt;/code&gt; to read and download &lt;code&gt;json&lt;/code&gt; data from Facebook.&lt;/p&gt;
-&lt;p&gt;We&amp;rsquo;ll perform tasks such as tokenization, normalization, stemming and lemmatization aided by Python&amp;rsquo;s &lt;strong&gt;Natural Language Toolkit&lt;/strong&gt;, &lt;code&gt;NLTK&lt;/code&gt;. We can also get a word/sentence frequency count of all posts. Finally, we&amp;rsquo;ll use the &lt;code&gt;VADER&lt;/code&gt; module (Hutto &amp;amp; Gilbert, 2014) for rule-based (lexicon) model of &lt;strong&gt;sentiment analysis&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll perform tasks such as tokenization, normalization, stemming and lemmatization aided by Python&amp;rsquo;s &lt;strong&gt;Natural Language Toolkit&lt;/strong&gt;, &lt;code&gt;NLTK&lt;/code&gt;. We can also get a sentence frequency count of all posts. Finally, we&amp;rsquo;ll use the &lt;code&gt;VADER&lt;/code&gt; module (Hutto &amp;amp; Gilbert, 2014) for rule-based (lexicon) model of &lt;strong&gt;sentiment analysis&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;Finally, we&amp;rsquo;ll transition our work flow to &lt;code&gt;R&lt;/code&gt; and the &lt;code&gt;tidyverse&lt;/code&gt; for &lt;strong&gt;data manipulation&lt;/strong&gt; and &lt;strong&gt;visualization&lt;/strong&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;getting_data&#34;&gt;Getting_Data&lt;/h2&gt;
 &lt;p&gt;First, you&amp;rsquo;ll need to download your own Facebook data by following: Setting &amp;amp; Privacy &amp;gt; Setting &amp;gt; Your Facebook Information &amp;gt; Download Your Information &amp;gt; (select) Posts.&lt;/p&gt;
@@ -1411,8 +1411,10 @@ print(&amp;quot;This is the empty list: &amp;quot;, empty_lst)
 print(&amp;quot;\nLength of list: &amp;quot;, len(empty_lst))
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We now have a list of strings.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./list_of_strings.png&#34; alt=&#34;list_of_strings&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;tokenization&#34;&gt;Tokenization&lt;/h2&gt;
 &lt;p&gt;We&amp;rsquo;ll loop through our list of strings (empty_lst) to tokenize each &lt;em&gt;sentence&lt;/em&gt; with &lt;code&gt;nltk.sent_tokenize()&lt;/code&gt;. We want to split the text into either individual words or sentences. I think it&amp;rsquo;ll make more sense to try to find the sentiment of each sentence, so we&amp;rsquo;ll tokenize by sentence.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./token_list_of_strings&#34; alt=&#34;token_list_of_strings&#34;&gt;&lt;/p&gt;
 &lt;p&gt;This yields a list of list, we&amp;rsquo;ll need to flatten it:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# - list of list, len: 1762 (each list contain sentences)
 nested_sent_token = [nltk.sent_tokenize(lst) for lst in empty_lst]
@@ -1427,7 +1429,6 @@ print(&amp;quot;Flatten sentence token: &amp;quot;, len(flat_sent_token))
 &lt;p&gt;First, we&amp;rsquo;ll remove non-ASCII characters (&lt;code&gt;remove_non_ascii(words)&lt;/code&gt;) including: &lt;code&gt;#&lt;/code&gt;, &lt;code&gt;-&lt;/code&gt;, &lt;code&gt;&#39;&lt;/code&gt; and &lt;code&gt;?&lt;/code&gt;, among many others. Then we&amp;rsquo;ll lowercase (&lt;code&gt;to_lowercase(words)&lt;/code&gt;), remove punctuation (&lt;code&gt;remove_punctuation(words)&lt;/code&gt;), replace numbers (&lt;code&gt;replace_numbers(words)&lt;/code&gt;), and remove stopwords (&lt;code&gt;remove_stopwords(words)&lt;/code&gt;).&lt;/p&gt;
 &lt;p&gt;Example stopwords are: your, yours, yourself, yourselves, he, him, his, himself etc.&lt;/p&gt;
 &lt;p&gt;This allows us to have each sentence be on equal playing field.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: It turns out the &lt;code&gt;Vader&lt;/code&gt; module for sentiment analysis is fully capable of analyzing sentences with punctuation, word-shape (capitalization for emphasis), slang and even utf-8 encoded emojis, so we&amp;rsquo;ll run a parallel set of analyses at the end &lt;strong&gt;without normalization&lt;/strong&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Remove Non-ASCII
 def remove_non_ascii(words):
     &amp;quot;&amp;quot;&amp;quot;Remove non-ASCII character from List of tokenized words&amp;quot;&amp;quot;&amp;quot;
@@ -1492,6 +1493,8 @@ def normalize(words):
     return words
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Here, we&amp;rsquo;re normalizing &lt;em&gt;sentences&lt;/em&gt;, rather than &lt;em&gt;words&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;The below screen cap gives us an idea of the difference between sentence &lt;strong&gt;normalization&lt;/strong&gt; vs &lt;strong&gt;non-normalization&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./normal_v_non.png&#34; alt=&#34;normal_v_non&#34;&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sents = normalize(flat_sent_token)
 print(&amp;quot;Length of sentences list: &amp;quot;, len(sents))   # 3194
 &lt;/code&gt;&lt;/pre&gt;
@@ -1597,6 +1600,12 @@ df3 &amp;lt;- df2 %&amp;gt;%
 &lt;p&gt;&lt;img src=&#34;./sentiment2.png&#34; alt=&#34;sentiment2.png&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Finally, we can also use &lt;code&gt;histograms&lt;/code&gt; to see the distribution of negative and positive sentiment among the sentences:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./patch_histo.png&#34; alt=&#34;patch_histo&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;non-normalized-data&#34;&gt;Non-Normalized Data&lt;/h4&gt;
+&lt;p&gt;It turns out the &lt;code&gt;Vader&lt;/code&gt; module for sentiment analysis is fully capable of analyzing sentences with punctuation, word-shape (capitalization for emphasis), slang and even utf-8 encoded emojis.&lt;/p&gt;
+&lt;p&gt;So to see if there would be any difference if we implemented sentiment analysis &lt;strong&gt;without normalization&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Here are the two version of data for comparison. Top for normalization and bottom for non-normalized.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./two_version.png&#34; alt=&#34;two_version&#34;&gt;&lt;/p&gt;
+&lt;p&gt;While there are expected slight differences, they are only slight.&lt;/p&gt;
 &lt;h4 id=&#34;summary&#34;&gt;Summary&lt;/h4&gt;
 &lt;p&gt;I downloaded 14 years worth of Facebook posts to run a rule-based sentiment analysis and visualize the results, using a combination of &lt;code&gt;Python&lt;/code&gt; and &lt;code&gt;R&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;I enjoyed using both for this project and sought to play to their strengths. I found parsing JSON straight-forward with Python, but once we transition to data frames, I was itching to get back to R.&lt;/p&gt;
