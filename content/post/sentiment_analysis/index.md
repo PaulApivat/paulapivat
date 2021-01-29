@@ -8,7 +8,7 @@ featured: false
 image:
   caption: ""
   focal_point: ""
-lastMod: "2021-01-26T00:00:00Z"
+lastMod: "2021-01-29T00:00:00Z"
 projects: []
 subtitle: Rule-based Sentiment Analysis Using Python and R
 summary: Using Python and R to read, pre-process, wrangle and visualize data.
@@ -36,17 +36,15 @@ title: How Positive are Your Facebook Posts?
 
 NLP is subfield of linguistic, computer science and artificial intelligence ([wiki](https://en.wikipedia.org/wiki/Natural_language_processing)), and you could spend years studying it. 
 
-However, I wanted a quick mini-dive to a get an intuition for how NLP works, and we'll do that via **sentiment analysis**, categorizing text by their polarity. While NLP is 
+However, I wanted a quick dive to a get an intuition for how NLP works, and we'll do that via **sentiment analysis**, categorizing text by their polarity.
 
 We can't help but feel motivated to see insights about our *own* social media post, so we'll turn to a well known platform. 
 
 #### How well does Facebook know us? 
 
-*How much is too much?*
+To find out, I downloaded 14 years of posts to apply **text** and **sentiment** analysis. We'l use `Python` to read and parse `json` data from Facebook. 
 
-To find out, I downloaded 14 years of posts to apply **text analysis** and **pre-processing**. I  used `Python` to read and download `json` data from Facebook. 
-
-We'll perform tasks such as tokenization, normalization, stemming and lemmatization aided by Python's **Natural Language Toolkit**, `NLTK`. We can also get a sentence frequency count of all posts. Finally, we'll use the `VADER` module (Hutto & Gilbert, 2014) for rule-based (lexicon) model of **sentiment analysis**.
+We'll perform tasks such as tokenization and normalization aided by Python's **Natural Language Toolkit**, `NLTK`. Then, we'll use the `Vader` module (Hutto & Gilbert, 2014) for rule-based (lexicon) **sentiment analysis**.
 
 Finally, we'll transition our work flow to `R` and the `tidyverse` for **data manipulation** and **visualization**. 
 
@@ -86,7 +84,8 @@ import inflect
 import matplotlib.pyplot as plt
 ```
 
-[Natural Language Tookkit](https://www.nltk.org/) is a popular Python platform for work with human language data. While it has over 50 lexical resourcesm, we'll use the [Vader Sentiment Lexicon](https://github.com/cjhutto/vaderSentiment), that is *specifically* attuned to sentiments expressed in social media. Ideal for Facebook data. NLTK will also help with frequency count, stopwards, stemming and lemmatization.
+[Natural Language Tookkit](https://www.nltk.org/) is a popular Python platform for working with human language data. While it has over 50 lexical resources, we'll use the [Vader Sentiment Lexicon](https://github.com/cjhutto/vaderSentiment), that is *specifically* attuned to sentiments expressed in social media. 
+
 
 [Regex](https://docs.python.org/3/library/re.html) (regular expressions) will be used to remove punctuation.
 
@@ -98,11 +97,11 @@ import matplotlib.pyplot as plt
 
 [Pandas](https://pandas.pydata.org/) is a powerful data manipulation and data analysis tool for when we save our text data into a data frame and write to csv.
 
-After we have our data (in `json` format), we'll [dig through](https://twitter.com/paulapivat/status/1352893979897909251?s=20) to get actual **text data** (our posts). 
+After we have our data, we'll [dig through](https://twitter.com/paulapivat/status/1352893979897909251?s=20) to get actual **text data** (our posts). 
 
-We'll store this text in a list.
+We'll store this in a list.
 
-**Note**: the `data` key occassionally returns an empty array and we want to skip over those by checking `len(v) > 0`.
+**Note**: the `data` key occasionally returns an empty array and we want to skip over those by checking `if len(v) > 0`.
 
 ```python
 # create empty list
@@ -127,11 +126,11 @@ We now have a list of strings.
 
 ## Tokenization
 
-We'll loop through our list of strings (empty_lst) to tokenize each *sentence* with `nltk.sent_tokenize()`. We want to split the text into either individual words or sentences. I think it'll make more sense to try to find the sentiment of each sentence, so we'll tokenize by sentence. 
+We'll loop through our list of strings (empty_lst) to tokenize each *sentence* with `nltk.sent_tokenize()`. We want to split the text into individual sentences. 
 
 ![token_list_of_strings](./token_list_of_strings.png)
 
-This yields a list of list, we'll need to flatten it:
+This yields a list of list, which we'll flatten:
 
 ```python
 # - list of list, len: 1762 (each list contain sentences)
@@ -216,7 +215,6 @@ def normalize(words):
     words = remove_stopwords(words)
     return words
 ```
-Here, we're normalizing *sentences*, rather than *words*. 
 
 The below screen cap gives us an idea of the difference between sentence **normalization** vs **non-normalization**.
 
@@ -254,17 +252,17 @@ We'll use the `Vader` module from `NLTK`. Vader stands for:
 
 We are taking a **Rule-based/Lexicon** approach to sentiment analysis because we have a fairly large dataset, but lack labeled data to build a robust training set. Thus, Machine Learning would **not** be ideal for this task.
 
-To get an intuition for how the `Vader` module works, we can visit the github repo to view `vader_lexicon.txt` [source](https://github.com/cjhutto/vaderSentiment/blob/master/vaderSentiment/vader_lexicon.txt). This is a **dictionary** that has been empirically validated by multiple independent human judges. Sentiment ratings are provided by 10 independent human raters (pre-screened, trained and checked for inter-rater reliability).
+To get an intuition for how the `Vader` module works, we can visit the github repo to view `vader_lexicon.txt` ([source](https://github.com/cjhutto/vaderSentiment/blob/master/vaderSentiment/vader_lexicon.txt)). This is a **dictionary** that has been empirically validated. Sentiment ratings are provided by 10 independent human raters (pre-screened, trained and checked for inter-rater reliability).
 
-Scores range from (-4) Extremely Negative to (4) Extremely Positive, with (0) as Neutral. For example, "die" is rated -2.9, while "dignified" has a 2.2 rating. For more details visit their [repo](https://github.com/cjhutto/vaderSentiment).
+Scores range from (-4) Extremely Negative to (4) Extremely Positive, with (0) as Neutral. For example, "die" is rated -2.9, while "dignified" has a 2.2 rating. For more details visit their ([repo](https://github.com/cjhutto/vaderSentiment)).
 
 We'll create two empty lists to store the sentences and the polarity scores, separately. 
 
-`sentiment` captures each sentence and `sent_scores`, which initializes the `nltk.sentiment.vader.SentimentIntensityAnalyzer`, calculates the **polarity_score** of each sentence (i.e., negative, neutral, positive). 
+`sentiment` captures each sentence and `sent_scores`, which initializes the `nltk.sentiment.vader.SentimentIntensityAnalyzer` to calculate **polarity_score** of each sentence (i.e., negative, neutral, positive). 
 
 `sentiment2` captures each polarity and value in a list of tuples. 
 
-The below screen-cap should give you a sense of what we have:
+The below screen cap should give you a sense of what we have:
 
 
 ![sentiment_2](./sentiment_2.png)
@@ -365,7 +363,7 @@ When I sum positivity and negativity scores to get a ratio, it's approximately 5
 
 The `Vader` module will take in every sentence and assign a valence score from -1 (most negative) to 1 (most positive). We can classify sentences as `pos` (positive), `neu` (neutral) and `neg`(negative) or as a composite (`compound`) score (i.e., normalized, weighted composite score). For more details, see [vader-sentiment documentation](https://pypi.org/project/vader-sentiment/).
 
-To see both positive and negative scores together (positive = blue, negative = red, neutral = black).
+Here is a chart to see *both* positive and negative scores together (positive = blue, negative = red, neutral = black).
 
 ![sentiment2.png](./sentiment2.png)
 
@@ -375,9 +373,9 @@ Finally, we can also use `histograms` to see the distribution of negative and po
 
 #### Non-Normalized Data
 
-It turns out the `Vader` module for sentiment analysis is fully capable of analyzing sentences with punctuation, word-shape (capitalization for emphasis), slang and even utf-8 encoded emojis.
+It turns out the `Vader` module is fully capable of analyzing sentences with punctuation, word-shape (capitalization for emphasis), slang and even utf-8 encoded emojis.
 
-So to see if there would be any difference if we implemented sentiment analysis **without normalization**.
+So to see if there would be any difference if we implemented sentiment analysis **without normalization**, I re-ran all the analyses above. 
 
 Here are the two version of data for comparison. Top for normalization and bottom for non-normalized. 
 
