@@ -488,6 +488,28 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Use Anti_Joins to Find Non-Matching Rows</title>
+      <link>/technical_notes/example_tech/rstats_tip6/</link>
+      <pubDate>Fri, 05 Feb 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_tip6/</guid>
+      <description>&lt;h2 id=&#34;finding-non-matching-rows-before-joining-columns&#34;&gt;Finding Non-Matching Rows Before Joining Columns&lt;/h2&gt;
+&lt;p&gt;We often need to join two columns from different data frames. Rows to be joined are &lt;em&gt;assumed&lt;/em&gt; to have the same value.&lt;/p&gt;
+&lt;p&gt;Even different casing means those values will not be joined. For example: &amp;ldquo;Nigeria&amp;rdquo; and &amp;ldquo;NIGERIA&amp;rdquo; will not be joined.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s particularly useful to know which values are &lt;strong&gt;not&lt;/strong&gt; in sync when you have a list of countries and you want to join with one of the &lt;code&gt;map&lt;/code&gt; libraries (e.g., &lt;code&gt;ggmap&lt;/code&gt;). If the country is spelt differently, the join doesn&amp;rsquo;t happen.&lt;/p&gt;
+&lt;p&gt;Enter anti_join:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;world_map1 &amp;lt;- world_map %&amp;gt;%
+    mutate(id = region)
+
+df1 &amp;lt;- df %&amp;gt;%
+    mutate(id = country)
+    
+# use anti_join to figure out which rows are not aligned
+anti_join(world_map1, df1, by = &amp;quot;id&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Formating Dates with Lubridate</title>
       <link>/technical_notes/example_tech/rstats_dates/</link>
       <pubDate>Tue, 08 Dec 2020 00:00:00 +0100</pubDate>

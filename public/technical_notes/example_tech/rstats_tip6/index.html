@@ -27,11 +27,11 @@
   
     
   
-  <meta name="description" content="Ways of handling nested data Recently, I downloaded JSON data from BigQuery and had to make sense of the data. This starts with getting the data into tabular form.
-Here are the libraries I used:">
+  <meta name="description" content="Finding Non-Matching Rows Before Joining Columns We often need to join two columns from different data frames. Rows to be joined are assumed to have the same value.
+Even different casing means those values will not be joined.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_unnest/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip6/">
 
   
 
@@ -218,7 +218,7 @@ Here are the libraries I used:">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_unnest/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip6/">
 
   
   
@@ -237,16 +237,16 @@ Here are the libraries I used:">
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_unnest/">
-  <meta property="og:title" content="Reading and manipulating nested data | Paul Apivat">
-  <meta property="og:description" content="Ways of handling nested data Recently, I downloaded JSON data from BigQuery and had to make sense of the data. This starts with getting the data into tabular form.
-Here are the libraries I used:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip6/">
+  <meta property="og:title" content="Use Anti_Joins to Find Non-Matching Rows | Paul Apivat">
+  <meta property="og:description" content="Finding Non-Matching Rows Before Joining Columns We often need to join two columns from different data frames. Rows to be joined are assumed to have the same value.
+Even different casing means those values will not be joined."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-10-11T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-02-05T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-10-11T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-02-05T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +265,7 @@ Here are the libraries I used:"><meta property="og:image" content="/images/icon_
 
 
 
-  <title>Reading and manipulating nested data | Paul Apivat</title>
+  <title>Use Anti_Joins to Find Non-Matching Rows | Paul Apivat</title>
 
 </head>
 
@@ -772,7 +772,7 @@ Here are the libraries I used:"><meta property="og:image" content="/images/icon_
     <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_tip6/">Rstats Tip</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/rstats_tip6/">Anti Joins</a>
       </li>
       
@@ -800,7 +800,7 @@ Here are the libraries I used:"><meta property="og:image" content="/images/icon_
         <a href="/technical_notes/example_tech/rstats_tip2/">Tidy Data - Spread</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_unnest/">Unnest JSON data</a>
       </li>
       
@@ -822,7 +822,7 @@ Here are the libraries I used:"><meta property="og:image" content="/images/icon_
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#ways-of-handling-nested-data">Ways of handling nested data</a></li>
+    <li><a href="#finding-non-matching-rows-before-joining-columns">Finding Non-Matching Rows Before Joining Columns</a></li>
   </ul>
 </nav>
 
@@ -835,51 +835,22 @@ Here are the libraries I used:"><meta property="og:image" content="/images/icon_
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Reading and manipulating nested data</h1>
+          <h1>Use Anti_Joins to Find Non-Matching Rows</h1>
 
           <div class="article-style">
-            <h2 id="ways-of-handling-nested-data">Ways of handling nested data</h2>
-<p>Recently, I downloaded JSON data from BigQuery and had to make sense of the data. This starts with getting the data into tabular form.</p>
-<p>Here are the libraries I used:</p>
-<pre><code>library(jsonlite)
-library(tidyverse)
-</code></pre>
-<p>First, read in JSON data. Once read in, we check its class type to see that its a list. We&rsquo;ll want to get it into a data frame.</p>
-<pre><code># read data out into Large list (321 elements, 2.4 Mb)
-# each row is *another* list
+            <h2 id="finding-non-matching-rows-before-joining-columns">Finding Non-Matching Rows Before Joining Columns</h2>
+<p>We often need to join two columns from different data frames. Rows to be joined are <em>assumed</em> to have the same value.</p>
+<p>Even different casing means those values will not be joined. For example: &ldquo;Nigeria&rdquo; and &ldquo;NIGERIA&rdquo; will not be joined.</p>
+<p>It&rsquo;s particularly useful to know which values are <strong>not</strong> in sync when you have a list of countries and you want to join with one of the <code>map</code> libraries (e.g., <code>ggmap</code>). If the country is spelt differently, the join doesn&rsquo;t happen.</p>
+<p>Enter anti_join:</p>
+<pre><code>world_map1 &lt;- world_map %&gt;%
+    mutate(id = region)
 
-funnel &lt;- lapply(readLines(&quot;bq-mixpanel-funnel.json&quot;), fromJSON)
-
-# &quot;list&quot; class
-class(funnel)
-</code></pre>
-<p>After searching online, three approaches continually resurfaced.</p>
-<p>First, using <code>unlist()</code> and converting into <code>matrix()</code> before wrapping <em>that</em> in a <code>data.frame()</code>:</p>
-<pre><code># Approach 1: convert to matrix, array
-
-unlist_funnel &lt;- matrix(unlist(funnel), byrow = TRUE, ncol = length(funnel[[1]]))
-rownames(unlist_funnel) &lt;- names(funnel)
-as.data.frame(unlist_funnel) %&gt;% view()
-</code></pre>
-<p>These next approaches get us closer (<strong>note</strong>: I know from interacting with the data in BigQuery that there <em>should</em> be 321 rows):</p>
-<pre><code># Approach 2: Convert list to data frame
-
-df &lt;- data.frame(matrix(unlist(funnel), nrow = length(funnel), byrow = TRUE))
-df2 &lt;- data.frame(matrix(unlist(funnel), nrow = length(funnel), byrow = FALSE))
-df3 &lt;- data.frame(matrix(unlist(funnel), nrow = 321, byrow = TRUE), stringsAsFactors = FALSE)
-</code></pre>
-<p>The next approach is to use <code>lapply()</code></p>
-<pre><code>#works but everything is on one column
-
-unlist(lapply(funnel, c)) %&gt;% view() 
-
-# this makes everything a list, but we want everything into a vector
-t(lapply(funnel, c)) %&gt;% view() 
-</code></pre>
-<p>Finally, the approach that worked best, in this particular case was <code>sapply()</code>. This functions turns things into vector, which can then be converted into a dataframe:</p>
-<pre><code>#still the ideal, this works because 'c' is used ot combine lists
-
-t(sapply(funnel, c)) %&gt;% view()  
+df1 &lt;- df %&gt;%
+    mutate(id = country)
+    
+# use anti_join to figure out which rows are not aligned
+anti_join(world_map1, df1, by = &quot;id&quot;)
 </code></pre>
 
           </div>
@@ -897,14 +868,14 @@ t(sapply(funnel, c)) %&gt;% view()
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_dates/" rel="next">Formating Dates with Lubridate</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_viz_reactable/" rel="prev">Styling tables with reactable</a>
+    <a href="/technical_notes/example_tech/rstats_dates/" rel="prev">Formating Dates with Lubridate</a>
   </div>
   
 </div>
@@ -914,7 +885,7 @@ t(sapply(funnel, c)) %&gt;% view()
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Oct 11, 2020</p>
+          <p>Last updated on Feb 5, 2021</p>
 
           
 
@@ -926,7 +897,7 @@ t(sapply(funnel, c)) %&gt;% view()
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_unnest.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip6.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
