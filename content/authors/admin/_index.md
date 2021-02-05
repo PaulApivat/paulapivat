@@ -18,9 +18,9 @@ education:
     year: 2014
 email: ""
 interests:
-- Data Science & Machine Learning
+- Visualization & Data Science
 - R and Python programming
-- Psychology
+- Permissionless and Censorship Resistant Technologies 
 organizations:
 - name: Adjunct | Thammasat University
   url: ""
@@ -45,7 +45,11 @@ user_groups:
 - Visitors
 ---
 
-I help people and organizations make data-driven decisions. I run [Getwyze](http://getwyze.com/), a data-agency that provides services in data cleaning, analysis and visualizations. 
+I am exploring the intersection of writing, data and code. I seek to use data science as a tool to better understand the world. I write [atomic essays](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f) to explore ideas.
+
+My writings can be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f)
+
+I can provide [services](http://getwyze.com/) in data cleaning, analysis and visualizations. 
 
 I started in organizational psychology and have branched out to data science. For daily updates on my data science journey, find me on [Twitter](https://twitter.com/paulapivat). 
 
