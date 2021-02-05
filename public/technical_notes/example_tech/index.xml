@@ -489,6 +489,31 @@ anti_join(world_map1, df1, by = &amp;quot;id&amp;quot;)
     </item>
     
     <item>
+      <title>Extend Color Palettes</title>
+      <link>/technical_notes/example_tech/rstats_viz_extend_color/</link>
+      <pubDate>Fri, 05 Feb 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_viz_extend_color/</guid>
+      <description>&lt;h2 id=&#34;extending-the-number-of-colors-available-in-a-palette&#34;&gt;Extending the number of colors available in a palette&lt;/h2&gt;
+&lt;p&gt;You might be using the &lt;code&gt;RColorBrewer&lt;/code&gt; library and one of the palettes: Sequential, Qualitative or Diverging:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Sequential&lt;/strong&gt; includes: Blues, BuGn, BuPu, GnBu, Greens, Greys, Oranges, OrRd, PuBu, PuBuGn, PuRd, Purples, RdPu, Reds, YlGn, YlGnBu YlOrBr, YlOrRd.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Qualitative&lt;/strong&gt; includes: Accent, Dark2, Paired, Pastel1, Pastel2, Set1, Set2, Set3&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Diverging&lt;/strong&gt; includes: BrBG, PiYG, PRGn, PuOr, RdBu, RdGy, RdYlBu, RdYlGn, Spectral&lt;/p&gt;
+&lt;p&gt;These palettes 8-9 colors, at most 12. But what if you need more? Here&amp;rsquo;show to &lt;em&gt;extend&lt;/em&gt; the palettes:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;library(RColorBrewer)
+
+number.colors &amp;lt;- 46
+mycolors &amp;lt;- colorRampPalette(brewer.pal(8, &amp;quot;Set1&amp;quot;))(number.colors)
+
+df %&amp;gt;%
+   ggplot(aes(x=x, y=y)) +
+   geom_boxplot() +
+   geom_point() +
+   scale_color_manual(values = mycolors)
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Formating Dates with Lubridate</title>
       <link>/technical_notes/example_tech/rstats_dates/</link>
       <pubDate>Tue, 08 Dec 2020 00:00:00 +0100</pubDate>

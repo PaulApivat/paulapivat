@@ -27,11 +27,10 @@
   
     
   
-  <meta name="description" content="Setting up Poetry for Dependency Management  Poetry is python packaging and dependency management made easy.
-Poetry Install Script $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3  Sample Project Create Sample Project $ poetry new how-long  Creating virtual environment NOTE: This is done only once.">
+  <meta name="description" content="Changing the x-axis from decimals to integers When creating plots in ggplot2 you&rsquo;ll often want to customize the x-axis so that values appear on a certain interval. In the example below, I wanted to change the intervals from 0.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_poetry/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_viz_scale_x-copy/">
 
   
 
@@ -218,7 +217,7 @@ Poetry Install Script $ curl -sSL https://raw.githubusercontent.com/python-poetr
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/python_poetry/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_viz_scale_x-copy/">
 
   
   
@@ -237,16 +236,15 @@ Poetry Install Script $ curl -sSL https://raw.githubusercontent.com/python-poetr
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/python_poetry/">
-  <meta property="og:title" content="Setting up Poetry for Dependency Management | Paul Apivat">
-  <meta property="og:description" content="Setting up Poetry for Dependency Management  Poetry is python packaging and dependency management made easy.
-Poetry Install Script $ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3  Sample Project Create Sample Project $ poetry new how-long  Creating virtual environment NOTE: This is done only once."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_viz_scale_x-copy/">
+  <meta property="og:title" content="Decimals to Integers | Paul Apivat">
+  <meta property="og:description" content="Changing the x-axis from decimals to integers When creating plots in ggplot2 you&rsquo;ll often want to customize the x-axis so that values appear on a certain interval. In the example below, I wanted to change the intervals from 0."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-12-22T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2020-09-15T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-12-22T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2020-09-15T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +263,7 @@ Poetry Install Script $ curl -sSL https://raw.githubusercontent.com/python-poetr
 
 
 
-  <title>Setting up Poetry for Dependency Management | Paul Apivat</title>
+  <title>Decimals to Integers | Paul Apivat</title>
 
 </head>
 
@@ -660,19 +658,15 @@ Poetry Install Script $ curl -sSL https://raw.githubusercontent.com/python-poetr
   </div>
   
   <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_viz_extend_color/">Data Viz Tips</a>
+    <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_viz_reactable/">Data Viz Tips</a>
     <ul class="nav docs-sidenav">
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_viz_extend_color/">Extend Color Palettes</a>
-      </li>
       
       <li >
         <a href="/technical_notes/example_tech/rstats_viz_reactable/">reactable</a>
       </li>
       
-      <li >
-        <a href="/technical_notes/example_tech/rstats_viz_scale_x/">scale_x_continuous (ggplot2)</a>
+      <li class="active">
+        <a href="/technical_notes/example_tech/rstats_viz_scale_x-copy/">scale_x_continuous (ggplot2)</a>
       </li>
       
       <li >
@@ -751,7 +745,7 @@ Poetry Install Script $ curl -sSL https://raw.githubusercontent.com/python-poetr
         <a href="/technical_notes/example_tech/python_dotenv/">dotenv in Python</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/python_poetry/">Installing Poetry</a>
       </li>
       
@@ -826,17 +820,7 @@ Poetry Install Script $ curl -sSL https://raw.githubusercontent.com/python-poetr
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#setting-up-poetry-for-dependency-management">Setting up Poetry for Dependency Management</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-    <li><a href="#sample-project">Sample Project</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-    <li><a href="#existing-project">Existing Project</a></li>
+    <li><a href="#changing-the-x-axis-from-decimals-to-integers">Changing the x-axis from decimals to integers</a></li>
   </ul>
 </nav>
 
@@ -849,42 +833,24 @@ Poetry Install Script $ curl -sSL https://raw.githubusercontent.com/python-poetr
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Setting up Poetry for Dependency Management</h1>
+          <h1>Decimals to Integers</h1>
 
           <div class="article-style">
-            <h2 id="setting-up-poetry-for-dependency-management">Setting up Poetry for Dependency Management</h2>
-<p>
-<a href="https://python-poetry.org/" target="_blank" rel="noopener">Poetry</a> is python packaging and dependency management made easy.</p>
-<h4 id="poetry-install-script">Poetry Install Script</h4>
-<pre><code class="language-python">$ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+            <h2 id="changing-the-x-axis-from-decimals-to-integers">Changing the x-axis from decimals to integers</h2>
+<p>When creating plots in <code>ggplot2</code> you&rsquo;ll often want to customize the x-axis so that values appear on a certain interval. In the example below, I wanted to change the intervals from 0.25, 0.50, 0.75 to 1,2,3,4 and so on. In this specific instance, I wanted <em>each</em> season of the show Friends to have its down tick on the x-axis (note: the show had ten seasons).</p>
+<p>This operation changes the x-axis ticks from having decimals to being integers.</p>
+<pre><code>library(ggplot)
+
+ggplot(total_data, aes(x = season, y = episode, fill=imdb_rating)) +
+    geom_tile() +
+    scale_fill_gradient(low = '#FFF580', high = '#FF4238') +
+    
+    ## the seq() function defines the start and end numbers
+    ## 'by =' indicates the desired interval
+    scale_x_continuous(breaks = seq(1,10, by = 1)) + 
+    
+    theme_classic()
 </code></pre>
-<h2 id="sample-project">Sample Project</h2>
-<h4 id="create-sample-project">Create Sample Project</h4>
-<pre><code class="language-python">$ poetry new how-long
-</code></pre>
-<h4 id="creating-virtual-environment">Creating virtual environment</h4>
-<p><strong>NOTE:</strong> This is done only <strong>once</strong>.</p>
-<pre><code class="language-python">$ poetry config virtualenvs.in-project true
-$ poetry install
-</code></pre>
-<h4 id="launch-virtual-environment">Launch virtual environment</h4>
-<pre><code class="language-python">$ poetry shell 
-</code></pre>
-<h4 id="uninstall-virtual-environment">Uninstall virtual environment</h4>
-<pre><code class="language-python">$ poetry env remove 3.x
-</code></pre>
-<h2 id="existing-project">Existing Project</h2>
-<ol>
-<li>Switch to master branch (if not already on)</li>
-<li>git status</li>
-<li>git pull</li>
-<li>git checkout -b new_branch_name</li>
-</ol>
-<p><strong>NOTE:</strong> Assume that <code>poetry config virtualenvs.in-project true</code> has been run.</p>
-<pre><code class="language-python">$ poetry install
-$ poetry shell 
-</code></pre>
-<p>Check <code>python</code> environment.</p>
 
           </div>
 
@@ -901,14 +867,14 @@ $ poetry shell
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/python_dotenv/" rel="next">Setting dotenv to Access Sensitive API Keys</a>
+    <a href="/technical_notes/example_tech/rstats_viz_reactable/" rel="next">Styling tables with reactable</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/git_commit_message/" rel="prev">Writing a git commit message</a>
+    <a href="/technical_notes/example_tech/rstats_viz_scale_x/" rel="prev">Decimals to Integers</a>
   </div>
   
 </div>
@@ -918,7 +884,7 @@ $ poetry shell
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Dec 22, 2020</p>
+          <p>Last updated on Sep 15, 2020</p>
 
           
 
@@ -930,7 +896,7 @@ $ poetry shell
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_poetry.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_viz_scale_x%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
