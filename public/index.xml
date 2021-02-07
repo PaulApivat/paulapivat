@@ -1408,7 +1408,7 @@ df.to_csv(&#39;crypto51.csv&#39;, index=False)
 &lt;p&gt;We&amp;rsquo;ll load the &lt;code&gt;tidyverse&lt;/code&gt; and read in the CSV file we created. Then we&amp;rsquo;ll use a series of &lt;code&gt;magrittr&lt;/code&gt; 
 &lt;a href=&#34;https://magrittr.tidyverse.org/reference/pipe.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pipes&lt;/a&gt; to sequence our data manipulation in one flow. We&amp;rsquo;ll remove projects with &lt;strong&gt;no market_cap&lt;/strong&gt; data. We&amp;rsquo;ll remove the Handshake project because of missing data for &lt;code&gt;attack_hourly_cost&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll change &lt;code&gt;attack_hourly_cost&lt;/code&gt; data type into numeric. Then we&amp;rsquo;ll use &lt;code&gt;ggplot2&lt;/code&gt; to visualize a scatter plot with both X and Y axes transformed with &lt;code&gt;scale_*_log10()&lt;/code&gt; to make the scatter plot more interpretable.&lt;/p&gt;
-&lt;p&gt;Bitcoin and Ethereum are annotated as the two leading projects.&lt;/p&gt;
+&lt;p&gt;Bitcoin and Ethereum are annotated as the two leading projects (see chart below).&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;library(tidyverse)
 
 df &amp;lt;- read_csv(&amp;quot;crypto51.csv&amp;quot;)

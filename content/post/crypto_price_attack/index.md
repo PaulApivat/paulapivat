@@ -66,7 +66,7 @@ We'll load the `tidyverse` and read in the CSV file we created. Then we'll use a
 
 We'll change `attack_hourly_cost` data type into numeric. Then we'll use `ggplot2` to visualize a scatter plot with both X and Y axes transformed with `scale_*_log10()` to make the scatter plot more interpretable. 
 
-Bitcoin and Ethereum are annotated as the two leading projects. 
+Bitcoin and Ethereum are annotated as the two leading projects (see chart below). 
 
 ```python
 library(tidyverse)
