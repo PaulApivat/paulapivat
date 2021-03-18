@@ -174,7 +174,7 @@ df &amp;lt;- df %&amp;gt;%
 &lt;ul&gt;
 &lt;li&gt;Edit rows for missing data in Thai_name column: 26, 110, 157, 234-238, 240, 241, 246&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Note: This was only necessary the first time round, after the changes are made to how I scraped &lt;code&gt;a1&lt;/code&gt; and &lt;code&gt;a6&lt;/code&gt;, this step is no longer necessary:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: This was only necessary the first time round, after the changes are made to how I scraped &lt;code&gt;a1&lt;/code&gt; and &lt;code&gt;a6&lt;/code&gt;, this step is &lt;strong&gt;no longer necessary&lt;/strong&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# If necessary; may not need to do this after scraping a1 and a6 - see above
 # Edit Rows for missing Thai_name
 df[26,]$Thai_name &amp;lt;- &amp;quot;Khanom chin nam ngiao&amp;quot;
@@ -196,17 +196,176 @@ df[246,]$Thai_name &amp;lt;- &amp;quot;Nam phrik pla chi&amp;quot;
 write_csv(df, &amp;quot;edit_thai_dishes.csv&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;data_visualization&#34;&gt;Data_Visualization&lt;/h3&gt;
+&lt;p&gt;There are several ways to visualize the data. Because we want to communicate the diversity of Thai dishes, &lt;em&gt;aside&lt;/em&gt; from Pad Thai, we want a visualization that captures the many, many options.&lt;/p&gt;
+&lt;p&gt;I opted for a &lt;strong&gt;dendrogram&lt;/strong&gt;. This graph assumes hierarchy within the data, which fits our project because we can organize the dishes in grouping and sub-grouping.&lt;/p&gt;
+&lt;p&gt;We first make a distinction between &lt;strong&gt;individual&lt;/strong&gt; and &lt;strong&gt;shared&lt;/strong&gt; dishes, showing that Pad Thai, while not even close to being the best &lt;em&gt;individual&lt;/em&gt; dish is nonetheless an dish to be consumed individually. While, in fact, more dishes fall under the &lt;strong&gt;shared&lt;/strong&gt; grouping.&lt;/p&gt;
+&lt;p&gt;To avoid cramming too much data into one visual, we&amp;rsquo;ll create two separate visualizations for individual vs. shared dishes.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Dividing into Individual vs Shared Dishes&lt;/li&gt;
-&lt;li&gt;Dendrogram 1: Individual Dishes&lt;/li&gt;
-&lt;li&gt;Dendrogram 2: Shared Dishes&lt;/li&gt;
+&lt;li&gt;Dendrogram 1: 52 Alternatives to Pad Thai (individual dishes)&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;./indiv_thai_dishes.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Creating a dendrogram requires using the &lt;code&gt;ggraph&lt;/code&gt; and &lt;code&gt;igraph&lt;/code&gt; libraries. First, we&amp;rsquo;ll load the libraries and sub-set our data frame by filtering for Individual Dishes:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;df &amp;lt;- read_csv(&amp;quot;edit_thai_dishes.csv&amp;quot;)
+
+library(ggraph)
+library(igraph)
+
+df %&amp;gt;%
+    select(major_grouping, minor_grouping, Thai_name, Thai_script) %&amp;gt;%
+    filter(major_grouping == &#39;Individual dishes&#39;) %&amp;gt;%
+    group_by(minor_grouping) %&amp;gt;%
+    count() 
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We create edges and nodes (i.e., from and to) to create the sub-groupings within Individual Dishes (i.e., Rice, Noodles and Misc):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Individual Dishes ----
+
+# data: edge list
+d1 &amp;lt;- data.frame(from=&amp;quot;Individual dishes&amp;quot;, to=c(&amp;quot;Misc Indiv&amp;quot;, &amp;quot;Noodle dishes&amp;quot;, &amp;quot;Rice dishes&amp;quot;))
+
+d2 &amp;lt;- df %&amp;gt;%
+    select(minor_grouping, Thai_name) %&amp;gt;%
+    slice(1:53) %&amp;gt;%
+    rename(
+        from = minor_grouping,
+        to = Thai_name
+    ) 
+
+edges &amp;lt;- rbind(d1, d2)
+
+# plot dendrogram (idividual dishes)
+indiv_dishes_graph &amp;lt;- graph_from_data_frame(edges)
+
+ggraph(indiv_dishes_graph, layout = &amp;quot;dendrogram&amp;quot;, circular = FALSE) +
+    geom_edge_diagonal(aes(edge_colour = edges$from), label_dodge = NULL) +
+    geom_node_text(aes(label = name, filter = leaf, color = &#39;red&#39;), hjust = 1.1, size = 3) +
+    geom_node_point(color = &amp;quot;whitesmoke&amp;quot;) +
+    theme(
+        plot.background = element_rect(fill = &#39;#343d46&#39;),
+        panel.background = element_rect(fill = &#39;#343d46&#39;),
+        legend.position = &#39;none&#39;,
+        plot.title = element_text(colour = &#39;whitesmoke&#39;, face = &#39;bold&#39;, size = 25),
+        plot.subtitle = element_text(colour = &#39;whitesmoke&#39;, face = &#39;bold&#39;),
+        plot.caption = element_text(color = &#39;whitesmoke&#39;, face = &#39;italic&#39;)
+    ) +
+    labs(
+        title = &#39;52 Alternatives to Pad Thai&#39;,
+        subtitle = &#39;Individual Thai Dishes&#39;,
+        caption = &#39;Data: Wikipedia | Graphic: @paulapivat&#39;
+    ) +
+    expand_limits(x = c(-1.5, 1.5), y = c(-0.8, 0.8)) +
+    coord_flip() +
+    annotate(&amp;quot;text&amp;quot;, x = 47, y = 1, label = &amp;quot;Miscellaneous (7)&amp;quot;, color = &amp;quot;#7CAE00&amp;quot;)+
+    annotate(&amp;quot;text&amp;quot;, x = 31, y = 1, label = &amp;quot;Noodle Dishes (24)&amp;quot;, color = &amp;quot;#00C08B&amp;quot;) +
+    annotate(&amp;quot;text&amp;quot;, x = 8, y = 1, label = &amp;quot;Rice Dishes (22)&amp;quot;, color = &amp;quot;#C77CFF&amp;quot;) +
+    annotate(&amp;quot;text&amp;quot;, x = 26, y = 2, label = &amp;quot;Individual\nDishes&amp;quot;, color = &amp;quot;#F8766D&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Dendrogram 2: Thai Food is Best Shared (201 Shared Dishes)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;./shared_dishes_final.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Shared Dishes ----
+df %&amp;gt;%
+    select(major_grouping, minor_grouping, Thai_name, Thai_script) %&amp;gt;%
+    filter(major_grouping == &#39;Shared dishes&#39;) %&amp;gt;%
+    group_by(minor_grouping) %&amp;gt;%
+    count() %&amp;gt;%
+    arrange(desc(n))
+
+d3 &amp;lt;- data.frame(from=&amp;quot;Shared dishes&amp;quot;, to=c(&amp;quot;Curries&amp;quot;, &amp;quot;Soups&amp;quot;, &amp;quot;Salads&amp;quot;,
+                                            &amp;quot;Fried and stir-fried dishes&amp;quot;, &amp;quot;Deep-fried dishes&amp;quot;, &amp;quot;Grilled dishes&amp;quot;,
+                                            &amp;quot;Steamed or blanched dishes&amp;quot;, &amp;quot;Stewed dishes&amp;quot;, &amp;quot;Dipping sauces and pastes&amp;quot;, &amp;quot;Misc Shared&amp;quot;))
+
+
+d4 &amp;lt;- df %&amp;gt;%
+    select(minor_grouping, Thai_name) %&amp;gt;%
+    slice(54:254) %&amp;gt;%
+    rename(
+        from = minor_grouping,
+        to = Thai_name
+    )
+
+edges2 &amp;lt;- rbind(d3, d4)
+
+# create a vertices data.frame. One line per object of hierarchy
+vertices = data.frame(
+    name = unique(c(as.character(edges2$from), as.character(edges2$to)))
+)
+
+# add column with group of each name. Useful to later color points
+vertices$group = edges2$from[ match(vertices$name, edges2$to)]
+
+# Add information concerning the label we are going to add: angle, horizontal adjustment and potential flip
+# calculate the ANGLE of the labels
+vertices$id=NA
+myleaves=which(is.na(match(vertices$name, edges2$from)))
+nleaves=length(myleaves)
+vertices$id[myleaves] = seq(1:nleaves)
+vertices$angle = 360 / nleaves * vertices$id + 90    
+
+
+# calculate the alignment of labels: right or left
+vertices$hjust&amp;lt;-ifelse( vertices$angle &amp;lt; 275, 1, 0)
+
+
+
+# flip angle BY to make them readable
+vertices$angle&amp;lt;-ifelse(vertices$angle &amp;lt; 275, vertices$angle+180, vertices$angle)
+
+# plot dendrogram (shared dishes)
+shared_dishes_graph &amp;lt;- graph_from_data_frame(edges2)
+
+ggraph(shared_dishes_graph, layout = &amp;quot;dendrogram&amp;quot;, circular = TRUE) +
+    geom_edge_diagonal(aes(edge_colour = edges2$from), label_dodge = NULL) +
+    geom_node_text(aes(x = x*1.15, y=y*1.15, filter = leaf, label=name, angle = vertices$angle, hjust= vertices$hjust, colour= vertices$group), size=2.7, alpha=1) +
+    geom_node_point(color = &amp;quot;whitesmoke&amp;quot;) +
+    theme(
+        plot.background = element_rect(fill = &#39;#343d46&#39;),
+        panel.background = element_rect(fill = &#39;#343d46&#39;),
+        legend.position = &#39;none&#39;,
+        plot.title = element_text(colour = &#39;whitesmoke&#39;, face = &#39;bold&#39;, size = 25),
+        plot.subtitle = element_text(colour = &#39;whitesmoke&#39;, margin = margin(0,0,30,0), size = 20),
+        plot.caption = element_text(color = &#39;whitesmoke&#39;, face = &#39;italic&#39;)
+    ) +
+    labs(
+        title = &#39;Thai Food is Best Shared&#39;,
+        subtitle = &#39;201 Ways to Make Friends&#39;,
+        caption = &#39;Data: Wikipedia | Graphic: @paulapivat&#39;
+    ) +
+    #expand_limits(x = c(-1.5, 1.5), y = c(-0.8, 0.8)) +
+    expand_limits(x = c(-1.5, 1.5), y = c(-1.5, 1.5)) +
+    coord_flip() +
+    annotate(&amp;quot;text&amp;quot;, x = 0.4, y = 0.45, label = &amp;quot;Steamed&amp;quot;, color = &amp;quot;#F564E3&amp;quot;) +
+    annotate(&amp;quot;text&amp;quot;, x = 0.2, y = 0.5, label = &amp;quot;Grilled&amp;quot;, color = &amp;quot;#00BA38&amp;quot;) +
+    annotate(&amp;quot;text&amp;quot;, x = -0.2, y = 0.5, label = &amp;quot;Deep-Fried&amp;quot;, color = &amp;quot;#DE8C00&amp;quot;) +
+    annotate(&amp;quot;text&amp;quot;, x = -0.4, y = 0.1, label = &amp;quot;Fried &amp;amp;\n Stir-Fried&amp;quot;, color = &amp;quot;#7CAE00&amp;quot;) +
+    annotate(&amp;quot;text&amp;quot;, x = -0.3, y = -0.4, label = &amp;quot;Salads&amp;quot;, color = &amp;quot;#00B4F0&amp;quot;) +
+    annotate(&amp;quot;text&amp;quot;, x = -0.05, y = -0.5, label = &amp;quot;Soups&amp;quot;, color = &amp;quot;#C77CFF&amp;quot;) +
+    annotate(&amp;quot;text&amp;quot;, x = 0.3, y = -0.5, label = &amp;quot;Curries&amp;quot;, color = &amp;quot;#F8766D&amp;quot;) +
+    annotate(&amp;quot;text&amp;quot;, x = 0.5, y = -0.1, label = &amp;quot;Misc&amp;quot;, color = &amp;quot;#00BFC4&amp;quot;) +
+    annotate(&amp;quot;text&amp;quot;, x = 0.5, y = 0.1, label = &amp;quot;Sauces\nPastes&amp;quot;, color = &amp;quot;#B79F00&amp;quot;)
+    
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;text_mining&#34;&gt;Text_Mining&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Word Frequency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Frequency of Words across all Thai Dishes
+&lt;img src=&#34;./word_freq_barchart.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Frequent words that are shared by Individual and Shared Dishes
+&lt;img src=&#34;./word_freq_indiv_shared_dishes.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
 &lt;li&gt;Term Document Inverse Document Frequency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;./td_idf_thai_dishes.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
 &lt;li&gt;Network of Relationships&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;./network_thai_dishes.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Relationship between Words&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;./indiv_dish_corr.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;exploratory_questions&#34;&gt;Exploratory_Questions&lt;/h3&gt;
 &lt;p&gt;Here are some exploratory questions generated during this project:&lt;/p&gt;
 &lt;ol&gt;
