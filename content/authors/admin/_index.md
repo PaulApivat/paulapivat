@@ -45,9 +45,9 @@ user_groups:
 - Visitors
 ---
 
-I am exploring the intersection of writing, data and code. I seek to use data science as a tool to better understand the world. I write [atomic essays](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f) to explore ideas.
+I am exploring the intersection of writing, data and code. I seek to use data to better understand the world, Web3 and decentralized applications. 
 
-My writings can be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f)
+I write [atomic essays](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f) to explore ideas. My writings can also be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f)
 
 I can provide [services](http://getwyze.com/) in data cleaning, analysis and visualizations. 
 
