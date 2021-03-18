@@ -721,7 +721,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    2 min read
+    4 min read
   </span>
   
 
@@ -799,6 +799,72 @@ import urllib.parse
 import urllib.error
 import ssl
 import pandas as pd
+</code></pre>
+<p>We&rsquo;ll use <code>requests</code> to send an HTTP requests to the wikipedia url we need. We&rsquo;ll access network sockets using &lsquo;secure sockets layer&rsquo; (SSL). Then we&rsquo;ll read in the html data to parse it with <strong>Beautiful Soup</strong>.</p>
+<p>To being using <strong>Beautiful Soup</strong>, we want to understand the structure of the page (and tables) we want to scrape. We can see that we want the <code>table</code> tag, along with class of <code>wikitable sortable</code>.</p>
+<p><img src="./web_scrap.png" alt="png"></p>
+<p>The main function we&rsquo;ll use from <strong>Beautiful Soup</strong> is <code>findAll()</code> and the main three parameters are <code>th</code> (Header Cell in HTML table), <code>tr</code> (Row in HTML table) and <code>td</code> (Standard Data Cell).</p>
+<p>First, we&rsquo;ll save the table headers in a list, which we&rsquo;ll use when creating an empty <code>dictionary</code> to store the data we need.</p>
+<pre><code class="language-python">header = [item.text.rstrip() for item in all_tables[0].findAll('th')]
+
+table = dict([(x, 0) for x in header])
+</code></pre>
+<p>Initially, we want to successfully scrape one table, knowing that we&rsquo;ll need to repeat the process for all 16 tables. Therefore we&rsquo;ll use a <em>nested loop</em>. Because all tables have 6 columns, we&rsquo;ll want to create 6 empty lists.</p>
+<p>We&rsquo;ll scrape through all table rows <code>tr</code> and check for 6 cells (which we should have for 6 columns), then we&rsquo;ll <em>append</em> the data to each empty list we create.</p>
+<pre><code class="language-python"># loop through all 16 tables
+a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
+# empty list to store data
+a1 = []
+a2 = []
+a3 = []
+a4 = []
+a5 = []
+a6 = []
+
+# nested loop for looping through all 16 tables, then all tables individually
+for i in a:
+    for row in all_tables[i].findAll('tr'):
+        cells = row.findAll('td')
+        if len(cells) == 6:
+            a1.append([string for string in cells[0].strings])
+            a2.append(cells[1].find(text=True))
+            a3.append(cells[2].find(text=True))
+            a4.append(cells[3].find(text=True))
+            a5.append(cells[4].find(text=True))
+            a6.append([string for string in cells[5].strings])
+</code></pre>
+<p>You&rsquo;ll note the code for <code>a1</code> and <code>a6</code> are slightly different. In retrospect, I found that <code>cells[0].find(text=True)</code> did <strong>not</strong> yield certain texts, particularly if they were links, therefore a slight adjustment is made.</p>
+<p>The strings tag returns a <code>NavigableString</code> type object while text returns a <code>unicode</code> object (see 
+<a href="https://stackoverflow.com/questions/25327693/difference-between-string-and-text-beautifulsoup" target="_blank" rel="noopener">stack overflow</a> explanation).</p>
+<p>After we&rsquo;ve scrapped the data, we&rsquo;ll need to store the data in a <code>dictionary</code> before converting to <code>data frame</code>:</p>
+<pre><code class="language-python"># create dictionary
+table = dict([(x, 0) for x in header])
+
+# append dictionary with corresponding data list
+table['Thai name'] = a1
+table['Thai script'] = a2
+table['English name'] = a3
+table['Image'] = a4
+table['Region'] = a5
+table['Description'] = a6
+
+# turn dict into dataframe
+df_table = pd.DataFrame(table)
+</code></pre>
+<p>For <code>a1</code> and <code>a6</code>, we need to do an extra step of joining the strings together, so I&rsquo;ve created two additional corresponding columns, <code>Thai name 2</code> and <code>Description2</code>:</p>
+<pre><code class="language-python"># Need to Flatten Two Columns: 'Thai name' and 'Description'
+# Create two new columns
+df_table['Thai name 2'] = &quot;&quot;
+df_table['Description2'] = &quot;&quot;
+
+# join all words in the list for each of 328 rows and set to thai_dishes['Description2'] column
+# automatically flatten the list
+df_table['Description2'] = [
+    ' '.join(cell) for cell in df_table['Description']]
+
+df_table['Thai name 2'] = [
+    ' '.join(cell) for cell in df_table['Thai name']]
 </code></pre>
 <p>Exploring and wrangling data revealed issues in the web scraping process</p>
 <p>Second pass to rectify all issues</p>

@@ -1479,6 +1479,72 @@ import urllib.error
 import ssl
 import pandas as pd
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We&amp;rsquo;ll use &lt;code&gt;requests&lt;/code&gt; to send an HTTP requests to the wikipedia url we need. We&amp;rsquo;ll access network sockets using &amp;lsquo;secure sockets layer&amp;rsquo; (SSL). Then we&amp;rsquo;ll read in the html data to parse it with &lt;strong&gt;Beautiful Soup&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;To being using &lt;strong&gt;Beautiful Soup&lt;/strong&gt;, we want to understand the structure of the page (and tables) we want to scrape. We can see that we want the &lt;code&gt;table&lt;/code&gt; tag, along with class of &lt;code&gt;wikitable sortable&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./web_scrap.png&#34; alt=&#34;png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The main function we&amp;rsquo;ll use from &lt;strong&gt;Beautiful Soup&lt;/strong&gt; is &lt;code&gt;findAll()&lt;/code&gt; and the main three parameters are &lt;code&gt;th&lt;/code&gt; (Header Cell in HTML table), &lt;code&gt;tr&lt;/code&gt; (Row in HTML table) and &lt;code&gt;td&lt;/code&gt; (Standard Data Cell).&lt;/p&gt;
+&lt;p&gt;First, we&amp;rsquo;ll save the table headers in a list, which we&amp;rsquo;ll use when creating an empty &lt;code&gt;dictionary&lt;/code&gt; to store the data we need.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;header = [item.text.rstrip() for item in all_tables[0].findAll(&#39;th&#39;)]
+
+table = dict([(x, 0) for x in header])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Initially, we want to successfully scrape one table, knowing that we&amp;rsquo;ll need to repeat the process for all 16 tables. Therefore we&amp;rsquo;ll use a &lt;em&gt;nested loop&lt;/em&gt;. Because all tables have 6 columns, we&amp;rsquo;ll want to create 6 empty lists.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll scrape through all table rows &lt;code&gt;tr&lt;/code&gt; and check for 6 cells (which we should have for 6 columns), then we&amp;rsquo;ll &lt;em&gt;append&lt;/em&gt; the data to each empty list we create.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# loop through all 16 tables
+a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
+# empty list to store data
+a1 = []
+a2 = []
+a3 = []
+a4 = []
+a5 = []
+a6 = []
+
+# nested loop for looping through all 16 tables, then all tables individually
+for i in a:
+    for row in all_tables[i].findAll(&#39;tr&#39;):
+        cells = row.findAll(&#39;td&#39;)
+        if len(cells) == 6:
+            a1.append([string for string in cells[0].strings])
+            a2.append(cells[1].find(text=True))
+            a3.append(cells[2].find(text=True))
+            a4.append(cells[3].find(text=True))
+            a5.append(cells[4].find(text=True))
+            a6.append([string for string in cells[5].strings])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You&amp;rsquo;ll note the code for &lt;code&gt;a1&lt;/code&gt; and &lt;code&gt;a6&lt;/code&gt; are slightly different. In retrospect, I found that &lt;code&gt;cells[0].find(text=True)&lt;/code&gt; did &lt;strong&gt;not&lt;/strong&gt; yield certain texts, particularly if they were links, therefore a slight adjustment is made.&lt;/p&gt;
+&lt;p&gt;The strings tag returns a &lt;code&gt;NavigableString&lt;/code&gt; type object while text returns a &lt;code&gt;unicode&lt;/code&gt; object (see 
+&lt;a href=&#34;https://stackoverflow.com/questions/25327693/difference-between-string-and-text-beautifulsoup&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;stack overflow&lt;/a&gt; explanation).&lt;/p&gt;
+&lt;p&gt;After we&amp;rsquo;ve scrapped the data, we&amp;rsquo;ll need to store the data in a &lt;code&gt;dictionary&lt;/code&gt; before converting to &lt;code&gt;data frame&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# create dictionary
+table = dict([(x, 0) for x in header])
+
+# append dictionary with corresponding data list
+table[&#39;Thai name&#39;] = a1
+table[&#39;Thai script&#39;] = a2
+table[&#39;English name&#39;] = a3
+table[&#39;Image&#39;] = a4
+table[&#39;Region&#39;] = a5
+table[&#39;Description&#39;] = a6
+
+# turn dict into dataframe
+df_table = pd.DataFrame(table)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For &lt;code&gt;a1&lt;/code&gt; and &lt;code&gt;a6&lt;/code&gt;, we need to do an extra step of joining the strings together, so I&amp;rsquo;ve created two additional corresponding columns, &lt;code&gt;Thai name 2&lt;/code&gt; and &lt;code&gt;Description2&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Need to Flatten Two Columns: &#39;Thai name&#39; and &#39;Description&#39;
+# Create two new columns
+df_table[&#39;Thai name 2&#39;] = &amp;quot;&amp;quot;
+df_table[&#39;Description2&#39;] = &amp;quot;&amp;quot;
+
+# join all words in the list for each of 328 rows and set to thai_dishes[&#39;Description2&#39;] column
+# automatically flatten the list
+df_table[&#39;Description2&#39;] = [
+    &#39; &#39;.join(cell) for cell in df_table[&#39;Description&#39;]]
+
+df_table[&#39;Thai name 2&#39;] = [
+    &#39; &#39;.join(cell) for cell in df_table[&#39;Thai name&#39;]]
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Exploring and wrangling data revealed issues in the web scraping process&lt;/p&gt;
 &lt;p&gt;Second pass to rectify all issues&lt;/p&gt;
 &lt;h3 id=&#34;data_cleaning&#34;&gt;Data_Cleaning&lt;/h3&gt;
