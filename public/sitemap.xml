@@ -168,13 +168,63 @@
   </url>
   
   <url>
-    <loc>/technical_notes/</loc>
-    <lastmod>2021-03-03T00:00:00+01:00</lastmod>
+    <loc>/authors/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/authors/</loc>
-    <lastmod>2021-02-07T00:00:00+00:00</lastmod>
+    <loc>/tag/data-viz/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/ggplot2/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/thai_dishes_project/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/author/paul-apivat-hanvongse/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/python/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/rstats/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/text-mining/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/web-scraping/</loc>
+    <lastmod>2021-03-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/technical_notes/</loc>
+    <lastmod>2021-03-03T00:00:00+01:00</lastmod>
   </url>
   
   <url>
@@ -188,42 +238,7 @@
   </url>
   
   <url>
-    <loc>/tag/data-viz/</loc>
-    <lastmod>2021-02-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tag/ethereum/</loc>
-    <lastmod>2021-02-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tag/ggplot2/</loc>
-    <lastmod>2021-02-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/author/paul-apivat-hanvongse/</loc>
-    <lastmod>2021-02-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2021-02-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tag/python/</loc>
-    <lastmod>2021-02-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tag/rstats/</loc>
-    <lastmod>2021-02-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2021-02-07T00:00:00+00:00</lastmod>
   </url>
   

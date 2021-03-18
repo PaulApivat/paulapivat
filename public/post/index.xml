@@ -5,12 +5,115 @@
     <link>/post/</link>
       <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Sun, 07 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Thu, 18 Mar 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>/post/</link>
     </image>
+    
+    <item>
+      <title>Pad Thai is a Terrible Choice</title>
+      <link>/post/thai_dishes_project/</link>
+      <pubDate>Thu, 18 Mar 2021 00:00:00 +0000</pubDate>
+      <guid>/post/thai_dishes_project/</guid>
+      <description>&lt;h3 id=&#34;table-of-contents&#34;&gt;Table of contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;#overview&#34;&gt;Overview&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#web_scraping&#34;&gt;Web Scraping&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#data_cleaning&#34;&gt;Data Cleaning&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#data_visualization&#34;&gt;Data Visualization&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#text_mining&#34;&gt;Text Mining&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#exploratory_questions&#34;&gt;Exploratory Questions&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;overview&#34;&gt;Overview&lt;/h3&gt;
+&lt;p&gt;People need to know they have other choices aside from Pad Thai. In fact Pad Thai is one of 53 individual dishes and there are at least 201 shared dishes in Thai cuisine (source: 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/List_of_Thai_dishes&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;wikipedia&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;This project is an opportunity to build a dataset of Thai dishes by scrapping tables off Wikipedia. We will use Python for web scrapping and R for visualization. Web scrapping is done in &lt;code&gt;Beautiful Soup&lt;/code&gt; (Python) and pre-processed further with &lt;code&gt;dplyr&lt;/code&gt; and visualized with &lt;code&gt;ggplot2&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Aside from furthering our data skills, we also make an open source 
+&lt;a href=&#34;https://github.com/holtzy/R-graph-gallery/pull/34&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;contribution&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The project repo is 
+&lt;a href=&#34;https://github.com/PaulApivat/thai_dishes&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;web_scraping&#34;&gt;Web_Scraping&lt;/h3&gt;
+&lt;h4 id=&#34;first-round&#34;&gt;First Round&lt;/h4&gt;
+&lt;p&gt;We scraped over 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/List_of_Thai_dishes&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;300 Thai dishes&lt;/a&gt;. For each dish, we got:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Thai name&lt;/li&gt;
+&lt;li&gt;Thai script&lt;/li&gt;
+&lt;li&gt;English name&lt;/li&gt;
+&lt;li&gt;Region&lt;/li&gt;
+&lt;li&gt;Description&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;First, we&amp;rsquo;ll use the following libraries/modules:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import requests
+from bs4 import BeautifulSoup
+import urllib.request
+import urllib.parse
+import urllib.error
+import ssl
+import pandas as pd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Exploring and wrangling data revealed issues in the web scraping process&lt;/p&gt;
+&lt;p&gt;Second pass to rectify all issues&lt;/p&gt;
+&lt;h3 id=&#34;data_cleaning&#34;&gt;Data_Cleaning&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Changing column names (snake case)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Remove newline escape sequence (\n)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Add/Mutate new columns:&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;major_groupings (individual, shared, savory, sweet, drinks)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;minor_groupings (rice, noodles, curries, soups, salads, grilled etc.)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Edit rows for missing data in Thai_name column: 26, 110, 157, 234-238, 240, 241, 246&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;save to &amp;ldquo;edit_thai_dishes.csv&amp;rdquo;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;lead to second-pass web scrappings&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;data_visualization&#34;&gt;Data_Visualization&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Dividing into Individual vs Shared Dishes&lt;/li&gt;
+&lt;li&gt;Dendrogram 1: Individual Dishes&lt;/li&gt;
+&lt;li&gt;Dendrogram 2: Shared Dishes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;text_mining&#34;&gt;Text_Mining&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Word Frequency&lt;/li&gt;
+&lt;li&gt;Term Document Inverse Document Frequency&lt;/li&gt;
+&lt;li&gt;Network of Relationships&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;exploratory_questions&#34;&gt;Exploratory_Questions&lt;/h3&gt;
+&lt;p&gt;Here are some exploratory questions generated during this project:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;How might we organized Thai dishes?&lt;/li&gt;
+&lt;li&gt;What is the best way to organized the different dishes?&lt;/li&gt;
+&lt;li&gt;Which raw material(s) are most popular?&lt;/li&gt;
+&lt;li&gt;Which raw materials are most important?&lt;/li&gt;
+&lt;li&gt;Could you learn about Thai food just from the names of the dishes?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For more content on data science, machine learning, R, Python, SQL and more, 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>The More a Network is Worth, the Harder it is to Attack</title>
