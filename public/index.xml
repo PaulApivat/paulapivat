@@ -1545,35 +1545,75 @@ df_table[&#39;Description2&#39;] = [
 df_table[&#39;Thai name 2&#39;] = [
     &#39; &#39;.join(cell) for cell in df_table[&#39;Thai name&#39;]]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Exploring and wrangling data revealed issues in the web scraping process&lt;/p&gt;
-&lt;p&gt;Second pass to rectify all issues&lt;/p&gt;
+&lt;p&gt;After we&amp;rsquo;ve scrapped all the data and converted from &lt;code&gt;dictionary&lt;/code&gt; to &lt;code&gt;data frame&lt;/code&gt;, we&amp;rsquo;ll write to CSV to prepare for data cleaning in R (note: I saved the csv as thai_dishes.csv, but you can choose a different name).&lt;/p&gt;
 &lt;h3 id=&#34;data_cleaning&#34;&gt;Data_Cleaning&lt;/h3&gt;
+&lt;p&gt;Data cleaning is typically non-linear. I&amp;rsquo;ll manipulate the data to explore, then learn &lt;em&gt;about&lt;/em&gt; the data and see that certain aspects need cleaning or, in some cases, re-scraping back in Python altogether. The difference in how columns &lt;code&gt;a1&lt;/code&gt; and &lt;code&gt;a6&lt;/code&gt; were created above stems from &lt;strong&gt;missing data&lt;/strong&gt; found during exploration and cleaning.&lt;/p&gt;
+&lt;p&gt;Certain words were hyperlink and simply using &lt;code&gt;.find(text=True)&lt;/code&gt; wasn&amp;rsquo;t working how I needed, so a slight adjustment was made.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;R&lt;/code&gt; is my tool of choice for cleaning the data.&lt;/p&gt;
+&lt;p&gt;Here are other more &lt;em&gt;minor&lt;/em&gt; cleaning tasks:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Changing column names (snake case)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Remove newline escape sequence (\n)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Add/Mutate new columns:&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;major_groupings (individual, shared, savory, sweet, drinks)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;minor_groupings (rice, noodles, curries, soups, salads, grilled etc.)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Edit rows for missing data in Thai_name column: 26, 110, 157, 234-238, 240, 241, 246&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;save to &amp;ldquo;edit_thai_dishes.csv&amp;rdquo;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;lead to second-pass web scrappings&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;Changing column names (snake case)&lt;/li&gt;
 &lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# read data
+df &amp;lt;- read_csv(&amp;quot;thai_dishes.csv&amp;quot;)
+
+# change column name
+df &amp;lt;- df %&amp;gt;%
+    rename(
+        Thai_name = `Thai name`,
+        Thai_name_2 = `Thai name 2`,
+        Thai_script = `Thai script`,
+        English_name = `English name`
+    )
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Remove newline escape sequence (\n)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# remove  \n from all columns ----
+df$Thai_name &amp;lt;- gsub(&amp;quot;[\n]&amp;quot;, &amp;quot;&amp;quot;, df$Thai_name)
+df$Thai_name_2 &amp;lt;- gsub(&amp;quot;[\n]&amp;quot;, &amp;quot;&amp;quot;, df$Thai_name_2)
+df$Thai_script &amp;lt;- gsub(&amp;quot;[\n]&amp;quot;, &amp;quot;&amp;quot;, df$Thai_script)
+df$English_name &amp;lt;- gsub(&amp;quot;[\n]&amp;quot;, &amp;quot;&amp;quot;, df$English_name)
+df$Image &amp;lt;- gsub(&amp;quot;[\n]&amp;quot;, &amp;quot;&amp;quot;, df$Image)
+df$Region &amp;lt;- gsub(&amp;quot;[\n]&amp;quot;, &amp;quot;&amp;quot;, df$Region)
+df$Description &amp;lt;- gsub(&amp;quot;[\n]&amp;quot;, &amp;quot;&amp;quot;, df$Description)
+df$Description2 &amp;lt;- gsub(&amp;quot;[\n]&amp;quot;, &amp;quot;&amp;quot;, df$Description2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Add/Mutate new columns (major_groupings, minor_groupings):&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Add Major AND Minor Groupings ----
+df &amp;lt;- df %&amp;gt;%
+    mutate(
+        major_grouping = as.character(NA),
+        minor_grouping = as.character(NA)
+        )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Edit rows for missing data in Thai_name column: 26, 110, 157, 234-238, 240, 241, 246&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note: This was only necessary the first time round, after the changes are made to how I scraped &lt;code&gt;a1&lt;/code&gt; and &lt;code&gt;a6&lt;/code&gt;, this step is no longer necessary:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# If necessary; may not need to do this after scraping a1 and a6 - see above
+# Edit Rows for missing Thai_name
+df[26,]$Thai_name &amp;lt;- &amp;quot;Khanom chin nam ngiao&amp;quot;
+df[110,]$Thai_name &amp;lt;- &amp;quot;Lap Lanna&amp;quot;
+df[157,]$Thai_name &amp;lt;- &amp;quot;Kai phat khing&amp;quot;
+df[234,]$Thai_name &amp;lt;- &amp;quot;Nam chim chaeo&amp;quot;
+df[235,]$Thai_name &amp;lt;- &amp;quot;Nam chim kai&amp;quot;
+df[236,]$Thai_name &amp;lt;- &amp;quot;Nam chim paesa&amp;quot;
+df[237,]$Thai_name &amp;lt;- &amp;quot;Nam chim sate&amp;quot;
+df[238,]$Thai_name &amp;lt;- &amp;quot;Nam phrik i-ke&amp;quot;
+df[240,]$Thai_name &amp;lt;- &amp;quot;Nam phrik kha&amp;quot;
+df[241,]$Thai_name &amp;lt;- &amp;quot;Nam phrik khaep mu&amp;quot;
+df[246,]$Thai_name &amp;lt;- &amp;quot;Nam phrik pla chi&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;save to &amp;ldquo;edit_thai_dishes.csv&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Write new csv to save edits made to data frame
+write_csv(df, &amp;quot;edit_thai_dishes.csv&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;data_visualization&#34;&gt;Data_Visualization&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Dividing into Individual vs Shared Dishes&lt;/li&gt;

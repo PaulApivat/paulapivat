@@ -143,24 +143,88 @@ df_table['Thai name 2'] = [
     ' '.join(cell) for cell in df_table['Thai name']]
 ```
 
-
-
-
-Exploring and wrangling data revealed issues in the web scraping process
-
-Second pass to rectify all issues
+After we've scrapped all the data and converted from `dictionary` to `data frame`, we'll write to CSV to prepare for data cleaning in R (note: I saved the csv as thai_dishes.csv, but you can choose a different name).
 
 ### Data_Cleaning
 
+Data cleaning is typically non-linear. I'll manipulate the data to explore, then learn *about* the data and see that certain aspects need cleaning or, in some cases, re-scraping back in Python altogether. The difference in how columns `a1` and `a6` were created above stems from **missing data** found during exploration and cleaning.
+
+Certain words were hyperlink and simply using `.find(text=True)` wasn't working how I needed, so a slight adjustment was made. 
+
+`R` is my tool of choice for cleaning the data. 
+
+Here are other more *minor* cleaning tasks:
+
 - Changing column names (snake case)
+
+```python
+# read data
+df <- read_csv("thai_dishes.csv")
+
+# change column name
+df <- df %>%
+    rename(
+        Thai_name = `Thai name`,
+        Thai_name_2 = `Thai name 2`,
+        Thai_script = `Thai script`,
+        English_name = `English name`
+    )
+
+```
+
 - Remove newline escape sequence (\n)
-- Add/Mutate new columns:
-- major_groupings (individual, shared, savory, sweet, drinks)
-- minor_groupings (rice, noodles, curries, soups, salads, grilled etc.)
+
+```python
+# remove  \n from all columns ----
+df$Thai_name <- gsub("[\n]", "", df$Thai_name)
+df$Thai_name_2 <- gsub("[\n]", "", df$Thai_name_2)
+df$Thai_script <- gsub("[\n]", "", df$Thai_script)
+df$English_name <- gsub("[\n]", "", df$English_name)
+df$Image <- gsub("[\n]", "", df$Image)
+df$Region <- gsub("[\n]", "", df$Region)
+df$Description <- gsub("[\n]", "", df$Description)
+df$Description2 <- gsub("[\n]", "", df$Description2)
+```
+
+- Add/Mutate new columns (major_groupings, minor_groupings):
+
+```python
+# Add Major AND Minor Groupings ----
+df <- df %>%
+    mutate(
+        major_grouping = as.character(NA),
+        minor_grouping = as.character(NA)
+        )
+```
+
+
 - Edit rows for missing data in Thai_name column: 26, 110, 157, 234-238, 240, 241, 246
+
+Note: This was only necessary the first time round, after the changes are made to how I scraped `a1` and `a6`, this step is no longer necessary:
+
+```python
+# If necessary; may not need to do this after scraping a1 and a6 - see above
+# Edit Rows for missing Thai_name
+df[26,]$Thai_name <- "Khanom chin nam ngiao"
+df[110,]$Thai_name <- "Lap Lanna"
+df[157,]$Thai_name <- "Kai phat khing"
+df[234,]$Thai_name <- "Nam chim chaeo"
+df[235,]$Thai_name <- "Nam chim kai"
+df[236,]$Thai_name <- "Nam chim paesa"
+df[237,]$Thai_name <- "Nam chim sate"
+df[238,]$Thai_name <- "Nam phrik i-ke"
+df[240,]$Thai_name <- "Nam phrik kha"
+df[241,]$Thai_name <- "Nam phrik khaep mu"
+df[246,]$Thai_name <- "Nam phrik pla chi"
+```
+
 - save to "edit_thai_dishes.csv"
 
-- lead to second-pass web scrappings
+```python
+# Write new csv to save edits made to data frame
+write_csv(df, "edit_thai_dishes.csv")
+```
+
 
 ### Data_Visualization
 
