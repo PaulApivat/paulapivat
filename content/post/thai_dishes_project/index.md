@@ -10,7 +10,7 @@ image:
   focal_point: ""
 lastMod: "2021-03-18T00:00:00Z"
 projects: []
-subtitle: Using visualization and text mining to learn about Thai dishes
+subtitle: A Data Project to Explore Thai Food
 summary: Using R and Python to scrape, pre-process, wrangle and visualize data.
 tags: ["Web Scraping", Data Viz", "Text Mining", "RStats", "ggplot2", "Python"]
 title: Pad Thai is a Terrible Choice
@@ -19,25 +19,45 @@ title: Pad Thai is a Terrible Choice
 ### Table of contents
 
 - [Overview](#overview)
+- [Exploratory Questions](#exploratory_questions)
 - [Web Scraping](#web_scraping)
 - [Data Cleaning](#data_cleaning)
 - [Data Visualization](#data_visualization)
 - [Text Mining](#text_mining)
-- [Exploratory Questions](#exploratory_questions)
+
 
 ### Overview
 
-People need to know they have other choices aside from Pad Thai. In fact Pad Thai is one of 53 individual dishes and there are at least 201 shared dishes in Thai cuisine (source: [wikipedia](https://en.wikipedia.org/wiki/List_of_Thai_dishes)).
+"Let's order Thai."
 
-This project is an opportunity to build a dataset of Thai dishes by scrapping tables off Wikipedia. We will use Python for web scrapping and R for visualization. Web scrapping is done in `Beautiful Soup` (Python) and pre-processed further with `dplyr` and visualized with `ggplot2`.
+"Great, what's your go-to dish?"
 
-Aside from furthering our data skills, we also make an open source [contribution](https://github.com/holtzy/R-graph-gallery/pull/34).
+"Pad Thai.”
+
+This has bugged me for years and is the genesis for this project. 
+
+People need to know they have other choices aside from Pad Thai. Pad Thai is one of 53 individual dishes and stopping there risks missing out on at least 201 shared Thai dishes (source: [wikipedia](https://en.wikipedia.org/wiki/List_of_Thai_dishes)).
+
+This project is an opportunity to build a data set of Thai dishes by scraping tables off Wikipedia. We will use Python for web scraping and R for visualization. Web scraping is done in `Beautiful Soup` (Python) and pre-processed further with `dplyr` and visualized with `ggplot2`.
+
+Furthermore, we'll use the `tidytext` package in R to explore the names of Thai dishes (in ENglish) to see if we can learn some interest things from text data. 
+
+Finally, there is an opportunity to make an open source [contribution](https://github.com/holtzy/R-graph-gallery/pull/34).
 
 The project repo is [here](https://github.com/PaulApivat/thai_dishes).
 
-### Web_Scraping
+### Exploratory_Questions
 
-#### First Round
+The purpose of this analysis is to generate questions. Because **exploratory analysis** is iterative, these questions were generated in the process of manipulating and visualizing data. We can use these questions to structure the rest of the post:
+
+1. How might we organized Thai dishes?
+2. What is the best way to organized the different dishes?
+3. Which raw material(s) are most popular?
+4. Which raw materials are most important?
+5. Could you learn about Thai food just from the names of the dishes?
+
+
+### Web_Scraping
 
 We scraped over [300 Thai dishes](https://en.wikipedia.org/wiki/List_of_Thai_dishes). For each dish, we got:
 
@@ -47,7 +67,7 @@ We scraped over [300 Thai dishes](https://en.wikipedia.org/wiki/List_of_Thai_dis
 - Region
 - Description
 
-First, we'll use the following libraries/modules:
+First, we'll use the following Python libraries/modules:
 
 ```python
 import requests
@@ -61,11 +81,11 @@ import pandas as pd
 
 We'll use `requests` to send an HTTP requests to the wikipedia url we need. We'll access network sockets using 'secure sockets layer' (SSL). Then we'll read in the html data to parse it with **Beautiful Soup**.
 
-To being using **Beautiful Soup**, we want to understand the structure of the page (and tables) we want to scrape. We can see that we want the `table` tag, along with class of `wikitable sortable`.
+Before using **Beautiful Soup**, we want to understand the structure of the page (and tables) we want to scrape under **inspect element** on the browser (note: I used Chrome). We can see that we want the `table` tag, along with `class` of wikitable sortable.
 
 ![png](./web_scrap.png)
 
-The main function we'll use from **Beautiful Soup** is `findAll()` and the main three parameters are `th` (Header Cell in HTML table), `tr` (Row in HTML table) and `td` (Standard Data Cell). 
+The main function we'll use from **Beautiful Soup** is `findAll()` and the three parameters are `th` (Header Cell in HTML table), `tr` (Row in HTML table) and `td` (Standard Data Cell). 
 
 First, we'll save the table headers in a list, which we'll use when creating an empty `dictionary` to store the data we need. 
 
@@ -75,15 +95,15 @@ header = [item.text.rstrip() for item in all_tables[0].findAll('th')]
 table = dict([(x, 0) for x in header])
 ```
 
-Initially, we want to successfully scrape one table, knowing that we'll need to repeat the process for all 16 tables. Therefore we'll use a *nested loop*. Because all tables have 6 columns, we'll want to create 6 empty lists.
+Initially, we want to scrape one table, knowing that we'll need to repeat the process for all 16 tables. Therefore we'll use a *nested loop*. Because all tables have 6 columns, we'll want to create 6 empty lists.
 
-We'll scrape through all table rows `tr` and check for 6 cells (which we should have for 6 columns), then we'll *append* the data to each empty list we create.
+We'll scrape through all table rows `tr` and check for 6 cells (which we should have for 6 columns), then we'll *append* the data to each empty list we created.
 
 ```python
 # loop through all 16 tables
 a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
-# empty list to store data
+# 6 empty list (for 6 columns) to store data
 a1 = []
 a2 = []
 a3 = []
@@ -143,17 +163,17 @@ df_table['Thai name 2'] = [
     ' '.join(cell) for cell in df_table['Thai name']]
 ```
 
-After we've scrapped all the data and converted from `dictionary` to `data frame`, we'll write to CSV to prepare for data cleaning in R (note: I saved the csv as thai_dishes.csv, but you can choose a different name).
+After we've scrapped all the data and converted from `dictionary` to `data frame`, we'll write to CSV to prepare for data cleaning in R (**note**: I saved the csv as thai_dishes.csv, but you can choose a different name).
 
 ### Data_Cleaning
 
-Data cleaning is typically non-linear. I'll manipulate the data to explore, then learn *about* the data and see that certain aspects need cleaning or, in some cases, re-scraping back in Python altogether. The difference in how columns `a1` and `a6` were created above stems from **missing data** found during exploration and cleaning.
+Data cleaning is typically non-linear. I'll manipulate the data to explore, learn *about* the data and see that certain things need cleaning or, in some cases, going back to Python to re-scrape. The columns `a1` and `a6` were scraped differently from other columns due to **missing data** found during exploration and cleaning.
 
-Certain words were hyperlink and simply using `.find(text=True)` wasn't working how I needed, so a slight adjustment was made. 
+For certain links, using `.find(text=True)` did not work as intended, so a slight adjustment was made. 
 
 `R` is my tool of choice for cleaning the data. 
 
-Here are other more *minor* cleaning tasks:
+Here are other cleaning tasks:
 
 - Changing column names (snake case)
 
@@ -232,11 +252,13 @@ There are several ways to visualize the data. Because we want to communicate the
 
 I opted for a **dendrogram**. This graph assumes hierarchy within the data, which fits our project because we can organize the dishes in grouping and sub-grouping. 
 
-We first make a distinction between **individual** and **shared** dishes, showing that Pad Thai, while not even close to being the best *individual* dish is nonetheless an dish to be consumed individually. While, in fact, more dishes fall under the **shared** grouping. 
+#### How might we organized Thai dishes?
+
+We first make a distinction between **individual** and **shared** dishes to show that Pad Thai is not even close to being the best *individual* dish. And, in fact, more dishes fall under the **shared** grouping. 
 
 To avoid cramming too much data into one visual, we'll create two separate visualizations for individual vs. shared dishes. 
 
-- Dendrogram 1: 52 Alternatives to Pad Thai (individual dishes)
+Here is the first **dendrogram** representing 52 individual dish alternatives to Pad Thai.
 
 ![png](./indiv_thai_dishes.png)
 
@@ -302,8 +324,13 @@ ggraph(indiv_dishes_graph, layout = "dendrogram", circular = FALSE) +
     annotate("text", x = 26, y = 2, label = "Individual\nDishes", color = "#F8766D")
 ```
 
+#### What is the best way to organized the different dishes?
 
-- Dendrogram 2: Thai Food is Best Shared (201 Shared Dishes)
+There are approximately **4X** as many *shared* dishes as individual dishes, so the dendrogram should be **circular** to fit the names of all dishes in one graphic. 
+
+A wonderful resource I use regularly for these types of visuals is the [R Graph Gallery](https://www.r-graph-gallery.com/339-circular-dendrogram-with-ggraph.html). There was a slight issue in how the **text angles** were calculated so I submitted a [PR to fix](https://github.com/holtzy/R-graph-gallery/pull/34). 
+
+Perhaps distinguishing between individual and shared dishes is too crude, within the dendrogram for 201 shared Thai dishes, we can see further sub-groupings including Curries, Sauces/Pastes, Steamed, Grilled, Deep-Fried, Fried & Stir-Fried, Salads, Soups and other Misc:
 
 ![png](./shared_dishes_final.png)
 
@@ -395,20 +422,36 @@ ggraph(shared_dishes_graph, layout = "dendrogram", circular = TRUE) +
 
 ### Text_Mining
 
-- Word Frequency
+#### Which raw material(s) are most popular?
 
-Frequency of Words across all Thai Dishes
+One way to answer this question is to use text mining to **tokenize** by either word and count the words by frequency as one measure of popularity.
+
+In the below bar chart, we see frequency of words across all Thai Dishes. **Mu** (หมู) which means pork in Thai appears most frequently across all dish types and sub-grouping. Next we have **kaeng** (แกง) which means curry. **Phat** (ผัด) comings in third suggesting "stir-fry" is a popular cooking mode.
+
+As we can see **not** all words refer to raw materials, so we may not be able to answer this question directly.
+
 ![png](./word_freq_barchart.png)
 
-Frequent words that are shared by Individual and Shared Dishes
+
+We can also see words common to both Individual and Shared Dishes. We see other words like **nuea** (beef), **phrik** (chili) and **kaphrao** (basil leaves).
+
 ![png](./word_freq_indiv_shared_dishes.png)
 
-- Term Document Inverse Document Frequency
+#### Which raw materials are most important?
+
+We can only learn so much from frequency, so text mining practitioners have created **term frequency - inverse document frequency** to better reflect how important a word is in a document or corpus (further details [here](https://en.wikipedia.org/wiki/Tf%E2%80%93idf)).
+
+Again, the words don't necessarily refer to raw materials, so this question can't be fully answered directly here. 
 
 ![png](./td_idf_thai_dishes.png)
 
+#### Could you learn about Thai food just from the names of the dishes?
 
-- Network of Relationships
+The short answer is "yes". 
+
+We learned just from frequency and "term frequency - inverse document frequency" not only the most frequent words, but the relative importance within the current set of words that we have tokenized with {tidytext}. This informs us of not only popular raw materials (Pork), but also dish types (Curries) and other popular mode of preparation (Stir-Fry).
+
+We can even examine the **network of relationships** between words.
 
 ![png](./network_thai_dishes.png)
 
@@ -417,15 +460,6 @@ Frequent words that are shared by Individual and Shared Dishes
 ![png](./indiv_dish_corr.png)
 
 
-### Exploratory_Questions
-
-Here are some exploratory questions generated during this project:
-
-1. How might we organized Thai dishes?
-2. What is the best way to organized the different dishes?
-3. Which raw material(s) are most popular?
-4. Which raw materials are most important?
-5. Could you learn about Thai food just from the names of the dishes?
 
 
 
