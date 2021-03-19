@@ -10,7 +10,7 @@ image:
   focal_point: ""
 lastMod: "2021-03-18T00:00:00Z"
 projects: []
-subtitle: A Data Project to Explore Thai Food
+subtitle: Using Python and R to explore Thai Food 
 summary: Using R and Python to scrape, pre-process, wrangle and visualize data.
 tags: ["Web Scraping", Data Viz", "Text Mining", "RStats", "ggplot2", "Python"]
 title: Pad Thai is a Terrible Choice
@@ -40,7 +40,7 @@ People need to know they have other choices aside from Pad Thai. Pad Thai is one
 
 This project is an opportunity to build a data set of Thai dishes by scraping tables off Wikipedia. We will use Python for web scraping and R for visualization. Web scraping is done in `Beautiful Soup` (Python) and pre-processed further with `dplyr` and visualized with `ggplot2`.
 
-Furthermore, we'll use the `tidytext` package in R to explore the names of Thai dishes (in ENglish) to see if we can learn some interest things from text data. 
+Furthermore, we'll use the `tidytext` package in R to explore the names of Thai dishes (in English) to see if we can learn some interest things from text data. 
 
 Finally, there is an opportunity to make an open source [contribution](https://github.com/holtzy/R-graph-gallery/pull/34).
 
@@ -48,7 +48,9 @@ The project repo is [here](https://github.com/PaulApivat/thai_dishes).
 
 ### Exploratory_Questions
 
-The purpose of this analysis is to generate questions. Because **exploratory analysis** is iterative, these questions were generated in the process of manipulating and visualizing data. We can use these questions to structure the rest of the post:
+The purpose of this analysis is to generate questions. 
+
+Because **exploratory analysis** is iterative, these questions were generated in the process of manipulating and visualizing data. We can use these questions to structure the rest of the post:
 
 1. How might we organized Thai dishes?
 2. What is the best way to organized the different dishes?
@@ -167,13 +169,15 @@ After we've scrapped all the data and converted from `dictionary` to `data frame
 
 ### Data_Cleaning
 
-Data cleaning is typically non-linear. I'll manipulate the data to explore, learn *about* the data and see that certain things need cleaning or, in some cases, going back to Python to re-scrape. The columns `a1` and `a6` were scraped differently from other columns due to **missing data** found during exploration and cleaning.
+Data cleaning is typically non-linear. 
+
+We'll manipulate the data to explore, learn *about* the data and see that certain things need cleaning or, in some cases, going back to Python to re-scrape. The columns `a1` and `a6` were scraped differently from other columns due to **missing data** found during exploration and cleaning.
 
 For certain links, using `.find(text=True)` did not work as intended, so a slight adjustment was made. 
 
-`R` is my tool of choice for cleaning the data. 
+For this post, `R` is the tool of choice for cleaning the data. 
 
-Here are other cleaning tasks:
+Here are other data cleaning tasks:
 
 - Changing column names (snake case)
 
@@ -432,10 +436,101 @@ As we can see **not** all words refer to raw materials, so we may not be able to
 
 ![png](./word_freq_barchart.png)
 
+```python
+library(tidytext)
+library(scales)
+
+# new csv file after data cleaning (see above)
+df <- read_csv("../web_scraping/edit_thai_dishes.csv")
+
+df %>%
+    select(Thai_name, Thai_script) %>%
+    # can substitute 'word' for ngrams, sentences, lines
+    unnest_tokens(ngrams, Thai_name) %>%  
+    # to reference thai spelling: group_by(Thai_script)
+    group_by(ngrams) %>%  
+    tally(sort = TRUE) %>%  # alt: count(sort = TRUE)
+    filter(n > 9) %>%
+# visualize
+# pipe directly into ggplot2, because using tidytools
+    ggplot(aes(x = n, y = reorder(ngrams, n))) + 
+    geom_col(aes(fill = ngrams)) +
+    scale_fill_manual(values = c(
+        "#c3d66b",
+        "#70290a",
+        "#2f1c0b",
+        "#ba9d8f",
+        "#dda37b",
+        "#8f5e23",
+        "#96b224",
+        "#dbcac9",
+        "#626817",
+        "#a67e5f",
+        "#be7825",
+        "#446206",
+        "#c8910b",
+        "#88821b",
+        "#313d5f",
+        "#73869a",
+        "#6f370f",
+        "#c0580d",
+        "#e0d639",
+        "#c9d0ce",
+        "#ebf1f0",
+        "#50607b"
+    )) +
+    theme_minimal() +
+    theme(legend.position = "none") +
+    labs(
+        x = "Frequency",
+        y = "Words",
+        title = "Frequency of Words in Thai Cuisine",
+        subtitle = "Words appearing at least 10 times in Individual or Shared Dishes",
+        caption = "Data: Wikipedia | Graphic: @paulapivat"
+    )
+```
+
 
 We can also see words common to both Individual and Shared Dishes. We see other words like **nuea** (beef), **phrik** (chili) and **kaphrao** (basil leaves).
 
 ![png](./word_freq_indiv_shared_dishes.png)
+
+```python
+# frequency for Thai_dishes (Major Grouping) ----
+
+# comparing Individual and Shared Dishes (Major Grouping)
+thai_name_freq <- df %>%
+    select(Thai_name, Thai_script, major_grouping) %>%
+    unnest_tokens(ngrams, Thai_name) %>% 
+    count(ngrams, major_grouping) %>%
+    group_by(major_grouping) %>%
+    mutate(proportion = n / sum(n)) %>%
+    select(major_grouping, ngrams, proportion) %>%
+    spread(major_grouping, proportion) %>%
+    gather(major_grouping, proportion, c(`Shared dishes`)) %>%
+    select(ngrams, `Individual dishes`, major_grouping, proportion)
+
+
+# Expect warming message about missing values
+ggplot(thai_name_freq, aes(x = proportion, y = `Individual dishes`,
+       color = abs(`Individual dishes` - proportion))) +
+    geom_abline(color = 'gray40', lty = 2) +
+    geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3) +
+    geom_text(aes(label = ngrams), check_overlap = TRUE, vjust = 1.5) +
+    scale_x_log10(labels = percent_format()) +
+    scale_y_log10(labels = percent_format()) +
+    scale_color_gradient(limits = c(0, 0.01), 
+                         low = "red", high = "blue") +    # low = "darkslategray4", high = "gray75"
+    theme_minimal() +
+    theme(legend.position = "none",
+          legend.text = element_text(angle = 45, hjust = 1)) +
+    labs(y = "Individual Dishes",
+         x = "Shared Dishes",
+         color = NULL,
+         title = "Comparing Word Frequencies in the names Thai Dishes",
+         subtitle = "Individual and Shared Dishes",
+         caption = "Data: Wikipedia | Graphics: @paulapivat")
+```
 
 #### Which raw materials are most important?
 
@@ -449,19 +544,93 @@ Again, the words don't necessarily refer to raw materials, so this question can'
 
 The short answer is "yes". 
 
-We learned just from frequency and "term frequency - inverse document frequency" not only the most frequent words, but the relative importance within the current set of words that we have tokenized with {tidytext}. This informs us of not only popular raw materials (Pork), but also dish types (Curries) and other popular mode of preparation (Stir-Fry).
+We learned just from frequency and "term frequency - inverse document frequency" not only the most frequent words, but the relative importance within the current set of words that we have tokenized with `tidytext`. This informs us of not only popular raw materials (Pork), but also dish types (Curries) and other popular mode of preparation (Stir-Fry).
 
-We can even examine the **network of relationships** between words.
+We can even examine the **network of relationships** between words. Darker arrows suggest a stronger relationship between pairs of words, for example "nam phrik" is a strong pairing. This means "chili sauce" in Thai and suggests the important role that it plays across many types of dishes. 
+
+We learned above that "mu" (pork) appears frequently. Now we see that "mu" and "krop" are more related than other pairings (note: "mu krop" means "crispy pork"). We also saw above that "khao" appears frequently in Rice dishes. This alone is not surprising as "khao" means rice in Thai, but we see here "khao phat" is strongly related suggesting that fried rice ("khao phat") is quite popular. 
 
 ![png](./network_thai_dishes.png)
 
-- Relationship between Words
+```python
+# Visualizing a network of Bi-grams with {ggraph} ----
+library(igraph)
+library(ggraph)
+set.seed(2021)
+
+thai_dish_bigram_counts <- df %>%
+    select(Thai_name, minor_grouping) %>%
+    unnest_tokens(bigram, Thai_name, token = "ngrams", n = 2) %>%
+    separate(bigram, c("word1", "word2"), sep = " ") %>%
+    count(word1, word2, sort = TRUE)
+
+
+# filter for relatively common combinations (n > 2)
+thai_dish_bigram_graph <- thai_dish_bigram_counts %>%
+    filter(n > 2) %>%
+    graph_from_data_frame()
+
+
+# polishing operations to make a better looking graph
+a <- grid::arrow(type = "closed", length = unit(.15, "inches"))
+
+set.seed(2021)
+ggraph(thai_dish_bigram_graph, layout = "fr") +
+    geom_edge_link(aes(edge_alpha = n), show.legend = FALSE,
+                   arrow = a, end_cap = circle(.07, 'inches')) +
+    geom_node_point(color = "dodgerblue", size = 5, alpha = 0.7) +
+    geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+    labs(
+        title = "Network of Relations between Word Pairs",
+        subtitle = "{ggraph}: common nodes in Thai food",
+        caption = "Data: Wikipedia | Graphics: @paulapivat"
+    ) +
+    theme_void()
+```
+
+Finally, we may be interested in word relationships *within* individual dishes. 
+
+The below graph shows a network of word pairs with moderate-to-high correlations. We can see certain words clustered near each other with relatively dark lines: kaeng (curry), pet (spicy), wan (sweet), khiao (green curry), phrik (chili) and mu (pork). These words represent a collection of ingredient, mode of cooking and description that are generally combined. 
 
 ![png](./indiv_dish_corr.png)
 
+```python
+set.seed(2021)
+
+# Individual Dishes
+individual_dish_words <- df %>%
+    select(major_grouping, Thai_name) %>%
+    filter(major_grouping == 'Individual dishes') %>%
+    mutate(section = row_number() %/% 10) %>%
+    filter(section > 0) %>%
+    unnest_tokens(word, Thai_name)  # assume no stop words
+
+individual_dish_cors <- individual_dish_words %>%
+    group_by(word) %>% 
+    filter(n() >= 2) %>%     # looking for co-occuring words, so must be 2 or greater
+    pairwise_cor(word, section, sort = TRUE) 
+
+
+individual_dish_cors %>%
+    filter(correlation < -0.40) %>%
+    graph_from_data_frame() %>%
+    ggraph(layout = "fr") +
+    geom_edge_link(aes(edge_alpha = correlation, size = correlation), show.legend = TRUE) +
+    geom_node_point(color = "green", size = 5, alpha = 0.5) +
+    geom_node_text(aes(label = name), repel = TRUE) +
+    labs(
+        title = "Word Pairs in Individual Dishes",
+        subtitle = "{ggraph}: Negatively correlated (r = -0.4)",
+        caption = "Data: Wikipedia | Graphics: @paulapivat"
+    ) +
+    theme_void()
+```
+
+#### Summary
+
+We have completed an exploratory data project where we scraped, clean, manipulated and visualized data using a combination of Python and R. We also used the `tidytext` package for basic text mining task to see if we could gain some insights into Thai cuisine using  words from dish names scraped off Wikipedia. 
 
 
 
 
-
-For more content on data science, machine learning, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).
+For more content on data science, R, Python, SQL and more, [find me on Twitter](https://twitter.com/paulapivat).
