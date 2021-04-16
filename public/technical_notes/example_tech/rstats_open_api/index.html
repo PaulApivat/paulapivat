@@ -27,7 +27,8 @@
   
     
   
-  <meta name="description" content="Reading in JSON data from an Open API install.packages(&quot;httr&quot;) install.packages(&quot;jsonlite&quot;) library(httr) library(jsonlite) # send a GET request to the Ministry of Public Health Open API # consume API to receive JSON file url &lt;- &quot;https://covid19.">
+  <meta name="description" content="Reading in JSON data from an Open API The following example is an Open API from the Ministry of Public Health in Thailand.
+The following script consumes the API using the httr package, then transforms JSON to dataframe via the jsonlite package.">
 
   
   <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_open_api/">
@@ -237,8 +238,9 @@
   
   <meta property="og:site_name" content="Paul Apivat">
   <meta property="og:url" content="/technical_notes/example_tech/rstats_open_api/">
-  <meta property="og:title" content="Read Open API in JSON with R | Paul Apivat">
-  <meta property="og:description" content="Reading in JSON data from an Open API install.packages(&quot;httr&quot;) install.packages(&quot;jsonlite&quot;) library(httr) library(jsonlite) # send a GET request to the Ministry of Public Health Open API # consume API to receive JSON file url &lt;- &quot;https://covid19."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:title" content="Consume Open API with R | Paul Apivat">
+  <meta property="og:description" content="Reading in JSON data from an Open API The following example is an Open API from the Ministry of Public Health in Thailand.
+The following script consumes the API using the httr package, then transforms JSON to dataframe via the jsonlite package."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
@@ -263,7 +265,7 @@
 
 
 
-  <title>Read Open API in JSON with R | Paul Apivat</title>
+  <title>Consume Open API with R | Paul Apivat</title>
 
 </head>
 
@@ -790,12 +792,12 @@
         <a href="/technical_notes/example_tech/rstats_dates/">Format Dates</a>
       </li>
       
-      <li >
-        <a href="/technical_notes/example_tech/rstats_tip5/">Order of Dplyr Functions</a>
+      <li class="active">
+        <a href="/technical_notes/example_tech/rstats_open_api/">Open API with R</a>
       </li>
       
-      <li class="active">
-        <a href="/technical_notes/example_tech/rstats_open_api/">Read Open API with R</a>
+      <li >
+        <a href="/technical_notes/example_tech/rstats_tip5/">Order of Dplyr Functions</a>
       </li>
       
       <li >
@@ -845,10 +847,13 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Read Open API in JSON with R</h1>
+          <h1>Consume Open API with R</h1>
 
           <div class="article-style">
             <h2 id="reading-in-json-data-from-an-open-api">Reading in JSON data from an Open API</h2>
+<p>The following example is an 
+<a href="https://covid19.th-stat.com/api/open/timeline" target="_blank" rel="noopener">Open API</a> from the Ministry of Public Health in Thailand.</p>
+<p>The following script consumes the API using the <code>httr</code> package, then transforms JSON to dataframe via the <code>jsonlite</code> package.</p>
 <pre><code>install.packages(&quot;httr&quot;)
 install.packages(&quot;jsonlite&quot;)
 library(httr)

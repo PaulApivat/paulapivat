@@ -467,11 +467,14 @@ Python 2.7.16
     </item>
     
     <item>
-      <title>Read Open API in JSON with R</title>
+      <title>Consume Open API with R</title>
       <link>/technical_notes/example_tech/rstats_open_api/</link>
       <pubDate>Fri, 16 Apr 2021 00:00:00 +0100</pubDate>
       <guid>/technical_notes/example_tech/rstats_open_api/</guid>
       <description>&lt;h2 id=&#34;reading-in-json-data-from-an-open-api&#34;&gt;Reading in JSON data from an Open API&lt;/h2&gt;
+&lt;p&gt;The following example is an 
+&lt;a href=&#34;https://covid19.th-stat.com/api/open/timeline&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Open API&lt;/a&gt; from the Ministry of Public Health in Thailand.&lt;/p&gt;
+&lt;p&gt;The following script consumes the API using the &lt;code&gt;httr&lt;/code&gt; package, then transforms JSON to dataframe via the &lt;code&gt;jsonlite&lt;/code&gt; package.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;install.packages(&amp;quot;httr&amp;quot;)
 install.packages(&amp;quot;jsonlite&amp;quot;)
 library(httr)

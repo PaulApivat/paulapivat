@@ -1,12 +1,12 @@
 ---
 date: "2021-04-16T00:00:00+01:00"
 draft: false
-linktitle: Read Open API with R
+linktitle: Open API with R
 menu:
   example_tech:
     parent: Rstats Tip
     weight: 2
-title: Read Open API in JSON with R
+title: Consume Open API with R
 toc: true
 type: docs
 weight: 2
@@ -14,6 +14,9 @@ weight: 2
 
 ## Reading in JSON data from an Open API
 
+The following example is an [Open API](https://covid19.th-stat.com/api/open/timeline) from the Ministry of Public Health in Thailand. 
+
+The following script consumes the API using the `httr` package, then transforms JSON to dataframe via the `jsonlite` package. 
 
 ```
 install.packages("httr")
