@@ -467,6 +467,38 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Read Open API in JSON with R</title>
+      <link>/technical_notes/example_tech/rstats_open_api/</link>
+      <pubDate>Fri, 16 Apr 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_open_api/</guid>
+      <description>&lt;h2 id=&#34;reading-in-json-data-from-an-open-api&#34;&gt;Reading in JSON data from an Open API&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;install.packages(&amp;quot;httr&amp;quot;)
+install.packages(&amp;quot;jsonlite&amp;quot;)
+library(httr)
+library(jsonlite)
+
+# send a GET request to the Ministry of Public Health Open API
+# consume API to receive JSON file
+url &amp;lt;- &amp;quot;https://covid19.th-stat.com/api/open/timeline&amp;quot;
+resp &amp;lt;- GET(url = url)
+
+# convert JSON file into text
+text_json &amp;lt;- content(resp, as = &amp;quot;text&amp;quot;, encoding = &amp;quot;UTF-8&amp;quot;)
+
+# read text from JSON
+jfile &amp;lt;- fromJSON(text_json)
+
+# save as data frame
+df &amp;lt;- as.data.frame(jfile)
+
+# view data frame
+View(df)
+
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Circular Dendrogram</title>
       <link>/technical_notes/example_tech/rstats_viz_circular_dendrogram/</link>
       <pubDate>Wed, 03 Mar 2021 00:00:00 +0100</pubDate>
