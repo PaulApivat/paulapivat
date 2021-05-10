@@ -8,7 +8,7 @@ headless = true  # This file represents a page section.
 active = true  # Activate this widget? true/false
 weight = 15  # Order that this section will appear.
 
-title = "Hello!"
+title = ""
 subtitle = ""
 
 [design]
@@ -50,7 +50,7 @@ subtitle = ""
  css_class = ""
 +++
 
-Welcome to my page where I document and share everything I'm learning about data science and visualization in the new Web3 Data Economy with R, Python, SQL and more. 
+Welcome to my page where I document and explore web3 and our decentralized future through words, data and code. 
 
 
 
