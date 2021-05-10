@@ -187,3 +187,8 @@ Remove title 'biography' from section head.
 - pay attention to actual file name (e.g., file_name_of_new_technical_note.md)
 - change yaml linktitle: (will appear on side menu)
 - change yaml menu: parent: Topic Heading (will appear on side menu)
+
+### Edit Contact Section
+
+- path: paulapivat/content/home/contact.md
+- active: false
