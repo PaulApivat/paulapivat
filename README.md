@@ -94,6 +94,7 @@ active = true
 # Edit About Section
 
 - path: paulapivat/content/authors/admin/\_index.md
+- change **profile pic** path: paulapivat/content/authors/admin/red_avatar.jpg
 
 Remove title 'biography' from section head.
 
