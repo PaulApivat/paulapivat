@@ -149,6 +149,7 @@ Remove title 'biography' from section head.
 ## Edit Accomplishments section
 
 - path: paulapivat/content/home/accomplishments.md
+- active: false
 
 ## Edit Gallery
 
