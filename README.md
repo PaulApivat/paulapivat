@@ -55,6 +55,8 @@ Google Font: family=Domine:wght@400;700
 
 active = false
 
+- projects (50)
+- accomplishment (65)
 - hero
 - featured
 - publications
@@ -67,9 +69,7 @@ active = true
 
 - demo (15)
 - about (20)
-- projects (50)
 - posts (60)
-- accomplishment (65)
 - gallery (66)
 - tags (120)
 - contact (130)
@@ -80,11 +80,11 @@ active = true
 
 - Start Here ('#', 10)
 - About ('#about', 15)
-- Projects ('#projects', 20)
+- [inactive] Projects ('#projects', 20)
 - Posts ('#posts', 30)
-- News ('#accomplishments', 40)
+- [inactive] News ('#accomplishments', 40)
 - Viz ('#gallery', 45)
-- Courses ('courses/', 50)
+- [inactive] Courses ('courses/', 50)
 - Contact ('#contact', 60)
 
 # Edit Start Here section
