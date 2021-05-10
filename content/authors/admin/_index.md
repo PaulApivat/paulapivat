@@ -41,7 +41,7 @@ user_groups:
 
 I use writing, data and code to unpack decentralized organizations (DAO), applications and protocols on web3. 
 
-Currently, my time is spent working at [Bankless DAO](https://www.bankless.community/) and other projects involving data on Ethereum. 
+Current: community member at [Bankless DAO](https://www.bankless.community/), other projects involving data on Ethereum. 
 
 I enjoy [visualizing data](https://paulapivat.com/#gallery).
 
