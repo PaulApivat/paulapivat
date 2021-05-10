@@ -18,13 +18,13 @@ education:
     year: 2014
 email: ""
 interests:
-- Visualization & Data Science
-- R and Python programming
-- Permissionless and Censorship Resistant Technologies 
+- Data Analytics and Visualization
+- SQL, Python, R
+- Ethereum, Web3, Bitcoin 
 organizations:
-- name: Adjunct | Thammasat University
+- name: the internet
   url: ""
-role: Self-Employed | Getwyze
+role: web3 | Bankless DAO
 social:
 - icon: envelope
   icon_pack: fas
@@ -39,18 +39,20 @@ social:
   icon_pack: fab
   link: https://github.com/paulapivat
 superuser: true
-title: Paul Apivat Hanvongse
+title: paulapivat
 user_groups:
 - Researchers
 - Visitors
 ---
 
-I am exploring the intersection of writing, data and code. I seek to use data to better understand the world, Web3 and decentralized applications. 
+I use writing, data and code to unpack decentralized organizations (DAO), applications and protocols on web3. 
 
-I write [atomic essays](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f) to explore ideas. My writings can also be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f)
+Currently, my time is spent working at [Bankless DAO](https://www.bankless.community/) and other projects involving data on Ethereum. 
 
-I can provide [services](http://getwyze.com/) in data cleaning, analysis and visualizations. 
 
-I started in organizational psychology and have branched out to data science. For daily updates on my data science journey, find me on [Twitter](https://twitter.com/paulapivat). 
+My writings can also be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f)
+
+
+My training is in organizational psychology, but my passion is in tech and data. Find me on [Twitter](https://twitter.com/paulapivat). 
 
 
