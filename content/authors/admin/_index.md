@@ -4,16 +4,10 @@ authors:
 bio: My interests include data science, machine learning and R/Python programming.
 education:
   courses:
-  - course: Advanced Data Science (R)
-    institution: Business Science University
-    year: 2020
-  - course: R Statistical Computing / Data Visualization
-    institution: Self-Taught
-    year: 2020
-  - course: HTML, CSS, Javascript
-    institution: Self-Taught / Lambda School
-    year: 2019
-  - course: PhD in Social-Organizational Psychology
+  - course: Data and Web technologies
+    institution: Self
+    year: 2018 - present
+  - course: Organizational Psychology (phd)
     institution: Teachers College, Columbia University
     year: 2014
 email: ""
@@ -49,10 +43,13 @@ I use writing, data and code to unpack decentralized organizations (DAO), applic
 
 Currently, my time is spent working at [Bankless DAO](https://www.bankless.community/) and other projects involving data on Ethereum. 
 
+I enjoy [visualizing data](https://paulapivat.com/#gallery).
 
-My writings can also be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f)
+My writings can also be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f).
 
 
-My training is in organizational psychology, but my passion is in tech and data. Find me on [Twitter](https://twitter.com/paulapivat). 
+My background is in organizational psychology, but my passion is in tech and data. 
+
+Find me on [Twitter](https://twitter.com/paulapivat).
 
 
