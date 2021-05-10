@@ -76,6 +76,8 @@ active = true
 
 # Menu (weights)
 
+- path: paulapivat/config/\_default/menus.toml
+
 - Start Here ('#', 10)
 - About ('#about', 15)
 - Projects ('#projects', 20)
