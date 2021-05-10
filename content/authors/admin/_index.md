@@ -33,7 +33,7 @@ social:
   icon_pack: fab
   link: https://github.com/paulapivat
 superuser: true
-title: paulapivat
+title: Paul Apivat
 user_groups:
 - Researchers
 - Visitors

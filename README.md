@@ -143,7 +143,7 @@ Remove title 'biography' from section head.
 ## Edit Blog Section
 
 - path: paulapivat/content/home/posts.md
-- add external link to [Getwyze.com](http://getwyze.com/)
+- remove external link to [Getwyze.com](http://getwyze.com/)
 - edit how many blog posts to display (currently 2)
 
 ## Edit Accomplishments section
