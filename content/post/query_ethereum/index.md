@@ -236,6 +236,58 @@ The average number of blocks produced per day since 2016 is slightly above that 
 
 ### Gas
 
+Blocks are bounded in size. Each block has a gas limit which is collectively set by miners and the network to prevent arbitrarily large block size to be less of a strain on full node in terms of disk space and speed requirements ([source](https://ethereum.org/en/developers/docs/blocks/)). 
 
+One way to conceptualize block gas limit is to think of it as the **supply** of available block space in which to batch transactions. The block gas limit can be queried and visualized from 2016 to present day:
+
+![avg_gas_limit](./avg_gas_limit.png)
+
+```
+SELECT 
+    DATE_TRUNC('day', time) AS dt,
+    AVG(gas_limit) AS avg_block_gas_limit
+FROM ethereum."blocks"
+GROUP BY dt
+OFFSET 1
+```
+Then there is the actual gas used daily to pay for computing done on the Ethereum chain (i.e., sending transaction, calling a smart contract, minting an NFT). This is the **demand** for available Ethereum block space:
+
+![daily_gas_used](./daily_gas_used.png)
+
+```
+SELECT 
+    DATE_TRUNC('day', time) AS dt,
+    AVG(gas_used) AS avg_block_gas_used
+FROM ethereum."blocks"
+GROUP BY dt
+OFFSET 1
+```
+
+We can also juxtapose these two charts together to see how **demand and supply** line up:
+
+![gas_demand_supply](./gas_demand_supply.png)
+
+Therefore we can understand gas prices as a function of demand for Ethereum block space, given available supply. 
+
+Finally, we may want to query average daily gas prices for the Ethereum chain, however, doing so result in an especially long query time, so we’ll filter our query to the average amount of gas paid per transaction by the Ethereum Foundation.
+
+![ef_daily_gas](./ef_daily_gas.png)
+
+We can see gas prices paid in transaction to the Ethereum Foundation address over the years. Here is the query:
+
+```
+SELECT 
+    block_time,
+    gas_price / 1e9 AS gas_price_gwei,
+    value / 1e18 AS eth_sent
+FROM ethereum."transactions"
+WHERE "to" = '\xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'   
+ORDER BY block_time DESC
+```
+### Summary
+
+With this tutorial, we understand foundational Ethereum concepts and how the Ethereum blockchain works by querying and getting a feel for on-chain data. 
+
+The dashboard that holds all code used in this tutorial can be found [here](https://duneanalytics.com/paulapivat/Learn-Ethereum).
 
 For more use of data to explore web3 [find me on Twitter](https://twitter.com/paulapivat).

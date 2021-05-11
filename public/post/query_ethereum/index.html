@@ -663,7 +663,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    6 min read
+    7 min read
   </span>
   
 
@@ -878,6 +878,44 @@ FROM temp_table
 </code></pre>
 <p>The average number of blocks produced per day since 2016 is slightly above that number at 5,874. Alternatively, dividing 86400 seconds by 5874 average blocks comes out to 14.7 seconds or approximately one block every 15 seconds.</p>
 <h3 id="gas">Gas</h3>
+<p>Blocks are bounded in size. Each block has a gas limit which is collectively set by miners and the network to prevent arbitrarily large block size to be less of a strain on full node in terms of disk space and speed requirements (
+<a href="https://ethereum.org/en/developers/docs/blocks/" target="_blank" rel="noopener">source</a>).</p>
+<p>One way to conceptualize block gas limit is to think of it as the <strong>supply</strong> of available block space in which to batch transactions. The block gas limit can be queried and visualized from 2016 to present day:</p>
+<p><img src="./avg_gas_limit.png" alt="avg_gas_limit"></p>
+<pre><code>SELECT 
+    DATE_TRUNC('day', time) AS dt,
+    AVG(gas_limit) AS avg_block_gas_limit
+FROM ethereum.&quot;blocks&quot;
+GROUP BY dt
+OFFSET 1
+</code></pre>
+<p>Then there is the actual gas used daily to pay for computing done on the Ethereum chain (i.e., sending transaction, calling a smart contract, minting an NFT). This is the <strong>demand</strong> for available Ethereum block space:</p>
+<p><img src="./daily_gas_used.png" alt="daily_gas_used"></p>
+<pre><code>SELECT 
+    DATE_TRUNC('day', time) AS dt,
+    AVG(gas_used) AS avg_block_gas_used
+FROM ethereum.&quot;blocks&quot;
+GROUP BY dt
+OFFSET 1
+</code></pre>
+<p>We can also juxtapose these two charts together to see how <strong>demand and supply</strong> line up:</p>
+<p><img src="./gas_demand_supply.png" alt="gas_demand_supply"></p>
+<p>Therefore we can understand gas prices as a function of demand for Ethereum block space, given available supply.</p>
+<p>Finally, we may want to query average daily gas prices for the Ethereum chain, however, doing so result in an especially long query time, so we’ll filter our query to the average amount of gas paid per transaction by the Ethereum Foundation.</p>
+<p><img src="./ef_daily_gas.png" alt="ef_daily_gas"></p>
+<p>We can see gas prices paid in transaction to the Ethereum Foundation address over the years. Here is the query:</p>
+<pre><code>SELECT 
+    block_time,
+    gas_price / 1e9 AS gas_price_gwei,
+    value / 1e18 AS eth_sent
+FROM ethereum.&quot;transactions&quot;
+WHERE &quot;to&quot; = '\xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'   
+ORDER BY block_time DESC
+</code></pre>
+<h3 id="summary">Summary</h3>
+<p>With this tutorial, we understand foundational Ethereum concepts and how the Ethereum blockchain works by querying and getting a feel for on-chain data.</p>
+<p>The dashboard that holds all code used in this tutorial can be found 
+<a href="https://duneanalytics.com/paulapivat/Learn-Ethereum" target="_blank" rel="noopener">here</a>.</p>
 <p>For more use of data to explore web3 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
