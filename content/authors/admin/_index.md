@@ -18,7 +18,7 @@ interests:
 organizations:
 - name: the internet
   url: ""
-role: web3 | Bankless DAO
+role: web3 
 social:
 - icon: envelope
   icon_pack: fas
