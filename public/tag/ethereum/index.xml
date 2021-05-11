@@ -5,12 +5,40 @@
     <link>/tag/ethereum/</link>
       <atom:link href="/tag/ethereum/index.xml" rel="self" type="application/rss+xml" />
     <description>Ethereum</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Sun, 07 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Tue, 11 May 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Ethereum</title>
       <link>/tag/ethereum/</link>
     </image>
+    
+    <item>
+      <title>Learn Foundational Ethereum Topics with SQL</title>
+      <link>/post/query_ethereum/</link>
+      <pubDate>Tue, 11 May 2021 00:00:00 +0000</pubDate>
+      <guid>/post/query_ethereum/</guid>
+      <description>&lt;h3 id=&#34;table-of-contents&#34;&gt;Table of contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#transactions&#34;&gt;Transactions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#breaking_down_transactions&#34;&gt;Breaking Down Transactions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#blocks&#34;&gt;Blocks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;#gas&#34;&gt;Gas&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;h3 id=&#34;transactions&#34;&gt;Transactions&lt;/h3&gt;
+&lt;h3 id=&#34;breaking_down_transactions&#34;&gt;Breaking_Down_Transactions&lt;/h3&gt;
+&lt;h3 id=&#34;blocks&#34;&gt;Blocks&lt;/h3&gt;
+&lt;h3 id=&#34;gas&#34;&gt;Gas&lt;/h3&gt;
+&lt;p&gt;For more use of data to explore web3 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>The More a Network is Worth, the Harder it is to Attack</title>
