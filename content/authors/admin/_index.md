@@ -39,7 +39,7 @@ user_groups:
 - Visitors
 ---
 
-I unpack decentralized organizations (DAO), applications and protocols on web3 through words and data.
+I help build web3 through words and data.
 
 Current: community member at [Bankless DAO](https://www.bankless.community/) and using data to understand networks, protocols and tokens. 
 
