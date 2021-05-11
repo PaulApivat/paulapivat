@@ -18,7 +18,7 @@ interests:
 organizations:
 - name: the internet
   url: ""
-role: web3 
+role: data in web3 
 social:
 - icon: envelope
   icon_pack: fas
@@ -39,16 +39,16 @@ user_groups:
 - Visitors
 ---
 
-I use writing, data and code to unpack decentralized organizations (DAO), applications and protocols on web3. 
+I unpack decentralized organizations (DAO), applications and protocols on web3 through words and data.
 
-Current: community member at [Bankless DAO](https://www.bankless.community/), other projects involving data on Ethereum. 
+Current: community member at [Bankless DAO](https://www.bankless.community/) and using data to understand networks, protocols and tokens. 
 
 I enjoy [visualizing data](https://paulapivat.com/#gallery).
 
-My writings can also be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f).
+My writings can be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f).
 
 
-My background is in organizational psychology, but my passion is in tech and data. 
+My background is in org psych, but my passion is in data and web3.
 
 Find me on [Twitter](https://twitter.com/paulapivat).
 
