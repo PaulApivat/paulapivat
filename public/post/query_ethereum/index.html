@@ -663,7 +663,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    5 min read
+    6 min read
   </span>
   
 
@@ -813,14 +813,70 @@ WHERE &quot;number&quot; = 12396854 OR &quot;number&quot; = 12396855 OR &quot;nu
 LIMIT 10
 
 </code></pre>
-<p>We can  examine what’s inside a block by querying time, block number, difficulty, hash, parent hash, and nonce.</p>
-<p>The only thing this query does not cover is <em>transaction list</em> which requires a separate query below and <em>state root</em>. A full or archival node will store all transactions and state transitions, allowing for clients to query the state of the chain at any time. Because this requires large storage space, we can separate chain data from state data:</p>
+<p>We can  examine a block by querying time, block number, difficulty, hash, parent hash, and nonce.</p>
+<p>The only thing this query does not cover is <em>list of transaction</em> which requires a separate query below and <em>state root</em>. A full or archival node will store all transactions and state transitions, allowing for clients to query the state of the chain at any time. Because this requires large storage space, we can separate chain data from state data:</p>
 <ul>
 <li>Chain data (list of blocks, transactions)</li>
 <li>State data (result of each transaction’s state transition)</li>
 </ul>
 <p>State root falls in the latter and is <em>implicit</em> data (not stored on-chain), while chain data is explicit and stored on the chain itself (
-<a href="https://ethereum.stackexchange.com/questions/359/where-is-the-state-data-stored" target="_blank" rel="noopener">source</a>). For this tutorial, we&rsquo;ll be focusing on on-chain data that <em>can</em> be queried with SQL via Dune Analytics.</p>
+<a href="https://ethereum.stackexchange.com/questions/359/where-is-the-state-data-stored" target="_blank" rel="noopener">source</a>).</p>
+<p>For this tutorial, we&rsquo;ll be focusing on on-chain data that <em>can</em> be queried with SQL via Dune Analytics.</p>
+<p>As stated above, each block contains a list of transactions, we can query this by filtering for a specific block. We&rsquo;ll try the most recent block, 12396854:</p>
+<pre><code>SELECT * FROM ethereum.&quot;transactions&quot;
+WHERE block_number = 12396854 
+ORDER BY block_time DESC`
+
+</code></pre>
+<p>Here&rsquo;s the SQL output on Dune:</p>
+<p><img src="./list_of_txn.png" alt="list_of_txn"></p>
+<p>This single block being added to the chain changes the state of the Ethereum virtual machine (
+<a href="https://ethereum.org/en/developers/docs/evm/" target="_blank" rel="noopener">EVM</a>). Dozens sometimes, hundreds of transactions are verified at once. In this specific case, 222 transactions were included.</p>
+<p>To see how many were actually successful, we would add another filter to count successful transactions:</p>
+<pre><code>WITH temp_table AS (
+    SELECT * FROM ethereum.&quot;transactions&quot;
+    WHERE block_number = 12396854 AND success = true
+    ORDER BY block_time DESC
+)
+SELECT
+    COUNT(success) AS num_successful_txn
+FROM temp_table
+
+</code></pre>
+<p>For block 12396854, out of 222 total transactions, 204 were successfully verified:</p>
+<p><img src="./successful_txn.png" alt="successful_txn"></p>
+<p>Transactions requests occur dozens of times per second, but blocks are committed approximately once every 15 seconds (
+<a href="https://ethereum.org/en/developers/docs/blocks/" target="_blank" rel="noopener">source</a>).</p>
+<p>To see that there is one block produced approximately every 15 seconds, we could take the number of seconds in a day (86400) divided by 15 to get an <em>estimate</em> average number of blocks per day (~ 5760).</p>
+<p>The chart for Ethereum blocks produced per day (2016 - present) is:</p>
+<p><img src="./daily_blocks.png" alt="daily_blocks"></p>
+<p>The average number of blocks produced daily over this time period is ~5,874:</p>
+<p><img src="./avg_daily_blocks.png" alt="avg_daily_blocks"></p>
+<p>The queries are:</p>
+<pre><code># query to visualize number of blocks produced daily since 2016
+
+SELECT 
+    DATE_TRUNC('day', time) AS dt,
+    COUNT(*) AS block_count
+FROM ethereum.&quot;blocks&quot;
+GROUP BY dt
+OFFSET 1
+
+# average number of blocks produced per day
+
+WITH temp_table AS (
+SELECT 
+    DATE_TRUNC('day', time) AS dt,
+    COUNT(*) AS block_count
+FROM ethereum.&quot;blocks&quot;
+GROUP BY dt
+OFFSET 1
+)
+SELECT 
+    AVG(block_count) AS avg_block_count
+FROM temp_table
+</code></pre>
+<p>The average number of blocks produced per day since 2016 is slightly above that number at 5,874. Alternatively, dividing 86400 seconds by 5874 average blocks comes out to 14.7 seconds or approximately one block every 15 seconds.</p>
 <h3 id="gas">Gas</h3>
 <p>For more use of data to explore web3 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>

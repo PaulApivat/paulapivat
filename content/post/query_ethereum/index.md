@@ -149,16 +149,89 @@ LIMIT 10
 
 ```
 
-We can  examine what’s inside a block by querying time, block number, difficulty, hash, parent hash, and nonce. 
+We can  examine a block by querying time, block number, difficulty, hash, parent hash, and nonce. 
 
-The only thing this query does not cover is *transaction list* which requires a separate query below and *state root*. A full or archival node will store all transactions and state transitions, allowing for clients to query the state of the chain at any time. Because this requires large storage space, we can separate chain data from state data: 
+The only thing this query does not cover is *list of transaction* which requires a separate query below and *state root*. A full or archival node will store all transactions and state transitions, allowing for clients to query the state of the chain at any time. Because this requires large storage space, we can separate chain data from state data: 
 
 - Chain data (list of blocks, transactions)
 - State data (result of each transaction’s state transition)
 
-State root falls in the latter and is *implicit* data (not stored on-chain), while chain data is explicit and stored on the chain itself ([source](https://ethereum.stackexchange.com/questions/359/where-is-the-state-data-stored)). For this tutorial, we'll be focusing on on-chain data that *can* be queried with SQL via Dune Analytics.
+State root falls in the latter and is *implicit* data (not stored on-chain), while chain data is explicit and stored on the chain itself ([source](https://ethereum.stackexchange.com/questions/359/where-is-the-state-data-stored)). 
 
+For this tutorial, we'll be focusing on on-chain data that *can* be queried with SQL via Dune Analytics.
 
+As stated above, each block contains a list of transactions, we can query this by filtering for a specific block. We'll try the most recent block, 12396854:
+
+```
+SELECT * FROM ethereum."transactions"
+WHERE block_number = 12396854 
+ORDER BY block_time DESC`
+
+```
+Here's the SQL output on Dune:
+
+![list_of_txn](./list_of_txn.png)
+
+This single block being added to the chain changes the state of the Ethereum virtual machine ([EVM](https://ethereum.org/en/developers/docs/evm/)). Dozens sometimes, hundreds of transactions are verified at once. In this specific case, 222 transactions were included. 
+
+To see how many were actually successful, we would add another filter to count successful transactions:
+
+```
+WITH temp_table AS (
+    SELECT * FROM ethereum."transactions"
+    WHERE block_number = 12396854 AND success = true
+    ORDER BY block_time DESC
+)
+SELECT
+    COUNT(success) AS num_successful_txn
+FROM temp_table
+
+```
+
+For block 12396854, out of 222 total transactions, 204 were successfully verified:
+
+![successful_txn](./successful_txn.png)
+
+Transactions requests occur dozens of times per second, but blocks are committed approximately once every 15 seconds ([source](https://ethereum.org/en/developers/docs/blocks/)). 
+
+To see that there is one block produced approximately every 15 seconds, we could take the number of seconds in a day (86400) divided by 15 to get an *estimate* average number of blocks per day (~ 5760).
+
+The chart for Ethereum blocks produced per day (2016 - present) is:
+
+![daily_blocks](./daily_blocks.png)
+
+The average number of blocks produced daily over this time period is ~5,874:
+
+![avg_daily_blocks](./avg_daily_blocks.png)
+
+The queries are:
+
+```
+# query to visualize number of blocks produced daily since 2016
+
+SELECT 
+    DATE_TRUNC('day', time) AS dt,
+    COUNT(*) AS block_count
+FROM ethereum."blocks"
+GROUP BY dt
+OFFSET 1
+
+# average number of blocks produced per day
+
+WITH temp_table AS (
+SELECT 
+    DATE_TRUNC('day', time) AS dt,
+    COUNT(*) AS block_count
+FROM ethereum."blocks"
+GROUP BY dt
+OFFSET 1
+)
+SELECT 
+    AVG(block_count) AS avg_block_count
+FROM temp_table
+```
+
+The average number of blocks produced per day since 2016 is slightly above that number at 5,874. Alternatively, dividing 86400 seconds by 5874 average blocks comes out to 14.7 seconds or approximately one block every 15 seconds. 
 
 
 ### Gas
