@@ -41,7 +41,7 @@ user_groups:
 
 I help build web3 through words and data.
 
-Current: community member at [Bankless DAO](https://www.bankless.community/) and using data to understand networks, protocols and tokens. 
+Current: community member at [Bankless DAO](https://www.bankless.community/) ([POAP](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)) and using data to understand networks, protocols and tokens. 
 
 I enjoy [visualizing data](https://paulapivat.com/#gallery).
 
