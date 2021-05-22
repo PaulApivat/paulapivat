@@ -48,8 +48,10 @@ I enjoy [visualizing data](https://paulapivat.com/#gallery).
 My writings can be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f).
 
 
-My background is in org psych, but my passion is in data and web3.
+My background is in org psych, but my passion is in data and web3. Check out my [NFTs](https://opensea.io/accounts/0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781) 
 
 Find me on [Twitter](https://twitter.com/paulapivat).
+
+
 
 
