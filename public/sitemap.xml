@@ -1,635 +1,386 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
+    <loc>/technical_notes/example_tech/python_faker/</loc>
+    <lastmod>2021-07-11T00:00:00+01:00</lastmod>
+  </url><url>
     <loc>/technical_notes/example_tech/python_dotenv/</loc>
     <lastmod>2021-01-07T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/python_poetry/</loc>
     <lastmod>2020-12-22T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/git_commit_message/</loc>
     <lastmod>2020-11-28T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/github_make_pr/</loc>
     <lastmod>2020-11-24T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/python_virtualenv/</loc>
     <lastmod>2020-10-22T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/python_tip2/</loc>
     <lastmod>2020-09-23T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/python_reproducibility/</loc>
     <lastmod>2020-09-10T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/google_cloud_tip1/</loc>
     <lastmod>2020-09-05T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/python_tip1/</loc>
     <lastmod>2020-09-04T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/courses/example/example1/</loc>
     <lastmod>2019-05-05T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/technical_notes1/</loc>
     <lastmod>2019-05-05T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/courses/example/</loc>
     <lastmod>2018-09-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/</loc>
     <lastmod>2018-09-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_open_api/</loc>
     <lastmod>2021-04-16T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_viz_circular_dendrogram/</loc>
     <lastmod>2021-03-03T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_tip6/</loc>
     <lastmod>2021-02-05T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_viz_extend_color/</loc>
     <lastmod>2021-02-05T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_dates/</loc>
     <lastmod>2020-12-08T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_unnest/</loc>
     <lastmod>2020-10-11T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_viz_reactable/</loc>
     <lastmod>2020-09-25T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_viz_scale_x/</loc>
     <lastmod>2020-09-15T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_viz_treemapify/</loc>
     <lastmod>2020-09-15T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/data_viz_tip2/</loc>
     <lastmod>2020-09-02T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_tip4/</loc>
     <lastmod>2020-08-27T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_tip5/</loc>
     <lastmod>2020-08-27T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/data_viz_tip1/</loc>
     <lastmod>2020-08-27T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_tip3/</loc>
     <lastmod>2020-08-26T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_tip2/</loc>
     <lastmod>2020-08-25T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_tip1/</loc>
     <lastmod>2019-05-05T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/courses/example/example2/</loc>
     <lastmod>2019-05-05T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/technical_notes/example_tech/technical_notes2/</loc>
     <lastmod>2019-05-05T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/talk/example/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/talk/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>/technical_notes/</loc>
+    <lastmod>2021-07-11T00:00:00+01:00</lastmod>
+  </url><url>
     <loc>/tag/analytics/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/authors/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/dune-analytics/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/ethereum/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/query_ethereum/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/author/paul-apivat/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/querying/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/sql/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tags/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/technical_notes/</loc>
-    <lastmod>2021-04-16T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/data-viz/</loc>
     <lastmod>2021-03-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/ggplot2/</loc>
     <lastmod>2021-03-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/thai_dishes_project/</loc>
     <lastmod>2021-03-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/python/</loc>
     <lastmod>2021-03-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/rstats/</loc>
     <lastmod>2021-03-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/text-mining/</loc>
     <lastmod>2021-03-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/web-scraping/</loc>
     <lastmod>2021-03-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/bitcoin/</loc>
     <lastmod>2021-02-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/cryptocurrency/</loc>
     <lastmod>2021-02-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/crypto_price_attack/</loc>
     <lastmod>2021-02-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/data-science/</loc>
     <lastmod>2021-01-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/facebook-data/</loc>
     <lastmod>2021-01-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/sentiment_analysis/</loc>
     <lastmod>2021-01-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/r/</loc>
     <lastmod>2021-01-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/sentiment-analysis/</loc>
     <lastmod>2021-01-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/text-analysis/</loc>
     <lastmod>2021-01-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/twitter_analytics/</loc>
     <lastmod>2021-01-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/twitter-analytics/</loc>
     <lastmod>2021-01-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/gradient-descent/</loc>
     <lastmod>2020-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/dsfs_8/</loc>
     <lastmod>2020-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/machine-learning/</loc>
     <lastmod>2020-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/sunburst/</loc>
     <lastmod>2020-12-17T20:24:12+07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/r-markdown/</loc>
     <lastmod>2020-12-17T20:24:12+07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/statistics/</loc>
     <lastmod>2020-12-17T20:24:12+07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/dsfs_7/</loc>
     <lastmod>2020-12-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/probability/</loc>
     <lastmod>2020-12-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/statistics_probability/</loc>
     <lastmod>2020-12-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/dsfs_6/</loc>
     <lastmod>2020-11-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/end_to_end/</loc>
     <lastmod>2020-11-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/dsfs_5/</loc>
     <lastmod>2020-11-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/datasaurus/</loc>
     <lastmod>2020-11-16T20:24:12+07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/dsfs_4/</loc>
     <lastmod>2020-11-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/list-to-df/</loc>
     <lastmod>2020-11-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/dsfs_3/</loc>
     <lastmod>2020-11-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/dsfs_1/</loc>
     <lastmod>2020-11-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/reactable/</loc>
     <lastmod>2020-10-31T20:24:12+07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/vintage-nba/</loc>
     <lastmod>2020-10-31T20:24:12+07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/dsfs_2/</loc>
     <lastmod>2020-10-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/mlaas/</loc>
     <lastmod>2020-10-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/data_science_canon/</loc>
     <lastmod>2020-09-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/ggplot_art/</loc>
     <lastmod>2021-01-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/tidyverse/</loc>
     <lastmod>2021-01-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/custom-functions/</loc>
     <lastmod>2020-06-25T20:24:12+07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/ds4b-data-wrangling/</loc>
     <lastmod>2020-06-30T20:24:12+07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/r-markdown-utm/</loc>
     <lastmod>2020-06-25T20:24:12+07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/slides/wpa/</loc>
     <lastmod>2020-06-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/people-analytics/</loc>
     <lastmod>2020-06-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/project/</loc>
     <lastmod>2020-06-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/slides/</loc>
     <lastmod>2020-06-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/project/wharton-people-analytics/</loc>
     <lastmod>2020-06-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/writing-technical-content/</loc>
     <lastmod>2019-07-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/courses/</loc>
     <lastmod>2019-05-05T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/publication-type/3/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/publication/preprint/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/publication_types/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/publication/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/source-themes/</loc>
     <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/jupyter/</loc>
     <lastmod>2019-09-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/slides/example/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/privacy/</loc>
     <lastmod>2018-06-28T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/terms/</loc>
     <lastmod>2018-06-28T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/deep-learning/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/demo/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/project/external-project/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/project/internal-project/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/academic/</loc>
     <lastmod>2019-04-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/getting-started/</loc>
     <lastmod>2019-04-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/categories/</loc>
     <lastmod>2019-04-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/category/demo/</loc>
     <lastmod>2019-04-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/author/%E5%90%B3%E6%81%A9%E9%81%94/</loc>
     <lastmod>2019-04-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/%E5%BC%80%E6%BA%90/</loc>
     <lastmod>2019-04-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/category/%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2019-04-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/publication-type/2/</loc>
     <lastmod>2015-09-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/publication/journal-article/</loc>
     <lastmod>2015-09-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/author/robert-ford/</loc>
     <lastmod>2015-09-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/post/2015-07-23-r-rmarkdown/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/plot/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/category/r/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/tag/regression/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/publication-type/1/</loc>
     <lastmod>2013-07-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>/publication/conference-paper/</loc>
     <lastmod>2013-07-01T00:00:00+00:00</lastmod>
   </url>
-  
 </urlset>

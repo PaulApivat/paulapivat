@@ -13,6 +13,200 @@
     </image>
     
     <item>
+      <title>Using Faker to simulate fake data with Python</title>
+      <link>/technical_notes/example_tech/python_faker/</link>
+      <pubDate>Sun, 11 Jul 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_faker/</guid>
+      <description>&lt;h2 id=&#34;creating-mock-data-in-python-with-the-faker-library&#34;&gt;Creating mock data in Python with the Faker library&lt;/h2&gt;
+&lt;p&gt;If you need to simulate mock data, the &lt;code&gt;Faker&lt;/code&gt; 
+&lt;a href=&#34;https://github.com/joke2k/faker&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;library&lt;/a&gt; is a great resource. Shout out to 
+&lt;a href=&#34;https://twitter.com/joke2k&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;@joke2k&lt;/a&gt; for maintaining this project.&lt;/p&gt;
+&lt;p&gt;The full code for a recent project is below, with breakdown of each section to follow. Project context: Utilizing MongoDB as our NoSQL database. I&amp;rsquo;ve created a basic document (json) and now need to replicate multiple documents to simulate data once it&amp;rsquo;s populated with data from the frontend (or a Bot for this project specifically).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from json import dumps
+from faker import Faker
+import collections
+
+database = []
+filename = &#39;testing_bounty&#39;
+length = 5
+fake = Faker()
+
+# fake.word(ext_word_list=)
+random_currencies = [&#39;BANK&#39;, &#39;ETH&#39;, &#39;BTC&#39;]
+
+random_guilds = [&amp;quot;Marketing Guild&amp;quot;, &amp;quot;Treasury Guild&amp;quot;,
+                 &amp;quot;Developer&#39;s Guild&amp;quot;, &amp;quot;Analytics Guild&amp;quot;, &amp;quot;Writer&#39;s Guild&amp;quot;]
+
+discord_handle = [&amp;quot;@bob#8888&amp;quot;, &amp;quot;@alice#1234&amp;quot;,
+                  &amp;quot;@carol#5555&amp;quot;, &amp;quot;@delta#2222&amp;quot;, &amp;quot;@lambda#3333&amp;quot;]
+
+bounty_status = [&#39;Open&#39;, &#39;Draft&#39;, &#39;In-Progress&#39;,
+                 &#39;In-Review&#39;, &#39;Completed&#39;, &#39;Deleted&#39;]
+
+skills = [&amp;quot;writing&amp;quot;,
+          &amp;quot;design&amp;quot;,
+          &amp;quot;software development&amp;quot;,
+          &amp;quot;strategic planning&amp;quot;,
+          &amp;quot;data analysis&amp;quot;,
+          &amp;quot;grant writing&amp;quot;,
+          &amp;quot;proposal development&amp;quot;,
+          &amp;quot;team building&amp;quot;,
+          &amp;quot;marketing&amp;quot;]
+
+for x in range(length):
+    database.append(collections.OrderedDict([
+        (&#39;season&#39;, fake.random_int(0, 10)),
+        (&#39;bounty&#39;, fake.sentence()),
+        (&#39;bountyDescription&#39;, fake.sentence()),
+        (&#39;doneCriteria&#39;, fake.sentence()),
+        (&#39;bountyReward&#39;, collections.OrderedDict([
+            (&#39;currency&#39;, fake.word(ext_word_list=random_currencies)),
+            (&#39;amount&#39;, fake.random_int(0, 50000))
+        ])),
+        # list of dictionaries
+        (&#39;applicableGuilds&#39;, [collections.OrderedDict(
+            [(&#39;guildName&#39;, fake.word(ext_word_list=random_guilds))]), collections.OrderedDict([(&#39;guildName&#39;, fake.word(ext_word_list=random_guilds))])]),
+        (&#39;bountyCreatedBy&#39;, collections.OrderedDict([
+            (&#39;isDaoMember&#39;, fake.pybool()),
+            (&#39;guildName&#39;, fake.word(ext_word_list=random_guilds)),
+            (&#39;discordHandle&#39;, fake.word(ext_word_list=discord_handle)),
+            (&#39;publicAddress&#39;, &amp;quot;0x2d94aa3e47d9d5024503ca8&amp;quot; + fake.pystr())
+        ])),
+        (&#39;bountyCreatedAt&#39;, fake.date_between(start_date=&#39;today&#39;, end_date=&#39;+3m&#39;)),
+        (&#39;bountyDueAt&#39;, fake.date_between(start_date=&#39;today&#39;, end_date=&#39;+1y&#39;)),
+        (&#39;bountyActivatedAt&#39;, fake.date_between(
+            start_date=&#39;today&#39;, end_date=&#39;+6m&#39;)),
+        (&#39;bountyClaimedBy&#39;, collections.OrderedDict([
+            (&#39;guildName&#39;, fake.word(ext_word_list=random_guilds)),
+            (&#39;discordHandle&#39;, fake.word(ext_word_list=discord_handle)),
+            (&#39;publicAddress&#39;, &amp;quot;0x2d94aa3e47d9d5024503ca8&amp;quot; + fake.pystr())
+        ])),
+        (&#39;bountyClaimedAt&#39;, fake.date_between(start_date=&#39;today&#39;, end_date=&#39;+4m&#39;)),
+        (&#39;bountySubmittedBy&#39;, fake.word(ext_word_list=random_guilds)),
+        (&#39;bountySubmittedAt&#39;, fake.date_between(
+            start_date=&#39;today&#39;, end_date=&#39;+11m&#39;)),
+        (&#39;bountySubmissionLink&#39;, &amp;quot;www.&amp;quot; + fake.safe_domain_name()),
+        # list of dictionaries
+        (&#39;bountyStatus&#39;, [collections.OrderedDict([
+            (&#39;status&#39;, fake.word(ext_word_list=bounty_status)),
+            (&#39;bountyStatusTime&#39;, fake.date_between(
+                start_date=&#39;today&#39;, end_date=&#39;+1y&#39;))
+        ])]),
+        (&#39;bountyHash&#39;, fake.md5(raw_output=False)),
+        # list of words
+        (&#39;skillsRequired&#39;, [fake.word(ext_word_list=skills),
+                            fake.word(ext_word_list=skills)])
+    ]))
+
+with open(&#39;%s.json&#39; % filename, &#39;w&#39;) as output:
+    # turns date_between into string, circumvent json serialization
+    output.write(dumps(database, indent=4, sort_keys=False, default=str))
+print(&amp;quot;Done.&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s a breakdown, section-by-section:&lt;/p&gt;
+&lt;p&gt;Since we&amp;rsquo;ll be creating mock json data, the &lt;code&gt;json&lt;/code&gt; built-in library is imported (specifically &lt;code&gt;dumps&lt;/code&gt;), the &lt;code&gt;Faker&lt;/code&gt; library is the main tool and we&amp;rsquo;ll also be using &lt;code&gt;OrderedDict&lt;/code&gt; from &lt;code&gt;collections&lt;/code&gt; to create document objects.&lt;/p&gt;
+&lt;p&gt;Database is set to an empty array which will store the json object (&lt;code&gt;OrderedDict&lt;/code&gt;). We&amp;rsquo;ll save the file that we eventually write as &lt;code&gt;testing_bounty&lt;/code&gt; and keep it a short length (5), while we&amp;rsquo;re still testing.&lt;/p&gt;
+&lt;p&gt;Finally, we initialize the &lt;code&gt;Faker&lt;/code&gt; library by calling the Faker function and setting to &lt;code&gt;fake&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from json import dumps
+from faker import Faker
+import collections
+
+database = []
+filename = &#39;testing_bounty&#39;
+length = 5
+fake = Faker()   &amp;lt;--- important
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This next section save a list of words that pertinent to our project in lists. As we create mock json objects, for certain fields, we&amp;rsquo;ll want to populate from a sample of &lt;strong&gt;keywords&lt;/strong&gt; that&amp;rsquo;s important for our project.&lt;/p&gt;
+&lt;p&gt;Without these keywords, we&amp;rsquo;ll need to rely on random words/sentences that comes with the &lt;code&gt;Faker&lt;/code&gt; library and that may not always be appropriate for our context.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# fake.word(ext_word_list=)
+random_currencies = [&#39;BANK&#39;, &#39;ETH&#39;, &#39;BTC&#39;]
+
+random_guilds = [&amp;quot;Marketing Guild&amp;quot;, &amp;quot;Treasury Guild&amp;quot;,
+                 &amp;quot;Developer&#39;s Guild&amp;quot;, &amp;quot;Analytics Guild&amp;quot;, &amp;quot;Writer&#39;s Guild&amp;quot;]
+
+discord_handle = [&amp;quot;@bob#8888&amp;quot;, &amp;quot;@alice#1234&amp;quot;,
+                  &amp;quot;@carol#5555&amp;quot;, &amp;quot;@delta#2222&amp;quot;, &amp;quot;@lambda#3333&amp;quot;]
+
+bounty_status = [&#39;Open&#39;, &#39;Draft&#39;, &#39;In-Progress&#39;,
+                 &#39;In-Review&#39;, &#39;Completed&#39;, &#39;Deleted&#39;]
+
+skills = [&amp;quot;writing&amp;quot;,
+          &amp;quot;design&amp;quot;,
+          &amp;quot;software development&amp;quot;,
+          &amp;quot;strategic planning&amp;quot;,
+          &amp;quot;data analysis&amp;quot;,
+          &amp;quot;grant writing&amp;quot;,
+          &amp;quot;proposal development&amp;quot;,
+          &amp;quot;team building&amp;quot;,
+          &amp;quot;marketing&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This next section is where we create a number of json objects, specified by length. Everything is pushed into an &lt;code&gt;collections.OrderedDict&lt;/code&gt; and in some cases, we have nested data.&lt;/p&gt;
+&lt;p&gt;Most of the fields are typical &lt;code&gt;key-value&lt;/code&gt; pairs. There are variations in the &lt;code&gt;values&lt;/code&gt;, including:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;strings (&lt;code&gt;fake.sentence()&lt;/code&gt;, &lt;code&gt;fake.word()&lt;/code&gt;, &lt;code&gt;fake.pystr()&lt;/code&gt;); you can sample from list of words created above&lt;/li&gt;
+&lt;li&gt;integers (&lt;code&gt;fake.random_int()&lt;/code&gt;); you can randomize within a range of integers&lt;/li&gt;
+&lt;li&gt;dates (&lt;code&gt;fake.date_between&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;boolean (&lt;code&gt;fake.pybool&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;dictionaries / json object (&lt;code&gt;collections.OrderedDict&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;list of dictionaries, enclose within &lt;code&gt;[]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;list of strings&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;
+for x in range(length):
+    database.append(collections.OrderedDict([
+        (&#39;season&#39;, fake.random_int(0, 10)),
+        (&#39;bounty&#39;, fake.sentence()),
+        (&#39;bountyDescription&#39;, fake.sentence()),
+        (&#39;doneCriteria&#39;, fake.sentence()),
+        (&#39;bountyReward&#39;, collections.OrderedDict([
+            (&#39;currency&#39;, fake.word(ext_word_list=random_currencies)),
+            (&#39;amount&#39;, fake.random_int(0, 50000))
+        ])),
+        # list of dictionaries
+        (&#39;applicableGuilds&#39;, [collections.OrderedDict(
+            [(&#39;guildName&#39;, fake.word(ext_word_list=random_guilds))]), collections.OrderedDict([(&#39;guildName&#39;, fake.word(ext_word_list=random_guilds))])]),
+        (&#39;bountyCreatedBy&#39;, collections.OrderedDict([
+            (&#39;isDaoMember&#39;, fake.pybool()),
+            (&#39;guildName&#39;, fake.word(ext_word_list=random_guilds)),
+            (&#39;discordHandle&#39;, fake.word(ext_word_list=discord_handle)),
+            (&#39;publicAddress&#39;, &amp;quot;0x2d94aa3e47d9d5024503ca8&amp;quot; + fake.pystr())
+        ])),
+        (&#39;bountyCreatedAt&#39;, fake.date_between(start_date=&#39;today&#39;, end_date=&#39;+3m&#39;)),
+        (&#39;bountyDueAt&#39;, fake.date_between(start_date=&#39;today&#39;, end_date=&#39;+1y&#39;)),
+        (&#39;bountyActivatedAt&#39;, fake.date_between(
+            start_date=&#39;today&#39;, end_date=&#39;+6m&#39;)),
+        (&#39;bountyClaimedBy&#39;, collections.OrderedDict([
+            (&#39;guildName&#39;, fake.word(ext_word_list=random_guilds)),
+            (&#39;discordHandle&#39;, fake.word(ext_word_list=discord_handle)),
+            (&#39;publicAddress&#39;, &amp;quot;0x2d94aa3e47d9d5024503ca8&amp;quot; + fake.pystr())
+        ])),
+        (&#39;bountyClaimedAt&#39;, fake.date_between(start_date=&#39;today&#39;, end_date=&#39;+4m&#39;)),
+        (&#39;bountySubmittedBy&#39;, fake.word(ext_word_list=random_guilds)),
+        (&#39;bountySubmittedAt&#39;, fake.date_between(
+            start_date=&#39;today&#39;, end_date=&#39;+11m&#39;)),
+        (&#39;bountySubmissionLink&#39;, &amp;quot;www.&amp;quot; + fake.safe_domain_name()),
+        # list of dictionaries
+        (&#39;bountyStatus&#39;, [collections.OrderedDict([
+            (&#39;status&#39;, fake.word(ext_word_list=bounty_status)),
+            (&#39;bountyStatusTime&#39;, fake.date_between(
+                start_date=&#39;today&#39;, end_date=&#39;+1y&#39;))
+        ])]),
+        (&#39;bountyHash&#39;, fake.md5(raw_output=False)),
+        # list of words
+        (&#39;skillsRequired&#39;, [fake.word(ext_word_list=skills),
+                            fake.word(ext_word_list=skills)])
+    ]))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once we run our script, we&amp;rsquo;ll want to save and serialize the &lt;code&gt;OrderedDict&lt;/code&gt; in a json file. We also want to enclose our dates in strings to avoid getting a &lt;code&gt;json serialization error&lt;/code&gt;; this is done by setting the parameters of &lt;code&gt;output.write()&lt;/code&gt; to &lt;code&gt;default=str&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;with open(&#39;%s.json&#39; % filename, &#39;w&#39;) as output:
+    # turns date_between into string, circumvent json serialization
+    output.write(dumps(database, indent=4, sort_keys=False, default=str))
+print(&amp;quot;Done.&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Setting dotenv to Access Sensitive API Keys</title>
       <link>/technical_notes/example_tech/python_dotenv/</link>
       <pubDate>Thu, 07 Jan 2021 00:00:00 +0100</pubDate>
@@ -245,7 +439,7 @@ This is &lt;strong&gt;not&lt;/strong&gt; an error message. Git is using your def
       <pubDate>Thu, 22 Oct 2020 00:00:00 +0100</pubDate>
       <guid>/technical_notes/example_tech/python_virtualenv/</guid>
       <description>&lt;h2 id=&#34;virtual-environment-best-practices&#34;&gt;Virtual Environment Best Practices&lt;/h2&gt;
-&lt;p&gt;NOTE: This is from chapter 2 of Joel Grus&amp;rsquo; &amp;lsquo;Data Science from Scratch&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;NOTE: This is from chapter 2 of Joel Grus&#39; &amp;lsquo;Data Science from Scratch&amp;rsquo;.&lt;/p&gt;
 &lt;p&gt;Joel&amp;rsquo;s a known 
 &lt;a href=&#34;https://www.youtube.com/watch?v=7jiPeIFXb6U&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;opponent of notebooks&lt;/a&gt; and recommends operating in IPython instead.&lt;/p&gt;
 &lt;p&gt;I was pleasantly surprised that the process of setting up a virtual environment and IPython was relatively painless. Here&amp;rsquo;s my process, taken from the book with some tweaks:&lt;/p&gt;
@@ -368,7 +562,7 @@ print(&amp;quot;numpy is a&amp;quot;, type(numpy))
 print(&amp;quot;it contains names such as...&amp;quot;, dir(numpy.random)[-15:])
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;reproducibility&#34;&gt;Reproducibility&lt;/h2&gt;
-&lt;p&gt;When using &lt;code&gt;numpy.random&lt;/code&gt;, you can ensure reproducibility by accessing &lt;code&gt;numpy.random.seed(30)&lt;/code&gt;, which mirrors #Rstats&amp;rsquo; &lt;code&gt;set.seed(30)&lt;/code&gt; behavior.&lt;/p&gt;
+&lt;p&gt;When using &lt;code&gt;numpy.random&lt;/code&gt;, you can ensure reproducibility by accessing &lt;code&gt;numpy.random.seed(30)&lt;/code&gt;, which mirrors #Rstats&#39; &lt;code&gt;set.seed(30)&lt;/code&gt; behavior.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;import random
 
 numpy.random.seed(30)
@@ -839,7 +1033,7 @@ ggplot(total_data, aes(x = season, y = episode, fill=imdb_rating)) +
 &lt;p&gt;There are several options for visualizing treemaps in R. This note focuses on  
 &lt;a href=&#34;https://cran.r-project.org/web/packages/treemapify/vignettes/introduction-to-treemapify.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Treemapify&lt;/a&gt;, a package maintained by 
 &lt;a href=&#34;https://github.com/wilkox&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;David Wilkins&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I favor this approach over the &lt;code&gt;treemap&lt;/code&gt; package because it is compatible with &lt;code&gt;ggplot2&lt;/code&gt; and allows users to access its&amp;rsquo; functionality.&lt;/p&gt;
+&lt;p&gt;I favor this approach over the &lt;code&gt;treemap&lt;/code&gt; package because it is compatible with &lt;code&gt;ggplot2&lt;/code&gt; and allows users to access its&#39; functionality.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s an example Treemap I created to visualize the dominant emotions displayed for the iconic 90&amp;rsquo;s sitcom, Friends. You can find out more about the 
 &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-09-08/readme.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Friends dataset here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Other visualizations I created for the Friends project can also be found 
@@ -930,7 +1124,7 @@ ggMarginal(p, type = &#39;histogram&#39;)
       <guid>/technical_notes/example_tech/rstats_tip4/</guid>
       <description>&lt;h2 id=&#34;calculating-percentiles&#34;&gt;Calculating Percentiles&lt;/h2&gt;
 &lt;p&gt;When we have a list of values in a column, how can we determine which values are under/over the 25th percentile, 50th percentile or 75th percentile?&lt;/p&gt;
-&lt;p&gt;Here the example are countries&amp;rsquo; &lt;em&gt;average percentages&lt;/em&gt; of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, 
+&lt;p&gt;Here the example are countries&#39; &lt;em&gt;average percentages&lt;/em&gt; of the population with, broadly speaking, ICT Skills as determine by the Sustainable Development Goals, 
 &lt;a href=&#34;https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&amp;#43;4.4.1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Indicator 4.4.1&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;There are three methods. First, manually calculating values for the 25th, 50th and 75th percentile with the &lt;code&gt;quantile()&lt;/code&gt; function.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# Country mean_values at 25th, 50th and 75th percentile 
@@ -1004,7 +1198,7 @@ data %&amp;gt;%
       <guid>/technical_notes/example_tech/rstats_tip5/</guid>
       <description>&lt;h2 id=&#34;data-wrangling-does-order-matter&#34;&gt;Data Wrangling: Does Order matter?&lt;/h2&gt;
 &lt;p&gt;In short, yes, it matters. But when and where?&lt;/p&gt;
-&lt;p&gt;Below are examples to highlight when function order matters and when it doesn&amp;rsquo;t. The source for the raw data used in this illustration are from the United Nations&amp;rsquo; Statistics Division for 
+&lt;p&gt;Below are examples to highlight when function order matters and when it doesn&amp;rsquo;t. The source for the raw data used in this illustration are from the United Nations&#39; Statistics Division for 
 &lt;a href=&#34;https://unstats.un.org/sdgs/indicators/database/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Sustainable Development Goals&lt;/a&gt; (SDG) Indicators (Goal 4, Target 4.4).&lt;/p&gt;
 &lt;p&gt;See also UN Statistics Wiki on 
 &lt;a href=&#34;https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&amp;#43;4.4.1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Indicator 4.4.1&lt;/a&gt;.&lt;/p&gt;
@@ -1292,7 +1486,7 @@ plants %&amp;gt;%
 &lt;h2 id=&#34;using-spread&#34;&gt;Using spread()&lt;/h2&gt;
 &lt;p&gt;The first part of the below pre-processing steps include subsetting the original data frame (data) by selecting two countries for comparison (Morocco and Qatar) on specific variables such as: &lt;code&gt;GeoAreaName&lt;/code&gt;, &lt;code&gt;TimePeriod&lt;/code&gt;, &lt;code&gt;Sex&lt;/code&gt;, &lt;code&gt;Type of skill&lt;/code&gt; and &lt;code&gt;Value&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Then employing &lt;code&gt;group_by&lt;/code&gt; to ensure all rows are unique. The next line is key as it addresses an error that each row must be marked by a unique id key.&lt;/p&gt;
-&lt;p&gt;Finally, the &lt;code&gt;spread()&lt;/code&gt; function allows us to see each countries&amp;rsquo; relative performance on various 
+&lt;p&gt;Finally, the &lt;code&gt;spread()&lt;/code&gt; function allows us to see each countries&#39; relative performance on various 
 &lt;a href=&#34;http://tcg.uis.unesco.org/4-4-1-proportion-of-youth-and-adults-with-information-and-communications-technology-ict-skills-by-type-of-skill/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ICT skills&lt;/a&gt;. Please consult meta-data for more details.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;data %&amp;gt;%
     filter(GeoAreaName==&amp;quot;Morocco&amp;quot; | GeoAreaName==&amp;quot;Qatar&amp;quot;) %&amp;gt;% 

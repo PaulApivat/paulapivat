@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Changing Date formats with Lubridate For every data visualization project that involves using dates on one of the axes, I always find myself having to re-format the date so that visualization &ldquo;works&rdquo;.">
+  <meta name="description" content="Creating mock data in Python with the Faker library If you need to simulate mock data, the Faker library is a great resource. Shout out to @joke2k for maintaining this project.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_dates/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_faker/">
 
   
 
@@ -217,7 +217,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_dates/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_faker/">
 
   
   
@@ -236,15 +236,15 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_dates/">
-  <meta property="og:title" content="Formating Dates with Lubridate | Paul Apivat">
-  <meta property="og:description" content="Changing Date formats with Lubridate For every data visualization project that involves using dates on one of the axes, I always find myself having to re-format the date so that visualization &ldquo;works&rdquo;."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_faker/">
+  <meta property="og:title" content="Using Faker to simulate fake data with Python | Paul Apivat">
+  <meta property="og:description" content="Creating mock data in Python with the Faker library If you need to simulate mock data, the Faker library is a great resource. Shout out to @joke2k for maintaining this project."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-12-08T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-07-11T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-12-08T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-07-11T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +263,7 @@
 
 
 
-  <title>Formating Dates with Lubridate | Paul Apivat</title>
+  <title>Using Faker to simulate fake data with Python | Paul Apivat</title>
 
 </head>
 
@@ -695,7 +695,7 @@
         <a href="/technical_notes/example_tech/python_dotenv/">dotenv in Python</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/python_faker/">Faker in Python</a>
       </li>
       
@@ -732,7 +732,7 @@
         <a href="/technical_notes/example_tech/rstats_tip4/">Calculating Percentiles</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_dates/">Format Dates</a>
       </li>
       
@@ -778,7 +778,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#changing-date-formats-with-lubridate">Changing Date formats with Lubridate</a></li>
+    <li><a href="#creating-mock-data-in-python-with-the-faker-library">Creating mock data in Python with the Faker library</a></li>
   </ul>
 </nav>
 
@@ -791,24 +791,194 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Formating Dates with Lubridate</h1>
+          <h1>Using Faker to simulate fake data with Python</h1>
 
           <div class="article-style">
-            <h2 id="changing-date-formats-with-lubridate">Changing Date formats with Lubridate</h2>
-<p>For every data visualization project that involves using <code>dates</code> on one of the axes, I always find myself having to re-format the date so that visualization &ldquo;works&rdquo;.</p>
-<p>Here&rsquo;s a workflow that is recommended at the <strong>start</strong> of any data visualization project.</p>
-<pre><code>library(tidyverse)
-library(lubridate) # handling dates
+            <h2 id="creating-mock-data-in-python-with-the-faker-library">Creating mock data in Python with the Faker library</h2>
+<p>If you need to simulate mock data, the <code>Faker</code> 
+<a href="https://github.com/joke2k/faker" target="_blank" rel="noopener">library</a> is a great resource. Shout out to 
+<a href="https://twitter.com/joke2k" target="_blank" rel="noopener">@joke2k</a> for maintaining this project.</p>
+<p>The full code for a recent project is below, with breakdown of each section to follow. Project context: Utilizing MongoDB as our NoSQL database. I&rsquo;ve created a basic document (json) and now need to replicate multiple documents to simulate data once it&rsquo;s populated with data from the frontend (or a Bot for this project specifically).</p>
+<pre><code>from json import dumps
+from faker import Faker
+import collections
 
-df %&gt;%
-    # handling date first
-    mutate(
-        date = original_date_variable %&gt;% ymd(),
-        year = date %&gt;% year(),
-        month = date %&gt;% month(),
-        day = date %&gt;% day(),
-        year_month = make_datetime(year, month) # combine year &amp; month
-    ) 
+database = []
+filename = 'testing_bounty'
+length = 5
+fake = Faker()
+
+# fake.word(ext_word_list=)
+random_currencies = ['BANK', 'ETH', 'BTC']
+
+random_guilds = [&quot;Marketing Guild&quot;, &quot;Treasury Guild&quot;,
+                 &quot;Developer's Guild&quot;, &quot;Analytics Guild&quot;, &quot;Writer's Guild&quot;]
+
+discord_handle = [&quot;@bob#8888&quot;, &quot;@alice#1234&quot;,
+                  &quot;@carol#5555&quot;, &quot;@delta#2222&quot;, &quot;@lambda#3333&quot;]
+
+bounty_status = ['Open', 'Draft', 'In-Progress',
+                 'In-Review', 'Completed', 'Deleted']
+
+skills = [&quot;writing&quot;,
+          &quot;design&quot;,
+          &quot;software development&quot;,
+          &quot;strategic planning&quot;,
+          &quot;data analysis&quot;,
+          &quot;grant writing&quot;,
+          &quot;proposal development&quot;,
+          &quot;team building&quot;,
+          &quot;marketing&quot;]
+
+for x in range(length):
+    database.append(collections.OrderedDict([
+        ('season', fake.random_int(0, 10)),
+        ('bounty', fake.sentence()),
+        ('bountyDescription', fake.sentence()),
+        ('doneCriteria', fake.sentence()),
+        ('bountyReward', collections.OrderedDict([
+            ('currency', fake.word(ext_word_list=random_currencies)),
+            ('amount', fake.random_int(0, 50000))
+        ])),
+        # list of dictionaries
+        ('applicableGuilds', [collections.OrderedDict(
+            [('guildName', fake.word(ext_word_list=random_guilds))]), collections.OrderedDict([('guildName', fake.word(ext_word_list=random_guilds))])]),
+        ('bountyCreatedBy', collections.OrderedDict([
+            ('isDaoMember', fake.pybool()),
+            ('guildName', fake.word(ext_word_list=random_guilds)),
+            ('discordHandle', fake.word(ext_word_list=discord_handle)),
+            ('publicAddress', &quot;0x2d94aa3e47d9d5024503ca8&quot; + fake.pystr())
+        ])),
+        ('bountyCreatedAt', fake.date_between(start_date='today', end_date='+3m')),
+        ('bountyDueAt', fake.date_between(start_date='today', end_date='+1y')),
+        ('bountyActivatedAt', fake.date_between(
+            start_date='today', end_date='+6m')),
+        ('bountyClaimedBy', collections.OrderedDict([
+            ('guildName', fake.word(ext_word_list=random_guilds)),
+            ('discordHandle', fake.word(ext_word_list=discord_handle)),
+            ('publicAddress', &quot;0x2d94aa3e47d9d5024503ca8&quot; + fake.pystr())
+        ])),
+        ('bountyClaimedAt', fake.date_between(start_date='today', end_date='+4m')),
+        ('bountySubmittedBy', fake.word(ext_word_list=random_guilds)),
+        ('bountySubmittedAt', fake.date_between(
+            start_date='today', end_date='+11m')),
+        ('bountySubmissionLink', &quot;www.&quot; + fake.safe_domain_name()),
+        # list of dictionaries
+        ('bountyStatus', [collections.OrderedDict([
+            ('status', fake.word(ext_word_list=bounty_status)),
+            ('bountyStatusTime', fake.date_between(
+                start_date='today', end_date='+1y'))
+        ])]),
+        ('bountyHash', fake.md5(raw_output=False)),
+        # list of words
+        ('skillsRequired', [fake.word(ext_word_list=skills),
+                            fake.word(ext_word_list=skills)])
+    ]))
+
+with open('%s.json' % filename, 'w') as output:
+    # turns date_between into string, circumvent json serialization
+    output.write(dumps(database, indent=4, sort_keys=False, default=str))
+print(&quot;Done.&quot;)
+</code></pre>
+<p>Here&rsquo;s a breakdown, section-by-section:</p>
+<p>Since we&rsquo;ll be creating mock json data, the <code>json</code> built-in library is imported (specifically <code>dumps</code>), the <code>Faker</code> library is the main tool and we&rsquo;ll also be using <code>OrderedDict</code> from <code>collections</code> to create document objects.</p>
+<p>Database is set to an empty array which will store the json object (<code>OrderedDict</code>). We&rsquo;ll save the file that we eventually write as <code>testing_bounty</code> and keep it a short length (5), while we&rsquo;re still testing.</p>
+<p>Finally, we initialize the <code>Faker</code> library by calling the Faker function and setting to <code>fake</code>.</p>
+<pre><code>from json import dumps
+from faker import Faker
+import collections
+
+database = []
+filename = 'testing_bounty'
+length = 5
+fake = Faker()   &lt;--- important
+</code></pre>
+<p>This next section save a list of words that pertinent to our project in lists. As we create mock json objects, for certain fields, we&rsquo;ll want to populate from a sample of <strong>keywords</strong> that&rsquo;s important for our project.</p>
+<p>Without these keywords, we&rsquo;ll need to rely on random words/sentences that comes with the <code>Faker</code> library and that may not always be appropriate for our context.</p>
+<pre><code># fake.word(ext_word_list=)
+random_currencies = ['BANK', 'ETH', 'BTC']
+
+random_guilds = [&quot;Marketing Guild&quot;, &quot;Treasury Guild&quot;,
+                 &quot;Developer's Guild&quot;, &quot;Analytics Guild&quot;, &quot;Writer's Guild&quot;]
+
+discord_handle = [&quot;@bob#8888&quot;, &quot;@alice#1234&quot;,
+                  &quot;@carol#5555&quot;, &quot;@delta#2222&quot;, &quot;@lambda#3333&quot;]
+
+bounty_status = ['Open', 'Draft', 'In-Progress',
+                 'In-Review', 'Completed', 'Deleted']
+
+skills = [&quot;writing&quot;,
+          &quot;design&quot;,
+          &quot;software development&quot;,
+          &quot;strategic planning&quot;,
+          &quot;data analysis&quot;,
+          &quot;grant writing&quot;,
+          &quot;proposal development&quot;,
+          &quot;team building&quot;,
+          &quot;marketing&quot;]
+</code></pre>
+<p>This next section is where we create a number of json objects, specified by length. Everything is pushed into an <code>collections.OrderedDict</code> and in some cases, we have nested data.</p>
+<p>Most of the fields are typical <code>key-value</code> pairs. There are variations in the <code>values</code>, including:</p>
+<ol>
+<li>strings (<code>fake.sentence()</code>, <code>fake.word()</code>, <code>fake.pystr()</code>); you can sample from list of words created above</li>
+<li>integers (<code>fake.random_int()</code>); you can randomize within a range of integers</li>
+<li>dates (<code>fake.date_between</code>)</li>
+<li>boolean (<code>fake.pybool</code>)</li>
+<li>dictionaries / json object (<code>collections.OrderedDict</code>)</li>
+<li>list of dictionaries, enclose within <code>[]</code></li>
+<li>list of strings</li>
+</ol>
+<pre><code>
+for x in range(length):
+    database.append(collections.OrderedDict([
+        ('season', fake.random_int(0, 10)),
+        ('bounty', fake.sentence()),
+        ('bountyDescription', fake.sentence()),
+        ('doneCriteria', fake.sentence()),
+        ('bountyReward', collections.OrderedDict([
+            ('currency', fake.word(ext_word_list=random_currencies)),
+            ('amount', fake.random_int(0, 50000))
+        ])),
+        # list of dictionaries
+        ('applicableGuilds', [collections.OrderedDict(
+            [('guildName', fake.word(ext_word_list=random_guilds))]), collections.OrderedDict([('guildName', fake.word(ext_word_list=random_guilds))])]),
+        ('bountyCreatedBy', collections.OrderedDict([
+            ('isDaoMember', fake.pybool()),
+            ('guildName', fake.word(ext_word_list=random_guilds)),
+            ('discordHandle', fake.word(ext_word_list=discord_handle)),
+            ('publicAddress', &quot;0x2d94aa3e47d9d5024503ca8&quot; + fake.pystr())
+        ])),
+        ('bountyCreatedAt', fake.date_between(start_date='today', end_date='+3m')),
+        ('bountyDueAt', fake.date_between(start_date='today', end_date='+1y')),
+        ('bountyActivatedAt', fake.date_between(
+            start_date='today', end_date='+6m')),
+        ('bountyClaimedBy', collections.OrderedDict([
+            ('guildName', fake.word(ext_word_list=random_guilds)),
+            ('discordHandle', fake.word(ext_word_list=discord_handle)),
+            ('publicAddress', &quot;0x2d94aa3e47d9d5024503ca8&quot; + fake.pystr())
+        ])),
+        ('bountyClaimedAt', fake.date_between(start_date='today', end_date='+4m')),
+        ('bountySubmittedBy', fake.word(ext_word_list=random_guilds)),
+        ('bountySubmittedAt', fake.date_between(
+            start_date='today', end_date='+11m')),
+        ('bountySubmissionLink', &quot;www.&quot; + fake.safe_domain_name()),
+        # list of dictionaries
+        ('bountyStatus', [collections.OrderedDict([
+            ('status', fake.word(ext_word_list=bounty_status)),
+            ('bountyStatusTime', fake.date_between(
+                start_date='today', end_date='+1y'))
+        ])]),
+        ('bountyHash', fake.md5(raw_output=False)),
+        # list of words
+        ('skillsRequired', [fake.word(ext_word_list=skills),
+                            fake.word(ext_word_list=skills)])
+    ]))
+</code></pre>
+<p>Once we run our script, we&rsquo;ll want to save and serialize the <code>OrderedDict</code> in a json file. We also want to enclose our dates in strings to avoid getting a <code>json serialization error</code>; this is done by setting the parameters of <code>output.write()</code> to <code>default=str</code>.</p>
+<pre><code>with open('%s.json' % filename, 'w') as output:
+    # turns date_between into string, circumvent json serialization
+    output.write(dumps(database, indent=4, sort_keys=False, default=str))
+print(&quot;Done.&quot;)
 </code></pre>
 
           </div>
@@ -825,15 +995,8 @@ df %&gt;%
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_viz_extend_color/" rel="next">Extend Color Palettes</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_unnest/" rel="prev">Reading and manipulating nested data</a>
+    <a href="/technical_notes/example_tech/python_dotenv/" rel="prev">Setting dotenv to Access Sensitive API Keys</a>
   </div>
   
 </div>
@@ -843,7 +1006,7 @@ df %&gt;%
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Dec 8, 2020</p>
+          <p>Last updated on Jul 11, 2021</p>
 
           
 
@@ -855,7 +1018,7 @@ df %&gt;%
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_dates.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_faker.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

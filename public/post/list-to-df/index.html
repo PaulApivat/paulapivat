@@ -707,7 +707,7 @@
 <p>How would I approach the same problem using data frames?</p>
 </blockquote>
 <p>So that&rsquo;s what this post is about. You can reference these 
-<a href="https://paulapivat.com/post/dsfs_1/" target="_blank" rel="noopener">previous post</a> for context; also keep in mind, this is a brief detour and deviation from Joel Grus&rsquo; book (for example, I&rsquo;ll be using 
+<a href="https://paulapivat.com/post/dsfs_1/" target="_blank" rel="noopener">previous post</a> for context; also keep in mind, this is a brief detour and deviation from Joel Grus' book (for example, I&rsquo;ll be using 
 <a href="https://pandas.pydata.org/" target="_blank" rel="noopener">pandas</a> here and a 
 <a href="https://jupyter.org/" target="_blank" rel="noopener">jupyter notebook</a> here, both of which are not covered in the book).</p>
 <p>For review, here&rsquo;s the data you are given as a newly hired data scientist at Data Scienster™</p>
@@ -803,7 +803,7 @@ users_friendships = pd.merge(users_df, friendships_df, on='id')
 </code></pre>
 <p>Once we&rsquo;ve joined <code>users_df</code> and <code>friendships_df</code>, we have:</p>
 <p><img src="./users_friendships.png" alt="png"></p>
-<p>Since we have <code>users</code> and <code>friendships</code> data, we could write a function to help us answer &ldquo;how many friends does each user have?&quot;. In addition, we&rsquo;ll have to create a <code>list comprehension</code> so we loop through each <code>user</code> within <code>users</code>:</p>
+<p>Since we have <code>users</code> and <code>friendships</code> data, we could write a function to help us answer &ldquo;how many friends does each user have?&rdquo;. In addition, we&rsquo;ll have to create a <code>list comprehension</code> so we loop through each <code>user</code> within <code>users</code>:</p>
 <pre><code class="language-python"># function to count how many friend each user has
 def number_of_friends(user):
     &quot;&quot;&quot;How many friends does _user_ have?&quot;&quot;&quot;
@@ -1210,7 +1210,7 @@ user_friendship_topics.groupby(['topic']).count().reset_index().sort_values('id'
     
     
     
-    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+    <script src="/js/academic.min.b2ed8054531fc8b77a9c500d5dfef876.js"></script>
 
     
 
