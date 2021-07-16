@@ -1,5 +1,5 @@
 ---
-date: "2020-11-24T00:00:00+01:00"
+date: "2021-07-16T00:00:00+01:00"
 draft: false
 linktitle: Making a Pull Request
 menu:
@@ -66,3 +66,29 @@ weight: 1
 - Add good PR description, [see here](https://www.pullrequest.com/blog/writing-a-great-pull-request-description/)
 
 11. Click **Create pull request** to open a new pull request
+
+## Production vs Development
+
+Ongoing projects with several contributors will generally separate the **main** from **develop** branch. Making a PR in this context is *slighty* different:
+
+1. In the command line, switch to development branch `git checkout develop` (even if you don't see the `develop` branch locally, you may just see `main` or a new branch you created `new_branch`).
+
+2. Now that you're *starting* on `develop` branch, do `git pull origin develop` to make sure that any prior changes from the `develop` branch is pulled in locally, and you're up-to-date. 
+
+3. Then from `develop`, create a new `feature` branch like so: `git checkout feature/new-branch`. (note: `feature/new-branch` is a naming convention that explicitly says you're creating a new feature branch).
+
+4. Then make your changes or add new code. 
+
+5. Then, `git push origin` (in this case, origin will be develop)
+
+6. Once you go back to github, if you see `compare and pull request`, make sure it is being merged into `develop` and **not** `main`. 
+
+## VIM
+
+If for whatever reason you find yourself on VIM, you can escape by:
+
+1. Press `esc` (escape)
+2. Press `:` (colon)
+3. Press `wq` (write and quit)
+
+

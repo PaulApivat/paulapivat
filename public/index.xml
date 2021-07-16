@@ -13,6 +13,115 @@
     </image>
     
     <item>
+      <title>Making a Pull Request on a GitHub Repo</title>
+      <link>/technical_notes/example_tech/github_make_pr/</link>
+      <pubDate>Fri, 16 Jul 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/github_make_pr/</guid>
+      <description>&lt;h2 id=&#34;guide-for-contributing-to-another-code-base-by-making-a-pull-request&#34;&gt;Guide for contributing to another code base by making a pull request&lt;/h2&gt;
+&lt;h2 id=&#34;public-repo&#34;&gt;Public Repo&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Identify a project you want to contribute to on GitHub&lt;/li&gt;
+&lt;li&gt;Fork that project&lt;/li&gt;
+&lt;li&gt;Clone it to your local machine*&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;note&lt;/strong&gt; : Do not clone in another directory that was &lt;em&gt;already&lt;/em&gt; cloned from another repo. For example, when I cloned 
+&lt;a href=&#34;https://github.com/PaulApivat/pytalentsolution&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pytalentsolution&lt;/a&gt; on my local machine, I initially cloned it &lt;em&gt;inside&lt;/em&gt; Saku directory, which was &lt;em&gt;itself&lt;/em&gt; a clone of an already-existing-repo. The correct way was to create a &lt;em&gt;new&lt;/em&gt; directory for pytalentsolution.&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Make a new branch&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;4a: &lt;code&gt;cd&lt;/code&gt; into directory of the cloned repo&lt;/li&gt;
+&lt;li&gt;4b: use &lt;code&gt;git branch&lt;/code&gt; to confirm you&amp;rsquo;re on the &lt;code&gt;*master&lt;/code&gt; branch&lt;/li&gt;
+&lt;li&gt;4c: use &lt;code&gt;git checkout -b name_of_new_branch&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;4d: use &lt;code&gt;git branch&lt;/code&gt; to check that you&amp;rsquo;re on &lt;code&gt;name_of_new_branch&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;Make changes&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Push it back to your repo&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;note&lt;/strong&gt; : You&amp;rsquo;ll get a message &lt;code&gt;git push remote --&lt;/code&gt; use this instead of the traditional &lt;code&gt;git push&lt;/code&gt;&lt;/p&gt;
+&lt;ol start=&#34;7&#34;&gt;
+&lt;li&gt;(Go back to the forked repo in GitHub) Click the &lt;strong&gt;Compare &amp;amp; Pull Request&lt;/strong&gt; button.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;add a description to changes made in the pull request&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;8&#34;&gt;
+&lt;li&gt;Click &lt;strong&gt;Create pull request&lt;/strong&gt; to open a new pull request&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;private-repo&#34;&gt;Private Repo&lt;/h2&gt;
+&lt;p&gt;1-3. You cannot fork a private repo&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;Clone directly to local machine&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;git branch -a&lt;/code&gt; to see all branches in the project&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;git branch&lt;/code&gt; to confirm you&amp;rsquo;re on master branch&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;[important] &lt;code&gt;git status&lt;/code&gt; to check if ahead or behind (if behind, use &lt;code&gt;git pull&lt;/code&gt; to fetch and download content from a remote repository)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;[from git master] create a &lt;strong&gt;new&lt;/strong&gt; branch use &lt;code&gt;git checkout -b name_of_new_branch&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Use &lt;code&gt;git branch&lt;/code&gt; to make sure you&amp;rsquo;re on new branch&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Make changes, then normal: git add, git commit -m &amp;ldquo;message&amp;rdquo;, git push&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;note&lt;/strong&gt; : You&amp;rsquo;ll get a message &lt;code&gt;git push remote --&lt;/code&gt; use this instead of the traditional &lt;code&gt;git push&lt;/code&gt;&lt;/p&gt;
+&lt;ol start=&#34;10&#34;&gt;
+&lt;li&gt;(Go back to the forked repo in GitHub) Click the &lt;strong&gt;Compare &amp;amp; Pull Request&lt;/strong&gt; button.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Add good PR description, 
+&lt;a href=&#34;https://www.pullrequest.com/blog/writing-a-great-pull-request-description/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;see here&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;11&#34;&gt;
+&lt;li&gt;Click &lt;strong&gt;Create pull request&lt;/strong&gt; to open a new pull request&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;production-vs-development&#34;&gt;Production vs Development&lt;/h2&gt;
+&lt;p&gt;Ongoing projects with several contributors will generally separate the &lt;strong&gt;main&lt;/strong&gt; from &lt;strong&gt;develop&lt;/strong&gt; branch. Making a PR in this context is &lt;em&gt;slighty&lt;/em&gt; different:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;In the command line, switch to development branch &lt;code&gt;git checkout develop&lt;/code&gt; (even if you don&amp;rsquo;t see the &lt;code&gt;develop&lt;/code&gt; branch locally, you may just see &lt;code&gt;main&lt;/code&gt; or a new branch you created &lt;code&gt;new_branch&lt;/code&gt;).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Now that you&amp;rsquo;re &lt;em&gt;starting&lt;/em&gt; on &lt;code&gt;develop&lt;/code&gt; branch, do &lt;code&gt;git pull origin develop&lt;/code&gt; to make sure that any prior changes from the &lt;code&gt;develop&lt;/code&gt; branch is pulled in locally, and you&amp;rsquo;re up-to-date.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Then from &lt;code&gt;develop&lt;/code&gt;, create a new &lt;code&gt;feature&lt;/code&gt; branch like so: &lt;code&gt;git checkout feature/new-branch&lt;/code&gt;. (note: &lt;code&gt;feature/new-branch&lt;/code&gt; is a naming convention that explicitly says you&amp;rsquo;re creating a new feature branch).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Then make your changes or add new code.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Then, &lt;code&gt;git push origin&lt;/code&gt; (in this case, origin will be develop)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Once you go back to github, if you see &lt;code&gt;compare and pull request&lt;/code&gt;, make sure it is being merged into &lt;code&gt;develop&lt;/code&gt; and &lt;strong&gt;not&lt;/strong&gt; &lt;code&gt;main&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;vim&#34;&gt;VIM&lt;/h2&gt;
+&lt;p&gt;If for whatever reason you find yourself on VIM, you can escape by:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Press &lt;code&gt;esc&lt;/code&gt; (escape)&lt;/li&gt;
+&lt;li&gt;Press &lt;code&gt;:&lt;/code&gt; (colon)&lt;/li&gt;
+&lt;li&gt;Press &lt;code&gt;wq&lt;/code&gt; (write and quit)&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Using Faker to simulate fake data with Python</title>
       <link>/technical_notes/example_tech/python_faker/</link>
       <pubDate>Sun, 11 Jul 2021 00:00:00 +0100</pubDate>
@@ -349,86 +458,6 @@ This is &lt;strong&gt;not&lt;/strong&gt; an error message. Git is using your def
 &lt;li&gt;press &amp;ldquo;esc&amp;rdquo; (escape)&lt;/li&gt;
 &lt;li&gt;write &amp;ldquo;:wq&amp;rdquo; (write &amp;amp; quite)&lt;/li&gt;
 &lt;li&gt;then press enter&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Making a Pull Request on a GitHub Repo</title>
-      <link>/technical_notes/example_tech/github_make_pr/</link>
-      <pubDate>Tue, 24 Nov 2020 00:00:00 +0100</pubDate>
-      <guid>/technical_notes/example_tech/github_make_pr/</guid>
-      <description>&lt;h2 id=&#34;guide-for-contributing-to-another-code-base-by-making-a-pull-request&#34;&gt;Guide for contributing to another code base by making a pull request&lt;/h2&gt;
-&lt;h2 id=&#34;public-repo&#34;&gt;Public Repo&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;Identify a project you want to contribute to on GitHub&lt;/li&gt;
-&lt;li&gt;Fork that project&lt;/li&gt;
-&lt;li&gt;Clone it to your local machine*&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;note&lt;/strong&gt; : Do not clone in another directory that was &lt;em&gt;already&lt;/em&gt; cloned from another repo. For example, when I cloned 
-&lt;a href=&#34;https://github.com/PaulApivat/pytalentsolution&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;pytalentsolution&lt;/a&gt; on my local machine, I initially cloned it &lt;em&gt;inside&lt;/em&gt; Saku directory, which was &lt;em&gt;itself&lt;/em&gt; a clone of an already-existing-repo. The correct way was to create a &lt;em&gt;new&lt;/em&gt; directory for pytalentsolution.&lt;/p&gt;
-&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;Make a new branch&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;4a: &lt;code&gt;cd&lt;/code&gt; into directory of the cloned repo&lt;/li&gt;
-&lt;li&gt;4b: use &lt;code&gt;git branch&lt;/code&gt; to confirm you&amp;rsquo;re on the &lt;code&gt;*master&lt;/code&gt; branch&lt;/li&gt;
-&lt;li&gt;4c: use &lt;code&gt;git checkout -b name_of_new_branch&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;4d: use &lt;code&gt;git branch&lt;/code&gt; to check that you&amp;rsquo;re on &lt;code&gt;name_of_new_branch&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;5&#34;&gt;
-&lt;li&gt;
-&lt;p&gt;Make changes&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Push it back to your repo&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;note&lt;/strong&gt; : You&amp;rsquo;ll get a message &lt;code&gt;git push remote --&lt;/code&gt; use this instead of the traditional &lt;code&gt;git push&lt;/code&gt;&lt;/p&gt;
-&lt;ol start=&#34;7&#34;&gt;
-&lt;li&gt;(Go back to the forked repo in GitHub) Click the &lt;strong&gt;Compare &amp;amp; Pull Request&lt;/strong&gt; button.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;add a description to changes made in the pull request&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;8&#34;&gt;
-&lt;li&gt;Click &lt;strong&gt;Create pull request&lt;/strong&gt; to open a new pull request&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;private-repo&#34;&gt;Private Repo&lt;/h2&gt;
-&lt;p&gt;1-3. You cannot fork a private repo&lt;/p&gt;
-&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;
-&lt;p&gt;Clone directly to local machine&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;git branch -a&lt;/code&gt; to see all branches in the project&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;git branch&lt;/code&gt; to confirm you&amp;rsquo;re on master branch&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;[important] &lt;code&gt;git status&lt;/code&gt; to check if ahead or behind (if behind, use &lt;code&gt;git pull&lt;/code&gt; to fetch and download content from a remote repository)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;[from git master] create a &lt;strong&gt;new&lt;/strong&gt; branch use &lt;code&gt;git checkout -b name_of_new_branch&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Use &lt;code&gt;git branch&lt;/code&gt; to make sure you&amp;rsquo;re on new branch&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Make changes, then normal: git add, git commit -m &amp;ldquo;message&amp;rdquo;, git push&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;note&lt;/strong&gt; : You&amp;rsquo;ll get a message &lt;code&gt;git push remote --&lt;/code&gt; use this instead of the traditional &lt;code&gt;git push&lt;/code&gt;&lt;/p&gt;
-&lt;ol start=&#34;10&#34;&gt;
-&lt;li&gt;(Go back to the forked repo in GitHub) Click the &lt;strong&gt;Compare &amp;amp; Pull Request&lt;/strong&gt; button.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;Add good PR description, 
-&lt;a href=&#34;https://www.pullrequest.com/blog/writing-a-great-pull-request-description/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;see here&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;11&#34;&gt;
-&lt;li&gt;Click &lt;strong&gt;Create pull request&lt;/strong&gt; to open a new pull request&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
