@@ -39,16 +39,35 @@ user_groups:
 - Visitors
 ---
 
-I help build web3 through words and data.
+Enabling capital, coordination and culture on Web3 through on- and off-chain data. 
 
-Current: community member at [Bankless DAO](https://www.bankless.community/) ([POAP](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)) and using data to understand networks, protocols and tokens. 
+**Current**
 
-I enjoy [visualizing data](https://paulapivat.com/#gallery).
+Contributor at [Bankless DAO](https://www.bankless.community/) ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)). I work primarily in the Analytics and Developer's Guild to support other guilds including Education, Treasury, Marketing, Writing and Operations (see our [Notion](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f)). 
 
-My writings can be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f).
+**On-Chain Data**
+- [Bankless DAO Membership Categories Dashboard](https://duneanalytics.com/paulapivat/dollarBANK-Members)
+- [Bankless DAO Membership Over Time](https://duneanalytics.com/paulapivat/dollarBANK-Members-Time-Series)
+- [Bankless DAO Treasury](https://duneanalytics.com/paulapivat/WIP-Bankless-DAO-Treasury)
+- [Bankless DAO Treasury Start & End Period](https://duneanalytics.com/paulapivat/Bankless-DAO-Treasury-Overtime)
+- [$BANK Trading Volume](https://duneanalytics.com/paulapivat/BANK)
+- [Staking $AAVE](https://duneanalytics.com/paulapivat/Staking-Aave)
+- [Bankless DAO Community Calls POAPs Claimed Data](https://forum.bankless.community/t/community-call-poaps-claimed-numbers-thru-july-9th/1232)
+
+**Off-Chain Data**
+
+- [Bankless DAO Twitter Analytics](https://forum.bankless.community/t/bankless-dao-twitter-analytics-june-2021-edition/1200)
+- [Exploring Discord Data: Bankless DAO Engagement](https://forum.bankless.community/t/exploring-discord-data-bankless-dao-engagement/1100)
+- [Bankless DAO Onboard Survey Pt 1](https://forum.bankless.community/t/onboard-survey-exploratory-analysis/1048)
+- [Bankless DAO Onboard Survey Pt 2](https://forum.bankless.community/t/onboard-survey-exploratory-analysis-part-2/1067)
 
 
-My background is in org psych, but my passion is in data and web3. Check out my [NFTs](https://opensea.io/accounts/0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781) 
+I also enjoy [visualizing data](https://paulapivat.com/#gallery).
+
+Past writings can be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f).
+
+
+Check out my [NFTs](https://opensea.io/accounts/0xdfDf2D882D9ebce6c7EAc3DA9AB66cbfDa263781) 
 
 Find me on [Twitter](https://twitter.com/paulapivat).
 
