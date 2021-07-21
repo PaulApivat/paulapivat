@@ -13,6 +13,78 @@
     </image>
     
     <item>
+      <title>Creating a Github Repo</title>
+      <link>/technical_notes/example_tech/github_make_repo/</link>
+      <pubDate>Wed, 21 Jul 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/github_make_repo/</guid>
+      <description>&lt;h2 id=&#34;guide-for-creating-a-github-repo-and-cloning-locally&#34;&gt;Guide for Creating a GitHub Repo and Cloning Locally&lt;/h2&gt;
+&lt;p&gt;This guide can help you setup a fresh new GitHub Repo, then clone it locally to begin working in your local environment, then pushing changes up to your GitHub Repo.&lt;/p&gt;
+&lt;p&gt;This guide assumes you have a Text Editor like VSCode installed and that you can use the &lt;strong&gt;Terminal&lt;/strong&gt; to navigate through various folders.&lt;/p&gt;
+&lt;h2 id=&#34;creating-repo&#34;&gt;Creating Repo&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Sign-up for a GitHub Account&lt;/li&gt;
+&lt;li&gt;Navigate to Your Profile&lt;/li&gt;
+&lt;li&gt;Click on Repositories&lt;/li&gt;
+&lt;li&gt;Click on green button &amp;ldquo;New&amp;rdquo; (for New Repo)&lt;/li&gt;
+&lt;li&gt;In the Repository Name field, give your new repo a name*&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Names should have no spaces, use underscore _ to separate words (ie., special_project)&lt;/p&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;Description is optional&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Default is Public (a Private Repo requires a monthly fee)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Tick Add a README and Choose license (if applicable, if not just go with a README)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;A .gitignore file is recommended if your project has sensitive info associated with it that you&amp;rsquo;d like to keep OUT of GitHub&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Click &amp;ldquo;Create Repository&amp;rdquo;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;cloning-locally&#34;&gt;Cloning Locally&lt;/h2&gt;
+&lt;ol start=&#34;11&#34;&gt;
+&lt;li&gt;Navigate to your newly created repository (still on GitHub)&lt;/li&gt;
+&lt;li&gt;Click on the Green Button &amp;ldquo;Code&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Select the HTTPS (default) option and &lt;strong&gt;copy&lt;/strong&gt; the &lt;a href=&#34;https://github.com/YourName/special_project&#34;&gt;https://github.com/YourName/special_project&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Once you&amp;rsquo;ve copied the &lt;code&gt;https&lt;/code&gt; address, you&amp;rsquo;ll use the &lt;strong&gt;terminal&lt;/strong&gt; in your text editor (i.e., VSCode) to navigate to a folder on your local machine (desktop or laptop) where you&amp;rsquo;ve &lt;em&gt;already&lt;/em&gt; created a folder just for coding projects (i.e., coding_projects)&lt;/p&gt;
+&lt;ol start=&#34;14&#34;&gt;
+&lt;li&gt;Open the text editor (i.e., VS Code), click on Terminal in the menu bar, &amp;ldquo;New Terminal&amp;rdquo;, this will open your terminal to have you start at a level &lt;em&gt;above&lt;/em&gt; the Desktop. Suppose you have a folder &lt;em&gt;on&lt;/em&gt; your Desktop that says &amp;ldquo;coding_projects&amp;rdquo; you&amp;rsquo;ll want to &lt;strong&gt;clone&lt;/strong&gt; your newly-created github repo &lt;em&gt;in&lt;/em&gt; this folder. But you have to navigate to &lt;em&gt;coding_projects&lt;/em&gt; folder first. Here&amp;rsquo;s the command to navigate in Terminal:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;cd Desktop/coding_projects&lt;/code&gt;&lt;/p&gt;
+&lt;ol start=&#34;15&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;cd&lt;/code&gt; means change directory; here, you&amp;rsquo;ll change directory into your Desktop, then into coding_projects folder (two steps) to &lt;strong&gt;clone&lt;/strong&gt; your github repository (special_project)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;(in Terminal), you&amp;rsquo;re now inside the &lt;code&gt;coding_projects&lt;/code&gt; folder, you&amp;rsquo;ll run this command, pasting the &lt;code&gt;https&lt;/code&gt; address that you copied from your GitHub Repo:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;git clone https://github.com/YourName/special_project&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This will initialize your repo locally. From here, try making a minor change to the README file.&lt;/p&gt;
+&lt;ol start=&#34;17&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;Make a small change to your README file on your Text Editor, then save the changes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Back in Terminal, you&amp;rsquo;ll add the changes, then commit, then push back up to GitHub. You&amp;rsquo;ll run these commands:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;git status&lt;/code&gt;   (this should indicate in red that you have new changes)
+&lt;code&gt;git add .&lt;/code&gt;    (you&amp;rsquo;ll add those changes)
+&lt;code&gt;git push&lt;/code&gt;     (you&amp;rsquo;re pushing those changes to your GitHub Repo)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: you might see a prompt to do &lt;code&gt;git push --upstream origin&lt;/code&gt;, which happens if this is the first push you&amp;rsquo;re making to the repo.&lt;/p&gt;
+&lt;p&gt;Now you&amp;rsquo;ve cloned your repo locally, made some changes, then pushed it back up to GitHub. Its important to &lt;strong&gt;note&lt;/strong&gt; that the process described here is to allow you to track changes for your personal coding projects, &lt;strong&gt;NOT&lt;/strong&gt; any code for production or development environment.&lt;/p&gt;
+&lt;p&gt;In those cases, the team may have it&amp;rsquo;s own protocol for version control and you&amp;rsquo;ll want to get familiar and follow those protocols.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Making a Pull Request on a GitHub Repo</title>
       <link>/technical_notes/example_tech/github_make_pr/</link>
       <pubDate>Fri, 16 Jul 2021 00:00:00 +0100</pubDate>
