@@ -27,11 +27,10 @@
   
     
   
-  <meta name="description" content="Creating a Circular Dendrogram with ggraph I tried creating a Circular Dendrogram using reproducible code from R Graph Gallery.
-However, the code on the website has some issues so I submitted a pull request to fix it.">
+  <meta name="description" content="Survey Data Cleaning NOTE: These tips are a distillation of data cleaning techniques I picked up in the course of cleaning data for the first DAO Creators Survey (Gitcoin x BanklessDAO).">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_viz_circular_dendrogram/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/data_cleaning_tip1/">
 
   
 
@@ -218,7 +217,7 @@ However, the code on the website has some issues so I submitted a pull request t
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_viz_circular_dendrogram/">
+  <link rel="canonical" href="/technical_notes/example_tech/data_cleaning_tip1/">
 
   
   
@@ -237,16 +236,15 @@ However, the code on the website has some issues so I submitted a pull request t
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_viz_circular_dendrogram/">
-  <meta property="og:title" content="Circular Dendrogram | Paul Apivat">
-  <meta property="og:description" content="Creating a Circular Dendrogram with ggraph I tried creating a Circular Dendrogram using reproducible code from R Graph Gallery.
-However, the code on the website has some issues so I submitted a pull request to fix it."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/data_cleaning_tip1/">
+  <meta property="og:title" content="Survey Data Cleaning | Paul Apivat">
+  <meta property="og:description" content="Survey Data Cleaning NOTE: These tips are a distillation of data cleaning techniques I picked up in the course of cleaning data for the first DAO Creators Survey (Gitcoin x BanklessDAO)."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-03-03T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-09-08T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-03-03T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-09-08T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +263,7 @@ However, the code on the website has some issues so I submitted a pull request t
 
 
 
-  <title>Circular Dendrogram | Paul Apivat</title>
+  <title>Survey Data Cleaning | Paul Apivat</title>
 
 </head>
 
@@ -605,7 +603,7 @@ However, the code on the website has some issues so I submitted a pull request t
     <a class="docs-toc-link" href="/technical_notes/example_tech/data_cleaning_tip1/">Data Cleaning Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/data_cleaning_tip1/">Data Cleaning</a>
       </li>
       
@@ -618,7 +616,7 @@ However, the code on the website has some issues so I submitted a pull request t
     <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_viz_circular_dendrogram/">Data Viz Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_viz_circular_dendrogram/">Circular Dendrogram</a>
       </li>
       
@@ -797,7 +795,16 @@ However, the code on the website has some issues so I submitted a pull request t
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#creating-a-circular-dendrogram-with-ggraph">Creating a Circular Dendrogram with ggraph</a></li>
+    <li><a href="#survey-data-cleaning">Survey Data Cleaning</a>
+      <ul>
+        <li><a href="#pre-cleaning-steps">Pre-Cleaning Steps</a></li>
+        <li><a href="#baseline-step-convert-text-to-tidy-format">Baseline Step: Convert Text to Tidy Format</a></li>
+        <li><a href="#string-detect">String Detect</a></li>
+        <li><a href="#manually-add-numbers">Manually add numbers</a></li>
+        <li><a href="#delete-specific-rows">Delete specific rows</a></li>
+        <li><a href="#assigning-factors-to-preserve-order-for-visualization">Assigning Factors to Preserve Order for Visualization</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -810,71 +817,111 @@ However, the code on the website has some issues so I submitted a pull request t
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Circular Dendrogram</h1>
+          <h1>Survey Data Cleaning</h1>
 
           <div class="article-style">
-            <h2 id="creating-a-circular-dendrogram-with-ggraph">Creating a Circular Dendrogram with ggraph</h2>
-<p>I tried creating a 
-<a href="https://www.r-graph-gallery.com/339-circular-dendrogram-with-ggraph.html" target="_blank" rel="noopener">Circular Dendrogram</a> using reproducible code from R Graph Gallery.</p>
-<p>However, the code on the website has some issues so I submitted a 
-<a href="https://github.com/holtzy/R-graph-gallery/pull/34" target="_blank" rel="noopener">pull request to fix it</a>.</p>
-<p>The code below, for the most part, match the original on R Graph Gallery, except 4 lines of code that were updated to fix the <code>geom_node_text</code> issue:</p>
-<pre><code class="language-python"># libraries
-library(ggraph)
-library(igraph)
-library(tidyverse)
-library(RColorBrewer) 
-
-# create data.frame
-d1=data.frame(from=&quot;origin&quot;, to=paste(&quot;group&quot;, seq(1,10), sep=&quot;&quot;))
-d2=data.frame(from=rep(d1$to, each=10), to=paste(&quot;subgroup&quot;, seq(1,100), sep=&quot;_&quot;))
-edges=rbind(d1, d2)
-
-# create vertices
-vertices = data.frame(
-    name = unique(c(as.character(edges$from), as.character(edges$to))) , 
-    value = runif(111)
-) 
-
-vertices$group = edges$from[ match( vertices$name, edges$to ) ]
-
-
-vertices$id=NA
-myleaves=which(is.na( match(vertices$name, edges$from) ))
-nleaves=length(myleaves)
-vertices$id[ myleaves ] = seq(1:nleaves)
-
-# change the angle of the geom_node_text
-# angle and hjust must be consistent
-
-vertices$angle = 360 / nleaves * vertices$id + 110  # adjust angle calculation
-
-vertices$hjust&lt;-ifelse( vertices$angle &lt; 291, 1, 0) # adjust hjust
-
-vertices$angle&lt;-ifelse(vertices$angle &lt; 291, vertices$angle+180, vertices$angle) # adjust where 180 is added
-
-# crate mygraph object (dendrogram)
-mygraph &lt;- graph_from_data_frame( edges, vertices=vertices )
-
-# plot the dendrogram
-ggraph(mygraph, layout = 'dendrogram', circular = TRUE) + 
-    geom_edge_diagonal(colour=&quot;grey&quot;) +
-    scale_edge_colour_distiller(palette = &quot;RdPu&quot;) +
-    geom_node_text(aes(x = x*1.15, y=y*1.15, filter = leaf, label=name, angle = angle, hjust=hjust, colour=group), size=2.7, alpha=1) +
-    geom_node_point(aes(filter = leaf, x = x*1.07, y=y*1.07, colour=group, size=value, alpha=0.2)) +
-    scale_colour_manual(values= rep( brewer.pal(9,&quot;Paired&quot;) , 30)) +
-    scale_size_continuous( range = c(0.1,10) ) +
-    theme_void() +
-    theme(
-        legend.position=&quot;none&quot;,
-        plot.margin=unit(c(0,0,0,0),&quot;cm&quot;),
-    ) +
-    expand_limits(x = c(-1.3, 1.3), y = c(-1.3, 1.3)) +
-    coord_flip()  # add coord_flip
+            <h2 id="survey-data-cleaning">Survey Data Cleaning</h2>
+<p><strong>NOTE</strong>: These tips are a distillation of data cleaning techniques I picked up in the course of cleaning data for the first DAO Creators Survey (Gitcoin x BanklessDAO).</p>
+<p>The DAO Creators Survey was a two part survey sampling 442 and 256 respondents to approximately 50 survey questions ranging from demographics to web3 tooling, DAO compensation/healthcare and income stability, to name a few.</p>
+<p>The questions ranged from highly structured (i.e., multiple choice, multiple response options and dropdown boxes) to highly unstructured (i.e., qualitative responses).</p>
+<p>I created approximately 50 charts for this report and each chart presented unique data cleaning challenges. However, I will describe a base foundation and areas of overlap so the next project is easier.</p>
+<p>Two articles were used for reference, but because this project optimized for speed, I did <em>not</em> do a full text analysis.</p>
+<ol>
+<li>
+<a href="https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a" target="_blank" rel="noopener">How to Generate Word Clouds in R</a></li>
+<li>
+<a href="https://www.tidytextmining.com/tidytext.html#summary" target="_blank" rel="noopener">Text Mining with R: A Tidy Approach</a></li>
+</ol>
+<h3 id="pre-cleaning-steps">Pre-Cleaning Steps</h3>
+<p>The first move for any survey is to <strong>change column names</strong> into more manageable short codes and then <strong>delete identifying information</strong> to preserve privacy, for example:</p>
+<pre><code>df1 &lt;- df %&gt;%
+    # Rename: shorten column names to be manageable
+    rename(
+       timestamp = &quot;Timestamp&quot;,
+       daos_work_for = &quot;what DAO(s) do you work for? for each DAO, how many hours/month do you work? (feel free to include multiple)&quot;,
+       city = &quot;what city are you based in?&quot;,
+       twitter = &quot;whats your twitter username?&quot;,
+       eth_addr = &quot;whats your ETH address?&quot;,
+       ) %&gt;%
+    # delete identifying information
+    select(-twitter, -eth_addr, -email)
+</code></pre>
+<h3 id="baseline-step-convert-text-to-tidy-format">Baseline Step: Convert Text to Tidy Format</h3>
+<p>This requires the <code>tidytext</code> package and a couple functions. The flow is to use <code>unnest_tokens()</code> to separate a string of words into a vector of individual words. Then follow-up with <code>anti_join()</code> to get rid of <strong>stop words</strong> (a corpus of words is provided with tidytext).</p>
+<p>Then, group and tally, which can be achieved with <code>group_by()</code> and <code>tally(sort = TRUE)</code> or one function <code>count(, sort = TRUE)</code>.</p>
+<pre><code>daos_work_tbl %&gt;%
+    unnest_tokens(word, text) %&gt;%
+    anti_join(stop_words) %&gt;% 
+    view()
 
 </code></pre>
-<p>For more content on data science, R, and Python 
-<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
+<p>If there are too many words, we can <code>filter()</code> and drop NA responses. With <code>dplyr</code> these operations can be chained to <code>ggplot2</code> to visualize the output.</p>
+<pre><code>daos_work_tbl %&gt;%
+    unnest_tokens(word, text) %&gt;%
+    anti_join(stop_words) %&gt;% 
+    count(word, sort = TRUE) %&gt;%
+    filter(n &gt; 3) %&gt;%
+    drop_na() %&gt;%
+</code></pre>
+<h3 id="string-detect">String Detect</h3>
+<p>Sometimes you need to use <code>str_detect()</code> to see how many instances of a string are present in a column. If there is a <em>match</em> of string detected, you want to categorize survey responses. This is structured combining <code>if_else()</code> conditionals with <code>str_detect()</code>.</p>
+<p>This first requires creating an empty column:</p>
+<pre><code># create empty column
+daos_work_long$bin &lt;- NA
+
+# use if_else and str_detect
+daos_work_long$bin &lt;- if_else((str_detect(daos_work_long$word, &quot;cre8&quot;)==TRUE), &quot;cre8rdao&quot;, &quot;NA&quot;)
+daos_work_long$bin &lt;- if_else((str_detect(daos_work_long$word, &quot;mstable&quot;)==TRUE), &quot;mstable&quot;, daos_work_long$bin)
+daos_work_long$bin &lt;- if_else((str_detect(daos_work_long$word, &quot;marrow&quot;)==TRUE), &quot;marrow dao&quot;, daos_work_long$bin)
+daos_work_long$bin &lt;- if_else((str_detect(daos_work_long$word, &quot;badger&quot;)==TRUE), &quot;badger dao&quot;, daos_work_long$bin)
+daos_work_long$bin &lt;- if_else((str_detect(daos_work_long$word, &quot;raid&quot;)==TRUE), &quot;raid guild&quot;, daos_work_long$bin)
+daos_work_long$bin &lt;- if_else((str_detect(daos_work_long$word, &quot;metagame&quot;)==TRUE), &quot;metagame&quot;, daos_work_long$bin)
+</code></pre>
+<h3 id="manually-add-numbers">Manually add numbers</h3>
+<p>Surprisingly, it was not easy to add items from the <strong>same</strong> category:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zebra</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Zebra</td>
+<td>17</td>
+</tr>
+</tbody>
+</table>
+<p>It should be more straight forward to add Zebra. But instead we have to really manually add. For example, here i&rsquo;m manually changing the <code>n</code> for bankless dao to <code>35</code>:</p>
+<pre><code># bankless dao = 35
+daos_work_long2$n[12] &lt;- 35
+
+</code></pre>
+<h3 id="delete-specific-rows">Delete specific rows</h3>
+<p>There are two ways to delete rows. First is to subset (a base R operation):</p>
+<pre><code>daos_work_long3 &lt;- daos_work_long2[-c(4, 6, 13, 14, 15, 19, 24, 28, 31, 42, 46, 51, 52, 53,
+                  61, 63, 67, 68, 69, 70, 78, 81, 87, 95, 100, 103),] %&gt;% 
+                  arrange(desc(n))
+</code></pre>
+<p>The second way is to use <code>slice</code> in <code>dplyr</code>. <code>Slice</code> can be used to select or re-order rows as well:</p>
+<pre><code>usd_earning_tbl3 &lt;- usd_earning_tbl2 %&gt;%
+                    slice(4, 6, 7, 1:3, 5, 8:9)
+</code></pre>
+<h3 id="assigning-factors-to-preserve-order-for-visualization">Assigning Factors to Preserve Order for Visualization</h3>
+<p>After using <code>slice</code> to re-order rows, we can use <code>mutate()</code> and <code>as_factor()</code> to create factors for visualization. This preserves the order we want (e.g., age range on the x-axis):</p>
+<pre><code># reorder rows, save as new df
+usd_earning_tbl3 &lt;- usd_earning_tbl2 %&gt;%
+    slice(4, 6, 7, 1:3, 5, 8:9)
+
+# need to sort by factors before visualize
+usd_earning_tbl3 %&gt;% 
+    mutate(text_factor = as_factor(text))
+</code></pre>
 
           </div>
 
@@ -891,14 +938,14 @@ ggraph(mygraph, layout = 'dendrogram', circular = TRUE) +
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_open_api/" rel="next">Consume Open API with R</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip6/" rel="prev">Use Anti_Joins to Find Non-Matching Rows</a>
+    <a href="/technical_notes/example_tech/rstats_open_api/" rel="prev">Consume Open API with R</a>
   </div>
   
 </div>
@@ -908,7 +955,7 @@ ggraph(mygraph, layout = 'dendrogram', circular = TRUE) +
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Mar 3, 2021</p>
+          <p>Last updated on Sep 8, 2021</p>
 
           
 
@@ -920,7 +967,7 @@ ggraph(mygraph, layout = 'dendrogram', circular = TRUE) +
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_viz_circular_dendrogram.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/data_cleaning_tip1.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

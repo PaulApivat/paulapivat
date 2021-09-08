@@ -783,6 +783,116 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Survey Data Cleaning</title>
+      <link>/technical_notes/example_tech/data_cleaning_tip1/</link>
+      <pubDate>Wed, 08 Sep 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/data_cleaning_tip1/</guid>
+      <description>&lt;h2 id=&#34;survey-data-cleaning&#34;&gt;Survey Data Cleaning&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: These tips are a distillation of data cleaning techniques I picked up in the course of cleaning data for the first DAO Creators Survey (Gitcoin x BanklessDAO).&lt;/p&gt;
+&lt;p&gt;The DAO Creators Survey was a two part survey sampling 442 and 256 respondents to approximately 50 survey questions ranging from demographics to web3 tooling, DAO compensation/healthcare and income stability, to name a few.&lt;/p&gt;
+&lt;p&gt;The questions ranged from highly structured (i.e., multiple choice, multiple response options and dropdown boxes) to highly unstructured (i.e., qualitative responses).&lt;/p&gt;
+&lt;p&gt;I created approximately 50 charts for this report and each chart presented unique data cleaning challenges. However, I will describe a base foundation and areas of overlap so the next project is easier.&lt;/p&gt;
+&lt;p&gt;Two articles were used for reference, but because this project optimized for speed, I did &lt;em&gt;not&lt;/em&gt; do a full text analysis.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;How to Generate Word Clouds in R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href=&#34;https://www.tidytextmining.com/tidytext.html#summary&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Text Mining with R: A Tidy Approach&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;pre-cleaning-steps&#34;&gt;Pre-Cleaning Steps&lt;/h3&gt;
+&lt;p&gt;The first move for any survey is to &lt;strong&gt;change column names&lt;/strong&gt; into more manageable short codes and then &lt;strong&gt;delete identifying information&lt;/strong&gt; to preserve privacy, for example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;df1 &amp;lt;- df %&amp;gt;%
+    # Rename: shorten column names to be manageable
+    rename(
+       timestamp = &amp;quot;Timestamp&amp;quot;,
+       daos_work_for = &amp;quot;what DAO(s) do you work for? for each DAO, how many hours/month do you work? (feel free to include multiple)&amp;quot;,
+       city = &amp;quot;what city are you based in?&amp;quot;,
+       twitter = &amp;quot;whats your twitter username?&amp;quot;,
+       eth_addr = &amp;quot;whats your ETH address?&amp;quot;,
+       ) %&amp;gt;%
+    # delete identifying information
+    select(-twitter, -eth_addr, -email)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;baseline-step-convert-text-to-tidy-format&#34;&gt;Baseline Step: Convert Text to Tidy Format&lt;/h3&gt;
+&lt;p&gt;This requires the &lt;code&gt;tidytext&lt;/code&gt; package and a couple functions. The flow is to use &lt;code&gt;unnest_tokens()&lt;/code&gt; to separate a string of words into a vector of individual words. Then follow-up with &lt;code&gt;anti_join()&lt;/code&gt; to get rid of &lt;strong&gt;stop words&lt;/strong&gt; (a corpus of words is provided with tidytext).&lt;/p&gt;
+&lt;p&gt;Then, group and tally, which can be achieved with &lt;code&gt;group_by()&lt;/code&gt; and &lt;code&gt;tally(sort = TRUE)&lt;/code&gt; or one function &lt;code&gt;count(, sort = TRUE)&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;daos_work_tbl %&amp;gt;%
+    unnest_tokens(word, text) %&amp;gt;%
+    anti_join(stop_words) %&amp;gt;% 
+    view()
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If there are too many words, we can &lt;code&gt;filter()&lt;/code&gt; and drop NA responses. With &lt;code&gt;dplyr&lt;/code&gt; these operations can be chained to &lt;code&gt;ggplot2&lt;/code&gt; to visualize the output.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;daos_work_tbl %&amp;gt;%
+    unnest_tokens(word, text) %&amp;gt;%
+    anti_join(stop_words) %&amp;gt;% 
+    count(word, sort = TRUE) %&amp;gt;%
+    filter(n &amp;gt; 3) %&amp;gt;%
+    drop_na() %&amp;gt;%
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;string-detect&#34;&gt;String Detect&lt;/h3&gt;
+&lt;p&gt;Sometimes you need to use &lt;code&gt;str_detect()&lt;/code&gt; to see how many instances of a string are present in a column. If there is a &lt;em&gt;match&lt;/em&gt; of string detected, you want to categorize survey responses. This is structured combining &lt;code&gt;if_else()&lt;/code&gt; conditionals with &lt;code&gt;str_detect()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;This first requires creating an empty column:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# create empty column
+daos_work_long$bin &amp;lt;- NA
+
+# use if_else and str_detect
+daos_work_long$bin &amp;lt;- if_else((str_detect(daos_work_long$word, &amp;quot;cre8&amp;quot;)==TRUE), &amp;quot;cre8rdao&amp;quot;, &amp;quot;NA&amp;quot;)
+daos_work_long$bin &amp;lt;- if_else((str_detect(daos_work_long$word, &amp;quot;mstable&amp;quot;)==TRUE), &amp;quot;mstable&amp;quot;, daos_work_long$bin)
+daos_work_long$bin &amp;lt;- if_else((str_detect(daos_work_long$word, &amp;quot;marrow&amp;quot;)==TRUE), &amp;quot;marrow dao&amp;quot;, daos_work_long$bin)
+daos_work_long$bin &amp;lt;- if_else((str_detect(daos_work_long$word, &amp;quot;badger&amp;quot;)==TRUE), &amp;quot;badger dao&amp;quot;, daos_work_long$bin)
+daos_work_long$bin &amp;lt;- if_else((str_detect(daos_work_long$word, &amp;quot;raid&amp;quot;)==TRUE), &amp;quot;raid guild&amp;quot;, daos_work_long$bin)
+daos_work_long$bin &amp;lt;- if_else((str_detect(daos_work_long$word, &amp;quot;metagame&amp;quot;)==TRUE), &amp;quot;metagame&amp;quot;, daos_work_long$bin)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;manually-add-numbers&#34;&gt;Manually add numbers&lt;/h3&gt;
+&lt;p&gt;Surprisingly, it was not easy to add items from the &lt;strong&gt;same&lt;/strong&gt; category:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th&gt;Number&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Zebra&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Zebra&lt;/td&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;It should be more straight forward to add Zebra. But instead we have to really manually add. For example, here i&amp;rsquo;m manually changing the &lt;code&gt;n&lt;/code&gt; for bankless dao to &lt;code&gt;35&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# bankless dao = 35
+daos_work_long2$n[12] &amp;lt;- 35
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;delete-specific-rows&#34;&gt;Delete specific rows&lt;/h3&gt;
+&lt;p&gt;There are two ways to delete rows. First is to subset (a base R operation):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;daos_work_long3 &amp;lt;- daos_work_long2[-c(4, 6, 13, 14, 15, 19, 24, 28, 31, 42, 46, 51, 52, 53,
+                  61, 63, 67, 68, 69, 70, 78, 81, 87, 95, 100, 103),] %&amp;gt;% 
+                  arrange(desc(n))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The second way is to use &lt;code&gt;slice&lt;/code&gt; in &lt;code&gt;dplyr&lt;/code&gt;. &lt;code&gt;Slice&lt;/code&gt; can be used to select or re-order rows as well:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;usd_earning_tbl3 &amp;lt;- usd_earning_tbl2 %&amp;gt;%
+                    slice(4, 6, 7, 1:3, 5, 8:9)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;assigning-factors-to-preserve-order-for-visualization&#34;&gt;Assigning Factors to Preserve Order for Visualization&lt;/h3&gt;
+&lt;p&gt;After using &lt;code&gt;slice&lt;/code&gt; to re-order rows, we can use &lt;code&gt;mutate()&lt;/code&gt; and &lt;code&gt;as_factor()&lt;/code&gt; to create factors for visualization. This preserves the order we want (e.g., age range on the x-axis):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# reorder rows, save as new df
+usd_earning_tbl3 &amp;lt;- usd_earning_tbl2 %&amp;gt;%
+    slice(4, 6, 7, 1:3, 5, 8:9)
+
+# need to sort by factors before visualize
+usd_earning_tbl3 %&amp;gt;% 
+    mutate(text_factor = as_factor(text))
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Consume Open API with R</title>
       <link>/technical_notes/example_tech/rstats_open_api/</link>
       <pubDate>Fri, 16 Apr 2021 00:00:00 +0100</pubDate>
