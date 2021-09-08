@@ -176,3 +176,7 @@ task_tabl2 <- task_tbl %>%
     count(phrase, sort = TRUE) %>%
     view()
 ```
+
+### Github Repo
+
+See data cleaning scripts [here](https://github.com/PaulApivat/banklessDAO/tree/main/dao_survey_gitcoin)

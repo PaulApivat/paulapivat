@@ -918,6 +918,9 @@ usd_earning_tbl3 %&amp;gt;%
     count(phrase, sort = TRUE) %&amp;gt;%
     view()
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;github-repo&#34;&gt;Github Repo&lt;/h3&gt;
+&lt;p&gt;See data cleaning scripts 
+&lt;a href=&#34;https://github.com/PaulApivat/banklessDAO/tree/main/dao_survey_gitcoin&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
