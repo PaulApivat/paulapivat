@@ -88,6 +88,35 @@ daos_work_long$bin <- if_else((str_detect(daos_work_long$word, "raid")==TRUE), "
 daos_work_long$bin <- if_else((str_detect(daos_work_long$word, "metagame")==TRUE), "metagame", daos_work_long$bin)
 ```
 
+### String Match
+
+In some situations, you may want to see if a string *contains* a specific word. The function to use here is `str_match()`. Here, we're seeing if a string contains either `yes` or `yeah` or `no` or `not`:
+
+```
+income_stability_tbl2 <- income_stability_tbl %>%
+    mutate(phrase = strsplit(as.character(text), ",")) %>%
+    unnest(phrase) %>%
+    count(phrase, sort = TRUE) %>%
+    mutate(
+        phrase_no = str_match(phrase, "[Nn]o|[Nn]ot")[,1],
+        phrase_no = str_to_lower(phrase_no)
+    ) %>%
+    mutate(
+        phrase_yes = str_match(phrase, "[Yy]es|[Yy]eah")[,1],
+        phrase_yes = str_to_lower(phrase_yes)
+    )
+
+```
+
+### Handling each survey question (column) separately
+
+This requires splitting each column off. You could turn it into a `vector` first, then `tibble` or just subset a dataframe:
+
+```
+comp_denom_v <- as.vector(df1$comp_denom)
+comp_denom_tbl <- tibble(line = 1:445, text = comp_denom_v)
+```
+
 ### Manually add numbers 
 
 Surprisingly, it was not easy to add items from the **same** category:
@@ -134,4 +163,16 @@ usd_earning_tbl3 <- usd_earning_tbl2 %>%
 # need to sort by factors before visualize
 usd_earning_tbl3 %>% 
     mutate(text_factor = as_factor(text))
+```
+
+### Separate String at Comma
+
+Sometimes, simply turning a string into `tidytext` doesn't work because meaning phrases of two or three words *inadvertently* get split, so we may need to split by comma with `mutate()` and `strsplit()`, in lieu of using `unnest_tokens()`, then group and tally:
+
+```
+task_tabl2 <- task_tbl %>%
+    mutate(phrase = strsplit(as.character(text), ",")) %>%
+    unnest(phrase) %>%
+    count(phrase, sort = TRUE) %>%
+    view()
 ```

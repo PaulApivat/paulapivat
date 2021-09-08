@@ -800,9 +800,12 @@
         <li><a href="#pre-cleaning-steps">Pre-Cleaning Steps</a></li>
         <li><a href="#baseline-step-convert-text-to-tidy-format">Baseline Step: Convert Text to Tidy Format</a></li>
         <li><a href="#string-detect">String Detect</a></li>
+        <li><a href="#string-match">String Match</a></li>
+        <li><a href="#handling-each-survey-question-column-separately">Handling each survey question (column) separately</a></li>
         <li><a href="#manually-add-numbers">Manually add numbers</a></li>
         <li><a href="#delete-specific-rows">Delete specific rows</a></li>
         <li><a href="#assigning-factors-to-preserve-order-for-visualization">Assigning Factors to Preserve Order for Visualization</a></li>
+        <li><a href="#separate-string-at-comma">Separate String at Comma</a></li>
       </ul>
     </li>
   </ul>
@@ -877,6 +880,27 @@ daos_work_long$bin &lt;- if_else((str_detect(daos_work_long$word, &quot;badger&q
 daos_work_long$bin &lt;- if_else((str_detect(daos_work_long$word, &quot;raid&quot;)==TRUE), &quot;raid guild&quot;, daos_work_long$bin)
 daos_work_long$bin &lt;- if_else((str_detect(daos_work_long$word, &quot;metagame&quot;)==TRUE), &quot;metagame&quot;, daos_work_long$bin)
 </code></pre>
+<h3 id="string-match">String Match</h3>
+<p>In some situations, you may want to see if a string <em>contains</em> a specific word. The function to use here is <code>str_match()</code>. Here, we&rsquo;re seeing if a string contains either <code>yes</code> or <code>yeah</code> or <code>no</code> or <code>not</code>:</p>
+<pre><code>income_stability_tbl2 &lt;- income_stability_tbl %&gt;%
+    mutate(phrase = strsplit(as.character(text), &quot;,&quot;)) %&gt;%
+    unnest(phrase) %&gt;%
+    count(phrase, sort = TRUE) %&gt;%
+    mutate(
+        phrase_no = str_match(phrase, &quot;[Nn]o|[Nn]ot&quot;)[,1],
+        phrase_no = str_to_lower(phrase_no)
+    ) %&gt;%
+    mutate(
+        phrase_yes = str_match(phrase, &quot;[Yy]es|[Yy]eah&quot;)[,1],
+        phrase_yes = str_to_lower(phrase_yes)
+    )
+
+</code></pre>
+<h3 id="handling-each-survey-question-column-separately">Handling each survey question (column) separately</h3>
+<p>This requires splitting each column off. You could turn it into a <code>vector</code> first, then <code>tibble</code> or just subset a dataframe:</p>
+<pre><code>comp_denom_v &lt;- as.vector(df1$comp_denom)
+comp_denom_tbl &lt;- tibble(line = 1:445, text = comp_denom_v)
+</code></pre>
 <h3 id="manually-add-numbers">Manually add numbers</h3>
 <p>Surprisingly, it was not easy to add items from the <strong>same</strong> category:</p>
 <table>
@@ -921,6 +945,14 @@ usd_earning_tbl3 &lt;- usd_earning_tbl2 %&gt;%
 # need to sort by factors before visualize
 usd_earning_tbl3 %&gt;% 
     mutate(text_factor = as_factor(text))
+</code></pre>
+<h3 id="separate-string-at-comma">Separate String at Comma</h3>
+<p>Sometimes, simply turning a string into <code>tidytext</code> doesn&rsquo;t work because meaning phrases of two or three words <em>inadvertently</em> get split, so we may need to split by comma with <code>mutate()</code> and <code>strsplit()</code>, in lieu of using <code>unnest_tokens()</code>, then group and tally:</p>
+<pre><code>task_tabl2 &lt;- task_tbl %&gt;%
+    mutate(phrase = strsplit(as.character(text), &quot;,&quot;)) %&gt;%
+    unnest(phrase) %&gt;%
+    count(phrase, sort = TRUE) %&gt;%
+    view()
 </code></pre>
 
           </div>
