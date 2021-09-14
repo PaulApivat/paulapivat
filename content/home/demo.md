@@ -50,7 +50,8 @@ subtitle = ""
  css_class = ""
 +++
 
-Welcome to my page where I document and explore web3 and our decentralized future through words, data and code. 
+<!-- Add text here (if needed) -->
+
 
 
 
