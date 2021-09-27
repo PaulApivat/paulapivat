@@ -43,7 +43,7 @@ Enabling capital, coordination and culture on Web3 through on- and off-chain dat
 
 **Current**
 
-Contributor at [Bankless DAO](https://www.bankless.community/) ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)). We're creating [infrastructure](https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828) to enable data insights for Guilds and Projects at Bankless DAO. 
+Contributor at [Bankless DAO](https://www.bankless.community/) ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)). We're creating infrastructure with [DAO Dash](https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828) to enable data insights for Guilds and Projects at Bankless DAO. I'm also part of the [Bounty Board](https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90) team working to coordinate talent and capital.
 
 I work primarily in the Analytics and Developer's Guild to support other guilds including Education, Treasury, Marketing, Writing and Operations (see our [Notion](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f)). 
 
@@ -59,7 +59,7 @@ I work primarily in the Analytics and Developer's Guild to support other guilds 
 - [Bankless DAO Tipping Economy](https://dune.xyz/paulapivat/Bankless-DAO-Tipping-Economy)
 - [ForeFront Tipping Economy](https://dune.xyz/paulapivat/Fore-Front-Tipping-Economy)
 - [Learn Foundational Ethereum Topics with SQL](https://ethereum.org/en/developers/tutorials/learn-foundational-ethereum-topics-with-sql/)
-
+- [Grants Committee Dashboard](https://dune.xyz/paulapivat/Grants-Committee-Dashboard)
 
 **Off-Chain Data**
 
@@ -68,6 +68,7 @@ I work primarily in the Analytics and Developer's Guild to support other guilds 
 - [Exploring Discord Data: Bankless DAO Engagement](https://forum.bankless.community/t/exploring-discord-data-bankless-dao-engagement/1100)
 - [Bankless DAO Onboard Survey Pt 1](https://forum.bankless.community/t/onboard-survey-exploratory-analysis/1048)
 - [Bankless DAO Onboard Survey Pt 2](https://forum.bankless.community/t/onboard-survey-exploratory-analysis-part-2/1067)
+
 
 
 
