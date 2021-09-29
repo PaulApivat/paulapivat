@@ -799,6 +799,7 @@
     <li><a href="#public-repo">Public Repo</a></li>
     <li><a href="#private-repo">Private Repo</a></li>
     <li><a href="#production-vs-development">Production vs Development</a></li>
+    <li><a href="#when-feature-branch-goes-out-of-sync-with-development">When Feature branch goes out of sync with Development</a></li>
     <li><a href="#vim">VIM</a></li>
   </ul>
 </nav>
@@ -909,12 +910,38 @@
 <p>Once you go back to github, if you see <code>compare and pull request</code>, make sure it is being merged into <code>develop</code> and <strong>not</strong> <code>main</code>.</p>
 </li>
 </ol>
+<h2 id="when-feature-branch-goes-out-of-sync-with-development">When Feature branch goes out of sync with Development</h2>
+<p>Sometimes you&rsquo;ve already pushed a pull request, but the development branch goes ahead of your proposed changes. Here&rsquo;s how to handle:</p>
+<ol>
+<li>Switch to a specific feature branch (no need to go back to develop): <code>git checkout branch_name</code></li>
+<li>Run <code>git pull origin develop</code></li>
+<li>Then <code>git push origin</code></li>
+</ol>
+<p>3a. If there&rsquo;s an <code>Index Error</code>, run</p>
+<ul>
+<li><code>git reset --hard</code> *</li>
+<li><code>git clean -df</code></li>
+</ul>
+<ul>
+<li><code>git reset</code> is to take the current branch and reset it to point somewhere else, also bringing the index and working tree along. Here&rsquo;s a more visual explanation (
+<a href="https://stackoverflow.com/questions/2530060/in-plain-english-what-does-git-reset-d" target="_blank" rel="noopener">source</a>)</li>
+</ul>
+<p>If your main branch is <code>C</code> and you want to point your current branch somewhere else:</p>
+<pre><code>- A - B - C (HEAD, main branch)
+</code></pre>
+<p>and you want to point to <code>B</code>, not <code>C</code>, then you use <code>git reset B</code> to move it there:</p>
+<pre><code>- A - B (HEAD, main branch)  # - C is still here, but there's no branch pointing to it anymore
+</code></pre>
 <h2 id="vim">VIM</h2>
 <p>If for whatever reason you find yourself on VIM, you can escape by:</p>
 <ol>
 <li>Press <code>esc</code> (escape)</li>
 <li>Press <code>:</code> (colon)</li>
 <li>Press <code>wq</code> (write and quit)</li>
+</ol>
+<p>Or one-line command to get out of VIM</p>
+<ol start="4">
+<li>Press <code>:wq!</code> (colon, write and quit)</li>
 </ol>
 
           </div>

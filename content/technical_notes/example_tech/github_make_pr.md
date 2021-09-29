@@ -83,6 +83,30 @@ Ongoing projects with several contributors will generally separate the **main** 
 
 6. Once you go back to github, if you see `compare and pull request`, make sure it is being merged into `develop` and **not** `main`. 
 
+## When Feature branch goes out of sync with Development
+
+Sometimes you've already pushed a pull request, but the development branch goes ahead of your proposed changes. Here's how to handle:
+
+1. Switch to a specific feature branch (no need to go back to develop): `git checkout branch_name`
+2. Run `git pull origin develop`
+3. Then `git push origin`
+
+3a. If there's an `Index Error`, run
+- `git reset --hard` *
+- `git clean -df`
+
+* `git reset` is to take the current branch and reset it to point somewhere else, also bringing the index and working tree along. Here's a more visual explanation ([source](https://stackoverflow.com/questions/2530060/in-plain-english-what-does-git-reset-d))
+
+If your main branch is `C` and you want to point your current branch somewhere else:
+```
+- A - B - C (HEAD, main branch)
+```
+and you want to point to `B`, not `C`, then you use `git reset B` to move it there:
+
+```
+- A - B (HEAD, main branch)  # - C is still here, but there's no branch pointing to it anymore
+```
+
 ## VIM
 
 If for whatever reason you find yourself on VIM, you can escape by:
@@ -90,5 +114,11 @@ If for whatever reason you find yourself on VIM, you can escape by:
 1. Press `esc` (escape)
 2. Press `:` (colon)
 3. Press `wq` (write and quit)
+
+Or one-line command to get out of VIM
+
+4. Press `:wq!` (colon, write and quit)
+
+
 
 

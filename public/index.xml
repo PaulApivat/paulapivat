@@ -183,12 +183,38 @@
 &lt;p&gt;Once you go back to github, if you see &lt;code&gt;compare and pull request&lt;/code&gt;, make sure it is being merged into &lt;code&gt;develop&lt;/code&gt; and &lt;strong&gt;not&lt;/strong&gt; &lt;code&gt;main&lt;/code&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2 id=&#34;when-feature-branch-goes-out-of-sync-with-development&#34;&gt;When Feature branch goes out of sync with Development&lt;/h2&gt;
+&lt;p&gt;Sometimes you&amp;rsquo;ve already pushed a pull request, but the development branch goes ahead of your proposed changes. Here&amp;rsquo;s how to handle:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Switch to a specific feature branch (no need to go back to develop): &lt;code&gt;git checkout branch_name&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;git pull origin develop&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Then &lt;code&gt;git push origin&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;3a. If there&amp;rsquo;s an &lt;code&gt;Index Error&lt;/code&gt;, run&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git reset --hard&lt;/code&gt; *&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git clean -df&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git reset&lt;/code&gt; is to take the current branch and reset it to point somewhere else, also bringing the index and working tree along. Here&amp;rsquo;s a more visual explanation (
+&lt;a href=&#34;https://stackoverflow.com/questions/2530060/in-plain-english-what-does-git-reset-d&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If your main branch is &lt;code&gt;C&lt;/code&gt; and you want to point your current branch somewhere else:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- A - B - C (HEAD, main branch)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and you want to point to &lt;code&gt;B&lt;/code&gt;, not &lt;code&gt;C&lt;/code&gt;, then you use &lt;code&gt;git reset B&lt;/code&gt; to move it there:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- A - B (HEAD, main branch)  # - C is still here, but there&#39;s no branch pointing to it anymore
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;vim&#34;&gt;VIM&lt;/h2&gt;
 &lt;p&gt;If for whatever reason you find yourself on VIM, you can escape by:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Press &lt;code&gt;esc&lt;/code&gt; (escape)&lt;/li&gt;
 &lt;li&gt;Press &lt;code&gt;:&lt;/code&gt; (colon)&lt;/li&gt;
 &lt;li&gt;Press &lt;code&gt;wq&lt;/code&gt; (write and quit)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Or one-line command to get out of VIM&lt;/p&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Press &lt;code&gt;:wq!&lt;/code&gt; (colon, write and quit)&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
