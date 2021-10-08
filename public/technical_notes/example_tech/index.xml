@@ -863,6 +863,40 @@ msg_avg %&amp;gt;%
     </item>
     
     <item>
+      <title>Manually Ordering Factors</title>
+      <link>/technical_notes/example_tech/rstats_tip_manually_order_factors/</link>
+      <pubDate>Fri, 08 Oct 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_tip_manually_order_factors/</guid>
+      <description>&lt;h2 id=&#34;manually-ordering-factors&#34;&gt;Manually Ordering Factors&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: Sometimes you have want to display bar charts in a specific order, but the numbers get re-arranged or &lt;code&gt;group_by&lt;/code&gt; and &lt;code&gt;sort&lt;/code&gt; orders by value, but you have a specific order in mind.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: In this example, I have &amp;ldquo;Proposals&amp;rdquo; numbered &amp;ldquo;1-10&amp;rdquo;. I want to display them in order, but number 10 doesn&amp;rsquo;t go after 9, but instead goes 1, 10, 2, 3, and so on&amp;hellip;I need to &lt;strong&gt;manually set the factor order&lt;/strong&gt; so the bar chart displays exactly how I&amp;rsquo;d like.&lt;/p&gt;
+&lt;p&gt;I used &lt;code&gt;fct_relevel&lt;/code&gt; (factor re-level), choose a specific column, and the second parameter is a vector of values with the factors manually arranged according to how I&amp;rsquo;d like. Then I set it to that specific column so R knows the desired factor level.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# manually arranging factors - num
+# note: move &amp;quot;proposal 10&amp;quot; to the end
+# them apply newly arranged factor levels to column of interest
+new$num &amp;lt;- fct_relevel(new$num, c(&amp;quot;proposal 1&amp;quot;, &amp;quot;proposal 2&amp;quot;, &amp;quot;proposal 3&amp;quot;, &amp;quot;proposal 4&amp;quot;, &amp;quot;proposal 5&amp;quot;, 
+                       &amp;quot;proposal 6&amp;quot;, &amp;quot;proposal 7&amp;quot;, &amp;quot;proposal 8&amp;quot;, &amp;quot;proposal 9&amp;quot;, &amp;quot;proposal 10&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I can also achieve this for string values that don&amp;rsquo;t have an obvious order. Here i&amp;rsquo;m ordering the proposals by a known sequence (but not obvious to the audience).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# manually arrange factors - name
+# then apply newly arranged factor levels to column of interest
+new$name &amp;lt;- fct_relevel(new$name, c(&amp;quot;Approve the Bankless DAO Genesis Proposal&amp;quot;,
+                        &amp;quot;What charity should CMS Holdings donate 100k towards&amp;quot;,
+                        &amp;quot;Badge Distribution for Second Airdrop&amp;quot;,
+                        &amp;quot;Reward Season 0 Active Members&amp;quot;,
+                        &amp;quot;Bankless DAO Season 1&amp;quot;,
+                        &amp;quot;BanklessDAO Season 1 Grants Committee Ratification&amp;quot;,
+                        &amp;quot;BED Index Logo Contest&amp;quot;,
+                        &amp;quot;Request for funds for Notion&#39;s ongoing subscription&amp;quot;,
+                        &amp;quot;Transfer ownership of the treasury multisig wallet from the genesis team to the DAO&amp;quot;,
+                        &amp;quot;Bankless DAO Season 2&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Survey Data Cleaning</title>
       <link>/technical_notes/example_tech/data_cleaning_tip1/</link>
       <pubDate>Wed, 08 Sep 2021 00:00:00 +0100</pubDate>

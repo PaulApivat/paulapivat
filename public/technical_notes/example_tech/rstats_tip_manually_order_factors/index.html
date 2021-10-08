@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Creating mock data in Python with the Faker library If you need to simulate mock data, the Faker library is a great resource. Shout out to @joke2k for maintaining this project.">
+  <meta name="description" content="Manually Ordering Factors Situation: Sometimes you have want to display bar charts in a specific order, but the numbers get re-arranged or group_by and sort orders by value, but you have a specific order in mind.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_faker/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip_manually_order_factors/">
 
   
 
@@ -217,7 +217,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/python_faker/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip_manually_order_factors/">
 
   
   
@@ -236,15 +236,15 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/python_faker/">
-  <meta property="og:title" content="Using Faker to simulate fake data with Python | Paul Apivat">
-  <meta property="og:description" content="Creating mock data in Python with the Faker library If you need to simulate mock data, the Faker library is a great resource. Shout out to @joke2k for maintaining this project."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip_manually_order_factors/">
+  <meta property="og:title" content="Manually Ordering Factors | Paul Apivat">
+  <meta property="og:description" content="Manually Ordering Factors Situation: Sometimes you have want to display bar charts in a specific order, but the numbers get re-arranged or group_by and sort orders by value, but you have a specific order in mind."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-07-11T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-10-08T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-07-11T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-10-08T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +263,7 @@
 
 
 
-  <title>Using Faker to simulate fake data with Python | Paul Apivat</title>
+  <title>Manually Ordering Factors | Paul Apivat</title>
 
 </head>
 
@@ -716,7 +716,7 @@
         <a href="/technical_notes/example_tech/python_dotenv/">dotenv in Python</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/python_faker/">Faker in Python</a>
       </li>
       
@@ -757,7 +757,7 @@
         <a href="/technical_notes/example_tech/rstats_dates/">Format Dates</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/rstats_tip_manually_order_factors/">Manually Order Factors</a>
       </li>
       
@@ -803,7 +803,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#creating-mock-data-in-python-with-the-faker-library">Creating mock data in Python with the Faker library</a></li>
+    <li><a href="#manually-ordering-factors">Manually Ordering Factors</a></li>
   </ul>
 </nav>
 
@@ -816,195 +816,35 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Using Faker to simulate fake data with Python</h1>
+          <h1>Manually Ordering Factors</h1>
 
           <div class="article-style">
-            <h2 id="creating-mock-data-in-python-with-the-faker-library">Creating mock data in Python with the Faker library</h2>
-<p>If you need to simulate mock data, the <code>Faker</code> 
-<a href="https://github.com/joke2k/faker" target="_blank" rel="noopener">library</a> is a great resource. Shout out to 
-<a href="https://twitter.com/joke2k" target="_blank" rel="noopener">@joke2k</a> for maintaining this project.</p>
-<p>The full code for a recent project is below, with breakdown of each section to follow. Project context: Utilizing MongoDB as our NoSQL database. I&rsquo;ve created a basic document (json) and now need to replicate multiple documents to simulate data once it&rsquo;s populated with data from the frontend (or a Bot for this project specifically).</p>
-<pre><code>from json import dumps
-from faker import Faker
-import collections
-
-database = []
-filename = 'testing_bounty'
-length = 5
-fake = Faker()
-
-# fake.word(ext_word_list=)
-random_currencies = ['BANK', 'ETH', 'BTC']
-
-random_guilds = [&quot;Marketing Guild&quot;, &quot;Treasury Guild&quot;,
-                 &quot;Developer's Guild&quot;, &quot;Analytics Guild&quot;, &quot;Writer's Guild&quot;]
-
-discord_handle = [&quot;@bob#8888&quot;, &quot;@alice#1234&quot;,
-                  &quot;@carol#5555&quot;, &quot;@delta#2222&quot;, &quot;@lambda#3333&quot;]
-
-bounty_status = ['Open', 'Draft', 'In-Progress',
-                 'In-Review', 'Completed', 'Deleted']
-
-skills = [&quot;writing&quot;,
-          &quot;design&quot;,
-          &quot;software development&quot;,
-          &quot;strategic planning&quot;,
-          &quot;data analysis&quot;,
-          &quot;grant writing&quot;,
-          &quot;proposal development&quot;,
-          &quot;team building&quot;,
-          &quot;marketing&quot;]
-
-for x in range(length):
-    database.append(collections.OrderedDict([
-        ('season', fake.random_int(0, 10)),
-        ('bounty', fake.sentence()),
-        ('bountyDescription', fake.sentence()),
-        ('doneCriteria', fake.sentence()),
-        ('bountyReward', collections.OrderedDict([
-            ('currency', fake.word(ext_word_list=random_currencies)),
-            ('amount', fake.random_int(0, 50000))
-        ])),
-        # list of dictionaries
-        ('applicableGuilds', [collections.OrderedDict(
-            [('guildName', fake.word(ext_word_list=random_guilds))]), collections.OrderedDict([('guildName', fake.word(ext_word_list=random_guilds))])]),
-        ('bountyCreatedBy', collections.OrderedDict([
-            ('isDaoMember', fake.pybool()),
-            ('guildName', fake.word(ext_word_list=random_guilds)),
-            ('discordHandle', fake.word(ext_word_list=discord_handle)),
-            ('publicAddress', &quot;0x2d94aa3e47d9d5024503ca8&quot; + fake.pystr())
-        ])),
-        ('bountyCreatedAt', fake.date_between(start_date='today', end_date='+3m')),
-        ('bountyDueAt', fake.date_between(start_date='today', end_date='+1y')),
-        ('bountyActivatedAt', fake.date_between(
-            start_date='today', end_date='+6m')),
-        ('bountyClaimedBy', collections.OrderedDict([
-            ('guildName', fake.word(ext_word_list=random_guilds)),
-            ('discordHandle', fake.word(ext_word_list=discord_handle)),
-            ('publicAddress', &quot;0x2d94aa3e47d9d5024503ca8&quot; + fake.pystr())
-        ])),
-        ('bountyClaimedAt', fake.date_between(start_date='today', end_date='+4m')),
-        ('bountySubmittedBy', fake.word(ext_word_list=random_guilds)),
-        ('bountySubmittedAt', fake.date_between(
-            start_date='today', end_date='+11m')),
-        ('bountySubmissionLink', &quot;www.&quot; + fake.safe_domain_name()),
-        # list of dictionaries
-        ('bountyStatus', [collections.OrderedDict([
-            ('status', fake.word(ext_word_list=bounty_status)),
-            ('bountyStatusTime', fake.date_between(
-                start_date='today', end_date='+1y'))
-        ])]),
-        ('bountyHash', fake.md5(raw_output=False)),
-        # list of words
-        ('skillsRequired', [fake.word(ext_word_list=skills),
-                            fake.word(ext_word_list=skills)])
-    ]))
-
-with open('%s.json' % filename, 'w') as output:
-    # turns date_between into string, circumvent json serialization
-    output.write(dumps(database, indent=4, sort_keys=False, default=str))
-print(&quot;Done.&quot;)
+            <h2 id="manually-ordering-factors">Manually Ordering Factors</h2>
+<p><strong>Situation</strong>: Sometimes you have want to display bar charts in a specific order, but the numbers get re-arranged or <code>group_by</code> and <code>sort</code> orders by value, but you have a specific order in mind.</p>
+<p><strong>Context</strong>: In this example, I have &ldquo;Proposals&rdquo; numbered &ldquo;1-10&rdquo;. I want to display them in order, but number 10 doesn&rsquo;t go after 9, but instead goes 1, 10, 2, 3, and so on&hellip;I need to <strong>manually set the factor order</strong> so the bar chart displays exactly how I&rsquo;d like.</p>
+<p>I used <code>fct_relevel</code> (factor re-level), choose a specific column, and the second parameter is a vector of values with the factors manually arranged according to how I&rsquo;d like. Then I set it to that specific column so R knows the desired factor level.</p>
+<pre><code class="language-{python}"># manually arranging factors - num
+# note: move &quot;proposal 10&quot; to the end
+# them apply newly arranged factor levels to column of interest
+new$num &lt;- fct_relevel(new$num, c(&quot;proposal 1&quot;, &quot;proposal 2&quot;, &quot;proposal 3&quot;, &quot;proposal 4&quot;, &quot;proposal 5&quot;, 
+                       &quot;proposal 6&quot;, &quot;proposal 7&quot;, &quot;proposal 8&quot;, &quot;proposal 9&quot;, &quot;proposal 10&quot;))
 </code></pre>
-<p>Here&rsquo;s a breakdown, section-by-section:</p>
-<p>Since we&rsquo;ll be creating mock json data, the <code>json</code> built-in library is imported (specifically <code>dumps</code>), the <code>Faker</code> library is the main tool and we&rsquo;ll also be using <code>OrderedDict</code> from <code>collections</code> to create document objects.</p>
-<p>Database is set to an empty array which will store the json object (<code>OrderedDict</code>). We&rsquo;ll save the file that we eventually write as <code>testing_bounty</code> and keep it a short length (5), while we&rsquo;re still testing.</p>
-<p>Finally, we initialize the <code>Faker</code> library by calling the Faker function and setting to <code>fake</code>.</p>
-<pre><code>from json import dumps
-from faker import Faker
-import collections
-
-database = []
-filename = 'testing_bounty'
-length = 5
-fake = Faker()   &lt;--- important
+<p>I can also achieve this for string values that don&rsquo;t have an obvious order. Here i&rsquo;m ordering the proposals by a known sequence (but not obvious to the audience).</p>
+<pre><code class="language-{python}"># manually arrange factors - name
+# then apply newly arranged factor levels to column of interest
+new$name &lt;- fct_relevel(new$name, c(&quot;Approve the Bankless DAO Genesis Proposal&quot;,
+                        &quot;What charity should CMS Holdings donate 100k towards&quot;,
+                        &quot;Badge Distribution for Second Airdrop&quot;,
+                        &quot;Reward Season 0 Active Members&quot;,
+                        &quot;Bankless DAO Season 1&quot;,
+                        &quot;BanklessDAO Season 1 Grants Committee Ratification&quot;,
+                        &quot;BED Index Logo Contest&quot;,
+                        &quot;Request for funds for Notion's ongoing subscription&quot;,
+                        &quot;Transfer ownership of the treasury multisig wallet from the genesis team to the DAO&quot;,
+                        &quot;Bankless DAO Season 2&quot;))
 </code></pre>
-<p>This next section save a list of words that pertinent to our project in lists. As we create mock json objects, for certain fields, we&rsquo;ll want to populate from a sample of <strong>keywords</strong> that&rsquo;s important for our project.</p>
-<p>Without these keywords, we&rsquo;ll need to rely on random words/sentences that comes with the <code>Faker</code> library and that may not always be appropriate for our context.</p>
-<pre><code># fake.word(ext_word_list=)
-random_currencies = ['BANK', 'ETH', 'BTC']
-
-random_guilds = [&quot;Marketing Guild&quot;, &quot;Treasury Guild&quot;,
-                 &quot;Developer's Guild&quot;, &quot;Analytics Guild&quot;, &quot;Writer's Guild&quot;]
-
-discord_handle = [&quot;@bob#8888&quot;, &quot;@alice#1234&quot;,
-                  &quot;@carol#5555&quot;, &quot;@delta#2222&quot;, &quot;@lambda#3333&quot;]
-
-bounty_status = ['Open', 'Draft', 'In-Progress',
-                 'In-Review', 'Completed', 'Deleted']
-
-skills = [&quot;writing&quot;,
-          &quot;design&quot;,
-          &quot;software development&quot;,
-          &quot;strategic planning&quot;,
-          &quot;data analysis&quot;,
-          &quot;grant writing&quot;,
-          &quot;proposal development&quot;,
-          &quot;team building&quot;,
-          &quot;marketing&quot;]
-</code></pre>
-<p>This next section is where we create a number of json objects, specified by length. Everything is pushed into an <code>collections.OrderedDict</code> and in some cases, we have nested data.</p>
-<p>Most of the fields are typical <code>key-value</code> pairs. There are variations in the <code>values</code>, including:</p>
-<ol>
-<li>strings (<code>fake.sentence()</code>, <code>fake.word()</code>, <code>fake.pystr()</code>); you can sample from list of words created above</li>
-<li>integers (<code>fake.random_int()</code>); you can randomize within a range of integers</li>
-<li>dates (<code>fake.date_between</code>)</li>
-<li>boolean (<code>fake.pybool</code>)</li>
-<li>dictionaries / json object (<code>collections.OrderedDict</code>)</li>
-<li>list of dictionaries, enclose within <code>[]</code></li>
-<li>list of strings</li>
-</ol>
-<pre><code>
-for x in range(length):
-    database.append(collections.OrderedDict([
-        ('season', fake.random_int(0, 10)),
-        ('bounty', fake.sentence()),
-        ('bountyDescription', fake.sentence()),
-        ('doneCriteria', fake.sentence()),
-        ('bountyReward', collections.OrderedDict([
-            ('currency', fake.word(ext_word_list=random_currencies)),
-            ('amount', fake.random_int(0, 50000))
-        ])),
-        # list of dictionaries
-        ('applicableGuilds', [collections.OrderedDict(
-            [('guildName', fake.word(ext_word_list=random_guilds))]), collections.OrderedDict([('guildName', fake.word(ext_word_list=random_guilds))])]),
-        ('bountyCreatedBy', collections.OrderedDict([
-            ('isDaoMember', fake.pybool()),
-            ('guildName', fake.word(ext_word_list=random_guilds)),
-            ('discordHandle', fake.word(ext_word_list=discord_handle)),
-            ('publicAddress', &quot;0x2d94aa3e47d9d5024503ca8&quot; + fake.pystr())
-        ])),
-        ('bountyCreatedAt', fake.date_between(start_date='today', end_date='+3m')),
-        ('bountyDueAt', fake.date_between(start_date='today', end_date='+1y')),
-        ('bountyActivatedAt', fake.date_between(
-            start_date='today', end_date='+6m')),
-        ('bountyClaimedBy', collections.OrderedDict([
-            ('guildName', fake.word(ext_word_list=random_guilds)),
-            ('discordHandle', fake.word(ext_word_list=discord_handle)),
-            ('publicAddress', &quot;0x2d94aa3e47d9d5024503ca8&quot; + fake.pystr())
-        ])),
-        ('bountyClaimedAt', fake.date_between(start_date='today', end_date='+4m')),
-        ('bountySubmittedBy', fake.word(ext_word_list=random_guilds)),
-        ('bountySubmittedAt', fake.date_between(
-            start_date='today', end_date='+11m')),
-        ('bountySubmissionLink', &quot;www.&quot; + fake.safe_domain_name()),
-        # list of dictionaries
-        ('bountyStatus', [collections.OrderedDict([
-            ('status', fake.word(ext_word_list=bounty_status)),
-            ('bountyStatusTime', fake.date_between(
-                start_date='today', end_date='+1y'))
-        ])]),
-        ('bountyHash', fake.md5(raw_output=False)),
-        # list of words
-        ('skillsRequired', [fake.word(ext_word_list=skills),
-                            fake.word(ext_word_list=skills)])
-    ]))
-</code></pre>
-<p>Once we run our script, we&rsquo;ll want to save and serialize the <code>OrderedDict</code> in a json file. We also want to enclose our dates in strings to avoid getting a <code>json serialization error</code>; this is done by setting the parameters of <code>output.write()</code> to <code>default=str</code>.</p>
-<pre><code>with open('%s.json' % filename, 'w') as output:
-    # turns date_between into string, circumvent json serialization
-    output.write(dumps(database, indent=4, sort_keys=False, default=str))
-print(&quot;Done.&quot;)
-</code></pre>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -1021,14 +861,14 @@ print(&quot;Done.&quot;)
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/github_make_pr/" rel="next">Making a Pull Request on a GitHub Repo</a>
+    <a href="/technical_notes/example_tech/rstats_viz_2_y_axes/" rel="next">Two Y-Axes</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_dotenv/" rel="prev">Setting dotenv to Access Sensitive API Keys</a>
+    <a href="/technical_notes/example_tech/data_cleaning_tip1/" rel="prev">Survey Data Cleaning</a>
   </div>
   
 </div>
@@ -1038,7 +878,7 @@ print(&quot;Done.&quot;)
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Jul 11, 2021</p>
+          <p>Last updated on Oct 8, 2021</p>
 
           
 
@@ -1050,7 +890,7 @@ print(&quot;Done.&quot;)
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_faker.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip_manually_order_factors.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
