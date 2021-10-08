@@ -788,6 +788,81 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Two Y-Axes</title>
+      <link>/technical_notes/example_tech/rstats_viz_2_y_axes/</link>
+      <pubDate>Fri, 08 Oct 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_viz_2_y_axes/</guid>
+      <description>&lt;h2 id=&#34;creating-2-y-axes-in-a-plot&#34;&gt;Creating 2 Y-Axes in a Plot&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to create &lt;strong&gt;two y-axes&lt;/strong&gt;. The left y-axis measures an amount, while the &lt;em&gt;right&lt;/em&gt; y-axis converts the amount to a percentage.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: This may be useful when you have a bar chart depicting relative amounts (e.g., membership numbers) and you require &lt;em&gt;another&lt;/em&gt; y-axis (right side) to map &lt;em&gt;another&lt;/em&gt; amount as a percentage of the former (e.g., % of members who successfully activated on their first day).&lt;/p&gt;
+&lt;p&gt;This is exampe is taken from the 
+&lt;a href=&#34;https://docs.google.com/presentation/d/18DGuSTsLgU2C2iNNcvoo2-27uL2Tcb1jfMaMGa9Zeyc/edit#slide=id.gf1c26dd130_1_11&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Bankless DAO Community Growth metrics&lt;/a&gt; where we looked at:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;How many new members successfully activate on their first day?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;First, unlike typical use cases, we are &lt;strong&gt;not&lt;/strong&gt; using &lt;code&gt;pivot_longer&lt;/code&gt; in this example, but instead keep the data in a &lt;em&gt;wide&lt;/em&gt; format (&lt;code&gt;pivot_wider&lt;/code&gt;). We are visualizing 3 separate variables (columns) here, including: &lt;code&gt;new_members&lt;/code&gt;, &lt;code&gt;pct_communicated&lt;/code&gt; and &lt;code&gt;pct_opened_channels&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In addition, we&amp;rsquo;ll have a hard-coded fourth line that represents the industry &amp;ldquo;benchmark&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Because&lt;/em&gt; we are not using a &lt;code&gt;pivot_longer&lt;/code&gt; function, we will have to &lt;em&gt;manually&lt;/em&gt; create our own legend. This will be explained in the commented code below:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;first_activation %&amp;gt;%
+    rename(
+        time = &amp;quot;interval_start_timestamp&amp;quot;,
+        new = &amp;quot;new_members&amp;quot;,
+        talked = &amp;quot;pct_communicated&amp;quot;,
+        visited = &amp;quot;pct_opened_channels&amp;quot;
+    ) %&amp;gt;%
+    ggplot(aes(x = time)) +
+    # note: 3 separate charts: one bar and two lines
+    geom_bar(aes(y = new, color = &amp;quot;New members&amp;quot;), stat = &amp;quot;identity&amp;quot;, fill = &amp;quot;black&amp;quot;) +
+    # The left y-axis goes from 0-1500, &#39;talked&#39; and &#39;visited&#39; is multiplied by 1500/100 = 15
+    # color is set to a string so it can be repurposed in the manually created legend
+    geom_line(aes(y = talked*15, color = &amp;quot;% talked (voice or text)&amp;quot;), size = 1.5) +
+    geom_line(aes(y = visited*15, color = &amp;quot;% visited more than 3 channels&amp;quot;), size = 1.5) +
+    geom_line(y = 480, color = &amp;quot;orange&amp;quot;, size = 0.2) +
+    # scale_y_continuous(sec.axis) is the key to having two y-axes
+    # The left y-axis goes from 0-1500, so sec.axis has ~./1500*100
+    # name indicates both left and right y-axis label
+    scale_y_continuous(
+        name = &amp;quot;New Members&amp;quot;,
+        sec.axis = sec_axis(trans = ~./1500*100, name = &amp;quot;% Activated&amp;quot;)
+    ) +
+    # We have to manually set color because we didn&#39;t actually set color in geom_line above
+    scale_color_manual(values = c(&amp;quot;white&amp;quot;, &amp;quot;red&amp;quot;, &amp;quot;black&amp;quot;)) +
+    # setting the color = &amp;quot;Legend&amp;quot; allows us to indicate on the chart where legend is
+    labs(
+        title = &amp;quot;How many new members successfully activate on their first day?&amp;quot;,
+        x = &amp;quot;&amp;quot;,
+        color = &amp;quot;Legend&amp;quot;
+    )
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;converting-second-y-axis-to-another-number-aside-from-percentage-&#34;&gt;Converting Second Y-axis to another number aside from Percentage (%)&lt;/h3&gt;
+&lt;p&gt;This is similar to the example above, except the math is adjusted so that if you wanted to convert &lt;strong&gt;two scales&lt;/strong&gt; (and neither is a %). This is appropriate for when visualizing both a &lt;em&gt;total amount&lt;/em&gt; (Messages sent) and &lt;em&gt;average amount&lt;/em&gt; (Messages per communicator).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;
+msg_avg %&amp;gt;%
+    rename(
+        time = &amp;quot;interval_start_timestamp&amp;quot;,
+        per = &amp;quot;messages_per_communicator&amp;quot;
+    ) %&amp;gt;%
+    ggplot(aes(x = time)) +
+    geom_bar(aes(y = messages, color = &amp;quot;Messages sent&amp;quot;), stat = &amp;quot;identity&amp;quot;, fill = &amp;quot;black&amp;quot;) +
+    # conversion between two y-axis (similar to % conversion)
+    # Here we convert 6000 to 12
+    geom_line(aes(y = per*6000/12, color = &amp;quot;Messages per communicator&amp;quot;), size = 1.5) +
+    geom_line(y = 5000, color = &amp;quot;orange&amp;quot;, size = 0.2) +
+    scale_y_continuous(
+        name = &amp;quot;Messages sent&amp;quot;,
+        sec.axis = sec_axis(trans = ~./6000*12, name = &amp;quot;Message per ommunicator&amp;quot;)
+    ) +
+    scale_color_manual(values = c(&amp;quot;red&amp;quot;, &amp;quot;black&amp;quot;))
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Survey Data Cleaning</title>
       <link>/technical_notes/example_tech/data_cleaning_tip1/</link>
       <pubDate>Wed, 08 Sep 2021 00:00:00 +0100</pubDate>

@@ -27,11 +27,11 @@
   
     
   
-  <meta name="description" content="Data Wrangling: Does Order matter? In short, yes, it matters. But when and where?
-Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations&#39; Statistics Division for Sustainable Development Goals (SDG) Indicators (Goal 4, Target 4.">
+  <meta name="description" content="Creating a Circular Dendrogram with ggraph I tried creating a Circular Dendrogram using reproducible code from R Graph Gallery.
+However, the code on the website has some issues so I submitted a pull request to fix it.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip5/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_viz_circular_dendrogram-copy/">
 
   
 
@@ -218,7 +218,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip5/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_viz_circular_dendrogram-copy/">
 
   
   
@@ -237,16 +237,16 @@ Below are examples to highlight when function order matters and when it doesn&rs
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip5/">
-  <meta property="og:title" content="Does order of operation matter among dplyr functions? | Paul Apivat">
-  <meta property="og:description" content="Data Wrangling: Does Order matter? In short, yes, it matters. But when and where?
-Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations&#39; Statistics Division for Sustainable Development Goals (SDG) Indicators (Goal 4, Target 4."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_viz_circular_dendrogram-copy/">
+  <meta property="og:title" content="Circular Dendrogram | Paul Apivat">
+  <meta property="og:description" content="Creating a Circular Dendrogram with ggraph I tried creating a Circular Dendrogram using reproducible code from R Graph Gallery.
+However, the code on the website has some issues so I submitted a pull request to fix it."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-08-27T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-03-03T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-08-27T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-03-03T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +265,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
 
 
 
-  <title>Does order of operation matter among dplyr functions? | Paul Apivat</title>
+  <title>Circular Dendrogram | Paul Apivat</title>
 
 </head>
 
@@ -615,15 +615,11 @@ Below are examples to highlight when function order matters and when it doesn&rs
   </div>
   
   <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_viz_2_y_axes/">Data Viz Tips</a>
+    <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_viz_circular_dendrogram-copy/">Data Viz Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li >
-        <a href="/technical_notes/example_tech/rstats_viz_2_y_axes/">2 y-axes</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_viz_circular_dendrogram/">Circular Dendrogram</a>
+      <li class="active">
+        <a href="/technical_notes/example_tech/rstats_viz_circular_dendrogram-copy/">Circular Dendrogram</a>
       </li>
       
       <li >
@@ -763,7 +759,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
         <a href="/technical_notes/example_tech/rstats_open_api/">Open API with R</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_tip5/">Order of Dplyr Functions</a>
       </li>
       
@@ -801,7 +797,7 @@ Below are examples to highlight when function order matters and when it doesn&rs
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#data-wrangling-does-order-matter">Data Wrangling: Does Order matter?</a></li>
+    <li><a href="#creating-a-circular-dendrogram-with-ggraph">Creating a Circular Dendrogram with ggraph</a></li>
   </ul>
 </nav>
 
@@ -814,117 +810,71 @@ Below are examples to highlight when function order matters and when it doesn&rs
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Does order of operation matter among dplyr functions?</h1>
+          <h1>Circular Dendrogram</h1>
 
           <div class="article-style">
-            <h2 id="data-wrangling-does-order-matter">Data Wrangling: Does Order matter?</h2>
-<p>In short, yes, it matters. But when and where?</p>
-<p>Below are examples to highlight when function order matters and when it doesn&rsquo;t. The source for the raw data used in this illustration are from the United Nations' Statistics Division for 
-<a href="https://unstats.un.org/sdgs/indicators/database/" target="_blank" rel="noopener">Sustainable Development Goals</a> (SDG) Indicators (Goal 4, Target 4.4).</p>
-<p>See also UN Statistics Wiki on 
-<a href="https://unstats.un.org/wiki/display/SDGeHandbook/Indicator&#43;4.4.1" target="_blank" rel="noopener">Indicator 4.4.1</a>.</p>
-<pre><code># Example chain of functions to determine proportion of Thailand's population to have certain ICT skills in 2018
+            <h2 id="creating-a-circular-dendrogram-with-ggraph">Creating a Circular Dendrogram with ggraph</h2>
+<p>I tried creating a 
+<a href="https://www.r-graph-gallery.com/339-circular-dendrogram-with-ggraph.html" target="_blank" rel="noopener">Circular Dendrogram</a> using reproducible code from R Graph Gallery.</p>
+<p>However, the code on the website has some issues so I submitted a 
+<a href="https://github.com/holtzy/R-graph-gallery/pull/34" target="_blank" rel="noopener">pull request to fix it</a>.</p>
+<p>The code below, for the most part, match the original on R Graph Gallery, except 4 lines of code that were updated to fix the <code>geom_node_text</code> issue:</p>
+<pre><code class="language-python"># libraries
+library(ggraph)
+library(igraph)
+library(tidyverse)
+library(RColorBrewer) 
 
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    arrange(desc(mean_value))
-</code></pre>
-<p>Here, the <code>filter</code> functions are moved up to be before <code>rename</code> and <code>mutate</code>. The ordering here does <strong>not</strong> matter.</p>
-<pre><code>data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    
-    # putting filter before rename, mutate is fine
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    arrange(desc(mean_value))
-</code></pre>
-<p>Furthermore, we could even experiment with the <code>filter</code> function being before or after <code>select</code>. Here, ordering also does <strong>not</strong> matter.</p>
-<pre><code>data %&gt;%
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    arrange(desc(mean_value))
+# create data.frame
+d1=data.frame(from=&quot;origin&quot;, to=paste(&quot;group&quot;, seq(1,10), sep=&quot;&quot;))
+d2=data.frame(from=rep(d1$to, each=10), to=paste(&quot;subgroup&quot;, seq(1,100), sep=&quot;_&quot;))
+edges=rbind(d1, d2)
+
+# create vertices
+vertices = data.frame(
+    name = unique(c(as.character(edges$from), as.character(edges$to))) , 
+    value = runif(111)
+) 
+
+vertices$group = edges$from[ match( vertices$name, edges$to ) ]
+
+
+vertices$id=NA
+myleaves=which(is.na( match(vertices$name, edges$from) ))
+nleaves=length(myleaves)
+vertices$id[ myleaves ] = seq(1:nleaves)
+
+# change the angle of the geom_node_text
+# angle and hjust must be consistent
+
+vertices$angle = 360 / nleaves * vertices$id + 110  # adjust angle calculation
+
+vertices$hjust&lt;-ifelse( vertices$angle &lt; 291, 1, 0) # adjust hjust
+
+vertices$angle&lt;-ifelse(vertices$angle &lt; 291, vertices$angle+180, vertices$angle) # adjust where 180 is added
+
+# crate mygraph object (dendrogram)
+mygraph &lt;- graph_from_data_frame( edges, vertices=vertices )
+
+# plot the dendrogram
+ggraph(mygraph, layout = 'dendrogram', circular = TRUE) + 
+    geom_edge_diagonal(colour=&quot;grey&quot;) +
+    scale_edge_colour_distiller(palette = &quot;RdPu&quot;) +
+    geom_node_text(aes(x = x*1.15, y=y*1.15, filter = leaf, label=name, angle = angle, hjust=hjust, colour=group), size=2.7, alpha=1) +
+    geom_node_point(aes(filter = leaf, x = x*1.07, y=y*1.07, colour=group, size=value, alpha=0.2)) +
+    scale_colour_manual(values= rep( brewer.pal(9,&quot;Paired&quot;) , 30)) +
+    scale_size_continuous( range = c(0.1,10) ) +
+    theme_void() +
+    theme(
+        legend.position=&quot;none&quot;,
+        plot.margin=unit(c(0,0,0,0),&quot;cm&quot;),
+    ) +
+    expand_limits(x = c(-1.3, 1.3), y = c(-1.3, 1.3)) +
+    coord_flip()  # add coord_flip
 
 </code></pre>
-<p>Here is there order <strong>does</strong> matter. When we try to move the two <code>filter</code> functions below <code>group_by</code>, <code>summarize</code> and <code>ungroup</code>, the filtering does <em>not</em> work. By the time we get to <code>filter(GeoAreaName == 'Thailand')</code> in this example, GeoAreaName has been removed because we did <em>not</em> <code>group_by</code> <code>GeoAreaName</code>, so we get an error.</p>
-<pre><code># Running this code, we'll get the ERROR: Problem with `filter()` input `..1`. x object 'GeoAreaName' not found ℹ Input `..1` is 
-# `GeoAreaName == &quot;Thailand&quot;`.
-
-data %&gt;%
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    relocate(Sex, Value, GeoAreaName) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    # filter was previously here
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    # moving filter down below group_by &amp; summarize() does not work
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    arrange(desc(mean_value))
-</code></pre>
-<p>Finally, if we want to use <code>filter</code> on the <em>results</em> of the <code>mutate</code> function, we see that order <strong>does</strong> matter. By the time we get to the final <code>filter(Value &lt; 10)</code>, the <code>Value</code> variable is no longer available to us because we did not <code>group_by</code> and <code>summarize</code> by Value (instead we created <code>mean_value</code> and <code>median_value</code>).</p>
-<pre><code>
-data %&gt;%
-    filter(GeoAreaName == 'Thailand') %&gt;% 
-    filter(TimePeriod == 2018) %&gt;% 
-    select(GeoAreaName, Value, Sex, `Type of skill`, TimePeriod) %&gt;%
-    rename(type_of_skill = `Type of skill`) %&gt;%
-    mutate(
-        Value = as.double(Value)
-    ) %&gt;%
-    # filtering for Values less than 10 does work here
-    filter(Value &lt; 10) %&gt;%
-    group_by(type_of_skill) %&gt;%
-    summarize(
-        mean_value = mean(Value),
-        median_value = median(Value)
-    ) %&gt;%
-    ungroup() %&gt;%
-    arrange(desc(mean_value)) %&gt;%
-    # filter for Values less than 10 does not work down here
-    filter(Value &lt; 10)
-
-</code></pre>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -941,14 +891,14 @@ data %&gt;%
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_tip4/" rel="next">Calculating 25th, 50th and 75th Percentile of Column Values</a>
+    <a href="/technical_notes/example_tech/rstats_open_api/" rel="next">Consume Open API with R</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/data_viz_tip1/" rel="prev">Creating a dendrogram with R and ggraph</a>
+    <a href="/technical_notes/example_tech/rstats_viz_circular_dendrogram/" rel="prev">Circular Dendrogram</a>
   </div>
   
 </div>
@@ -958,7 +908,7 @@ data %&gt;%
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Aug 27, 2020</p>
+          <p>Last updated on Mar 3, 2021</p>
 
           
 
@@ -970,7 +920,7 @@ data %&gt;%
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip5.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_viz_circular_dendrogram%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
