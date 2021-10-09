@@ -43,7 +43,7 @@ Enabling capital, coordination and culture on Web3 through on- and off-chain dat
 
 **Current**
 
-Contributor at [Bankless DAO](https://www.bankless.community/) ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)). We're creating infrastructure with [DAO Dash](https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828) to enable data insights for Guilds and Projects at Bankless DAO. I'm also part of the [Bounty Board](https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90) team working to coordinate talent and capital.
+Core contributor at [Bankless DAO](https://www.bankless.community/) ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)). We're creating infrastructure with [DAO Dash](https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828) to enable data insights for Guilds and Projects at Bankless DAO. I'm also part of the [Bounty Board](https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90) team working to coordinate talent and capital.
 
 I work primarily in the Analytics and Developer's Guild to support other guilds including Education, Treasury, Marketing, Writing and Operations (see our [Notion](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f)). 
 
@@ -63,6 +63,7 @@ I work primarily in the Analytics and Developer's Guild to support other guilds 
 
 **Off-Chain Data**
 
+- [Bankless DAO Community Growth, Season 2 Launch](https://docs.google.com/presentation/d/18DGuSTsLgU2C2iNNcvoo2-27uL2Tcb1jfMaMGa9Zeyc/edit?usp=sharing)
 - [DAOs: The New Coordination Frontier (Gitcoin & BanklessDAO)](https://docs.google.com/presentation/d/1fLJvPOvibcCUpJ9ES44_cdoX5Hb7LpDaloGWz5FbUEM/edit#slide=id.gec41538503_0_399)
 - [Bankless DAO Twitter Analytics](https://forum.bankless.community/t/bankless-dao-twitter-analytics-june-2021-edition/1200)
 - [Exploring Discord Data: Bankless DAO Engagement](https://forum.bankless.community/t/exploring-discord-data-bankless-dao-engagement/1100)
