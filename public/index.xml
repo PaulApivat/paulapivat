@@ -809,6 +809,27 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Continuous to Discrete Plotting</title>
+      <link>/technical_notes/example_tech/rstats_tip_continuous_to_discrete_plot/</link>
+      <pubDate>Sat, 09 Oct 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_tip_continuous_to_discrete_plot/</guid>
+      <description>&lt;h2 id=&#34;continuous-to-discrete-plotting&#34;&gt;Continuous to Discrete Plotting&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: When plotting integers on the x-axis, it shows up in a ggplot like 2.5, 5, 7.5 and we want each bar to be plotted discretely (e.g. 1,2,3,4,5&amp;hellip;)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;
+gov_partcipation %&amp;gt;%
+    ggplot(aes(x = n, y = nn)) +
+    geom_col(aes(fill = as.factor(n))) +
+    geom_text(aes(label = nn), vjust = -0.5, color = &amp;quot;white&amp;quot;) +
+    # this sets the sequence from 1 to 10 with a break of 1
+    # turns a continuous sequence (2.5) into a discrete one (1,2,3...)
+    scale_x_continuous(breaks=seq(1,10, 1))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Reverse Plotting</title>
       <link>/technical_notes/example_tech/rstats_tip_reverse_plotting/</link>
       <pubDate>Sat, 09 Oct 2021 00:00:00 +0100</pubDate>
