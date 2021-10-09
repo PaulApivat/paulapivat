@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Guide for Creating a GitHub Repo and Cloning Locally This guide can help you setup a fresh new GitHub Repo, then clone it locally to begin working in your local environment, then pushing changes up to your GitHub Repo.">
+  <meta name="description" content="Manually Ordering Factors Situation: Sometimes you have want to display bar charts in a specific order, but the numbers get re-arranged or group_by and sort orders by value, but you have a specific order in mind.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/github_make_repo/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip_manually_order_factors-copy/">
 
   
 
@@ -217,7 +217,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/github_make_repo/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip_manually_order_factors-copy/">
 
   
   
@@ -236,15 +236,15 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/github_make_repo/">
-  <meta property="og:title" content="Creating a Github Repo | Paul Apivat">
-  <meta property="og:description" content="Guide for Creating a GitHub Repo and Cloning Locally This guide can help you setup a fresh new GitHub Repo, then clone it locally to begin working in your local environment, then pushing changes up to your GitHub Repo."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip_manually_order_factors-copy/">
+  <meta property="og:title" content="Manually Ordering Factors | Paul Apivat">
+  <meta property="og:description" content="Manually Ordering Factors Situation: Sometimes you have want to display bar charts in a specific order, but the numbers get re-arranged or group_by and sort orders by value, but you have a specific order in mind."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-07-21T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-10-08T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-07-21T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-10-08T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +263,7 @@
 
 
 
-  <title>Creating a Github Repo | Paul Apivat</title>
+  <title>Manually Ordering Factors | Paul Apivat</title>
 
 </head>
 
@@ -674,7 +674,7 @@
     <a class="docs-toc-link" href="/technical_notes/example_tech/github_make_repo/">Git &amp; GitHub</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/github_make_repo/">Creating a Github Repo</a>
       </li>
       
@@ -757,8 +757,8 @@
         <a href="/technical_notes/example_tech/rstats_dates/">Format Dates</a>
       </li>
       
-      <li >
-        <a href="/technical_notes/example_tech/rstats_tip_manually_order_factors/">Manually Order Factors</a>
+      <li class="active">
+        <a href="/technical_notes/example_tech/rstats_tip_manually_order_factors-copy/">Manually Order Factors</a>
       </li>
       
       <li >
@@ -771,10 +771,6 @@
       
       <li >
         <a href="/technical_notes/example_tech/rstats_tip1/">Reproducibility</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_tip_reverse_plotting/">Reverse Plotting</a>
       </li>
       
       <li >
@@ -807,9 +803,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#guide-for-creating-a-github-repo-and-cloning-locally">Guide for Creating a GitHub Repo and Cloning Locally</a></li>
-    <li><a href="#creating-repo">Creating Repo</a></li>
-    <li><a href="#cloning-locally">Cloning Locally</a></li>
+    <li><a href="#manually-ordering-factors">Manually Ordering Factors</a></li>
   </ul>
 </nav>
 
@@ -822,73 +816,35 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Creating a Github Repo</h1>
+          <h1>Manually Ordering Factors</h1>
 
           <div class="article-style">
-            <h2 id="guide-for-creating-a-github-repo-and-cloning-locally">Guide for Creating a GitHub Repo and Cloning Locally</h2>
-<p>This guide can help you setup a fresh new GitHub Repo, then clone it locally to begin working in your local environment, then pushing changes up to your GitHub Repo.</p>
-<p>This guide assumes you have a Text Editor like VSCode installed and that you can use the <strong>Terminal</strong> to navigate through various folders.</p>
-<h2 id="creating-repo">Creating Repo</h2>
-<ol>
-<li>Sign-up for a GitHub Account</li>
-<li>Navigate to Your Profile</li>
-<li>Click on Repositories</li>
-<li>Click on green button &ldquo;New&rdquo; (for New Repo)</li>
-<li>In the Repository Name field, give your new repo a name*</li>
-</ol>
-<p>Names should have no spaces, use underscore _ to separate words (ie., special_project)</p>
-<ol start="6">
-<li>
-<p>Description is optional</p>
-</li>
-<li>
-<p>Default is Public (a Private Repo requires a monthly fee)</p>
-</li>
-<li>
-<p>Tick Add a README and Choose license (if applicable, if not just go with a README)</p>
-</li>
-<li>
-<p>A .gitignore file is recommended if your project has sensitive info associated with it that you&rsquo;d like to keep OUT of GitHub</p>
-</li>
-<li>
-<p>Click &ldquo;Create Repository&rdquo;</p>
-</li>
-</ol>
-<h2 id="cloning-locally">Cloning Locally</h2>
-<ol start="11">
-<li>Navigate to your newly created repository (still on GitHub)</li>
-<li>Click on the Green Button &ldquo;Code&rdquo;</li>
-<li>Select the HTTPS (default) option and <strong>copy</strong> the <a href="https://github.com/YourName/special_project">https://github.com/YourName/special_project</a></li>
-</ol>
-<p>Once you&rsquo;ve copied the <code>https</code> address, you&rsquo;ll use the <strong>terminal</strong> in your text editor (i.e., VSCode) to navigate to a folder on your local machine (desktop or laptop) where you&rsquo;ve <em>already</em> created a folder just for coding projects (i.e., coding_projects)</p>
-<ol start="14">
-<li>Open the text editor (i.e., VS Code), click on Terminal in the menu bar, &ldquo;New Terminal&rdquo;, this will open your terminal to have you start at a level <em>above</em> the Desktop. Suppose you have a folder <em>on</em> your Desktop that says &ldquo;coding_projects&rdquo; you&rsquo;ll want to <strong>clone</strong> your newly-created github repo <em>in</em> this folder. But you have to navigate to <em>coding_projects</em> folder first. Here&rsquo;s the command to navigate in Terminal:</li>
-</ol>
-<p><code>cd Desktop/coding_projects</code></p>
-<ol start="15">
-<li>
-<p><code>cd</code> means change directory; here, you&rsquo;ll change directory into your Desktop, then into coding_projects folder (two steps) to <strong>clone</strong> your github repository (special_project)</p>
-</li>
-<li>
-<p>(in Terminal), you&rsquo;re now inside the <code>coding_projects</code> folder, you&rsquo;ll run this command, pasting the <code>https</code> address that you copied from your GitHub Repo:</p>
-</li>
-</ol>
-<p><code>git clone https://github.com/YourName/special_project</code></p>
-<p>This will initialize your repo locally. From here, try making a minor change to the README file.</p>
-<ol start="17">
-<li>
-<p>Make a small change to your README file on your Text Editor, then save the changes.</p>
-</li>
-<li>
-<p>Back in Terminal, you&rsquo;ll add the changes, then commit, then push back up to GitHub. You&rsquo;ll run these commands:</p>
-</li>
-</ol>
-<p><code>git status</code>   (this should indicate in red that you have new changes)
-<code>git add .</code>    (you&rsquo;ll add those changes)
-<code>git push</code>     (you&rsquo;re pushing those changes to your GitHub Repo)</p>
-<p><strong>NOTE</strong>: you might see a prompt to do <code>git push --upstream origin</code>, which happens if this is the first push you&rsquo;re making to the repo.</p>
-<p>Now you&rsquo;ve cloned your repo locally, made some changes, then pushed it back up to GitHub. Its important to <strong>note</strong> that the process described here is to allow you to track changes for your personal coding projects, <strong>NOT</strong> any code for production or development environment.</p>
-<p>In those cases, the team may have it&rsquo;s own protocol for version control and you&rsquo;ll want to get familiar and follow those protocols.</p>
+            <h2 id="manually-ordering-factors">Manually Ordering Factors</h2>
+<p><strong>Situation</strong>: Sometimes you have want to display bar charts in a specific order, but the numbers get re-arranged or <code>group_by</code> and <code>sort</code> orders by value, but you have a specific order in mind.</p>
+<p><strong>Context</strong>: In this example, I have &ldquo;Proposals&rdquo; numbered &ldquo;1-10&rdquo;. I want to display them in order, but number 10 doesn&rsquo;t go after 9, but instead goes 1, 10, 2, 3, and so on&hellip;I need to <strong>manually set the factor order</strong> so the bar chart displays exactly how I&rsquo;d like.</p>
+<p>I used <code>fct_relevel</code> (factor re-level), choose a specific column, and the second parameter is a vector of values with the factors manually arranged according to how I&rsquo;d like. Then I set it to that specific column so R knows the desired factor level.</p>
+<pre><code class="language-{python}"># manually arranging factors - num
+# note: move &quot;proposal 10&quot; to the end
+# them apply newly arranged factor levels to column of interest
+new$num &lt;- fct_relevel(new$num, c(&quot;proposal 1&quot;, &quot;proposal 2&quot;, &quot;proposal 3&quot;, &quot;proposal 4&quot;, &quot;proposal 5&quot;, 
+                       &quot;proposal 6&quot;, &quot;proposal 7&quot;, &quot;proposal 8&quot;, &quot;proposal 9&quot;, &quot;proposal 10&quot;))
+</code></pre>
+<p>I can also achieve this for string values that don&rsquo;t have an obvious order. Here i&rsquo;m ordering the proposals by a known sequence (but not obvious to the audience).</p>
+<pre><code class="language-{python}"># manually arrange factors - name
+# then apply newly arranged factor levels to column of interest
+new$name &lt;- fct_relevel(new$name, c(&quot;Approve the Bankless DAO Genesis Proposal&quot;,
+                        &quot;What charity should CMS Holdings donate 100k towards&quot;,
+                        &quot;Badge Distribution for Second Airdrop&quot;,
+                        &quot;Reward Season 0 Active Members&quot;,
+                        &quot;Bankless DAO Season 1&quot;,
+                        &quot;BanklessDAO Season 1 Grants Committee Ratification&quot;,
+                        &quot;BED Index Logo Contest&quot;,
+                        &quot;Request for funds for Notion's ongoing subscription&quot;,
+                        &quot;Transfer ownership of the treasury multisig wallet from the genesis team to the DAO&quot;,
+                        &quot;Bankless DAO Season 2&quot;))
+</code></pre>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -904,8 +860,15 @@
   
   
   <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/technical_notes/example_tech/rstats_viz_2_y_axes/" rel="next">Two Y-Axes</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/github_make_pr/" rel="prev">Making a Pull Request on a GitHub Repo</a>
+    <a href="/technical_notes/example_tech/rstats_tip_manually_order_factors/" rel="prev">Manually Ordering Factors</a>
   </div>
   
 </div>
@@ -915,7 +878,7 @@
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Jul 21, 2021</p>
+          <p>Last updated on Oct 8, 2021</p>
 
           
 
@@ -927,7 +890,7 @@
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/github_make_repo.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip_manually_order_factors%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
