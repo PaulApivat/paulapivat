@@ -1,0 +1,2236 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Paul Apivat">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Introduction to Database Design Situation: There are notes from an 8 hour course on YouTube.
+What is a Relational Database?
+ Entity (Rows)  Entity = User (a person, an object) Row = all attribute values for an entity   Attribute (Columns)  Attributes are about an entity (user name, name, password, address etc)   Mathematical name for a Row is a Tuple  RDBMS">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/database_design_tips/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#E32626">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Domine:wght@400;700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/technical_notes/example_tech/database_design_tips/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="twitter:site" content="@paulapivat">
+  <meta property="twitter:creator" content="@paulapivat">
+  
+  <meta property="og:site_name" content="Paul Apivat">
+  <meta property="og:url" content="/technical_notes/example_tech/database_design_tips/">
+  <meta property="og:title" content="Database Design Course by Caleb Curry | Paul Apivat">
+  <meta property="og:description" content="Introduction to Database Design Situation: There are notes from an 8 hour course on YouTube.
+What is a Relational Database?
+ Entity (Rows)  Entity = User (a person, an object) Row = all attribute values for an entity   Attribute (Columns)  Attributes are about an entity (user name, name, password, address etc)   Mathematical name for a Row is a Tuple  RDBMS"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2021-10-26T00:00:00&#43;01:00">
+    
+    <meta property="article:modified_time" content="2021-10-26T00:00:00&#43;01:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Database Design Course by Caleb Curry | Paul Apivat</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Paul Apivat</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Paul Apivat</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#"><span>Start Here</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>About</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#gallery"><span>Data Viz</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/courses/"><span></span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/technical_notes/"><span>Technical Notes</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      
+
+
+
+
+
+  
+    
+  
+
+
+
+
+<form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-3" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <span><i class="fas fa-bars"></i></span>
+  </button>
+
+  
+  <input name="q" type="search" class="form-control" placeholder="Search..." autocomplete="off">
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+
+  
+  
+  
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/technical_notes/example_tech/">Technical Notes Overview</a>
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/technical_notes/example_tech/data_cleaning_tip1/">Data Cleaning Tips</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="/technical_notes/example_tech/data_cleaning_tip1/">Data Cleaning</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_viz_2_y_axes/">Data Viz Tips</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_viz_2_y_axes/">2 y-axes</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_viz_circular_dendrogram/">Circular Dendrogram</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_viz_extend_color/">Extend Color Palettes</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_viz_reactable/">reactable</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_viz_scale_x/">scale_x_continuous (ggplot2)</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/data_viz_tip2/">Scatterplots &amp; Marginal Distribution</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_viz_treemapify/">Treemaps</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/data_viz_tip1/">Visualize Dendrograms</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/technical_notes/example_tech/database_design_tips/">Database</a>
+    <ul class="nav docs-sidenav">
+      
+      <li class="active">
+        <a href="/technical_notes/example_tech/database_design_tips/">Database Design Course</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/technical_notes/example_tech/technical_notes1/">Example Topic</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="/technical_notes/example_tech/technical_notes1/">Tips 1-2</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/technical_notes2/">Tips 3-4</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/technical_notes/example_tech/github_make_repo/">Git &amp; GitHub</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="/technical_notes/example_tech/github_make_repo/">Creating a Github Repo</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/git_commit_message/">Git Commit Message</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/github_make_pr/">Making a Pull Request</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/technical_notes/example_tech/google_cloud_tip1/">Google Cloud Tips</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="/technical_notes/example_tech/google_cloud_tip1/">Connect BigQuery to Data Studio</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/technical_notes/example_tech/python_tip2/">Python Tips</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="/technical_notes/example_tech/python_tip2/">Creating and Looping through DataFrames</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/python_dotenv/">dotenv in Python</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/python_faker/">Faker in Python</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/python_poetry/">Installing Poetry</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/python_tip1/">Python Setup</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/python_reproducibility/">Reproducibility in Python</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/python_virtualenv/">Virtual Environments in Python</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_tip6/">Rstats Tip</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_tip6/">Anti Joins</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_tip4/">Calculating Percentiles</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_tip_continuous_to_discrete_plot/">Continuous to Discrete Plotting</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_dates/">Format Dates</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_tip_manually_order_factors/">Manually Order Factors</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_open_api/">Open API with R</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_tip5/">Order of Dplyr Functions</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_tip1/">Reproducibility</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_tip_reverse_plotting/">Reverse Plotting</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_tip3/">Tidy Data - pivot_wider</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_tip2/">Tidy Data - Spread</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/rstats_unnest/">Unnest JSON data</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  
+</nav>
+
+    </div>
+
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction-to-database-design">Introduction to Database Design</a></li>
+  </ul>
+</nav>
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          <h1>Database Design Course by Caleb Curry</h1>
+
+          <div class="article-style">
+            <h2 id="introduction-to-database-design">Introduction to Database Design</h2>
+<p><strong>Situation</strong>: There are notes from an 
+<a href="https://www.youtube.com/watch?v=ztHopE5Wnpc" target="_blank" rel="noopener">8 hour course on YouTube</a>.</p>
+<p><strong>What is a Relational Database?</strong></p>
+<ol>
+<li>Entity (Rows)
+<ol>
+<li>Entity = User (a person, an object)</li>
+<li>Row = all attribute values for an entity</li>
+</ol>
+</li>
+<li>Attribute (Columns)
+<ol>
+<li>Attributes are <em>about</em> an entity (user name, name, password, address etc)</li>
+</ol>
+</li>
+<li>Mathematical name for a Row is a Tuple</li>
+</ol>
+<p><strong>RDBMS</strong></p>
+<ol>
+<li>View Mechanism changes the how data is presented (i.e., we don&rsquo;t want all rows x columns, just a subset)
+<ol>
+<li>Select only certain columns</li>
+</ol>
+</li>
+<li>View = Read Only (not everyone has access to Update for security purpose)</li>
+<li>RDBMS allows &ldquo;transactions&rdquo;</li>
+<li>Example: MySQL, SQL Server, PostgreSQL (open source)</li>
+<li>Database &amp; Relational Database are not separate things</li>
+</ol>
+<p><strong>SQL</strong></p>
+<ol>
+<li>Define structure (DDL, data definition language)
+<ol>
+<li>CREATE,</li>
+<li>structure &amp; connection between tables - JOIN</li>
+</ol>
+</li>
+<li>Manipulates data (DML, data manipulation language) -
+<ol>
+<li>UPDATE</li>
+<li>data within tables</li>
+</ol>
+</li>
+</ol>
+<p><strong>What is Database Design?</strong></p>
+<ol>
+<li>Separate information into multiple tables, while preventing data integrity issues</li>
+<li>How do you measure whether a database is &ldquo;good&rdquo; or &ldquo;bad&rdquo;? &ndash;&gt; Data Integrity</li>
+<li>Good design prevents &ldquo;data integrity issues&rdquo;
+<ol>
+<li>All data up to date</li>
+<li>No repeating data</li>
+<li>No incorrect data</li>
+<li>No broken relationships</li>
+</ol>
+</li>
+<li>Conceptual Schema: How data is related.</li>
+<li>Logical Schema: Table structures (i.e., X number of columns, data types), number of tables</li>
+<li>Physical Schema: Implementing into database, table types, what server? how will people access?</li>
+</ol>
+<p><strong>Data Integrity</strong></p>
+<ol>
+<li>Entity integrity
+<ol>
+<li>ID is used to enforce uniqueness of an entity (user)</li>
+</ol>
+</li>
+<li>Referential integrity
+<ol>
+<li>Foreign key constrains</li>
+</ol>
+</li>
+<li>Domain integrity
+<ol>
+<li>Range of what we&rsquo;re storing (correct Data Types; integers, text or dates)</li>
+</ol>
+</li>
+<li>Note: Relational Database does not come from the word &ldquo;relationship&rdquo;, it comes from Relations which is a mathematical connection between Sets</li>
+<li>When we don&rsquo;t have data integrity, we have errors</li>
+<li>When we have errors, data integrity allows us to correct those errors</li>
+</ol>
+<p><strong>Database Terms (Review)</strong></p>
+<ol>
+<li>Data</li>
+<li>Database</li>
+<li>Relational Database (stores things in tables)</li>
+<li>DBMS (how to control database)</li>
+<li>RDBMS</li>
+<li>Null (when someone doesn&rsquo;t enter a value)</li>
+<li>Anomolies (errors)</li>
+<li>Integrity (protect against anomolies)
+<ol>
+<li>Entity</li>
+<li>Referential - keep connection through Foreign Keys and Primary Keys</li>
+<li>Domain - correct data types</li>
+</ol>
+</li>
+<li>Entity - what we store</li>
+<li>Attributes*** - things about an entity</li>
+<li>Relations* - connection between two sets or Tables</li>
+<li>Tuple** or Row (all attributes about an entity)</li>
+<li>Table* - physical representation of
+<ol>
+<li>Rows**</li>
+<li>Columns***</li>
+</ol>
+</li>
+<li>File* (aka Table)</li>
+<li>Record** (aka Row)</li>
+<li>Field*** (aka Column)</li>
+<li>Value (something in a column)</li>
+<li>Entry (aka a Row)</li>
+<li>DB Design - process of designing table to have integrity</li>
+<li>Schema - structure of tables</li>
+<li>Normalization - steps to get the best data base design</li>
+<li>Naming Convention - consistency in naming</li>
+<li>Keys - something to make things in unique in a table and connect between tables</li>
+</ol>
+<p><strong>More Database Terms</strong></p>
+<ol>
+<li>SQL
+<ol>
+<li>DDL data define language</li>
+<li>DML data manipulation language</li>
+</ol>
+</li>
+<li>SQL Keywords - reserved words (e.g., SELECT)</li>
+<li>Frontend - we program frontends so people can securely access the database (doesn&rsquo;t allow us to type in SQL)</li>
+<li>Backend - serverside code to communicate with database</li>
+<li>Client side</li>
+<li>Server side - serves instances of the database to the client</li>
+<li>Server side scripting language</li>
+<li>Views - taking data from database and illustrating it in a different from how it&rsquo;s stored</li>
+<li>Joins - connect data from multiple tables
+<ol>
+<li>ID foreign key connection</li>
+</ol>
+</li>
+</ol>
+<p><strong>Atomic Values</strong></p>
+<ol>
+<li>Everything in a database should be about 1 thing</li>
+<li>Example: &ldquo;Paul Apivat Hanvongse&rdquo; &ndash; to make it atomic, create 3 separate columns (i.e., nickname, first name, last name)</li>
+<li>Atom - smallest indivisible piece (1 thing) but still makes sense to treat as 1 thing
+<ol>
+<li>example: Address - street, city, state, zip code (3 columns)</li>
+</ol>
+</li>
+</ol>
+<p><strong>Relationships</strong></p>
+<ol>
+<li>Relationship - connects two or more entities</li>
+</ol>
+<p>Example:
+(Entities)
+Database &ndash;&gt; Student - Attribute
+&ndash;&gt; Professor - Attribute
+&ndash;&gt; Class - Attribute
+&ndash;&gt; Major - Attribute</p>
+<p>There&rsquo;s multiple relationships here; Student have a Major, Students are in a Class, Professors are part of a Major, Professors teach a Class.</p>
+<p>One-to-One</p>
+<ol>
+<li>One Entity has connection with another Entity (e.g., Husband - Wife)</li>
+<li>Social security number unique to one person</li>
+</ol>
+<p>One-to-Many</p>
+<ol>
+<li>Comments under a Youtube video;</li>
+</ol>
+<p>User &ndash;&gt; Comment 1
+&ndash;&gt; Comment 2
+&ndash;&gt; Comment 3</p>
+<p>Many-to-Many</p>
+<ol>
+<li>Polygamous marriage (i.e., Multiple husbands have multiple wives)</li>
+<li>College: Class &amp; Students; class can have multiple students &amp; students can take multiple classes</li>
+</ol>
+<p><strong>Designing One-to-One Relationships</strong></p>
+<ol>
+<li>Example: Person and Username</li>
+<li>Generally One-to-one relations are stored in the same table</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>name</th>
+<th>user_name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Apivat</td>
+<td>Paul</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Caleb</td>
+<td>Caleb_Curry</td>
+</tr>
+</tbody>
+</table>
+<ol start="3">
+<li>There are times when one-to-one relations are stored in <em>different</em> tables (when you want to store <em>extra</em> attributes <em>about</em> the attribute)</li>
+</ol>
+<p>Cardholder Entity         </p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>first_name</td>
+</tr>
+<tr>
+<td>last_name</td>
+</tr>
+<tr>
+<td>card_id</td>
+</tr>
+</tbody>
+</table>
+<p>(card_id &lt;&ndash;&gt; ID )</p>
+<p>Card</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>card_number</td>
+</tr>
+<tr>
+<td>issue_date</td>
+</tr>
+<tr>
+<td>late_fees</td>
+</tr>
+<tr>
+<td>max</td>
+</tr>
+</tbody>
+</table>
+<p>Summary - One-to-One Relationship</p>
+<ol>
+<li>Store attribute of the entity in the table</li>
+<li>OR use another table and connect with a foreign_key</li>
+</ol>
+<p><strong>Designing One-to-Many Relationships</strong></p>
+<ol>
+<li>The &ldquo;many&rdquo; side is a foreign key to the &ldquo;one&rdquo; side</li>
+<li>User id stays the same.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>User</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user_id</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>(multiple cards)</p>
+<table>
+<thead>
+<tr>
+<th>Card</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>card_id</td>
+</tr>
+<tr>
+<td>user_id</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Card2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>card2_id</td>
+</tr>
+<tr>
+<td>user_id</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Card3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>card3_id</td>
+</tr>
+<tr>
+<td>user_id</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parent Tables and Child Tables</strong></p>
+<ol>
+<li>Tables are either Parent or Child</li>
+<li>Keys keep tables Unique</li>
+<li>Primary key = Parent (User ID)</li>
+<li>Foreign key = Child (user_id as a reference to User ID)</li>
+<li>Child points back to Parents</li>
+<li>In one-to-one, we don&rsquo;t have to worry about parent or child</li>
+<li>In one-to-many, many Children point to a Parent</li>
+<li>When we have a Child table, we always know the Parent (but not vice versa)</li>
+</ol>
+<p><strong>Notation</strong>
+One to One &ndash;&gt; 1 : 1
+One to Many &ndash;&gt; 1 : N
+Many to Many &ndash;&gt; M : N</p>
+<p><strong>Designing Many-to-Many Relationships</strong></p>
+<ol>
+<li>M : N</li>
+<li>Classes : Students</li>
+<li>Parent &lt;&ndash;&gt; Parent</li>
+<li>Solution: Break it up to TWO One-to-Many Relationships with an INTERMEDIARY or JUNCTION table to connect</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>63</td>
+<td>math</td>
+</tr>
+<tr>
+<td>75</td>
+<td>science</td>
+</tr>
+<tr>
+<td>89</td>
+<td>english</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Student</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>John</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Jake</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Sally</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Claire</td>
+</tr>
+</tbody>
+</table>
+<p>Intermediary Table
+(Child Table for both Parents)</p>
+<table>
+<thead>
+<tr>
+<th>class_id</th>
+<th>student_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>75</td>
+<td>8</td>
+</tr>
+<tr>
+<td>89</td>
+<td>8</td>
+</tr>
+<tr>
+<td>63</td>
+<td>17</td>
+</tr>
+<tr>
+<td>75</td>
+<td>17</td>
+</tr>
+<tr>
+<td>89</td>
+<td>17</td>
+</tr>
+<tr>
+<td>89</td>
+<td>16</td>
+</tr>
+<tr>
+<td>63</td>
+<td>6</td>
+</tr>
+<tr>
+<td>89</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Summary of Relationships</strong></p>
+<ol>
+<li>Now we can design every &ldquo;binary relationship&rdquo; - any relationship between two Entities</li>
+</ol>
+<p><strong>Introduction to Keys</strong></p>
+<ol>
+<li>Keys should be Unique</li>
+<li>Never Changing</li>
+<li>Never NULL</li>
+<li>What should be unique? (e.g., a user e-mail)
+<ol>
+<li>Could be a <em>Natural Key</em> (already in the table, no need to define a new column)</li>
+<li>Could be <em>user name</em>.</li>
+</ol>
+</li>
+<li>Key should be Never Changing (otherwise database integrity is compromised)</li>
+</ol>
+<p><strong>Primary Key Index</strong></p>
+<ol>
+<li>Index - think Index in a Book;</li>
+<li>Index points you to the data</li>
+<li>Keys are a type of Index</li>
+<li>Indexs are used for
+<ol>
+<li>SELECT * FROM</li>
+<li>WHERE first_name = &lsquo;Caleb&rsquo;     (need index for this)</li>
+<li></li>
+</ol>
+</li>
+</ol>
+<p><strong>Look Up Table</strong></p>
+<p>Example look-up table of member status:</p>
+<ol>
+<li>member_status id is the foreign key that can point to a members table</li>
+<li>all connections stay the same even if member_status changes</li>
+<li>can set Foreign Key constraints</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>member_status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>gold</td>
+</tr>
+<tr>
+<td>2</td>
+<td>silver</td>
+</tr>
+<tr>
+<td>3</td>
+<td>bronze</td>
+</tr>
+<tr>
+<td>4</td>
+<td>first_quest_complete</td>
+</tr>
+<tr>
+<td>5</td>
+<td>guess_pass</td>
+</tr>
+<tr>
+<td>6</td>
+<td>level_1</td>
+</tr>
+<tr>
+<td>7</td>
+<td>level_2</td>
+</tr>
+<tr>
+<td>8</td>
+<td>level_3</td>
+</tr>
+</tbody>
+</table>
+<p>(where member_status &amp; student_id are One-to-Many)</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>student</th>
+<th>member_status_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>John</td>
+<td>3</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Jake</td>
+<td>3</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Sally</td>
+<td>6</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Claire</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p>(where member_status &amp; student_id are Many-to-Many)</p>
+<table>
+<thead>
+<tr>
+<th>student_id</th>
+<th>member_status_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8</td>
+<td>3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>4</td>
+</tr>
+<tr>
+<td>17</td>
+<td>6</td>
+</tr>
+<tr>
+<td>17</td>
+<td>7</td>
+</tr>
+<tr>
+<td>17</td>
+<td>8</td>
+</tr>
+<tr>
+<td>16</td>
+<td>1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>4</td>
+</tr>
+<tr>
+<td>6</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>Lookup Tables (w Keys) allow for:</p>
+<ol>
+<li>Integrity</li>
+<li>Uniqueness</li>
+<li>Improves functionality (no repeating data)</li>
+<li>Less work</li>
+<li>Allows for added complexity</li>
+</ol>
+<p><strong>Superkey and Candidate Key</strong></p>
+<ol>
+<li>Two main kinds of keys:
+<ol>
+<li>Primary Key</li>
+<li>Foreign Key</li>
+</ol>
+</li>
+</ol>
+<p>Superkey</p>
+<ol>
+<li>Any number of columns that forces each row to be unique</li>
+<li>How do we know each row is unique and talks about one entity (user)?</li>
+<li>Superkey = any number column values  to force that each row is unique</li>
+<li>Candidate key = the least number of column to force every row to be unique (ie., username)</li>
+</ol>
+<p>You&rsquo;ll never program a superkey</p>
+<p>Candidate Key</p>
+<ol>
+<li>Superkey is asking: &ldquo;Can every row be unique?&rdquo;</li>
+<li>Then, once we answer yes, Candidate key asks: &ldquo;How many columns are needed (to force every row to be unique) ?&rdquo; &ndash; what&rsquo;s the least number of columns</li>
+<li>Then, &ldquo;How many Candidate Keys do we have?&rdquo;</li>
+<li>THEN, decide which Candidate Key will be the PRIMARY KEY.</li>
+</ol>
+<p><strong>Primary Key &amp; Alternate Keys</strong>
+Primary Key Possibilities</p>
+<ol>
+<li>username*</li>
+<li>email</li>
+<li>full name, last name, middle name, address, birthday</li>
+</ol>
+<p>*out of these three, username is the best primary key</p>
+<p>What are the criteria for choosing a Primary Key?</p>
+<ol>
+<li>UNIQUE</li>
+<li>NEVER CHANGING</li>
+<li>NEVER NULL</li>
+</ol>
+<p>Primary keys can also be an Index (use Select statement and how you connect most of your data).</p>
+<p>Keys <em>not</em> chosen to be the Primary Key become the Alternate Keys. Alternate Keys can be useful - you could use &ldquo;email&rdquo; (an alternate key) as an Index.</p>
+<p>SELECT * FROM table
+WHERE email = &ldquo;<a href="mailto:value@gmail.com">value@gmail.com</a>&rdquo;</p>
+<p><strong>Surrogate Keys and Natural Keys</strong></p>
+<ol>
+<li>These are &ldquo;categories&rdquo; of Primary Keys</li>
+<li>You won&rsquo;t search for these, but you&rsquo;ll Design the Database with these in mind</li>
+<li>Natural Keys are NATURALLY in the table; they fit requirements for Primary Keys and already <em>in</em> the table (email, username)</li>
+<li>Surrogate Keys are ADDED to your table (i.e., <em>id</em>); they AUTO-INCREMENT
+<ol>
+<li>user &ndash;&gt; user_id</li>
+<li>sale &ndash;&gt; sale_id</li>
+<li>comment &ndash;&gt; comment_id</li>
+</ol>
+</li>
+<li></li>
+</ol>
+<p><strong>Should I use Surrogate Keys or Natural Keys?</strong></p>
+<ol>
+<li>Natural keys = already there, but not always obvious which should e natural key</li>
+<li>Surrogate keys = easy, but you have to add a new column</li>
+<li>Choose one or the other
+<ol>
+<li>minor performance differences</li>
+</ol>
+</li>
+<li>Caleb personally uses Surrogate Key
+<ol>
+<li>Example:    user &ndash;&gt; user_id</li>
+</ol>
+</li>
+</ol>
+<p><strong>Foreign Key</strong></p>
+<ol>
+<li>Foreign Key References a Primary Key (either same table or separate table)</li>
+<li>Every table has ONE Primary Key (could be composed of many columns)</li>
+<li>Every table can have MULTIPLE Foreign Keys referencing many other tables</li>
+</ol>
+<p><strong>Not NULL Foreign Keys</strong></p>
+<ol>
+<li>Foreign Key constraints</li>
+<li>Every row is required to have a value if the column has &ldquo;not Null&rdquo;</li>
+<li>related to Cardinality</li>
+<li>(NOTE: sometimes you don&rsquo;t want to set &ldquo;Not NULL&rdquo; because  an id doesn&rsquo;t currently exist; but sometimes you want to force that relationship to be there between Foreign Key and Primary Key)</li>
+<li>you either want Not NULL or Not Required (depending on the situation)</li>
+<li>Primary Key values should never change, Foreign Key values <em>can</em> change</li>
+<li>We don&rsquo;t want Primary Key values to change, but we could have Foreign Key references change (?)</li>
+<li>Primary Key and Foreign Key should be the same data type</li>
+<li></li>
+</ol>
+<p><strong>Foreign Key Constraints</strong></p>
+<ol>
+<li>FK = Referential Integrity</li>
+<li>Make sure if you update Parent, ZChildren will update</li>
+<li>Prevent creating Children if there&rsquo;s no Parent</li>
+</ol>
+<p>SQL Statements that talk about FK constraints and refer to the Parent (Primary Key)</p>
+<ol>
+<li>ON DELETE = when we delete the Parent, we want to delete the Child
+<ol>
+<li>RESTRICT = (no action) throw an error whenever the Parent is deleted</li>
+<li>CASCADE = whatever we do to Parent, we do to Child (delete parent, delete child)</li>
+<li>SET NULL = if delete Parent, sets Child to NULL</li>
+</ol>
+</li>
+<li>ON UPDATE = when we update the Parent, we want to update the Child
+<ol>
+<li>RESTRICT = (no action) throw an error when try to Update Parent</li>
+<li>CASCADE = If we update Parent, Child updates as well</li>
+<li>SET NULL = if update Parents, thro</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>Every Foreign Key column value needs to reference a Primary Key value</li>
+<li></li>
+</ul>
+<p><strong>Simple Key, Composite Key, Compound Key</strong></p>
+<ul>
+<li>categories of Keys</li>
+<li>Simple Primary Keys - single column (e.g., username)</li>
+<li>Composite Primary Key has multiple columns, as a group as Primary Key; at least one column doesn&rsquo;t have to be a key</li>
+<li>Compound Primary Key - combination of columns in intermediary tables (in many-to-many relations); Primary Keys are compounded; all columns have to be a key</li>
+</ul>
+<p>For Intermediary Tables some people will</p>
+<ul>
+<li>add a surrogate_id to the Compound</li>
+</ul>
+<p><strong>REVIEW</strong></p>
+<ol>
+<li>Superkey</li>
+<li>Candidate Key - least number of columns used to enforce uniqueness</li>
+<li>Primary Key** - the candidate key you select as the Main key</li>
+<li>Alternate Keys - the candidate keys you didn&rsquo;t select as Primary Key</li>
+<li>Foreign Keys** - make connection between tables; references Primary Keys</li>
+</ol>
+<p>Primary + Foreign</p>
+<ol>
+<li>Surrogate &amp; Natural Keys - surrogate (user_id) is random with no real value; Natural is already contained in your database</li>
+<li>(don&rsquo;t switch between these two)</li>
+<li>Rule: You should be able to enforce uniqueness by the columns that are Naturally already there, <em>add</em> a surrogate key if you want</li>
+<li>Rule 2: If you cannot define uniqueness naturally, you&rsquo;ll need to rely on a Surrogate key (try to avoid)</li>
+</ol>
+<p>(can switch between Simple + Composites - you won&rsquo;t define these explicitly)
+6. Simple Key - one column key
+7. Composite Key - multiple column keys
+8. Compound Key - multiple column keys</p>
+<p>Foreign Key Constraints</p>
+<ol>
+<li>ON DELETE
+<ol>
+<li>RESTRICT</li>
+<li>CASCADE</li>
+<li>SET NULL</li>
+</ol>
+</li>
+<li>ON UPDATE
+<ol>
+<li>RESTRICT</li>
+<li>CASCADE</li>
+<li>SET NULL</li>
+</ol>
+</li>
+</ol>
+<p><strong>Introduction to Entity Relationship Modeling</strong></p>
+<ul>
+<li>A standard for Drawing Databases</li>
+<li>EER Model (Enhanced Entity Relationship Model)</li>
+<li>ERD            (Enhanced Relationship Diagram)</li>
+<li>ER Model   (Enhanced Relationship)</li>
+<li>DDL: Define Database Structure</li>
+</ul>
+<p>{do actual drawing}</p>
+<p><strong>Cardinality</strong></p>
+<ul>
+<li>one to one: |&mdash;&mdash;-|</li>
+<li>one to many:    |&mdash;&mdash;&mdash;&ndash;E</li>
+<li>one row to many rows</li>
+<li>many to one:    E&mdash;&mdash;&mdash;|</li>
+</ul>
+<p><strong>Modality</strong></p>
+<ul>
+<li>Can assign &ldquo;NOT NULL&rdquo; to Foreign Key, to say each card <em>must</em> have an owner</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>card_holder (Primary Key)</th>
+<th>card Foreign Key</th>
+<th>card_number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>7</td>
+<td>12</td>
+</tr>
+<tr>
+<td>12</td>
+<td>7</td>
+<td>48</td>
+</tr>
+<tr>
+<td>368</td>
+<td>7</td>
+<td>98</td>
+</tr>
+<tr>
+<td></td>
+<td>368</td>
+<td>112</td>
+</tr>
+</tbody>
+</table>
+<p>4 Modalities
+card_owner &mdash;&mdash;&ndash; card</p>
+<ol>
+<li>-|&mdash;&mdash;&mdash;0&ndash;|-      one-to-one; one card_owner can have zero or 1 card</li>
+<li>-|&mdash;&mdash;&mdash;|&ndash;|-      one-to-one; one card_owner must have 1 and only 1 card</li>
+<li>-|&mdash;&mdash;&mdash;0&ndash;E-  one-to-many; one card_owner can have 0 or many cards</li>
+<li>-|&mdash;&mdash;&mdash;|&ndash;E-  one-to-many; one card_owner must hv 1 or many cards</li>
+</ol>
+<p><strong>Introduction to Database Normalization</strong></p>
+<ol>
+<li>Normalization is a process where we go through our database and correct things that may cause database problems like
+<ol>
+<li>data integrity problems</li>
+<li>repeating data</li>
+</ol>
+</li>
+</ol>
+<p>Third Main Forms (three step-by-step data normalization process)</p>
+<ol>
+<li>1 NF     (first normal form)</li>
+<li>2 NF    (second normal form)</li>
+<li>3 NF    (third normal form)</li>
+</ol>
+<p>Systematic way to normalize a good structured database</p>
+<ul>
+<li>everything must be atomic</li>
+<li>think about how data <em>depends</em> on other data (dependencies)</li>
+<li>must go in sequential order 1 NF &ndash;&gt; 2 NF &ndash;&gt; 3 NF</li>
+</ul>
+<p><strong>1 NF (First Normal Form of Database Normalization)</strong></p>
+<ul>
+<li>Atomicity  (data must be atomic or about one thing)</li>
+</ul>
+<p>Problem: &ldquo;Address column&rdquo; is not atomic (street, apt, city, country, zip)
+Solution: Break this column into multiple columns</p>
+<p>Problem: User enters two email(s) as a single value (two values in one cell)
+Still Problem: Generate same two users for two emails (two of same primary keys)</p>
+<p>Solution: Break into <em>two</em> tables - User table &amp; Email table - turn this into a
+one-to-many   (one user to many emails)</p>
+<p>User
+user_id (primary key)
+first_name
+last_name</p>
+<p>Email
+email_id
+email
+user_id (foreign key)</p>
+<p><strong>2 NF (Second Normal Form of Database Normalization)</strong></p>
+<ul>
+<li><em>Partial Dependency</em>  (when a column depends on part of a Primary Key)</li>
+<li>You need ot have a <em>compound</em> or <em>composite</em> key (Primary Key has to be multiple columns)</li>
+<li>Found in Many-to-Many relationships w/ Intermediary Tables</li>
+</ul>
+<p>{see notebook for illustration}</p>
+<p><strong>3 NF (Third Normal Form of Database Normalization)</strong></p>
+<ul>
+<li>must do 1st and 2nd Normal Form before getting to 3 NF</li>
+<li><em>Transitive Dependency</em> (when a column depends on a column, which depends on a Primary Key)</li>
+<li>Solution: Take a transitive dependency (problematic column), move them to a new table and reference them with a foreign key</li>
+</ul>
+<p><strong>Summary of Normal Forms</strong></p>
+<ol>
+<li>1 NF = making everything atomic</li>
+<li>2 NF = removing partial dependencies</li>
+<li>3 NF = removing transitive dependencies</li>
+</ol>
+<p><strong>Indexes (Clustered, Nonclustered, Composite Index)</strong></p>
+<ul>
+<li>See a book&rsquo;s index (or Phone Book)</li>
+<li>A list of where certain data points are</li>
+<li>Data is sorted in a way that can easily be found</li>
+<li>Nonclustered Index = tells you how to get to the data (book&rsquo;s index)
+<ul>
+<li>points to the data</li>
+<li>a list of references that point to the data (like back of the book)</li>
+<li></li>
+</ul>
+</li>
+<li>Clustered Index = organizes the actual data in a way that&rsquo;s easy to use
+<ul>
+<li>organizes the actual data</li>
+<li>faster and better than non-clustered</li>
+</ul>
+</li>
+</ul>
+<p>Databases</p>
+<ul>
+<li>Rather than having to go through &ldquo;all&rdquo; the data (i.e., Table Scan), you create an index (index seek, makes queries faster)</li>
+<li>Downside: When you update the data, you have to update the index as well otherwise index becomes outdated and useless</li>
+<li></li>
+<li></li>
+<li>You only want to create an index for frequently used data
+<ul>
+<li>Primary Key that is indexed makes it faster</li>
+</ul>
+</li>
+<li>Apply WHERE (sql query) column to an Indexed column</li>
+<li>Index increase speed of JOINS</li>
+<li><em>Whenever you&rsquo;re JOINing certain columns, the two columns you&rsquo;re joining should be Indexed</em></li>
+</ul>
+<p><strong>Data Types</strong></p>
+<ol>
+<li>Date
+<ol>
+<li>date</li>
+<li>time</li>
+<li>datetime</li>
+<li>timestamp (can be millisecond or time, when something was &ldquo;done&rdquo; or when something was &ldquo;created&rdquo; or &ldquo;updated&rdquo; or when a new row is entered)</li>
+</ol>
+</li>
+<li>Numeric
+<ol>
+<li>integer (only whole numbers)</li>
+<li>decimal (more accurate)</li>
+<li>float / double (unsigned)</li>
+<li>binary</li>
+</ol>
+</li>
+<li>String
+<ol>
+<li>Char(8),</li>
+<li>varchar(8) 0 up to 8 characters</li>
+<li>text - longer strings (comments, paragraphs)</li>
+</ol>
+</li>
+</ol>
+<p><strong>Everything above here is DDL - data definition language</strong></p>
+<p><strong>Below here are DML - data manipulation language</strong></p>
+<p><strong>Introduction to JOINS</strong></p>
+<ul>
+<li>Joins bring multiple tables into a presentable format</li>
+</ul>
+<p><strong>Inner Join</strong></p>
+<ul>
+<li>Table A (customer table)</li>
+<li>Table B (card table)</li>
+<li>When there are rows that connect them, a new Table is presented</li>
+<li>Taking only the rows that intersect between two tables
+<ul>
+<li>Eliminate any customers that do not have a card</li>
+<li>Eliminate any cards that do not have a customer</li>
+</ul>
+</li>
+<li>Exclude rows that are <em>not</em> in both tables</li>
+</ul>
+<p>Example:</p>
+<p>Customer Table</p>
+<table>
+<thead>
+<tr>
+<th>customer (Primary Key)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>customer_id</td>
+</tr>
+<tr>
+<td>first_name</td>
+</tr>
+<tr>
+<td>last_name</td>
+</tr>
+</tbody>
+</table>
+<p>Card Table</p>
+<table>
+<thead>
+<tr>
+<th>card (Foreign Key)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>card_id</td>
+</tr>
+<tr>
+<td>customer_id</td>
+</tr>
+<tr>
+<td>max_amount</td>
+</tr>
+<tr>
+<td>monthly_bill</td>
+</tr>
+<tr>
+<td>amount_paid</td>
+</tr>
+<tr>
+<td>amount_owed</td>
+</tr>
+</tbody>
+</table>
+<p>Example Inner Join of Customer Table &amp; Card Table</p>
+<table>
+<thead>
+<tr>
+<th>first_name</th>
+<th>last_name</th>
+<th>amount_paid</th>
+<th>amount_owed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Paul</td>
+<td>Apivat</td>
+<td>2200</td>
+<td>3000</td>
+</tr>
+<tr>
+<td>Paul</td>
+<td>Apivat</td>
+<td>720</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>Jimmy</td>
+<td>John</td>
+<td>3000</td>
+<td>5000</td>
+</tr>
+</tbody>
+</table>
+<p>SELECT
+first_name,
+last_name,
+amount_paid,
+amount_owed
+FROM customer cu
+INNER JOIN card ca ON cu.customer_id = ca.customer_id</p>
+<p><strong>INNER JOIN on 3 Tables</strong></p>
+<p>See illustration</p>
+<p><strong>INNER JOIN on 3 Tables (with Example)</strong></p>
+<p>See illustration</p>
+<p><strong>Introduction to OUTER JOINS</strong></p>
+<ol>
+<li>INNER JOIN                      - least rows</li>
+<li>LEFT (Outer) JOIN</li>
+<li>RIGHT (Outer) JOIN</li>
+<li>FULL (Outer) JOIN          - most rows</li>
+</ol>
+<p><strong>RIGHT OUTER JOIN</strong></p>
+<ul>
+<li>
+<p>same as Left Outer Join, except the Right Table keeps all the rows</p>
+</li>
+<li>
+<p>IN PRACTICE, most people don&rsquo;t use Right Joins; instead they&rsquo;ll use a LEFT JOIN and just flip the tables</p>
+</li>
+<li>
+<p>How do you know which table is LEFT or RIGHT?</p>
+</li>
+</ul>
+<p>SELECT column1, column2, column3
+FROM this_table_is_Left
+LEFT JOIN&hellip;.</p>
+<p><strong>JOIN with NOT NULL Columns</strong></p>
+<ul>
+<li>Not Null columns can cause some confusion when it comes to Joins</li>
+<li>If you want to return <em>all</em> of a column, don&rsquo;t worry about NOT NULL, just put that table in the SELECT statement (i.e., make the table on the left side) and use a LEFT JOIN</li>
+</ul>
+<p>{see illustrations}</p>
+<p><strong>Outer JOIN Across 3 Tables</strong>
+Can combine</p>
+<ul>
+<li>LEFT (outer) JOIN with</li>
+<li>RIGHT (outer) JOIN</li>
+</ul>
+<p><strong>Aliases</strong></p>
+<ul>
+<li>use when writing SELECT statements</li>
+<li>use AS</li>
+</ul>
+<p><strong>SELF JOIN</strong></p>
+<ul>
+<li>take a Table and JOINING with itself</li>
+<li>How to think about it:</li>
+</ul>
+<ol>
+<li>Duplicate your exact table</li>
+<li>Joining with itself</li>
+</ol>
+<p>Illustration</p>
+<table>
+<thead>
+<tr>
+<th>v1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user</td>
+</tr>
+<tr>
+<td>referred_by</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>v2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user_id</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>SELECT
+v1.first_name,
+v1.last_name,
+v1.email,
+v2.email
+FROM user AS v1
+JOIN user AS v2
+ON v1.referred_by = v2.user_id</p>
+<p>(Self-Join is taking the same table, &ldquo;user&rdquo;, and making a duplicate)</p>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
+
+          </div>
+
+          
+
+
+
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/technical_notes/example_tech/rstats_tip_continuous_to_discrete_plot/" rel="prev">Continuous to Discrete Plotting</a>
+  </div>
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Oct 26, 2021</p>
+
+          
+
+
+
+
+
+  
+  
+
+<p class="edit-page">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/database_design_tips.md">
+    <i class="fas fa-pen pr-2"></i>Edit this page
+  </a>
+</p>
+
+
+
+
+          
+
+
+          
+  
+  
+
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+  <p class="powered-by">
+    
+      <a href="/privacy/">Privacy Policy</a>
+    
+    
+       &middot; 
+      <a href="/terms/">Terms</a>
+    
+  </p>
+  
+
+  <p class="powered-by">
+    © 2020 Paul Apivat Hanvongse. All Rights Reserved.
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js" integrity="sha256-pB/deHc9CGfFpJRjC43imB29Rse8tak+5eXqntO94ck=" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.b2ed8054531fc8b77a9c500d5dfef876.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
