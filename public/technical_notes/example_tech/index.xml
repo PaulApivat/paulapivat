@@ -795,6 +795,62 @@ Python 2.7.16
       <description>&lt;h2 id=&#34;introduction-to-database-design&#34;&gt;Introduction to Database Design&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: There are notes from an 
 &lt;a href=&#34;https://www.youtube.com/watch?v=ztHopE5Wnpc&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;8 hour course on YouTube&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;tldr&#34;&gt;TLDR&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;What is the relationship between entities (tables)? Physically draw out the lines and relationships (cardinality)
+&lt;ol&gt;
+&lt;li&gt;one-to-one&lt;/li&gt;
+&lt;li&gt;one-to-many (&amp;lsquo;many&amp;rsquo; side is the Foreign Key)&lt;/li&gt;
+&lt;li&gt;many-to-many (break into two one-to-many relationships w/ intermediary table)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Do we need Lookup Tables?&lt;/li&gt;
+&lt;li&gt;Design Data Tables for Integrity
+&lt;ol&gt;
+&lt;li&gt;Entity Integrity - ID for uniqueness
+&lt;ol&gt;
+&lt;li&gt;Ensure Atomic Values (Natural Keys, if cannot, then add surrogate keys)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Referential Integrity - connect tables between Foreign Keys to Primary Keys&lt;/li&gt;
+&lt;li&gt;Domain Integrity - identify data types of each variable (i.e., numeric, string, date)&lt;/li&gt;
+&lt;li&gt;No repeating data&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Identify which foreign key is NOT NULL (surrogate id will Auto-Increment) (modality)&lt;/li&gt;
+&lt;li&gt;Normalize the data
+&lt;ol&gt;
+&lt;li&gt;1 NF (first normal form) - atomicity&lt;/li&gt;
+&lt;li&gt;2 NF (second normal form) - partial depenency&lt;/li&gt;
+&lt;li&gt;3 NF (third normal form) - transitive dependency (solution: take problematic columns and split into their own tables with foreign key)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Foreign Key Constraints; SQL statements:
+&lt;ol&gt;
+&lt;li&gt;ON DELETE
+&lt;ol&gt;
+&lt;li&gt;RESTRICT&lt;/li&gt;
+&lt;li&gt;CASCADE&lt;/li&gt;
+&lt;li&gt;SET NULL&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;ON UPDATE
+&lt;ol&gt;
+&lt;li&gt;RESTRICT&lt;/li&gt;
+&lt;li&gt;CASCADE&lt;/li&gt;
+&lt;li&gt;SET NULL&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Deteremine which JOIN is needed to get the best &amp;ldquo;view&amp;rdquo;; which table goes after the FROM statement (which table is on the left?)
+&lt;ol&gt;
+&lt;li&gt;INNER JOIN&lt;/li&gt;
+&lt;li&gt;LEFT JOIN&lt;/li&gt;
+&lt;li&gt;SELF JOIN&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 &lt;p&gt;&lt;strong&gt;What is a Relational Database?&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Entity (Rows)
@@ -1728,8 +1784,8 @@ user_id (foreign key)&lt;/p&gt;
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;Everything above here is DDL - data definition language&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Below here are DML - data manipulation language&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;everything-above-here-is-ddl---data-definition-language&#34;&gt;Everything above here is DDL - data definition language&lt;/h2&gt;
+&lt;h2 id=&#34;below-here-are-dml---data-manipulation-language&#34;&gt;Below here are DML - data manipulation language**&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Introduction to JOINS&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Joins bring multiple tables into a presentable format&lt;/li&gt;

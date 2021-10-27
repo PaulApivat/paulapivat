@@ -16,6 +16,39 @@ weight: 2
 
 **Situation**: There are notes from an [8 hour course on YouTube](https://www.youtube.com/watch?v=ztHopE5Wnpc). 
 
+## TLDR
+
+1. What is the relationship between entities (tables)? Physically draw out the lines and relationships (cardinality)
+	1. one-to-one
+	2. one-to-many ('many' side is the Foreign Key)
+	3. many-to-many (break into two one-to-many relationships w/ intermediary table)
+2. Do we need Lookup Tables?
+3. Design Data Tables for Integrity
+	1. Entity Integrity - ID for uniqueness 
+		1. Ensure Atomic Values (Natural Keys, if cannot, then add surrogate keys)
+	2. Referential Integrity - connect tables between Foreign Keys to Primary Keys
+	3. Domain Integrity - identify data types of each variable (i.e., numeric, string, date)
+	4. No repeating data
+3. Identify which foreign key is NOT NULL (surrogate id will Auto-Increment) (modality)
+4. Normalize the data
+	1. 1 NF (first normal form) - atomicity
+	2. 2 NF (second normal form) - partial depenency
+	3. 3 NF (third normal form) - transitive dependency (solution: take problematic columns and split into their own tables with foreign key)
+5. Foreign Key Constraints; SQL statements:
+	1. ON DELETE
+		1. RESTRICT
+		2. CASCADE
+		3. SET NULL
+	2. ON UPDATE
+		1. RESTRICT
+		2. CASCADE
+		3. SET NULL
+6. Deteremine which JOIN is needed to get the best "view"; which table goes after the FROM statement (which table is on the left?)
+	1. INNER JOIN
+	2. LEFT JOIN 
+	3. SELF JOIN
+
+
 **What is a Relational Database?**
 1. Entity (Rows)
 	1. Entity = User (a person, an object)
@@ -630,9 +663,9 @@ Databases
 	3. text - longer strings (comments, paragraphs)
 
 
-**Everything above here is DDL - data definition language**
+## Everything above here is DDL - data definition language
 
-**Below here are DML - data manipulation language**
+## Below here are DML - data manipulation language**
 
 
 **Introduction to JOINS**

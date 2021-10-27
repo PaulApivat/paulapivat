@@ -28,8 +28,7 @@
     
   
   <meta name="description" content="Introduction to Database Design Situation: There are notes from an 8 hour course on YouTube.
-What is a Relational Database?
- Entity (Rows)  Entity = User (a person, an object) Row = all attribute values for an entity   Attribute (Columns)  Attributes are about an entity (user name, name, password, address etc)   Mathematical name for a Row is a Tuple  RDBMS">
+TLDR  What is the relationship between entities (tables)? Physically draw out the lines and relationships (cardinality)  one-to-one one-to-many (&lsquo;many&rsquo; side is the Foreign Key) many-to-many (break into two one-to-many relationships w/ intermediary table)   Do we need Lookup Tables?">
 
   
   <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/database_design_tips/">
@@ -241,8 +240,7 @@ What is a Relational Database?
   <meta property="og:url" content="/technical_notes/example_tech/database_design_tips/">
   <meta property="og:title" content="Database Design Course by Caleb Curry | Paul Apivat">
   <meta property="og:description" content="Introduction to Database Design Situation: There are notes from an 8 hour course on YouTube.
-What is a Relational Database?
- Entity (Rows)  Entity = User (a person, an object) Row = all attribute values for an entity   Attribute (Columns)  Attributes are about an entity (user name, name, password, address etc)   Mathematical name for a Row is a Tuple  RDBMS"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+TLDR  What is the relationship between entities (tables)? Physically draw out the lines and relationships (cardinality)  one-to-one one-to-many (&lsquo;many&rsquo; side is the Foreign Key) many-to-many (break into two one-to-many relationships w/ intermediary table)   Do we need Lookup Tables?"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
@@ -829,6 +827,9 @@ What is a Relational Database?
       <nav id="TableOfContents">
   <ul>
     <li><a href="#introduction-to-database-design">Introduction to Database Design</a></li>
+    <li><a href="#tldr">TLDR</a></li>
+    <li><a href="#everything-above-here-is-ddl---data-definition-language">Everything above here is DDL - data definition language</a></li>
+    <li><a href="#below-here-are-dml---data-manipulation-language">Below here are DML - data manipulation language**</a></li>
   </ul>
 </nav>
 
@@ -847,6 +848,62 @@ What is a Relational Database?
             <h2 id="introduction-to-database-design">Introduction to Database Design</h2>
 <p><strong>Situation</strong>: There are notes from an 
 <a href="https://www.youtube.com/watch?v=ztHopE5Wnpc" target="_blank" rel="noopener">8 hour course on YouTube</a>.</p>
+<h2 id="tldr">TLDR</h2>
+<ol>
+<li>What is the relationship between entities (tables)? Physically draw out the lines and relationships (cardinality)
+<ol>
+<li>one-to-one</li>
+<li>one-to-many (&lsquo;many&rsquo; side is the Foreign Key)</li>
+<li>many-to-many (break into two one-to-many relationships w/ intermediary table)</li>
+</ol>
+</li>
+<li>Do we need Lookup Tables?</li>
+<li>Design Data Tables for Integrity
+<ol>
+<li>Entity Integrity - ID for uniqueness
+<ol>
+<li>Ensure Atomic Values (Natural Keys, if cannot, then add surrogate keys)</li>
+</ol>
+</li>
+<li>Referential Integrity - connect tables between Foreign Keys to Primary Keys</li>
+<li>Domain Integrity - identify data types of each variable (i.e., numeric, string, date)</li>
+<li>No repeating data</li>
+</ol>
+</li>
+<li>Identify which foreign key is NOT NULL (surrogate id will Auto-Increment) (modality)</li>
+<li>Normalize the data
+<ol>
+<li>1 NF (first normal form) - atomicity</li>
+<li>2 NF (second normal form) - partial depenency</li>
+<li>3 NF (third normal form) - transitive dependency (solution: take problematic columns and split into their own tables with foreign key)</li>
+</ol>
+</li>
+<li>Foreign Key Constraints; SQL statements:
+<ol>
+<li>ON DELETE
+<ol>
+<li>RESTRICT</li>
+<li>CASCADE</li>
+<li>SET NULL</li>
+</ol>
+</li>
+<li>ON UPDATE
+<ol>
+<li>RESTRICT</li>
+<li>CASCADE</li>
+<li>SET NULL</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Deteremine which JOIN is needed to get the best &ldquo;view&rdquo;; which table goes after the FROM statement (which table is on the left?)
+<ol>
+<li>INNER JOIN</li>
+<li>LEFT JOIN</li>
+<li>SELF JOIN</li>
+</ol>
+</li>
+</ol>
 <p><strong>What is a Relational Database?</strong></p>
 <ol>
 <li>Entity (Rows)
@@ -1780,8 +1837,8 @@ user_id (foreign key)</p>
 </ol>
 </li>
 </ol>
-<p><strong>Everything above here is DDL - data definition language</strong></p>
-<p><strong>Below here are DML - data manipulation language</strong></p>
+<h2 id="everything-above-here-is-ddl---data-definition-language">Everything above here is DDL - data definition language</h2>
+<h2 id="below-here-are-dml---data-manipulation-language">Below here are DML - data manipulation language**</h2>
 <p><strong>Introduction to JOINS</strong></p>
 <ul>
 <li>Joins bring multiple tables into a presentable format</li>
