@@ -788,6 +788,46 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Check Equality of Two Columns</title>
+      <link>/technical_notes/example_tech/sql_check_equality_two_columns/</link>
+      <pubDate>Mon, 01 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/sql_check_equality_two_columns/</guid>
+      <description>&lt;h2 id=&#34;check-equality-of-two-columns&#34;&gt;Check Equality of Two Columns&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: There are two tables with two columns with different names. You want a simple script to check if the rows of those columns are equal, so the two tables can be joined.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the SQL script, taken from 
+&lt;a href=&#34;https://stackoverflow.com/questions/1632792/how-do-i-compare-two-columns-for-equality-in-sql-server/1632831&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this stackoverflow answer&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;
+SELECT 
+  CASE WHEN COLUMN1 = COLUMN2 
+    THEN &#39;1&#39; 
+    ELSE &#39;0&#39; 
+  END 
+  AS MyDesiredResult
+FROM Table1
+INNER JOIN Table2 ON Table1.PrimaryKey = Table2.ForeignKey
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s an application of this script used in &lt;strong&gt;DAO Dash&lt;/strong&gt;. We are comparing two tables - &lt;code&gt;discord_user&lt;/code&gt; and &lt;code&gt;discord_messages&lt;/code&gt; by these two columns respectively:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;discord_user_id&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;author_user_id&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{r}&#34;&gt;SELECT 
+  CASE WHEN discord_user_id = author_user_id 
+    THEN &#39;1&#39;
+    ELSE &#39;0&#39;
+  END
+  AS AreColumnsEqual
+FROM discord_user d
+INNER JOIN discord_messages m ON d.discord_user_id = m.author_user_id 
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Database Design Course by Caleb Curry</title>
       <link>/technical_notes/example_tech/database_design_tips/</link>
       <pubDate>Tue, 26 Oct 2021 00:00:00 +0100</pubDate>
