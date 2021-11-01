@@ -13,6 +13,47 @@
     </image>
     
     <item>
+      <title>Using Pandas to Convert JSON to Dataframes</title>
+      <link>/technical_notes/example_tech/python_json_to_df/</link>
+      <pubDate>Mon, 01 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_json_to_df/</guid>
+      <description>&lt;h2 id=&#34;using-pandas-to-convert-json-to-dataframes&#34;&gt;Using Pandas to Convert JSON to Dataframes&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: We are pulling in JSON data and need to convert it to a dataframe to load to a relational database or for further analysis.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s likely the JSON is nested with at least two levels. Here the &lt;code&gt;requests&lt;/code&gt; library makes an http request to an API endpoint. A function &lt;code&gt;run_query(q)&lt;/code&gt; is written to return the request in JSON data.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;import requests
+import json
+import pandas as pd
+
+def run_query(q):
+    request = requests.post(&#39;https://api-endpoint&#39;
+                            &#39;&#39;,
+                            json={&#39;query&#39;: query})
+    if request.status_code == 200:
+        return request.json()
+    else:
+        raise Exception(&#39;Query failed. return code is {}.     {}&#39;.format(
+            request.status_code, query))
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then we need to unnest the JSON into a list of dictionaries before converting into dataframe. THe flow is JSON -&amp;gt; get Items -&amp;gt; turn into List -&amp;gt; dig down into List of Dictionaries -&amp;gt; convert to dataframe:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# returns JSON
+result = run_query(query)
+
+# get Items
+result_items = result.items()
+# turn into List
+result_list = list(result_items)
+# dig down into List of Dictionaries (2 levels)
+lst_of_dict = result_list[0][1].get(&#39;transferBanks&#39;)
+# convert to data frame
+df = pd.json_normalize(lst_of_dict)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Creating a Github Repo</title>
       <link>/technical_notes/example_tech/github_make_repo/</link>
       <pubDate>Wed, 21 Jul 2021 00:00:00 +0100</pubDate>
@@ -841,7 +882,6 @@ INNER JOIN Table2 ON Table1.PrimaryKey = Table2.ForeignKey
   AS AreColumnsEqual
 FROM discord_user d
 INNER JOIN discord_messages m ON d.discord_user_id = m.author_user_id 
-
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For more content on data science, R, and Python 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;

@@ -45,7 +45,6 @@ SELECT
   AS AreColumnsEqual
 FROM discord_user d
 INNER JOIN discord_messages m ON d.discord_user_id = m.author_user_id 
-
 ```
 
 

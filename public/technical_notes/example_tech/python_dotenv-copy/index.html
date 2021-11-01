@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Manually Ordering Factors Situation: Sometimes you have want to display bar charts in a specific order, but the numbers get re-arranged or group_by and sort orders by value, but you have a specific order in mind.">
+  <meta name="description" content="Setting up dotenv Files Use Case: We have sensitive API Keys and Secret Keys we don&rsquo;t want to put into version control, but we need to access.
+The best practice is to create a .">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip_manually_order_factors/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_dotenv-copy/">
 
   
 
@@ -217,7 +218,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip_manually_order_factors/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_dotenv-copy/">
 
   
   
@@ -236,15 +237,16 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip_manually_order_factors/">
-  <meta property="og:title" content="Manually Ordering Factors | Paul Apivat">
-  <meta property="og:description" content="Manually Ordering Factors Situation: Sometimes you have want to display bar charts in a specific order, but the numbers get re-arranged or group_by and sort orders by value, but you have a specific order in mind."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_dotenv-copy/">
+  <meta property="og:title" content="Setting dotenv to Access Sensitive API Keys | Paul Apivat">
+  <meta property="og:description" content="Setting up dotenv Files Use Case: We have sensitive API Keys and Secret Keys we don&rsquo;t want to put into version control, but we need to access.
+The best practice is to create a ."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-10-08T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-01-07T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-10-08T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-01-07T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +265,7 @@
 
 
 
-  <title>Manually Ordering Factors | Paul Apivat</title>
+  <title>Setting dotenv to Access Sensitive API Keys | Paul Apivat</title>
 
 </head>
 
@@ -725,8 +727,8 @@
         <a href="/technical_notes/example_tech/python_tip2/">Creating and Looping through DataFrames</a>
       </li>
       
-      <li >
-        <a href="/technical_notes/example_tech/python_dotenv/">dotenv in Python</a>
+      <li class="active">
+        <a href="/technical_notes/example_tech/python_dotenv-copy/">dotenv in Python</a>
       </li>
       
       <li >
@@ -735,10 +737,6 @@
       
       <li >
         <a href="/technical_notes/example_tech/python_poetry/">Installing Poetry</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/python_json_to_df/">JSON to Dataframes with Pandas</a>
       </li>
       
       <li >
@@ -778,7 +776,7 @@
         <a href="/technical_notes/example_tech/rstats_dates/">Format Dates</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_tip_manually_order_factors/">Manually Order Factors</a>
       </li>
       
@@ -841,7 +839,8 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#manually-ordering-factors">Manually Ordering Factors</a></li>
+    <li><a href="#setting-up-dotenv-files">Setting up dotenv Files</a></li>
+    <li><a href="#installing-dotenv-module">Installing dotenv module</a></li>
   </ul>
 </nav>
 
@@ -854,35 +853,83 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Manually Ordering Factors</h1>
+          <h1>Setting dotenv to Access Sensitive API Keys</h1>
 
           <div class="article-style">
-            <h2 id="manually-ordering-factors">Manually Ordering Factors</h2>
-<p><strong>Situation</strong>: Sometimes you have want to display bar charts in a specific order, but the numbers get re-arranged or <code>group_by</code> and <code>sort</code> orders by value, but you have a specific order in mind.</p>
-<p><strong>Context</strong>: In this example, I have &ldquo;Proposals&rdquo; numbered &ldquo;1-10&rdquo;. I want to display them in order, but number 10 doesn&rsquo;t go after 9, but instead goes 1, 10, 2, 3, and so on&hellip;I need to <strong>manually set the factor order</strong> so the bar chart displays exactly how I&rsquo;d like.</p>
-<p>I used <code>fct_relevel</code> (factor re-level), choose a specific column, and the second parameter is a vector of values with the factors manually arranged according to how I&rsquo;d like. Then I set it to that specific column so R knows the desired factor level.</p>
-<pre><code class="language-{python}"># manually arranging factors - num
-# note: move &quot;proposal 10&quot; to the end
-# them apply newly arranged factor levels to column of interest
-new$num &lt;- fct_relevel(new$num, c(&quot;proposal 1&quot;, &quot;proposal 2&quot;, &quot;proposal 3&quot;, &quot;proposal 4&quot;, &quot;proposal 5&quot;, 
-                       &quot;proposal 6&quot;, &quot;proposal 7&quot;, &quot;proposal 8&quot;, &quot;proposal 9&quot;, &quot;proposal 10&quot;))
+            <h2 id="setting-up-dotenv-files">Setting up dotenv Files</h2>
+<p><strong>Use Case</strong>: We have sensitive API Keys and Secret Keys we don&rsquo;t want to put into version control, but we need to access.</p>
+<p>The best practice is to create a <code>.env</code> file at the root of your project and store the keys in there, and <strong>most importantly</strong>, making sure to include <code>.env</code> in a <code>.gitignore</code> file so it <em>does not</em> get included in versioning.</p>
+<p>The challenge is to install the <code>dotenv</code> module to access the <code>load_dotenv</code> function in order to access the data in the environment variable (<code>.env</code>).</p>
+<p>First, here&rsquo;s how the structure of the directory <em>could</em> look like:</p>
+<pre><code>.
+├── .env
+└── settings.py
+└── .gitignore
+└── project_directory_1
+        └── file.py
+└── project_directory_2
+        └── another_file.py
 </code></pre>
-<p>I can also achieve this for string values that don&rsquo;t have an obvious order. Here i&rsquo;m ordering the proposals by a known sequence (but not obvious to the audience).</p>
-<pre><code class="language-{python}"># manually arrange factors - name
-# then apply newly arranged factor levels to column of interest
-new$name &lt;- fct_relevel(new$name, c(&quot;Approve the Bankless DAO Genesis Proposal&quot;,
-                        &quot;What charity should CMS Holdings donate 100k towards&quot;,
-                        &quot;Badge Distribution for Second Airdrop&quot;,
-                        &quot;Reward Season 0 Active Members&quot;,
-                        &quot;Bankless DAO Season 1&quot;,
-                        &quot;BanklessDAO Season 1 Grants Committee Ratification&quot;,
-                        &quot;BED Index Logo Contest&quot;,
-                        &quot;Request for funds for Notion's ongoing subscription&quot;,
-                        &quot;Transfer ownership of the treasury multisig wallet from the genesis team to the DAO&quot;,
-                        &quot;Bankless DAO Season 2&quot;))
+<p>The key things to pay attention here are <code>.env</code>, <code>settings.py</code> and <code>.gitignore</code>.</p>
+<p>For the present hypothetical project, here&rsquo;s what needs to be in the <code>.gitignore</code> file:</p>
+<pre><code>#.gitignore
+
+# Environents
+.env
 </code></pre>
-<p>For more content on data science, R, and Python 
-<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
+<p>Here&rsquo;s what needs to be in <code>.env</code>. The example here is accessing Twitter API. The first time you&rsquo;re setting this up, I&rsquo;d recommend using a &ldquo;fake&rdquo; CONSUMER_KEY (aka API Key) and CONSUMER_SECRET (API Secret Key) just to test it out and make sure that it doesn&rsquo;t get inadvertently added to version control (<strong>note</strong>: see setting up <code>.gitignore</code> above).</p>
+<pre><code># you'll put your actual API Keys and Secrete Keys here
+
+TWITTER_CONSUMER_KEY=fakeconsumerkey
+TWITTER_CONSUMER_SECRET=fakeconsumersecret
+</code></pre>
+<p>Within the <code>settings.py</code> file, you&rsquo;ll have:</p>
+<pre><code>from dotenv import load_dotenv
+load_dotenv()
+</code></pre>
+<p>From there you&rsquo;ll go into <code>file.py</code> and use the dotenv module to access environment variables (sensitive API Keys). The example below accesses Twitter API.</p>
+<pre><code>#file.py
+
+# for python-dotenv method of access environment variables
+from twython import Twython
+import webbrowser
+import os
+import dotenv
+from dotenv import load_dotenv
+load_dotenv()
+
+###### TWITTER API ######
+
+# IMPORTANT: PLUG YOUR KEY AND SECRET IN DIRECTLY (without os.environ.get())
+CONSUMER_KEY = os.environ.get(&quot;TWITTER_CONSUMER_KEY&quot;)         # API Key
+CONSUMER_SECRET = os.environ.get(&quot;TWITTER_CONSUMER_SECRET&quot;)   # API Secret Key
+</code></pre>
+<p>Assuming everything is setup properly, you should be able to run the following code within <code>IPython</code> and have <code>CONSUMER_KEY</code> return a string:</p>
+<pre><code>import os
+import dotenv
+from dotenv import load_dotenv
+
+load_dotenv() # True
+CONSUMER_KEY = os.environ.get(&quot;TWITTER_CONSUMER_KEY&quot;)
+
+CONSUMER_KEY  # 'fakeconsumerkey'
+</code></pre>
+<h2 id="installing-dotenv-module">Installing dotenv module</h2>
+<p>This is the challenging part. I had installed <code>dotenv</code> but was unable to access it within <code>settings.py</code> and <code>file.py</code>.</p>
+<p>First, because we&rsquo;re using Python3, anything that involves <code>pip install</code> should  be <code>pip3 install</code>.</p>
+<p>I had to uninstall, then re-install <code>dotenv</code>, and what worked was following this 
+<a href="https://stackoverflow.com/questions/58943578/i-have-installed-python-dotenv-but-python-cannot-find-it" target="_blank" rel="noopener">Stack Overflow answer</a>:</p>
+<pre><code>conda install -c conda-forge python-dotenv
+</code></pre>
+<p>Sometimes having both <code>dotenv</code> and <code>python-dotenv</code> install can cause conflict. In which case, in your virtual environment, try below. Based on 
+<a href="https://stackoverflow.com/questions/58943578/i-have-installed-python-dotenv-but-python-cannot-find-it" target="_blank" rel="noopener">this answer</a>.</p>
+<pre><code>pip3 uninstall dotenv
+pip3 uninstall python-dotenv
+pip3 install python-dotenv
+</code></pre>
+<p>You&rsquo;ll know you have something working when you run the following code in the command line:</p>
+<pre><code>dotenv --version   # dotenv, version 0.15.0
+</code></pre>
 
           </div>
 
@@ -899,14 +946,14 @@ new$name &lt;- fct_relevel(new$name, c(&quot;Approve the Bankless DAO Genesis Pr
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_viz_2_y_axes/" rel="next">Two Y-Axes</a>
+    <a href="/technical_notes/example_tech/python_faker/" rel="next">Using Faker to simulate fake data with Python</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/data_cleaning_tip1/" rel="prev">Survey Data Cleaning</a>
+    <a href="/technical_notes/example_tech/python_dotenv/" rel="prev">Setting dotenv to Access Sensitive API Keys</a>
   </div>
   
 </div>
@@ -916,7 +963,7 @@ new$name &lt;- fct_relevel(new$name, c(&quot;Approve the Bankless DAO Genesis Pr
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Oct 8, 2021</p>
+          <p>Last updated on Jan 7, 2021</p>
 
           
 
@@ -928,7 +975,7 @@ new$name &lt;- fct_relevel(new$name, c(&quot;Approve the Bankless DAO Genesis Pr
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip_manually_order_factors.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_dotenv%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
