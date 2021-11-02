@@ -13,6 +13,81 @@
     </image>
     
     <item>
+      <title>Using Python to query GraphQL</title>
+      <link>/technical_notes/example_tech/python_query_graphql/</link>
+      <pubDate>Tue, 02 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_query_graphql/</guid>
+      <description>&lt;h2 id=&#34;using-python-to-query-graphql&#34;&gt;Using Python to query GraphQL&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: We need to query GraphQL, in JSON format, to convert to dataframe.&lt;/p&gt;
+&lt;p&gt;There are several ways to go about this. The simplest way is to use the &lt;code&gt;requests&lt;/code&gt; library to make HTTP requests to the API endpoint, then the &lt;code&gt;json&lt;/code&gt; library to convert those requests into JSON format:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;import requests
+import json
+import pandas as pd
+
+def run_query(q):
+    request = requests.post(&#39;https://api-endpoint&#39;
+                            &#39;&#39;,
+                            json={&#39;query&#39;: query})
+    if request.status_code == 200:
+        return request.json()
+    else:
+        raise Exception(&#39;Query failed. return code is {}.     {}&#39;.format(
+            request.status_code, query))
+
+# basic query first
+query = &amp;quot;&amp;quot;&amp;quot;
+{
+    transferBanks(first: 1000, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {
+    id
+    from_address
+    to_address
+    amount
+    amount_display
+    timestamp
+    timestamp_display
+  }
+}
+&amp;quot;&amp;quot;&amp;quot;
+
+# returns JSON
+result = run_query(query)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;An alternative way is to use the &lt;code&gt;gql&lt;/code&gt; and the &lt;code&gt;gql.transport.aiohttp&lt;/code&gt; libraries:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;from gql import gql, Client
+from gql.transport.aiohttp import AIOHTTPTransport
+
+# Select transport with url endpoint
+transport = AIOHTTPTransport(
+    url=&amp;quot;https://api.studio.thegraph.com/query/1121/bankv1/v0.0.5&amp;quot;)
+
+# create GraphQL client using defined transport
+client = Client(transport=transport, fetch_schema_from_transport=True)
+
+# GraphQL query
+query = gql(&amp;quot;&amp;quot;&amp;quot;
+{
+    transferBanks(first: 1000, where: {timestamp_gte: &amp;quot;1635403557&amp;quot;}, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {
+    id
+    from_address
+    to_address
+    amount
+    amount_display
+    timestamp
+    timestamp_display
+    }
+}
+&amp;quot;&amp;quot;&amp;quot;)
+
+# run query on transport
+result = client.execute(query)
+print(result)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Using Pandas to Convert JSON to Dataframes</title>
       <link>/technical_notes/example_tech/python_json_to_df/</link>
       <pubDate>Mon, 01 Nov 2021 00:00:00 +0100</pubDate>

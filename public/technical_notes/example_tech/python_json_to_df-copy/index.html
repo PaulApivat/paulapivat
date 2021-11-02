@@ -27,11 +27,10 @@
   
     
   
-  <meta name="description" content="Reading in JSON data from an Open API The following example is an Open API from the Ministry of Public Health in Thailand.
-The following script consumes the API using the httr package, then transforms JSON to dataframe via the jsonlite package.">
+  <meta name="description" content="Using Pandas to Convert JSON to Dataframes Situation: We are pulling in JSON data and need to convert it to a dataframe to load to a relational database or for further analysis.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_open_api/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_json_to_df-copy/">
 
   
 
@@ -218,7 +217,7 @@ The following script consumes the API using the httr package, then transforms JS
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_open_api/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_json_to_df-copy/">
 
   
   
@@ -237,16 +236,15 @@ The following script consumes the API using the httr package, then transforms JS
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_open_api/">
-  <meta property="og:title" content="Consume Open API with R | Paul Apivat">
-  <meta property="og:description" content="Reading in JSON data from an Open API The following example is an Open API from the Ministry of Public Health in Thailand.
-The following script consumes the API using the httr package, then transforms JSON to dataframe via the jsonlite package."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_json_to_df-copy/">
+  <meta property="og:title" content="Using Pandas to Convert JSON to Dataframes | Paul Apivat">
+  <meta property="og:description" content="Using Pandas to Convert JSON to Dataframes Situation: We are pulling in JSON data and need to convert it to a dataframe to load to a relational database or for further analysis."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-04-16T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-11-01T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-04-16T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-11-01T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +263,7 @@ The following script consumes the API using the httr package, then transforms JS
 
 
 
-  <title>Consume Open API with R | Paul Apivat</title>
+  <title>Using Pandas to Convert JSON to Dataframes | Paul Apivat</title>
 
 </head>
 
@@ -739,16 +737,12 @@ The following script consumes the API using the httr package, then transforms JS
         <a href="/technical_notes/example_tech/python_poetry/">Installing Poetry</a>
       </li>
       
-      <li >
-        <a href="/technical_notes/example_tech/python_json_to_df/">JSON to Dataframes with Pandas</a>
+      <li class="active">
+        <a href="/technical_notes/example_tech/python_json_to_df-copy/">JSON to Dataframes with Pandas</a>
       </li>
       
       <li >
         <a href="/technical_notes/example_tech/python_tip1/">Python Setup</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/python_query_graphql/">Querying GraphQL</a>
       </li>
       
       <li >
@@ -788,7 +782,7 @@ The following script consumes the API using the httr package, then transforms JS
         <a href="/technical_notes/example_tech/rstats_tip_manually_order_factors/">Manually Order Factors</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_open_api/">Open API with R</a>
       </li>
       
@@ -847,7 +841,7 @@ The following script consumes the API using the httr package, then transforms JS
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#reading-in-json-data-from-an-open-api">Reading in JSON data from an Open API</a></li>
+    <li><a href="#using-pandas-to-convert-json-to-dataframes">Using Pandas to Convert JSON to Dataframes</a></li>
   </ul>
 </nav>
 
@@ -860,36 +854,42 @@ The following script consumes the API using the httr package, then transforms JS
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Consume Open API with R</h1>
+          <h1>Using Pandas to Convert JSON to Dataframes</h1>
 
           <div class="article-style">
-            <h2 id="reading-in-json-data-from-an-open-api">Reading in JSON data from an Open API</h2>
-<p>The following example is an 
-<a href="https://covid19.th-stat.com/api/open/timeline" target="_blank" rel="noopener">Open API</a> from the Ministry of Public Health in Thailand.</p>
-<p>The following script consumes the API using the <code>httr</code> package, then transforms JSON to dataframe via the <code>jsonlite</code> package.</p>
-<pre><code>install.packages(&quot;httr&quot;)
-install.packages(&quot;jsonlite&quot;)
-library(httr)
-library(jsonlite)
+            <h2 id="using-pandas-to-convert-json-to-dataframes">Using Pandas to Convert JSON to Dataframes</h2>
+<p><strong>Situation</strong>: We are pulling in JSON data and need to convert it to a dataframe to load to a relational database or for further analysis.</p>
+<p>It&rsquo;s likely the JSON is nested with at least two levels. Here the <code>requests</code> library makes an http request to an API endpoint. A function <code>run_query(q)</code> is written to return the request in JSON data.</p>
+<pre><code class="language-{python}">import requests
+import json
+import pandas as pd
 
-# send a GET request to the Ministry of Public Health Open API
-# consume API to receive JSON file
-url &lt;- &quot;https://covid19.th-stat.com/api/open/timeline&quot;
-resp &lt;- GET(url = url)
-
-# convert JSON file into text
-text_json &lt;- content(resp, as = &quot;text&quot;, encoding = &quot;UTF-8&quot;)
-
-# read text from JSON
-jfile &lt;- fromJSON(text_json)
-
-# save as data frame
-df &lt;- as.data.frame(jfile)
-
-# view data frame
-View(df)
+def run_query(q):
+    request = requests.post('https://api-endpoint'
+                            '',
+                            json={'query': query})
+    if request.status_code == 200:
+        return request.json()
+    else:
+        raise Exception('Query failed. return code is {}.     {}'.format(
+            request.status_code, query))
 
 </code></pre>
+<p>Then we need to unnest the JSON into a list of dictionaries before converting into dataframe. THe flow is JSON -&gt; get Items -&gt; turn into List -&gt; dig down into List of Dictionaries -&gt; convert to dataframe:</p>
+<pre><code class="language-{python}"># returns JSON
+result = run_query(query)
+
+# get Items
+result_items = result.items()
+# turn into List
+result_list = list(result_items)
+# dig down into List of Dictionaries (2 levels)
+lst_of_dict = result_list[0][1].get('transferBanks')
+# convert to data frame
+df = pd.json_normalize(lst_of_dict)
+</code></pre>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -905,15 +905,8 @@ View(df)
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/data_cleaning_tip1/" rel="next">Survey Data Cleaning</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_viz_circular_dendrogram/" rel="prev">Circular Dendrogram</a>
+    <a href="/technical_notes/example_tech/python_json_to_df/" rel="prev">Using Pandas to Convert JSON to Dataframes</a>
   </div>
   
 </div>
@@ -923,7 +916,7 @@ View(df)
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Apr 16, 2021</p>
+          <p>Last updated on Nov 1, 2021</p>
 
           
 
@@ -935,7 +928,7 @@ View(df)
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_open_api.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_json_to_df%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

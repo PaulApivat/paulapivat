@@ -27,11 +27,11 @@
   
     
   
-  <meta name="description" content="Reading in JSON data from an Open API The following example is an Open API from the Ministry of Public Health in Thailand.
-The following script consumes the API using the httr package, then transforms JSON to dataframe via the jsonlite package.">
+  <meta name="description" content="Using Python to query GraphQL Situation: We need to query GraphQL, in JSON format, to convert to dataframe.
+There are several ways to go about this. The simplest way is to use the requests library to make HTTP requests to the API endpoint, then the json library to convert those requests into JSON format:">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_open_api/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_query_graphql/">
 
   
 
@@ -218,7 +218,7 @@ The following script consumes the API using the httr package, then transforms JS
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_open_api/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_query_graphql/">
 
   
   
@@ -237,16 +237,16 @@ The following script consumes the API using the httr package, then transforms JS
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_open_api/">
-  <meta property="og:title" content="Consume Open API with R | Paul Apivat">
-  <meta property="og:description" content="Reading in JSON data from an Open API The following example is an Open API from the Ministry of Public Health in Thailand.
-The following script consumes the API using the httr package, then transforms JSON to dataframe via the jsonlite package."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_query_graphql/">
+  <meta property="og:title" content="Using Python to query GraphQL | Paul Apivat">
+  <meta property="og:description" content="Using Python to query GraphQL Situation: We need to query GraphQL, in JSON format, to convert to dataframe.
+There are several ways to go about this. The simplest way is to use the requests library to make HTTP requests to the API endpoint, then the json library to convert those requests into JSON format:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-04-16T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-11-02T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-04-16T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-11-02T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +265,7 @@ The following script consumes the API using the httr package, then transforms JS
 
 
 
-  <title>Consume Open API with R | Paul Apivat</title>
+  <title>Using Python to query GraphQL | Paul Apivat</title>
 
 </head>
 
@@ -747,7 +747,7 @@ The following script consumes the API using the httr package, then transforms JS
         <a href="/technical_notes/example_tech/python_tip1/">Python Setup</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/python_query_graphql/">Querying GraphQL</a>
       </li>
       
@@ -788,7 +788,7 @@ The following script consumes the API using the httr package, then transforms JS
         <a href="/technical_notes/example_tech/rstats_tip_manually_order_factors/">Manually Order Factors</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_open_api/">Open API with R</a>
       </li>
       
@@ -847,7 +847,7 @@ The following script consumes the API using the httr package, then transforms JS
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#reading-in-json-data-from-an-open-api">Reading in JSON data from an Open API</a></li>
+    <li><a href="#using-python-to-query-graphql">Using Python to query GraphQL</a></li>
   </ul>
 </nav>
 
@@ -860,36 +860,76 @@ The following script consumes the API using the httr package, then transforms JS
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Consume Open API with R</h1>
+          <h1>Using Python to query GraphQL</h1>
 
           <div class="article-style">
-            <h2 id="reading-in-json-data-from-an-open-api">Reading in JSON data from an Open API</h2>
-<p>The following example is an 
-<a href="https://covid19.th-stat.com/api/open/timeline" target="_blank" rel="noopener">Open API</a> from the Ministry of Public Health in Thailand.</p>
-<p>The following script consumes the API using the <code>httr</code> package, then transforms JSON to dataframe via the <code>jsonlite</code> package.</p>
-<pre><code>install.packages(&quot;httr&quot;)
-install.packages(&quot;jsonlite&quot;)
-library(httr)
-library(jsonlite)
+            <h2 id="using-python-to-query-graphql">Using Python to query GraphQL</h2>
+<p><strong>Situation</strong>: We need to query GraphQL, in JSON format, to convert to dataframe.</p>
+<p>There are several ways to go about this. The simplest way is to use the <code>requests</code> library to make HTTP requests to the API endpoint, then the <code>json</code> library to convert those requests into JSON format:</p>
+<pre><code class="language-{python}">import requests
+import json
+import pandas as pd
 
-# send a GET request to the Ministry of Public Health Open API
-# consume API to receive JSON file
-url &lt;- &quot;https://covid19.th-stat.com/api/open/timeline&quot;
-resp &lt;- GET(url = url)
+def run_query(q):
+    request = requests.post('https://api-endpoint'
+                            '',
+                            json={'query': query})
+    if request.status_code == 200:
+        return request.json()
+    else:
+        raise Exception('Query failed. return code is {}.     {}'.format(
+            request.status_code, query))
 
-# convert JSON file into text
-text_json &lt;- content(resp, as = &quot;text&quot;, encoding = &quot;UTF-8&quot;)
+# basic query first
+query = &quot;&quot;&quot;
+{
+    transferBanks(first: 1000, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {
+    id
+    from_address
+    to_address
+    amount
+    amount_display
+    timestamp
+    timestamp_display
+  }
+}
+&quot;&quot;&quot;
 
-# read text from JSON
-jfile &lt;- fromJSON(text_json)
-
-# save as data frame
-df &lt;- as.data.frame(jfile)
-
-# view data frame
-View(df)
-
+# returns JSON
+result = run_query(query)
 </code></pre>
+<p>An alternative way is to use the <code>gql</code> and the <code>gql.transport.aiohttp</code> libraries:</p>
+<pre><code class="language-{python}">from gql import gql, Client
+from gql.transport.aiohttp import AIOHTTPTransport
+
+# Select transport with url endpoint
+transport = AIOHTTPTransport(
+    url=&quot;https://api.studio.thegraph.com/query/1121/bankv1/v0.0.5&quot;)
+
+# create GraphQL client using defined transport
+client = Client(transport=transport, fetch_schema_from_transport=True)
+
+# GraphQL query
+query = gql(&quot;&quot;&quot;
+{
+    transferBanks(first: 1000, where: {timestamp_gte: &quot;1635403557&quot;}, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {
+    id
+    from_address
+    to_address
+    amount
+    amount_display
+    timestamp
+    timestamp_display
+    }
+}
+&quot;&quot;&quot;)
+
+# run query on transport
+result = client.execute(query)
+print(result)
+</code></pre>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -905,15 +945,8 @@ View(df)
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/data_cleaning_tip1/" rel="next">Survey Data Cleaning</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_viz_circular_dendrogram/" rel="prev">Circular Dendrogram</a>
+    <a href="/technical_notes/example_tech/python_json_to_df/" rel="prev">Using Pandas to Convert JSON to Dataframes</a>
   </div>
   
 </div>
@@ -923,7 +956,7 @@ View(df)
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Apr 16, 2021</p>
+          <p>Last updated on Nov 2, 2021</p>
 
           
 
@@ -935,7 +968,7 @@ View(df)
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_open_api.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_query_graphql.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
