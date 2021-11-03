@@ -925,6 +925,59 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Use pgAdmin to upload CSV to Postgres</title>
+      <link>/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/</link>
+      <pubDate>Wed, 03 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/</guid>
+      <description>&lt;h2 id=&#34;use-pgadmin-to-upload-csv-to-postgres-quick--dirty&#34;&gt;Use pgAdmin to upload CSV to Postgres (Quick &amp;amp; Dirty)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: There are many ways to upload CSV into Postgres. This is the relatively quick and dirty way. This represents an infrequent step where we happen to be loading a 20,000+ rows as a one-time event with subsequent smaller, more regular, events.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: The example below is part of a larger process of querying GraphQL in JSON and converting it to Pandas dataframe before getting it into Postgres. Here we are using a mixture of Excel and pgAdmin (Postgres client) to get the job done.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note&lt;/em&gt;: pgAdmin happens to be the Postgresql-client I&amp;rsquo;m using, but any client could work.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pre-requisite Steps&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Create a database table in pgAdmin. Ideally, the columns are defined and consistent with the CSV data that&amp;rsquo;s about to be uploaded.
+1a. Assuming a table has already been created, we will be using the &lt;code&gt;INSERT&lt;/code&gt; statement, otherwise, it would be a &lt;code&gt;CREATE TABLE&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To &lt;code&gt;INSERT&lt;/code&gt; table, you&amp;rsquo;ll right click on a table (here we&amp;rsquo;re using, &amp;lsquo;stg_subgraph_bank&amp;rsquo;), select Scripts&amp;hellip;,then &lt;code&gt;INSERT Scripts&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The following or close variation should appear. Here we are &lt;em&gt;inserting into&lt;/em&gt; the &lt;code&gt;stg_subgraph_bank&lt;/code&gt; table. In this example, there are 6 columns: &lt;code&gt;to_address&lt;/code&gt;, &lt;code&gt;amount_display&lt;/code&gt;, &lt;code&gt;from_address&lt;/code&gt;, &lt;code&gt;graph_id&lt;/code&gt;, &lt;code&gt;tx_timestamp&lt;/code&gt; and &lt;code&gt;timestamp_display&lt;/code&gt;.&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;The &lt;code&gt;TRUNCATE TABLE&lt;/code&gt; is to remove existing data before inserting new data (if needed).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;TRUNCATE TABLE public.stg_subgraph_bank;
+
+INSERT INTO public.stg_subgraph_bank(
+	to_address, amount_display, from_address, graph_id, tx_timestamp, timestamp_display)
+	VALUES (?, ?, ?, ?, ?, ?);
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, we&amp;rsquo;re turning to Excel to prepare the data that will ultimately replace &amp;ldquo;VALUE (?, ?, ?, ?, ?, ?)&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;There is a &lt;code&gt;CONCATENATE&lt;/code&gt; function in Excel that converts data from rows/columns (CSV format) into parentheses of string values.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;=CONCATENATE(&amp;quot;(&#39;&amp;quot;,C2,&amp;quot;&#39;,&#39;&amp;quot;,A2,&amp;quot;&#39;,&amp;quot;,B2,&amp;quot;&#39;,&#39;&amp;quot;,E2,&amp;quot;&#39;,&#39;&amp;quot;,D2,&amp;quot;&#39;),&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After that&amp;rsquo;s been created in Excel, we&amp;rsquo;re copying and pasting all 20,000+ rows (or however many) back into pgAdmin.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a truncated version of the 20,000+ rows of data with the &lt;code&gt;TRUNCATE&lt;/code&gt; command to remove existing data before inserting new data:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;TRUNCATE TABLE public.stg_subgraph_bank;
+
+INSERT INTO public.stg_subgraph_bank(
+	to_address, amount_display, from_address, graph_id, tx_timestamp, timestamp_display)
+	VALUES 
+	(&#39;0x7a250d5630b4cf539739df2c5dacb4c659f2488d&#39;,&#39;14897.1883870177&#39;,&#39;0x59c1349bc6f28a427e78ddb6130ec669c2f39b48&#39;,&#39;0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23&#39;,&#39;1620159318&#39;,&#39;Tue, 04 May 2021 20:15:18 GMT&#39;),
+(&#39;0x156d3129b2fd634d5b0817132401aa68b0126098&#39;,&#39;14897.1883870177&#39;,&#39;0x7a250d5630b4cf539739df2c5dacb4c659f2488d&#39;,&#39;0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-27&#39;,&#39;1620159318&#39;,&#39;Tue, 04 May 2021 20:15:18 GMT&#39;),
+(&#39;0x11ebc944350df20940fb10dd8782d654d6aad8c6&#39;,&#39;37422.0374220399&#39;,&#39;0x9d1f1847582261be41f5a54e8b60cad21400c74f&#39;,&#39;0x355666cd33644fd05b36a54e4ddcd14190a71eea08a291731b6cd9ec8950a199-387&#39;,&#39;1620159318&#39;,&#39;Tue, 04 May 2021 20:15:18 GMT&#39;),
+(&#39;0x5e7a1573620e0df38e41dd302f68d7d8e5b99bba&#39;,&#39;3231.14250158999&#39;,&#39;0x9d1f1847582261be41f5a54e8b60cad21400c74f&#39;,&#39;0x98f688d6adcdbb1a395b21c8f30b81ef0da8454d863e6d6f9a03305c082bae82-263&#39;,&#39;1620159320&#39;,&#39;Tue, 04 May 2021 20:15:20 GMT&#39;),
+(&#39;0x2db3c0f42022fdc8dfe70036fee85e48a24b88af&#39;,&#39;3949.39809822999&#39;,&#39;0xfe8cac7dc7ac38da9ba540eb4d1797d0417dcc41&#39;,&#39;0xc9e209771502f73334340eeea2b943f98d9663a9b1eb4370d23f34a3c860c007-106&#39;,&#39;1620159320&#39;,&#39;Tue, 04 May 2021 20:15:20 GMT&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then run the query and the new data should populate the table.&lt;/p&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Check Equality of Two Columns</title>
       <link>/technical_notes/example_tech/sql_check_equality_two_columns/</link>
       <pubDate>Mon, 01 Nov 2021 00:00:00 +0100</pubDate>

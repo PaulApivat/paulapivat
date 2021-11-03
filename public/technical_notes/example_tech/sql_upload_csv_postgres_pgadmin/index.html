@@ -27,11 +27,10 @@
   
     
   
-  <meta name="description" content="Nested and Hierarchical Data When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.
-In this technical note, I&rsquo;ll outline how to create a dendrogram.">
+  <meta name="description" content="Use pgAdmin to upload CSV to Postgres (Quick &amp; Dirty) Situation: There are many ways to upload CSV into Postgres. This is the relatively quick and dirty way. This represents an infrequent step where we happen to be loading a 20,000&#43; rows as a one-time event with subsequent smaller, more regular, events.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/data_viz_tip1/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/">
 
   
 
@@ -218,7 +217,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram.">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/data_viz_tip1/">
+  <link rel="canonical" href="/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/">
 
   
   
@@ -237,16 +236,15 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram.">
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/data_viz_tip1/">
-  <meta property="og:title" content="Creating a dendrogram with R and ggraph | Paul Apivat">
-  <meta property="og:description" content="Nested and Hierarchical Data When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.
-In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/">
+  <meta property="og:title" content="Use pgAdmin to upload CSV to Postgres | Paul Apivat">
+  <meta property="og:description" content="Use pgAdmin to upload CSV to Postgres (Quick &amp; Dirty) Situation: There are many ways to upload CSV into Postgres. This is the relatively quick and dirty way. This represents an infrequent step where we happen to be loading a 20,000&#43; rows as a one-time event with subsequent smaller, more regular, events."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-08-27T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-11-03T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-08-27T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-11-03T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +263,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
 
 
 
-  <title>Creating a dendrogram with R and ggraph | Paul Apivat</title>
+  <title>Use pgAdmin to upload CSV to Postgres | Paul Apivat</title>
 
 </head>
 
@@ -646,7 +644,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
         <a href="/technical_notes/example_tech/rstats_viz_treemapify/">Treemaps</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/data_viz_tip1/">Visualize Dendrograms</a>
       </li>
       
@@ -829,7 +827,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
         <a href="/technical_notes/example_tech/sql_check_equality_two_columns/">SQL Check Columns Equality</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/">Upload CSV to Postgres with pgAdmin</a>
       </li>
       
@@ -851,7 +849,7 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#nested-and-hierarchical-data">Nested and Hierarchical Data</a></li>
+    <li><a href="#use-pgadmin-to-upload-csv-to-postgres-quick--dirty">Use pgAdmin to upload CSV to Postgres (Quick &amp; Dirty)</a></li>
   </ul>
 </nav>
 
@@ -864,133 +862,54 @@ In this technical note, I&rsquo;ll outline how to create a dendrogram."><meta pr
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Creating a dendrogram with R and ggraph</h1>
+          <h1>Use pgAdmin to upload CSV to Postgres</h1>
 
           <div class="article-style">
-            <h2 id="nested-and-hierarchical-data">Nested and Hierarchical Data</h2>
-<p>When you have data with multiple subgroups, one option is to treat them as nested and/or hierarchical data.</p>
-<p>In this technical note, I&rsquo;ll outline how to create a dendrogram.</p>
-<p>The data used is from the 
-<a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-08-18/readme.md" target="_blank" rel="noopener">Extinct Plants</a> data set from 
-<a href="https://github.com/rfordatascience/tidytuesday" target="_blank" rel="noopener">TidyTuesday</a>.</p>
-<p>Here&rsquo;s the breakdown:</p>
+            <h2 id="use-pgadmin-to-upload-csv-to-postgres-quick--dirty">Use pgAdmin to upload CSV to Postgres (Quick &amp; Dirty)</h2>
+<p><strong>Situation</strong>: There are many ways to upload CSV into Postgres. This is the relatively quick and dirty way. This represents an infrequent step where we happen to be loading a 20,000+ rows as a one-time event with subsequent smaller, more regular, events.</p>
+<p><strong>Context</strong>: The example below is part of a larger process of querying GraphQL in JSON and converting it to Pandas dataframe before getting it into Postgres. Here we are using a mixture of Excel and pgAdmin (Postgres client) to get the job done.</p>
+<p><em>Note</em>: pgAdmin happens to be the Postgresql-client I&rsquo;m using, but any client could work.</p>
+<p><strong>Pre-requisite Steps</strong>:</p>
 <ol>
-<li>Load Packages and Libraries</li>
+<li>
+<p>Create a database table in pgAdmin. Ideally, the columns are defined and consistent with the CSV data that&rsquo;s about to be uploaded.
+1a. Assuming a table has already been created, we will be using the <code>INSERT</code> statement, otherwise, it would be a <code>CREATE TABLE</code>.</p>
+</li>
+<li>
+<p>To <code>INSERT</code> table, you&rsquo;ll right click on a table (here we&rsquo;re using, &lsquo;stg_subgraph_bank&rsquo;), select Scripts&hellip;,then <code>INSERT Scripts</code>.</p>
+</li>
 </ol>
-<pre><code>install.packages(&quot;ggraph&quot;)
-install.packages(&quot;igraph&quot;)
-library(ggraph)
-library(igraph)
-</code></pre>
-<ol start="2">
-<li>Create a data frame with three levels</li>
-</ol>
-<p>Taking the <code>plants</code> data frame, I do some wrangling to get the desired columns.</p>
-<pre><code>plants_data &lt;- plants %&gt;%
-    select(group, binomial_name) %&gt;%
-    group_by(group) %&gt;%
-    arrange(group) %&gt;% 
-    mutate(
-        level1 = 'center',
-        level2 = group,
-        level3 = binomial_name
-    ) %&gt;%
-    # important to ungroup here
-    ungroup() %&gt;%
-    select(level1:level3) 
-
-</code></pre>
+<p>The following or close variation should appear. Here we are <em>inserting into</em> the <code>stg_subgraph_bank</code> table. In this example, there are 6 columns: <code>to_address</code>, <code>amount_display</code>, <code>from_address</code>, <code>graph_id</code>, <code>tx_timestamp</code> and <code>timestamp_display</code>.</p>
 <ol start="3">
-<li>Create an edge list</li>
+<li>The <code>TRUNCATE TABLE</code> is to remove existing data before inserting new data (if needed).</li>
 </ol>
-<pre><code># transform it to an edge list
-plants_edges_level1_2 &lt;- plants_data %&gt;% 
-    select(level1, level2) %&gt;% 
-    unique %&gt;% 
-    rename(from=level1, to=level2)
+<pre><code class="language-{python}">TRUNCATE TABLE public.stg_subgraph_bank;
 
-plants_edges_level2_3 &lt;- plants_data %&gt;% 
-    select(level2, level3) %&gt;% 
-    unique %&gt;% 
-    rename(from=level2, to=level3)
-
-plants_edge_list=rbind(plants_edges_level1_2, plants_edges_level2_3)
-</code></pre>
-<ol start="4">
-<li>Plot a basic chart</li>
-</ol>
-<p>Because I have many observations, I&rsquo;m optiing to use a &ldquo;circular&rdquo; dendrogram.</p>
-<pre><code># plot plant dendogram
-plantgraph &lt;- graph_from_data_frame(plants_edge_list)
-
-ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
-    geom_edge_diagonal() +
-    geom_node_point() +
-    theme_void()
-</code></pre>
-<ol start="5">
-<li>Add text to the end of the edges</li>
-</ol>
-<pre><code># add text &amp; color(leaf)
-ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
-    geom_edge_diagonal() +
-    geom_node_text(aes(label = name, filter=leaf), hjust = 1, size = 1) +
-    geom_node_point()
-</code></pre>
-<p>NOTE: The breakdown of plant groupings are listed below. We can see the Flowering Plants <em>disproportionately</em> out number other groups like Ferns &amp; Allies, Cycad, Mosses, Algae and Conifer.</p>
-<p>When visualizing, we&rsquo;re better off separating Flowering Plants from the other groups.</p>
-<pre><code>plants %&gt;%
-    group_by(group) %&gt;%
-    tally(sort = TRUE)
-
-# A tibble: 6 x 2
-  group                n
-  &lt;chr&gt;            &lt;int&gt;
-1 Flowering Plant    471
-2 Ferns and Allies    13
-3 Cycad                8
-4 Mosses               4
-5 Algae                3
-6 Conifer              1
+INSERT INTO public.stg_subgraph_bank(
+	to_address, amount_display, from_address, graph_id, tx_timestamp, timestamp_display)
+	VALUES (?, ?, ?, ?, ?, ?);
 
 </code></pre>
-<p>Here&rsquo;s a sample picture of the plants</p>
-<p><img src="./png/data_viz_tip1_pic1.png" alt="dendrogram"></p>
-<p><img src="./data_viz_tip1_pic1.png" alt="png"></p>
+<p>Then, we&rsquo;re turning to Excel to prepare the data that will ultimately replace &ldquo;VALUE (?, ?, ?, ?, ?, ?)&rdquo;.</p>
+<p>There is a <code>CONCATENATE</code> function in Excel that converts data from rows/columns (CSV format) into parentheses of string values.</p>
+<pre><code class="language-{python}">=CONCATENATE(&quot;('&quot;,C2,&quot;','&quot;,A2,&quot;',&quot;,B2,&quot;','&quot;,E2,&quot;','&quot;,D2,&quot;'),&quot;)
+</code></pre>
+<p>After that&rsquo;s been created in Excel, we&rsquo;re copying and pasting all 20,000+ rows (or however many) back into pgAdmin.</p>
+<p>Here&rsquo;s a truncated version of the 20,000+ rows of data with the <code>TRUNCATE</code> command to remove existing data before inserting new data:</p>
+<pre><code class="language-{python}">TRUNCATE TABLE public.stg_subgraph_bank;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure id="figure-dendrogram">
-
-
-  <a data-fancybox="" href="./data_viz_tip1_pic1.png" data-caption="Dendrogram.">
-
-
-  <img src="./data_viz_tip1_pic1.png" alt=""  >
-</a>
-
-
-  
-  
-  <figcaption>
-    Dendrogram.
-  </figcaption>
-
-
-</figure>
-
+INSERT INTO public.stg_subgraph_bank(
+	to_address, amount_display, from_address, graph_id, tx_timestamp, timestamp_display)
+	VALUES 
+	('0x7a250d5630b4cf539739df2c5dacb4c659f2488d','14897.1883870177','0x59c1349bc6f28a427e78ddb6130ec669c2f39b48','0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23','1620159318','Tue, 04 May 2021 20:15:18 GMT'),
+('0x156d3129b2fd634d5b0817132401aa68b0126098','14897.1883870177','0x7a250d5630b4cf539739df2c5dacb4c659f2488d','0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-27','1620159318','Tue, 04 May 2021 20:15:18 GMT'),
+('0x11ebc944350df20940fb10dd8782d654d6aad8c6','37422.0374220399','0x9d1f1847582261be41f5a54e8b60cad21400c74f','0x355666cd33644fd05b36a54e4ddcd14190a71eea08a291731b6cd9ec8950a199-387','1620159318','Tue, 04 May 2021 20:15:18 GMT'),
+('0x5e7a1573620e0df38e41dd302f68d7d8e5b99bba','3231.14250158999','0x9d1f1847582261be41f5a54e8b60cad21400c74f','0x98f688d6adcdbb1a395b21c8f30b81ef0da8454d863e6d6f9a03305c082bae82-263','1620159320','Tue, 04 May 2021 20:15:20 GMT'),
+('0x2db3c0f42022fdc8dfe70036fee85e48a24b88af','3949.39809822999','0xfe8cac7dc7ac38da9ba540eb4d1797d0417dcc41','0xc9e209771502f73334340eeea2b943f98d9663a9b1eb4370d23f34a3c860c007-106','1620159320','Tue, 04 May 2021 20:15:20 GMT');
+</code></pre>
+<p>Then run the query and the new data should populate the table.</p>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -1007,14 +926,14 @@ ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_tip5/" rel="next">Does order of operation matter among dplyr functions?</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip3/" rel="prev">Using the pivot_wider() function</a>
+    <a href="/technical_notes/example_tech/sql_check_equality_two_columns/" rel="prev">Check Equality of Two Columns</a>
   </div>
   
 </div>
@@ -1024,7 +943,7 @@ ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Aug 27, 2020</p>
+          <p>Last updated on Nov 3, 2021</p>
 
           
 
@@ -1036,7 +955,7 @@ ggraph(plantgraph, layout = &quot;dendrogram&quot;, circular = TRUE) +
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/data_viz_tip1.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
