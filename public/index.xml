@@ -925,6 +925,92 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Delete a table</title>
+      <link>/technical_notes/example_tech/postgresql_delete_table/</link>
+      <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/postgresql_delete_table/</guid>
+      <description>&lt;h2 id=&#34;delete-a-table&#34;&gt;Delete a table&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: Sometimes when testing a pipeline, you mess up a table (e.g., append the wrong index), you just need to delete and start over.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;TRUNCATE TABLE public.name_of_table;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on Data and DAOs 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Copy to new table</title>
+      <link>/technical_notes/example_tech/postgresql_copy_to_new_table/</link>
+      <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/postgresql_copy_to_new_table/</guid>
+      <description>&lt;h2 id=&#34;copy-existing-table-to-a-new-table&#34;&gt;Copy existing table to a new table&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: Useful to create &amp;lsquo;tests&amp;rsquo; tables while testing a new data pipeline. You can preserve the original in case you need to Write to or Update a table.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;CREATE TABLE new_table AS
+TABLE original_table
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Manually insert data to database</title>
+      <link>/technical_notes/example_tech/postgresql_insert_csv_to_db/</link>
+      <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/postgresql_insert_csv_to_db/</guid>
+      <description>&lt;h2 id=&#34;delete-a-table&#34;&gt;Delete a table&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: If you have a CSV file, you can manually load it into PostgreSQL through the pgAdmin client. This may require creating the data values in Excel first.&lt;/p&gt;
+&lt;p&gt;First, you&amp;rsquo;d have to create a table with the right columns in pgAdmin before inserting data in.&lt;/p&gt;
+&lt;p&gt;To create in Excel, you&amp;rsquo;d need a function to copy the values from the dataframe into a tuple of string values. Data is cut short to keep the example manageable.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# In Excel
+=CONCATENATE(&amp;quot;(&#39;&amp;quot;,C2,&amp;quot;&#39;,&#39;&amp;quot;,A2,&amp;quot;&#39;,&#39;&amp;quot;,B2,&amp;quot;&#39;,&#39;&amp;quot;,E2,&amp;quot;&#39;,&#39;&amp;quot;,D2,&amp;quot;&#39;),&amp;quot;)
+
+=CONCATENATE(&amp;quot;(&#39;&amp;quot;,amount_display,&amp;quot;&#39;,&#39;&amp;quot;,from_address,&amp;quot;&#39;,&#39;&amp;quot;,id,&amp;quot;&#39;,&#39;&amp;quot;,timestamp,&amp;quot;&#39;,&#39;&amp;quot;,to_address,&amp;quot;&#39;),&amp;quot;)
+
+# sample tuple format
+(&#39;0x7a250d5630b4cf539739df2c5dacb4c659f2488d&#39;,&#39;14897.1883870177&#39;,&#39;0x59c1349bc6f28a427e78ddb6130ec669c2f39b48&#39;,&#39;0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23&#39;,&#39;1620159318&#39;,&#39;Tue, 04 May 2021 20:15:18 GMT&#39;),
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once the data is prepped in Excel, you can manully paste into pgAdmin (note: can be error prone with 20,000+ rows). Data is cut short to keep the example manageable.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;INSERT INTO public.table_to_insert(
+        amount_display, from_address, id, timestamp, to_address)
+        VALUES
+        (&#39;14897.1883870177&#39;,&#39;0x59c1349bc6f28a427e78ddb6130ec669c2f39b48&#39;,&#39;0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23&#39;,&#39;1620159318&#39;,&#39;Tue, 04 May 2021 20:15:18 GMT&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note: this is similar to how it&amp;rsquo;s done using the &lt;code&gt;sqlalchemy&lt;/code&gt; library in python.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Sending Multiple Parameters
+with engine.connect() as conn:
+    conn.execute(
+        text(&amp;quot;INSERT INTO some_table (x, y) VALUES (:x, :y)&amp;quot;),
+        [{&amp;quot;x&amp;quot;: 11, &amp;quot;y&amp;quot;: 12}, {&amp;quot;x&amp;quot;: 13, &amp;quot;y&amp;quot;: 14}]
+    )
+    conn.commit()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on Data and DAOs 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Select a range of rows</title>
+      <link>/technical_notes/example_tech/postgresql_select_range_of_rows/</link>
+      <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/postgresql_select_range_of_rows/</guid>
+      <description>&lt;h2 id=&#34;select-a-range-of-rows&#34;&gt;Select a range of rows&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: This is most useful if your data table does not have a primary key. You can use the table&amp;rsquo;s natural index.&lt;/p&gt;
+&lt;p&gt;Here is a way to select a range of rows. &lt;strong&gt;OFFSET&lt;/strong&gt; value is the number of rows to skip (here skipping &lt;code&gt;20500&lt;/code&gt; rows before returning any rows). &lt;strong&gt;ALL&lt;/strong&gt; indicates the max number of rows to return.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;SELECT * FROM table
+LIMIT ALL OFFSET 20500
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you wanted to start on row 15 and only return 10 rows, the query would be:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;SELECT * FROM table
+LIMIT 10 OFFSET 15
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Use pgAdmin to upload CSV to Postgres</title>
       <link>/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/</link>
       <pubDate>Wed, 03 Nov 2021 00:00:00 +0100</pubDate>
