@@ -27,11 +27,10 @@
   
     
   
-  <meta name="description" content="Using Python to query GraphQL Situation: We need to query GraphQL, in JSON format, to convert to dataframe.
-There are several ways to go about this. The simplest way is to use the requests library to make HTTP requests to the API endpoint, then the json library to convert those requests into JSON format:">
+  <meta name="description" content="Prep dataframe to insert to database Situation: When inserting to postgresql with sqlalchemy, the to_sql() function works, but we need to make sure we&rsquo;re appending the id (primary key) column the right way &ndash; incrementally.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_query_graphql/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">
 
   
 
@@ -218,7 +217,7 @@ There are several ways to go about this. The simplest way is to use the requests
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/python_query_graphql/">
+  <link rel="canonical" href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">
 
   
   
@@ -237,16 +236,15 @@ There are several ways to go about this. The simplest way is to use the requests
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/python_query_graphql/">
-  <meta property="og:title" content="Using Python to query GraphQL | Paul Apivat">
-  <meta property="og:description" content="Using Python to query GraphQL Situation: We need to query GraphQL, in JSON format, to convert to dataframe.
-There are several ways to go about this. The simplest way is to use the requests library to make HTTP requests to the API endpoint, then the json library to convert those requests into JSON format:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">
+  <meta property="og:title" content="Prep dataframe to insert to database | Paul Apivat">
+  <meta property="og:description" content="Prep dataframe to insert to database Situation: When inserting to postgresql with sqlalchemy, the to_sql() function works, but we need to make sure we&rsquo;re appending the id (primary key) column the right way &ndash; incrementally."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-11-02T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-11-07T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-11-02T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-11-07T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +263,7 @@ There are several ways to go about this. The simplest way is to use the requests
 
 
 
-  <title>Using Python to query GraphQL | Paul Apivat</title>
+  <title>Prep dataframe to insert to database | Paul Apivat</title>
 
 </head>
 
@@ -723,7 +721,7 @@ There are several ways to go about this. The simplest way is to use the requests
     <a class="docs-toc-link" href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">Pipeline</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">Prep dataframe to insert to database</a>
       </li>
       
@@ -789,7 +787,7 @@ There are several ways to go about this. The simplest way is to use the requests
         <a href="/technical_notes/example_tech/python_tip1/">Python Setup</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/python_query_graphql/">Querying GraphQL</a>
       </li>
       
@@ -897,7 +895,7 @@ There are several ways to go about this. The simplest way is to use the requests
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#using-python-to-query-graphql">Using Python to query GraphQL</a></li>
+    <li><a href="#prep-dataframe-to-insert-to-database">Prep dataframe to insert to database</a></li>
   </ul>
 </nav>
 
@@ -910,73 +908,36 @@ There are several ways to go about this. The simplest way is to use the requests
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Using Python to query GraphQL</h1>
+          <h1>Prep dataframe to insert to database</h1>
 
           <div class="article-style">
-            <h2 id="using-python-to-query-graphql">Using Python to query GraphQL</h2>
-<p><strong>Situation</strong>: We need to query GraphQL, in JSON format, to convert to dataframe.</p>
-<p>There are several ways to go about this. The simplest way is to use the <code>requests</code> library to make HTTP requests to the API endpoint, then the <code>json</code> library to convert those requests into JSON format:</p>
-<pre><code class="language-{python}">import requests
-import json
-import pandas as pd
+            <h2 id="prep-dataframe-to-insert-to-database">Prep dataframe to insert to database</h2>
+<p><strong>Situation</strong>: When inserting to postgresql with sqlalchemy, the <code>to_sql()</code> function works, but we need to make sure we&rsquo;re appending the <code>id</code> (primary key) column the right way &ndash; incrementally.</p>
+<p>This will involve manipulating the dataframe with by incremeting with the <code>max_id</code> before using <code>reset_index()</code> to create an additional column using the natural index, then setting the <code>index=False</code> parameter.</p>
+<pre><code class="language-{python}"># change column name
+# id, graph_id, amount_display, from_address, to_address, tx_timestamp, timestamp_display
 
-def run_query(q):
-    request = requests.post('https://api-endpoint'
-                            '',
-                            json={'query': query})
-    if request.status_code == 200:
-        return request.json()
-    else:
-        raise Exception('Query failed. return code is {}.     {}'.format(
-            request.status_code, query))
+# use rename function to change Two column names, set inplace=False to preserve original dataframe column name
+df2 = df.rename(columns={'id': 'graph_id',
+                         'timestamp': 'tx_timestamp'}, inplace=False)
 
-# basic query first
-query = &quot;&quot;&quot;
-{
-    transferBanks(first: 1000, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {
-    id
-    from_address
-    to_address
-    amount
-    amount_display
-    timestamp
-    timestamp_display
-  }
-}
-&quot;&quot;&quot;
 
-# returns JSON
-result = run_query(query)
+# reorder dataframe column using list of names
+# list of names (in same order as stg_subgraph_bank)
+list_of_col_names = ['graph_id', 'amount_display', 'from_address',
+                     'to_address', 'tx_timestamp', 'timestamp_display']
+df2 = df2.filter(list_of_col_names)
+
 </code></pre>
-<p>An alternative way is to use the <code>gql</code> and the <code>gql.transport.aiohttp</code> libraries:</p>
-<pre><code class="language-{python}">from gql import gql, Client
-from gql.transport.aiohttp import AIOHTTPTransport
+<p>This next part is KEY:</p>
+<pre><code class="language-{python}">df2.index += max_id  # increment with max_id
+df2 = df2.reset_index()  # reset index to later increment with max_id
 
-# Select transport with url endpoint
-transport = AIOHTTPTransport(
-    url=&quot;https://api.studio.thegraph.com/query/1121/bankv1/v0.0.5&quot;)
+df3 = df2.rename(columns={'index': 'id'}, inplace=False)
 
-# create GraphQL client using defined transport
-client = Client(transport=transport, fetch_schema_from_transport=True)
+# only do this step if you've made sure to duplicate a test table in postgresql, then ensure that the dataframe is in the same shape as the postgresql table
+df3.to_sql('stg_subgraph_bank_1', con=db, if_exists='append', index=False)
 
-# GraphQL query
-query = gql(&quot;&quot;&quot;
-{
-    transferBanks(first: 1000, where: {timestamp_gte: &quot;1635403557&quot;}, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {
-    id
-    from_address
-    to_address
-    amount
-    amount_display
-    timestamp
-    timestamp_display
-    }
-}
-&quot;&quot;&quot;)
-
-# run query on transport
-result = client.execute(query)
-print(result)
 </code></pre>
 <p>For more content on data science, R, and Python 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
@@ -996,14 +957,14 @@ print(result)
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/python_string_interpolation_graphql/" rel="next">Use string interpolation to query GraphQL</a>
+    <a href="/technical_notes/example_tech/postgresql_insert_csv_to_db/" rel="next">Manually insert data to database</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_json_to_df/" rel="prev">Using Pandas to Convert JSON to Dataframes</a>
+    <a href="/technical_notes/example_tech/postgresql_select_range_of_rows/" rel="prev">Select a range of rows</a>
   </div>
   
 </div>
@@ -1013,7 +974,7 @@ print(result)
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Nov 2, 2021</p>
+          <p>Last updated on Nov 7, 2021</p>
 
           
 
@@ -1025,7 +986,7 @@ print(result)
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_query_graphql.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

@@ -27,11 +27,10 @@
   
     
   
-  <meta name="description" content="Using Python to query GraphQL Situation: We need to query GraphQL, in JSON format, to convert to dataframe.
-There are several ways to go about this. The simplest way is to use the requests library to make HTTP requests to the API endpoint, then the json library to convert those requests into JSON format:">
+  <meta name="description" content="Use Python&rsquo;s string interpolation to query GraphQL Situation: For this project, I had previously grabbed the latest timestamp in a data table, assigned it to a variable and now want to use it as input for a GraphQL query:">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_query_graphql/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_string_interpolation_graphql/">
 
   
 
@@ -218,7 +217,7 @@ There are several ways to go about this. The simplest way is to use the requests
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/python_query_graphql/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_string_interpolation_graphql/">
 
   
   
@@ -237,16 +236,15 @@ There are several ways to go about this. The simplest way is to use the requests
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/python_query_graphql/">
-  <meta property="og:title" content="Using Python to query GraphQL | Paul Apivat">
-  <meta property="og:description" content="Using Python to query GraphQL Situation: We need to query GraphQL, in JSON format, to convert to dataframe.
-There are several ways to go about this. The simplest way is to use the requests library to make HTTP requests to the API endpoint, then the json library to convert those requests into JSON format:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_string_interpolation_graphql/">
+  <meta property="og:title" content="Use string interpolation to query GraphQL | Paul Apivat">
+  <meta property="og:description" content="Use Python&rsquo;s string interpolation to query GraphQL Situation: For this project, I had previously grabbed the latest timestamp in a data table, assigned it to a variable and now want to use it as input for a GraphQL query:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-11-02T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-11-07T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-11-02T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-11-07T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +263,7 @@ There are several ways to go about this. The simplest way is to use the requests
 
 
 
-  <title>Using Python to query GraphQL | Paul Apivat</title>
+  <title>Use string interpolation to query GraphQL | Paul Apivat</title>
 
 </head>
 
@@ -789,7 +787,7 @@ There are several ways to go about this. The simplest way is to use the requests
         <a href="/technical_notes/example_tech/python_tip1/">Python Setup</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/python_query_graphql/">Querying GraphQL</a>
       </li>
       
@@ -797,7 +795,7 @@ There are several ways to go about this. The simplest way is to use the requests
         <a href="/technical_notes/example_tech/python_reproducibility/">Reproducibility in Python</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/python_string_interpolation_graphql/">String Interpolation GraphQL</a>
       </li>
       
@@ -897,7 +895,7 @@ There are several ways to go about this. The simplest way is to use the requests
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#using-python-to-query-graphql">Using Python to query GraphQL</a></li>
+    <li><a href="#use-pythons-string-interpolation-to-query-graphql">Use Python&rsquo;s string interpolation to query GraphQL</a></li>
   </ul>
 </nav>
 
@@ -910,73 +908,51 @@ There are several ways to go about this. The simplest way is to use the requests
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Using Python to query GraphQL</h1>
+          <h1>Use string interpolation to query GraphQL</h1>
 
           <div class="article-style">
-            <h2 id="using-python-to-query-graphql">Using Python to query GraphQL</h2>
-<p><strong>Situation</strong>: We need to query GraphQL, in JSON format, to convert to dataframe.</p>
-<p>There are several ways to go about this. The simplest way is to use the <code>requests</code> library to make HTTP requests to the API endpoint, then the <code>json</code> library to convert those requests into JSON format:</p>
-<pre><code class="language-{python}">import requests
-import json
-import pandas as pd
+            <h2 id="use-pythons-string-interpolation-to-query-graphql">Use Python&rsquo;s string interpolation to query GraphQL</h2>
+<p><strong>Situation</strong>: For this project, I had previously grabbed the latest timestamp in a data table, assigned it to a variable and now want to use it as input for a GraphQL query:</p>
+<pre><code class="language-{python}"># Run separate request to GraphQL endpoint
+# use max_tx_timestamp in parameter 'where: {timestamp_gte: max_tx_timestamp}'
+# this will return on-chain tx since latest timestamp (i.e., max_tx_timestamp)
+
+variables = {'input': max_tx_timestamp}
+
+query = f&quot;&quot;&quot;
+{{
+  transferBanks(first: 1000, where: {{timestamp_gte:{max_tx_timestamp}}}, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {{
+    id
+    from_address
+    to_address
+    amount
+    amount_display
+    timestamp
+    timestamp_display
+  }}
+}}
+&quot;&quot;&quot;
+</code></pre>
+<p>Then to make sure this <em>string interpolation</em> actually works, we need to make a post request to the GraphQL API endpoint, query it, save that query into a data frame.</p>
+<p>(NOTE: This requies toggling back and forth between the database client like pgAdmin and your ipython environment)</p>
+<pre><code class="language-{python}"># note: 'variables' defined above
+
 
 def run_query(q):
-    request = requests.post('https://api-endpoint'
+    request = requests.post('https://api.studio.thegraph.com/query/1121/bankv1/v0.0.5'
                             '',
-                            json={'query': query})
+                            json={'query': query, 'variables': variables})
     if request.status_code == 200:
         return request.json()
     else:
         raise Exception('Query failed. return code is {}.     {}'.format(
             request.status_code, query))
 
-# basic query first
-query = &quot;&quot;&quot;
-{
-    transferBanks(first: 1000, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {
-    id
-    from_address
-    to_address
-    amount
-    amount_display
-    timestamp
-    timestamp_display
-  }
-}
-&quot;&quot;&quot;
 
-# returns JSON
 result = run_query(query)
-</code></pre>
-<p>An alternative way is to use the <code>gql</code> and the <code>gql.transport.aiohttp</code> libraries:</p>
-<pre><code class="language-{python}">from gql import gql, Client
-from gql.transport.aiohttp import AIOHTTPTransport
 
-# Select transport with url endpoint
-transport = AIOHTTPTransport(
-    url=&quot;https://api.studio.thegraph.com/query/1121/bankv1/v0.0.5&quot;)
-
-# create GraphQL client using defined transport
-client = Client(transport=transport, fetch_schema_from_transport=True)
-
-# GraphQL query
-query = gql(&quot;&quot;&quot;
-{
-    transferBanks(first: 1000, where: {timestamp_gte: &quot;1635403557&quot;}, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {
-    id
-    from_address
-    to_address
-    amount
-    amount_display
-    timestamp
-    timestamp_display
-    }
-}
-&quot;&quot;&quot;)
-
-# run query on transport
-result = client.execute(query)
-print(result)
+# print results
+print('Print Bank Subgraph Result - {}'.format(result))
 </code></pre>
 <p>For more content on data science, R, and Python 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
@@ -995,15 +971,8 @@ print(result)
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/python_string_interpolation_graphql/" rel="next">Use string interpolation to query GraphQL</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_json_to_df/" rel="prev">Using Pandas to Convert JSON to Dataframes</a>
+    <a href="/technical_notes/example_tech/python_query_graphql/" rel="prev">Using Python to query GraphQL</a>
   </div>
   
 </div>
@@ -1013,7 +982,7 @@ print(result)
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Nov 2, 2021</p>
+          <p>Last updated on Nov 7, 2021</p>
 
           
 
@@ -1025,7 +994,7 @@ print(result)
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_query_graphql.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_string_interpolation_graphql.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

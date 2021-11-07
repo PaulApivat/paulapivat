@@ -13,6 +13,59 @@
     </image>
     
     <item>
+      <title>Use string interpolation to query GraphQL</title>
+      <link>/technical_notes/example_tech/python_string_interpolation_graphql/</link>
+      <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_string_interpolation_graphql/</guid>
+      <description>&lt;h2 id=&#34;use-pythons-string-interpolation-to-query-graphql&#34;&gt;Use Python&amp;rsquo;s string interpolation to query GraphQL&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: For this project, I had previously grabbed the latest timestamp in a data table, assigned it to a variable and now want to use it as input for a GraphQL query:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Run separate request to GraphQL endpoint
+# use max_tx_timestamp in parameter &#39;where: {timestamp_gte: max_tx_timestamp}&#39;
+# this will return on-chain tx since latest timestamp (i.e., max_tx_timestamp)
+
+variables = {&#39;input&#39;: max_tx_timestamp}
+
+query = f&amp;quot;&amp;quot;&amp;quot;
+{{
+  transferBanks(first: 1000, where: {{timestamp_gte:{max_tx_timestamp}}}, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {{
+    id
+    from_address
+    to_address
+    amount
+    amount_display
+    timestamp
+    timestamp_display
+  }}
+}}
+&amp;quot;&amp;quot;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then to make sure this &lt;em&gt;string interpolation&lt;/em&gt; actually works, we need to make a post request to the GraphQL API endpoint, query it, save that query into a data frame.&lt;/p&gt;
+&lt;p&gt;(NOTE: This requies toggling back and forth between the database client like pgAdmin and your ipython environment)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# note: &#39;variables&#39; defined above
+
+
+def run_query(q):
+    request = requests.post(&#39;https://api.studio.thegraph.com/query/1121/bankv1/v0.0.5&#39;
+                            &#39;&#39;,
+                            json={&#39;query&#39;: query, &#39;variables&#39;: variables})
+    if request.status_code == 200:
+        return request.json()
+    else:
+        raise Exception(&#39;Query failed. return code is {}.     {}&#39;.format(
+            request.status_code, query))
+
+
+result = run_query(query)
+
+# print results
+print(&#39;Print Bank Subgraph Result - {}&#39;.format(result))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Using Python to query GraphQL</title>
       <link>/technical_notes/example_tech/python_query_graphql/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0100</pubDate>
@@ -954,6 +1007,49 @@ TABLE original_table
     </item>
     
     <item>
+      <title>Connecting to postgresql database</title>
+      <link>/technical_notes/example_tech/postgresql_connecting_sqlalchemy/</link>
+      <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/postgresql_connecting_sqlalchemy/</guid>
+      <description>&lt;h2 id=&#34;connecting-to-postgresql-database-with-python&#34;&gt;Connecting to postgresql database with python&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You need to establish connection to an existing table in your postgresql database in order to build a data pipeline into it.&lt;/p&gt;
+&lt;p&gt;I use &lt;code&gt;sqlalchemy&lt;/code&gt; to work with existing tables in postgresql. In this project, I connected to a GraphQL API endpoint with &lt;code&gt;requests&lt;/code&gt; and the &lt;code&gt;json&lt;/code&gt; library is needed to work with JSON and &lt;code&gt;pandas&lt;/code&gt; for dataframes.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;import sqlalchemy
+from sqlalchemy import create_engine
+from sqlalchemy import text
+
+import requests
+import json
+import pandas as pd
+from pprint import pprint
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;making-a-connection&#34;&gt;Making a connection&lt;/h2&gt;
+&lt;p&gt;With &lt;code&gt;sqlalchemy&lt;/code&gt; we use the &lt;code&gt;create_engine()&lt;/code&gt; function. Here we&amp;rsquo;re reading a table and doing some data manipulation:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db_string = &#39;postgresql://user:password@localhost:port/mydatabase&#39;
+db = create_engine(db_string)
+
+# once a database connection is established, we can select pieces of data we want from a table:
+
+# Query existing postgres table: stg_subgraph_bank
+# read from stg_subgraph_bank to select MAX (tx_timestamp)
+# then, set to variable max_tx_timestamp
+
+with db.connect() as conn:
+    result = conn.execute(
+        text(&amp;quot;SELECT MAX(tx_timestamp) AS max_tx_timestamp, MAX(id) AS max_id FROM stg_subgraph_bank_1&amp;quot;))
+    for row in result:
+        max_tx_timestamp = row.max_tx_timestamp
+        max_id = row.max_id
+        print(&amp;quot;new max_tx_timestamp: &amp;quot;, max_tx_timestamp)
+        print(&amp;quot;new max_id: &amp;quot;, max_id)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on Data and DAOs 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Manually insert data to database</title>
       <link>/technical_notes/example_tech/postgresql_insert_csv_to_db/</link>
       <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>
@@ -986,6 +1082,44 @@ with engine.connect() as conn:
     conn.commit()
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For more content on Data and DAOs 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Prep dataframe to insert to database</title>
+      <link>/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/</link>
+      <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/</guid>
+      <description>&lt;h2 id=&#34;prep-dataframe-to-insert-to-database&#34;&gt;Prep dataframe to insert to database&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: When inserting to postgresql with sqlalchemy, the &lt;code&gt;to_sql()&lt;/code&gt; function works, but we need to make sure we&amp;rsquo;re appending the &lt;code&gt;id&lt;/code&gt; (primary key) column the right way &amp;ndash; incrementally.&lt;/p&gt;
+&lt;p&gt;This will involve manipulating the dataframe with by incremeting with the &lt;code&gt;max_id&lt;/code&gt; before using &lt;code&gt;reset_index()&lt;/code&gt; to create an additional column using the natural index, then setting the &lt;code&gt;index=False&lt;/code&gt; parameter.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# change column name
+# id, graph_id, amount_display, from_address, to_address, tx_timestamp, timestamp_display
+
+# use rename function to change Two column names, set inplace=False to preserve original dataframe column name
+df2 = df.rename(columns={&#39;id&#39;: &#39;graph_id&#39;,
+                         &#39;timestamp&#39;: &#39;tx_timestamp&#39;}, inplace=False)
+
+
+# reorder dataframe column using list of names
+# list of names (in same order as stg_subgraph_bank)
+list_of_col_names = [&#39;graph_id&#39;, &#39;amount_display&#39;, &#39;from_address&#39;,
+                     &#39;to_address&#39;, &#39;tx_timestamp&#39;, &#39;timestamp_display&#39;]
+df2 = df2.filter(list_of_col_names)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This next part is KEY:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;df2.index += max_id  # increment with max_id
+df2 = df2.reset_index()  # reset index to later increment with max_id
+
+df3 = df2.rename(columns={&#39;index&#39;: &#39;id&#39;}, inplace=False)
+
+# only do this step if you&#39;ve made sure to duplicate a test table in postgresql, then ensure that the dataframe is in the same shape as the postgresql table
+df3.to_sql(&#39;stg_subgraph_bank_1&#39;, con=db, if_exists=&#39;append&#39;, index=False)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>

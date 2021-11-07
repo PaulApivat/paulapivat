@@ -27,11 +27,11 @@
   
     
   
-  <meta name="description" content="Using Python to query GraphQL Situation: We need to query GraphQL, in JSON format, to convert to dataframe.
-There are several ways to go about this. The simplest way is to use the requests library to make HTTP requests to the API endpoint, then the json library to convert those requests into JSON format:">
+  <meta name="description" content="Connecting to postgresql database with python Situation: You need to establish connection to an existing table in your postgresql database in order to build a data pipeline into it.
+I use sqlalchemy to work with existing tables in postgresql.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_query_graphql/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/postgresql_connecting_sqlalchemy/">
 
   
 
@@ -218,7 +218,7 @@ There are several ways to go about this. The simplest way is to use the requests
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/python_query_graphql/">
+  <link rel="canonical" href="/technical_notes/example_tech/postgresql_connecting_sqlalchemy/">
 
   
   
@@ -237,16 +237,16 @@ There are several ways to go about this. The simplest way is to use the requests
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/python_query_graphql/">
-  <meta property="og:title" content="Using Python to query GraphQL | Paul Apivat">
-  <meta property="og:description" content="Using Python to query GraphQL Situation: We need to query GraphQL, in JSON format, to convert to dataframe.
-There are several ways to go about this. The simplest way is to use the requests library to make HTTP requests to the API endpoint, then the json library to convert those requests into JSON format:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/postgresql_connecting_sqlalchemy/">
+  <meta property="og:title" content="Connecting to postgresql database | Paul Apivat">
+  <meta property="og:description" content="Connecting to postgresql database with python Situation: You need to establish connection to an existing table in your postgresql database in order to build a data pipeline into it.
+I use sqlalchemy to work with existing tables in postgresql."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-11-02T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-11-07T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-11-02T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-11-07T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +265,7 @@ There are several ways to go about this. The simplest way is to use the requests
 
 
 
-  <title>Using Python to query GraphQL | Paul Apivat</title>
+  <title>Connecting to postgresql database | Paul Apivat</title>
 
 </head>
 
@@ -744,7 +744,7 @@ There are several ways to go about this. The simplest way is to use the requests
         <a href="/technical_notes/example_tech/postgresql_copy_to_new_table/">Duplicate a table</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/postgresql_connecting_sqlalchemy/">Establish connection (SQLAlchemy)</a>
       </li>
       
@@ -789,7 +789,7 @@ There are several ways to go about this. The simplest way is to use the requests
         <a href="/technical_notes/example_tech/python_tip1/">Python Setup</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/python_query_graphql/">Querying GraphQL</a>
       </li>
       
@@ -897,7 +897,8 @@ There are several ways to go about this. The simplest way is to use the requests
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#using-python-to-query-graphql">Using Python to query GraphQL</a></li>
+    <li><a href="#connecting-to-postgresql-database-with-python">Connecting to postgresql database with python</a></li>
+    <li><a href="#making-a-connection">Making a connection</a></li>
   </ul>
 </nav>
 
@@ -910,75 +911,43 @@ There are several ways to go about this. The simplest way is to use the requests
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Using Python to query GraphQL</h1>
+          <h1>Connecting to postgresql database</h1>
 
           <div class="article-style">
-            <h2 id="using-python-to-query-graphql">Using Python to query GraphQL</h2>
-<p><strong>Situation</strong>: We need to query GraphQL, in JSON format, to convert to dataframe.</p>
-<p>There are several ways to go about this. The simplest way is to use the <code>requests</code> library to make HTTP requests to the API endpoint, then the <code>json</code> library to convert those requests into JSON format:</p>
-<pre><code class="language-{python}">import requests
+            <h2 id="connecting-to-postgresql-database-with-python">Connecting to postgresql database with python</h2>
+<p><strong>Situation</strong>: You need to establish connection to an existing table in your postgresql database in order to build a data pipeline into it.</p>
+<p>I use <code>sqlalchemy</code> to work with existing tables in postgresql. In this project, I connected to a GraphQL API endpoint with <code>requests</code> and the <code>json</code> library is needed to work with JSON and <code>pandas</code> for dataframes.</p>
+<pre><code class="language-{python}">import sqlalchemy
+from sqlalchemy import create_engine
+from sqlalchemy import text
+
+import requests
 import json
 import pandas as pd
-
-def run_query(q):
-    request = requests.post('https://api-endpoint'
-                            '',
-                            json={'query': query})
-    if request.status_code == 200:
-        return request.json()
-    else:
-        raise Exception('Query failed. return code is {}.     {}'.format(
-            request.status_code, query))
-
-# basic query first
-query = &quot;&quot;&quot;
-{
-    transferBanks(first: 1000, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {
-    id
-    from_address
-    to_address
-    amount
-    amount_display
-    timestamp
-    timestamp_display
-  }
-}
-&quot;&quot;&quot;
-
-# returns JSON
-result = run_query(query)
+from pprint import pprint
 </code></pre>
-<p>An alternative way is to use the <code>gql</code> and the <code>gql.transport.aiohttp</code> libraries:</p>
-<pre><code class="language-{python}">from gql import gql, Client
-from gql.transport.aiohttp import AIOHTTPTransport
+<h2 id="making-a-connection">Making a connection</h2>
+<p>With <code>sqlalchemy</code> we use the <code>create_engine()</code> function. Here we&rsquo;re reading a table and doing some data manipulation:</p>
+<pre><code class="language-{python}">db_string = 'postgresql://user:password@localhost:port/mydatabase'
+db = create_engine(db_string)
 
-# Select transport with url endpoint
-transport = AIOHTTPTransport(
-    url=&quot;https://api.studio.thegraph.com/query/1121/bankv1/v0.0.5&quot;)
+# once a database connection is established, we can select pieces of data we want from a table:
 
-# create GraphQL client using defined transport
-client = Client(transport=transport, fetch_schema_from_transport=True)
+# Query existing postgres table: stg_subgraph_bank
+# read from stg_subgraph_bank to select MAX (tx_timestamp)
+# then, set to variable max_tx_timestamp
 
-# GraphQL query
-query = gql(&quot;&quot;&quot;
-{
-    transferBanks(first: 1000, where: {timestamp_gte: &quot;1635403557&quot;}, orderBy: timestamp, orderDirection: asc, subgraphError: allow) {
-    id
-    from_address
-    to_address
-    amount
-    amount_display
-    timestamp
-    timestamp_display
-    }
-}
-&quot;&quot;&quot;)
+with db.connect() as conn:
+    result = conn.execute(
+        text(&quot;SELECT MAX(tx_timestamp) AS max_tx_timestamp, MAX(id) AS max_id FROM stg_subgraph_bank_1&quot;))
+    for row in result:
+        max_tx_timestamp = row.max_tx_timestamp
+        max_id = row.max_id
+        print(&quot;new max_tx_timestamp: &quot;, max_tx_timestamp)
+        print(&quot;new max_id: &quot;, max_id)
 
-# run query on transport
-result = client.execute(query)
-print(result)
 </code></pre>
-<p>For more content on data science, R, and Python 
+<p>For more content on Data and DAOs 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
@@ -996,14 +965,14 @@ print(result)
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/python_string_interpolation_graphql/" rel="next">Use string interpolation to query GraphQL</a>
+    <a href="/technical_notes/example_tech/postgresql_copy_to_new_table/" rel="next">Copy to new table</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_json_to_df/" rel="prev">Using Pandas to Convert JSON to Dataframes</a>
+    <a href="/technical_notes/example_tech/postgresql_insert_csv_to_db/" rel="prev">Manually insert data to database</a>
   </div>
   
 </div>
@@ -1013,7 +982,7 @@ print(result)
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Nov 2, 2021</p>
+          <p>Last updated on Nov 7, 2021</p>
 
           
 
@@ -1025,7 +994,7 @@ print(result)
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_query_graphql.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/postgresql_connecting_sqlalchemy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

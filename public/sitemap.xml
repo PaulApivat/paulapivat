@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/technical_notes/example_tech/python_string_interpolation_graphql/</loc>
+    <lastmod>2021-11-07T00:00:00+01:00</lastmod>
+  </url><url>
     <loc>/technical_notes/example_tech/python_query_graphql/</loc>
     <lastmod>2021-11-02T00:00:00+01:00</lastmod>
   </url><url>
@@ -59,7 +62,13 @@
     <loc>/technical_notes/example_tech/postgresql_copy_to_new_table/</loc>
     <lastmod>2021-11-07T00:00:00+01:00</lastmod>
   </url><url>
+    <loc>/technical_notes/example_tech/postgresql_connecting_sqlalchemy/</loc>
+    <lastmod>2021-11-07T00:00:00+01:00</lastmod>
+  </url><url>
     <loc>/technical_notes/example_tech/postgresql_insert_csv_to_db/</loc>
+    <lastmod>2021-11-07T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/</loc>
     <lastmod>2021-11-07T00:00:00+01:00</lastmod>
   </url><url>
     <loc>/technical_notes/example_tech/postgresql_select_range_of_rows/</loc>
