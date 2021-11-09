@@ -978,6 +978,31 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Create a table to established connection with SQLAlchemy</title>
+      <link>/technical_notes/example_tech/postgresql_create_table/</link>
+      <pubDate>Tue, 09 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/postgresql_create_table/</guid>
+      <description>&lt;h2 id=&#34;create-a-test-table-then-insert-data-to-establish-a-connection&#34;&gt;Create a Test Table then Insert data to establish a connection&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to create a quick &amp;lsquo;test&amp;rsquo; table via the &lt;code&gt;sqlalchemy&lt;/code&gt; library in Python to establish a connection with your postgres db.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Create TEST table to confirm connection
+db.execute(
+    &amp;quot;CREATE TABLE IF NOT EXISTS films (title text, director text, year text)&amp;quot;)
+
+# Insert data
+db.execute(
+    &amp;quot;INSERT INTO films (title, director, year) VALUES (&#39;Dune&#39;, &#39;Denis Villeneuve&#39;, &#39;2021&#39;)&amp;quot;)
+
+# Read data
+result_set = db.execute(&amp;quot;SELECT * FROM films&amp;quot;)
+for r in result_set:
+    print(r)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Delete a table</title>
       <link>/technical_notes/example_tech/postgresql_delete_table/</link>
       <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>

@@ -27,12 +27,10 @@
   
     
   
-  <meta name="description" content="One principle of tidy data is to change from wide to long; and conversely, long to wide.
-Here&rsquo;s a concrete example:
-Using spread() The first part of the below pre-processing steps include subsetting the original data frame (data) by selecting two countries for comparison (Morocco and Qatar) on specific variables such as: GeoAreaName, TimePeriod, Sex, Type of skill and Value.">
+  <meta name="description" content="Create a Test Table then Insert data to establish a connection Situation: You want to create a quick &lsquo;test&rsquo; table via the sqlalchemy library in Python to establish a connection with your postgres db.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip2/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/postgresql_create_table/">
 
   
 
@@ -219,7 +217,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip2/">
+  <link rel="canonical" href="/technical_notes/example_tech/postgresql_create_table/">
 
   
   
@@ -238,17 +236,15 @@ Using spread() The first part of the below pre-processing steps include subsetti
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip2/">
-  <meta property="og:title" content="Use the spread() function | Paul Apivat">
-  <meta property="og:description" content="One principle of tidy data is to change from wide to long; and conversely, long to wide.
-Here&rsquo;s a concrete example:
-Using spread() The first part of the below pre-processing steps include subsetting the original data frame (data) by selecting two countries for comparison (Morocco and Qatar) on specific variables such as: GeoAreaName, TimePeriod, Sex, Type of skill and Value."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/postgresql_create_table/">
+  <meta property="og:title" content="Create a table to established connection with SQLAlchemy | Paul Apivat">
+  <meta property="og:description" content="Create a Test Table then Insert data to establish a connection Situation: You want to create a quick &lsquo;test&rsquo; table via the sqlalchemy library in Python to establish a connection with your postgres db."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-08-25T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-11-09T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-08-25T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-11-09T00:00:00&#43;01:00">
   
 
   
@@ -267,7 +263,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
 
 
 
-  <title>Use the spread() function | Paul Apivat</title>
+  <title>Create a table to established connection with SQLAlchemy | Paul Apivat</title>
 
 </head>
 
@@ -738,7 +734,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
     <a class="docs-toc-link" href="/technical_notes/example_tech/postgresql_create_table/">PostgreSQL</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/postgresql_create_table/">Create a table (establish connection)</a>
       </li>
       
@@ -860,7 +856,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
         <a href="/technical_notes/example_tech/rstats_tip3/">Tidy Data - pivot_wider</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_tip2/">Tidy Data - Spread</a>
       </li>
       
@@ -903,7 +899,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#using-spread">Using spread()</a></li>
+    <li><a href="#create-a-test-table-then-insert-data-to-establish-a-connection">Create a Test Table then Insert data to establish a connection</a></li>
   </ul>
 </nav>
 
@@ -916,28 +912,26 @@ Using spread() The first part of the below pre-processing steps include subsetti
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Use the spread() function</h1>
+          <h1>Create a table to established connection with SQLAlchemy</h1>
 
           <div class="article-style">
-            <p>One principle of <code>tidy</code> data is to change from wide to long; and conversely, long to wide.</p>
-<p>Here&rsquo;s a concrete example:</p>
-<h2 id="using-spread">Using spread()</h2>
-<p>The first part of the below pre-processing steps include subsetting the original data frame (data) by selecting two countries for comparison (Morocco and Qatar) on specific variables such as: <code>GeoAreaName</code>, <code>TimePeriod</code>, <code>Sex</code>, <code>Type of skill</code> and <code>Value</code>.</p>
-<p>Then employing <code>group_by</code> to ensure all rows are unique. The next line is key as it addresses an error that each row must be marked by a unique id key.</p>
-<p>Finally, the <code>spread()</code> function allows us to see each countries' relative performance on various 
-<a href="http://tcg.uis.unesco.org/4-4-1-proportion-of-youth-and-adults-with-information-and-communications-technology-ict-skills-by-type-of-skill/" target="_blank" rel="noopener">ICT skills</a>. Please consult meta-data for more details.</p>
-<pre><code>data %&gt;%
-    filter(GeoAreaName==&quot;Morocco&quot; | GeoAreaName==&quot;Qatar&quot;) %&gt;% 
-    select(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
-    group_by(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
-	
-    # Error: Each row of output must be identified by a unique combination of keys.
-    # rowid_to_column() address this error
-	
-    tibble::rowid_to_column() %&gt;%
-    spread(key = `Type of skill`, value = Value)
+            <h2 id="create-a-test-table-then-insert-data-to-establish-a-connection">Create a Test Table then Insert data to establish a connection</h2>
+<p><strong>Situation</strong>: You want to create a quick &lsquo;test&rsquo; table via the <code>sqlalchemy</code> library in Python to establish a connection with your postgres db.</p>
+<pre><code class="language-{python}"># Create TEST table to confirm connection
+db.execute(
+    &quot;CREATE TABLE IF NOT EXISTS films (title text, director text, year text)&quot;)
 
+# Insert data
+db.execute(
+    &quot;INSERT INTO films (title, director, year) VALUES ('Dune', 'Denis Villeneuve', '2021')&quot;)
+
+# Read data
+result_set = db.execute(&quot;SELECT * FROM films&quot;)
+for r in result_set:
+    print(r)
 </code></pre>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -954,14 +948,14 @@ Using spread() The first part of the below pre-processing steps include subsetti
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_tip3/" rel="next">Using the pivot_wider() function</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip1/" rel="prev">Make your work reproducible</a>
+    <a href="/technical_notes/example_tech/postgresql_delete_table/" rel="prev">Delete a table</a>
   </div>
   
 </div>
@@ -971,7 +965,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Aug 25, 2020</p>
+          <p>Last updated on Nov 9, 2021</p>
 
           
 
@@ -983,7 +977,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip2.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/postgresql_create_table.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
