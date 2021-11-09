@@ -982,6 +982,101 @@ for r in result_set:
     </item>
     
     <item>
+      <title>Testing databases in a Docker Container</title>
+      <link>/technical_notes/example_tech/database_install_docker/</link>
+      <pubDate>Tue, 09 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/database_install_docker/</guid>
+      <description>&lt;h2 id=&#34;setting-up-docker-locally&#34;&gt;Setting up Docker locally&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: We need have an separate frontend-backend work environment instead of spinning up a test database in our &lt;em&gt;actual&lt;/em&gt; database.&lt;/p&gt;
+&lt;p&gt;We need to separate &lt;code&gt;test environment&lt;/code&gt; from &lt;code&gt;dev/prod environment&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For demonstration, I&amp;rsquo;m pulling a docker container into my local machine to test a database for the bounty board project.&lt;/p&gt;
+&lt;p&gt;Enter Docker. Assuming a dev has &lt;strong&gt;already setup&lt;/strong&gt; the docker container in a specific feature branch &lt;code&gt;feature/docker-compose-mongo&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# clone repo that contains docker container (bountyboard-docker directory is installed locally)
+git clone https://github.com/jordaniza/bounty-board.git bountyboard-docker
+
+# change directory into that directory&#39;s root
+cd bountyboard-docker
+
+# create new feature branch to match branch you want to pull locally (containing the docker container) 
+git checkout -b feature/docker-compose-mongo
+
+# pull container to your local environment
+git pull origin feature/docker-compose-mongo
+
+# change directory to folder with &amp;quot;Dockerfile&amp;quot;
+cd mongo
+
+# run command to start Docker up
+docker-compose up --build
+
+# start up (frontend) App
+# install first
+yarn &amp;amp;&amp;amp; yarn dev
+
+## OPEN LOCALHOST:3000 http://localhost:3000
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;environment-variables&#34;&gt;ENVIRONMENT VARIABLES&lt;/h2&gt;
+&lt;p&gt;We have to change directory into &lt;code&gt;packages/react-app/.env.local&lt;/code&gt; to create the &lt;code&gt;.env.local&lt;/code&gt; file (changed for security)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# terminal
+$ code .env.local
+
+# paste this into the newly opened file
+
+BUILD_ENV=development
+MONGODB_DB=bountyboard
+#PROD_MONGODB_URI=
+MONGODB_URI=mongodb://localhost:27017/bountyboard
+NEXT_PUBLIC_DISCORD_SERVER_ID=8******************0
+NEXT_PUBLIC_DISCORD_CHANNEL_BOUNTY_BOARD_ID=8******************0
+
+# Public Environments
+NEXT_PUBLIC_DAO_CURRENT_SEASON=1
+NEXT_PUBLIC_DAO_CURRENT_SEASON_END_DATE=2021-08-31T04:00:00.000Z
+
+# URLs
+NEXT_PUBLIC_DAO_BOUNTY_BOARD_URL=https://bountyboard.bankless.community
+DISCORD_BOUNTY_BOARD_WEBHOOK=
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;what-happens-when-you-pull-a-docker-container-locally&#34;&gt;What happens when you pull a Docker container locally&lt;/h2&gt;
+&lt;p&gt;We are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pulling a folder for MongoDB with the latest scripts, schema, and Dockerfiles&lt;/li&gt;
+&lt;li&gt;Using the docker-compose utility, &lt;code&gt;docker-compose up --build&lt;/code&gt; to fire up a Mongo container, and a temporary seeding container&lt;/li&gt;
+&lt;li&gt;The seeding container runs a set of bash scripts to populate the DB
+you can see this in &lt;code&gt;mongo/seed.sh&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;opening-additional-terminal-windows-mongo&#34;&gt;Opening Additional Terminal windows: Mongo&lt;/h2&gt;
+&lt;p&gt;Once, I ran &lt;code&gt;yarn dev&lt;/code&gt; I got the Application to fire up, &lt;code&gt;ready - started server on 0.0.0.0:3000, url: http://localhost:3000&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;but &lt;code&gt;Mongo&lt;/code&gt; wasn&amp;rsquo;t turned on.&lt;/p&gt;
+&lt;p&gt;First, open up a new terminal, then:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;docker exec -it mongo_mongo_1 bash
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; Install DOCKER in VSCode to follow along&lt;/p&gt;
+&lt;p&gt;Find the Container that&amp;rsquo;s a GREEN TRIANGLE, right click, then &lt;code&gt;attach shell&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; This did not work, so I needed to open a 3rd Terminal to type in:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;docker exec -it mongo_mongo_1 bash
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;exec&lt;/code&gt; executes a command &lt;code&gt;-it&lt;/code&gt; starts an interactive terminal session &lt;code&gt;mongo_mongo_1&lt;/code&gt; is the name of the container and &lt;code&gt;bash&lt;/code&gt; is the shell.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; You should see something like &lt;code&gt;root@4d5cedd1a8a7:/#&lt;/code&gt;, then type in the following to fire up &lt;strong&gt;Mongo Shell&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;mongosh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Another confirmation is &lt;code&gt;Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&amp;amp;serverSelectionTimeoutMS=2000&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;At this point you can do basic Mongo commands:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;show collections
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: I was on the &lt;code&gt;test&amp;gt;&lt;/code&gt; database and needed to switch to &lt;code&gt;bountyboard&amp;gt;&lt;/code&gt; database where the &amp;ldquo;test&amp;rdquo; data was located and ready for testing.&lt;/p&gt;
+&lt;p&gt;Other commands to run are &lt;code&gt;findOne()&lt;/code&gt; or &lt;code&gt;find()&lt;/code&gt; just to see the &lt;em&gt;seeded&lt;/em&gt; data:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties.findOne()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; I did not get the front end to work so for this session, we only tested the database by querying in Mongo shell.&lt;/p&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Delete a table</title>
       <link>/technical_notes/example_tech/postgresql_delete_table/</link>
       <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>

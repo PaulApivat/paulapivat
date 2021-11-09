@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Learn how to use Academic&#39;s docs layout for publishing technical notes and tutorials.">
+  <meta name="description" content="Setting up Docker locally Situation: We need have an separate frontend-backend work environment instead of spinning up a test database in our actual database.
+We need to separate test environment from dev/prod environment.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/database_install_docker/">
 
   
 
@@ -212,14 +213,12 @@
   
 
   
-  <link rel="alternate" href="/technical_notes/example_tech/index.xml" type="application/rss+xml" title="Paul Apivat">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/">
+  <link rel="canonical" href="/technical_notes/example_tech/database_install_docker/">
 
   
   
@@ -238,29 +237,35 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/">
-  <meta property="og:title" content="Technical Notes Overview | Paul Apivat">
-  <meta property="og:description" content="Learn how to use Academic&#39;s docs layout for publishing technical notes and tutorials."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/database_install_docker/">
+  <meta property="og:title" content="Testing databases in a Docker Container | Paul Apivat">
+  <meta property="og:description" content="Setting up Docker locally Situation: We need have an separate frontend-backend work environment instead of spinning up a test database in our actual database.
+We need to separate test environment from dev/prod environment."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00">
+    
+      <meta property="article:published_time" content="2021-11-09T00:00:00&#43;01:00">
+    
+    <meta property="article:modified_time" content="2021-11-09T00:00:00&#43;01:00">
   
 
   
 
 
 
-
   
 
 
   
 
 
+  
 
 
 
-  <title>Technical Notes Overview | Paul Apivat</title>
+
+
+  <title>Testing databases in a Docker Container | Paul Apivat</title>
 
 </head>
 
@@ -591,7 +596,7 @@
   
   
   
-  <div class="docs-toc-item active">
+  <div class="docs-toc-item">
     <a class="docs-toc-link" href="/technical_notes/example_tech/">Technical Notes Overview</a>
 
   </div>
@@ -658,7 +663,7 @@
         <a href="/technical_notes/example_tech/database_design_tips/">Database Design Course</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/database_install_docker/">Testing Database in Docker</a>
       </li>
       
@@ -900,10 +905,10 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#flexibility">Flexibility</a></li>
-    <li><a href="#delete-tutorials">Delete tutorials</a></li>
-    <li><a href="#update-site-menu">Update site menu</a></li>
-    <li><a href="#update-the-docs-menu">Update the docs menu</a></li>
+    <li><a href="#setting-up-docker-locally">Setting up Docker locally</a></li>
+    <li><a href="#environment-variables">ENVIRONMENT VARIABLES</a></li>
+    <li><a href="#what-happens-when-you-pull-a-docker-container-locally">What happens when you pull a Docker container locally</a></li>
+    <li><a href="#opening-additional-terminal-windows-mongo">Opening Additional Terminal windows: Mongo</a></li>
   </ul>
 </nav>
 
@@ -916,36 +921,96 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Technical Notes Overview</h1>
+          <h1>Testing databases in a Docker Container</h1>
 
           <div class="article-style">
-            <h2 id="flexibility">Flexibility</h2>
-<p>Add Technical Notes.</p>
-<p>This feature can be used for publishing content such as:</p>
+            <h2 id="setting-up-docker-locally">Setting up Docker locally</h2>
+<p><strong>Situation</strong>: We need have an separate frontend-backend work environment instead of spinning up a test database in our <em>actual</em> database.</p>
+<p>We need to separate <code>test environment</code> from <code>dev/prod environment</code>.</p>
+<p>For demonstration, I&rsquo;m pulling a docker container into my local machine to test a database for the bounty board project.</p>
+<p>Enter Docker. Assuming a dev has <strong>already setup</strong> the docker container in a specific feature branch <code>feature/docker-compose-mongo</code>.</p>
+<pre><code class="language-{python}"># clone repo that contains docker container (bountyboard-docker directory is installed locally)
+git clone https://github.com/jordaniza/bounty-board.git bountyboard-docker
+
+# change directory into that directory's root
+cd bountyboard-docker
+
+# create new feature branch to match branch you want to pull locally (containing the docker container) 
+git checkout -b feature/docker-compose-mongo
+
+# pull container to your local environment
+git pull origin feature/docker-compose-mongo
+
+# change directory to folder with &quot;Dockerfile&quot;
+cd mongo
+
+# run command to start Docker up
+docker-compose up --build
+
+# start up (frontend) App
+# install first
+yarn &amp;&amp; yarn dev
+
+## OPEN LOCALHOST:3000 http://localhost:3000
+
+</code></pre>
+<h2 id="environment-variables">ENVIRONMENT VARIABLES</h2>
+<p>We have to change directory into <code>packages/react-app/.env.local</code> to create the <code>.env.local</code> file (changed for security)</p>
+<pre><code class="language-{python}"># terminal
+$ code .env.local
+
+# paste this into the newly opened file
+
+BUILD_ENV=development
+MONGODB_DB=bountyboard
+#PROD_MONGODB_URI=
+MONGODB_URI=mongodb://localhost:27017/bountyboard
+NEXT_PUBLIC_DISCORD_SERVER_ID=8******************0
+NEXT_PUBLIC_DISCORD_CHANNEL_BOUNTY_BOARD_ID=8******************0
+
+# Public Environments
+NEXT_PUBLIC_DAO_CURRENT_SEASON=1
+NEXT_PUBLIC_DAO_CURRENT_SEASON_END_DATE=2021-08-31T04:00:00.000Z
+
+# URLs
+NEXT_PUBLIC_DAO_BOUNTY_BOARD_URL=https://bountyboard.bankless.community
+DISCORD_BOUNTY_BOARD_WEBHOOK=
+
+</code></pre>
+<h2 id="what-happens-when-you-pull-a-docker-container-locally">What happens when you pull a Docker container locally</h2>
+<p>We are:</p>
 <ul>
-<li><strong>Online courses</strong></li>
-<li><strong>Project or software documentation</strong></li>
-<li><strong>Tutorials</strong></li>
+<li>Pulling a folder for MongoDB with the latest scripts, schema, and Dockerfiles</li>
+<li>Using the docker-compose utility, <code>docker-compose up --build</code> to fire up a Mongo container, and a temporary seeding container</li>
+<li>The seeding container runs a set of bash scripts to populate the DB
+you can see this in <code>mongo/seed.sh</code></li>
 </ul>
-<p>The <code>courses</code> folder may be renamed. For example, we can rename it to <code>docs</code> for software/project documentation or <code>tutorials</code> for creating an online course.</p>
-<h2 id="delete-tutorials">Delete tutorials</h2>
-<p><strong>To remove these pages, delete the <code>courses</code> folder and see below to delete the associated menu link.</strong></p>
-<h2 id="update-site-menu">Update site menu</h2>
-<p>After renaming or deleting the <code>courses</code> folder, you may wish to update any <code>[[main]]</code> menu links to it by editing your menu configuration at <code>config/_default/menus.toml</code>.</p>
-<p>For example, if you delete this folder, you can remove the following from your menu configuration:</p>
-<pre><code class="language-toml">[[main]]
-  name = &quot;Courses&quot;
-  url = &quot;courses/&quot;
-  weight = 50
+<h2 id="opening-additional-terminal-windows-mongo">Opening Additional Terminal windows: Mongo</h2>
+<p>Once, I ran <code>yarn dev</code> I got the Application to fire up, <code>ready - started server on 0.0.0.0:3000, url: http://localhost:3000</code></p>
+<p>but <code>Mongo</code> wasn&rsquo;t turned on.</p>
+<p>First, open up a new terminal, then:</p>
+<pre><code class="language-{python}">docker exec -it mongo_mongo_1 bash
 </code></pre>
-<p>Or, if you are creating a software documentation site, you can rename the <code>courses</code> folder to <code>docs</code> and update the associated <em>Courses</em> menu configuration to:</p>
-<pre><code class="language-toml">[[main]]
-  name = &quot;Docs&quot;
-  url = &quot;docs/&quot;
-  weight = 50
+<p><strong>NOTE:</strong> Install DOCKER in VSCode to follow along</p>
+<p>Find the Container that&rsquo;s a GREEN TRIANGLE, right click, then <code>attach shell</code>.</p>
+<p><strong>NOTE:</strong> This did not work, so I needed to open a 3rd Terminal to type in:</p>
+<pre><code class="language-{python}">docker exec -it mongo_mongo_1 bash
 </code></pre>
-<h2 id="update-the-docs-menu">Update the docs menu</h2>
-<p>If you use the <em>docs</em> layout, note that the name of the menu in the front matter should be in the form <code>[menu.X]</code> where <code>X</code> is the folder name. Hence, if you rename the <code>courses/example/</code> folder, you should also rename the menu definitions in the front matter of files within <code>courses/example/</code> from <code>[menu.example]</code> to <code>[menu.&lt;NewFolderName&gt;]</code>.</p>
+<p><code>exec</code> executes a command <code>-it</code> starts an interactive terminal session <code>mongo_mongo_1</code> is the name of the container and <code>bash</code> is the shell.</p>
+<p><strong>NOTE:</strong> You should see something like <code>root@4d5cedd1a8a7:/#</code>, then type in the following to fire up <strong>Mongo Shell</strong>:</p>
+<pre><code class="language-{python}">mongosh
+</code></pre>
+<p>Another confirmation is <code>Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&amp;serverSelectionTimeoutMS=2000</code></p>
+<p>At this point you can do basic Mongo commands:</p>
+<pre><code class="language-{python}">show collections
+</code></pre>
+<p><strong>NOTE</strong>: I was on the <code>test&gt;</code> database and needed to switch to <code>bountyboard&gt;</code> database where the &ldquo;test&rdquo; data was located and ready for testing.</p>
+<p>Other commands to run are <code>findOne()</code> or <code>find()</code> just to see the <em>seeded</em> data:</p>
+<pre><code class="language-{python}">db.bounties.findOne()
+</code></pre>
+<p><strong>NOTE:</strong> I did not get the front end to work so for this session, we only tested the database by querying in Mongo shell.</p>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -959,6 +1024,19 @@
 <div class="post-nav">
   
   
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/technical_notes/example_tech/postgresql_create_table/" rel="next">Create a table to established connection with SQLAlchemy</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/technical_notes/example_tech/postgresql_delete_table/" rel="prev">Delete a table</a>
+  </div>
+  
 </div>
 
           </div>
@@ -966,7 +1044,7 @@
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Sep 9, 2018</p>
+          <p>Last updated on Nov 9, 2021</p>
 
           
 
@@ -978,7 +1056,7 @@
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/_index.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/database_install_docker.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
