@@ -978,6 +978,86 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>CRUD Operations in Mongo (Shell)</title>
+      <link>/technical_notes/example_tech/mongodb_crud/</link>
+      <pubDate>Thu, 11 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_crud/</guid>
+      <description>&lt;h2 id=&#34;create-read-update-delete-in-mongo-shell&#34;&gt;Create, Read, Update, Delete in Mongo (Shell)&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: This is a summary of basic Mongo operations in shell. These commands can be used in create, seed test databases outside of the production database.&lt;/p&gt;
+&lt;h3 id=&#34;basic-commands&#34;&gt;Basic commands&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# show available databases
+show dbs
+
+# use a database
+use db_name
+
+# show collections within database
+show collections
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;delete-an-entire-collection&#34;&gt;Delete an entire collection&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.collectionName.drop()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;insert-one-document-into-a-collection&#34;&gt;Insert one document into a collection&lt;/h3&gt;
+&lt;p&gt;Create a collection &lt;em&gt;and&lt;/em&gt; insert one document. Copy a document (i.e., an object or python dictionary) and paste in argument of &lt;code&gt;.insertOne()&lt;/code&gt;. What&amp;rsquo;s inserted is a single object.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.newCollectionName.insertOne({})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;note&lt;/strong&gt;: &lt;code&gt;MongoServerError: _id fields may not contain &#39;$&#39;-prefixed fields: $oid is not valid for storage.&lt;/code&gt; Because mongo shell automatically inserted ids:&lt;/p&gt;
+&lt;p&gt;Example of two ObjectIds being inserted:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;{
+  acknowledged: true,
+  insertedIds: {
+    &#39;0&#39;: ObjectId(&amp;quot;618d1fb2f5975b1a2ed10b91&amp;quot;),
+    &#39;1&#39;: ObjectId(&amp;quot;618d1fb2f5975b1a2ed10b92&amp;quot;)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;insert-many-documents-into-a-collection&#34;&gt;Insert many documents into a collection&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;note&lt;/strong&gt;: to avoid &lt;code&gt;MongoServerError&lt;/code&gt; with &lt;code&gt;&#39;$&#39;oid is not valid for storage&lt;/code&gt; error, edit in VSCode before pasting in mongo shell.&lt;/p&gt;
+&lt;p&gt;Note, parameter is an &lt;em&gt;array of objects&lt;/em&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.newCollectionName.insertMany([{}, {}])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;count-documents-inside-a-collection&#34;&gt;Count document(s) inside a collection&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.collection.countDocuments()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;find-document-where-integer-value--9000&#34;&gt;Find document where integer value &amp;gt; 9000&lt;/h3&gt;
+&lt;p&gt;Using &lt;code&gt;$gt&lt;/code&gt; (greater than) as an example from the Bounty Board project.&lt;/p&gt;
+&lt;p&gt;Alternatives:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$lt&lt;/code&gt; less than&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$gte&lt;/code&gt; greater than or equal to&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties2.find({&amp;quot;reward.amount&amp;quot;: {$gt: 9000} }).pretty()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;update-one-document&#34;&gt;Update one document&lt;/h3&gt;
+&lt;p&gt;Updating &lt;code&gt;season&lt;/code&gt; from 1 to 2:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties2.updateOne({_id: ObjectId(&amp;quot;618d2585f5975b1a2ed10b93&amp;quot;)}, {$set: {season: 2}})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;replaceone-instead-update&#34;&gt;ReplaceOne instead update&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: This is more tedious than updating just one field; with &lt;code&gt;replaceOne()&lt;/code&gt; you have to update &lt;strong&gt;all&lt;/strong&gt; fields otherwise, they get deleted. Arguably, this makes it more explicit (and safe) way to update.&lt;/p&gt;
+&lt;p&gt;This replaces key-value pairs in the document with a specific &lt;code&gt;_id&lt;/code&gt; to only have 2 key-value pairs (erasing all others).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties2.replaceOne({_id: ObjectId(&amp;quot;618d1cddf5975b1a2ed10b8f&amp;quot;)}, {season: 2, &amp;quot;title&amp;quot;: &amp;quot;Implement Changes&amp;quot;})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;print-more-than-just-20-documents&#34;&gt;Print more than just 20 documents&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;bountyboard&amp;gt; db.bounties2.find().forEach((bounties2Data) =&amp;gt; {printjson(bounties2Data)})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;return-only-one-field-in-a-document&#34;&gt;Return only one field in a document&lt;/h3&gt;
+&lt;p&gt;Here we&amp;rsquo;re returning &amp;ldquo;title&amp;rdquo;, then &amp;ldquo;reward.amount&amp;rdquo;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# return title
+db.bounties2.find({}, {title: 1, _id: 0}).pretty()
+
+# return reward.amount
+db.bounties2.find({}, {&amp;quot;reward.amount&amp;quot;: 1, _id: 0}).pretty()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;joining-two-collections&#34;&gt;Joining two collections&lt;/h3&gt;
+&lt;p&gt;Note: Join two collections by &lt;code&gt;customerId&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties2.aggregate([{ $lookup: { from: &amp;quot;customers&amp;quot;, localField: &amp;quot;customerId&amp;quot;, foreignField: &amp;quot;customerId&amp;quot;, as: &amp;quot;customerId&amp;quot; } }])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Create a table to established connection with SQLAlchemy</title>
       <link>/technical_notes/example_tech/postgresql_create_table/</link>
       <pubDate>Tue, 09 Nov 2021 00:00:00 +0100</pubDate>
