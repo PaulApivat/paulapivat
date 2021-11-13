@@ -1260,6 +1260,33 @@ with engine.connect() as conn:
     )
     conn.commit()
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;demo&#34;&gt;Demo&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You have to &lt;code&gt;CREATE TABLE&lt;/code&gt; &lt;em&gt;before&lt;/em&gt; you &lt;code&gt;INSERT INTO&lt;/code&gt;. Here&amp;rsquo;s a full example of creating a table in Postgres. The code is truncated to save time.&lt;/p&gt;
+&lt;p&gt;Incidentally, you have to delete the table if you mistakenly created it in Postgres (use SQL commands to &lt;em&gt;Create&lt;/em&gt; the table.)&lt;/p&gt;
+&lt;p&gt;NOTE: &lt;strong&gt;PGAdmin&lt;/strong&gt; is the client, but this should transfer across client.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# delete table (if needed)
+DROP TABLE bankless_snapshot_header_1;
+
+# create table before insert in postgres
+CREATE TABLE IF NOT EXISTS bankless_snapshot_header_1 (
+	id SERIAL,
+	proposal_id VARCHAR(100),
+	title VARCHAR(2000),
+	start_date BIGINT,
+	end_date BIGINT,
+	PRIMARY KEY (proposal_id)
+)
+
+# insert data (copied from csv) to postgres
+INSERT INTO bankless_snapshot_header_1(
+	id, proposal_id, title, start_date, end_date)
+	VALUES
+	(&#39;0&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;,&#39;Approve the Bankless DAO Genesis¬†Proposal?&#39;,&#39;1620154800&#39;,&#39;1620414000&#39;),
+(&#39;1&#39;,&#39;QmbCCAH3WbAFJS4FAUTvpWGmtgbaeMh1zoKgocdt3ZJmdr&#39;,&#39;What charity should CMS Holdings donate 100k towards? &#39;,&#39;1620327600&#39;,&#39;1620673200&#39;),
+(&#39;2&#39;,&#39;QmYvsZ7AU2XyhpBL8g4QRQbLRX6uU3t5CHNdFQbs5r7ypJ&#39;,&#39;Badge Distribution for Second Airdrop&#39;,&#39;1620759600&#39;,&#39;1621018800&#39;),
+(&#39;3&#39;,&#39;QmQX2DQcDTZzCpM6DTVNJutQJwWXtxJDTMpBoFjbnaM9i2&#39;,&#39;Reward Season 0 Active Members &#39;,&#39;1623196800&#39;,&#39;1623456000&#39;),
+(&#39;4&#39;,&#39;QmXrfAHMoRcu5Vy3DsRTfokqLBTEKR6tqKVecLvkgw5NZf&#39;,&#39;Bankless DAO Season 1 &#39;,&#39;1623985200&#39;,&#39;1624590000&#39;);
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For more content on Data and DAOs 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>

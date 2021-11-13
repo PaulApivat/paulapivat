@@ -51,5 +51,37 @@ with engine.connect() as conn:
     conn.commit()
 ```
 
+## Demo
+
+**Situation**: You have to `CREATE TABLE` *before* you `INSERT INTO`. Here's a full example of creating a table in Postgres. The code is truncated to save time.
+
+Incidentally, you have to delete the table if you mistakenly created it in Postgres (use SQL commands to *Create* the table.)
+
+NOTE: **PGAdmin** is the client, but this should transfer across client.
+
+```{python}
+# delete table (if needed)
+DROP TABLE bankless_snapshot_header_1;
+
+# create table before insert in postgres
+CREATE TABLE IF NOT EXISTS bankless_snapshot_header_1 (
+	id SERIAL,
+	proposal_id VARCHAR(100),
+	title VARCHAR(2000),
+	start_date BIGINT,
+	end_date BIGINT,
+	PRIMARY KEY (proposal_id)
+)
+
+# insert data (copied from csv) to postgres
+INSERT INTO bankless_snapshot_header_1(
+	id, proposal_id, title, start_date, end_date)
+	VALUES
+	('0','QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS','Approve the Bankless DAO Genesis¬†Proposal?','1620154800','1620414000'),
+('1','QmbCCAH3WbAFJS4FAUTvpWGmtgbaeMh1zoKgocdt3ZJmdr','What charity should CMS Holdings donate 100k towards? ','1620327600','1620673200'),
+('2','QmYvsZ7AU2XyhpBL8g4QRQbLRX6uU3t5CHNdFQbs5r7ypJ','Badge Distribution for Second Airdrop','1620759600','1621018800'),
+('3','QmQX2DQcDTZzCpM6DTVNJutQJwWXtxJDTMpBoFjbnaM9i2','Reward Season 0 Active Members ','1623196800','1623456000'),
+('4','QmXrfAHMoRcu5Vy3DsRTfokqLBTEKR6tqKVecLvkgw5NZf','Bankless DAO Season 1 ','1623985200','1624590000');
+```
 
 For more content on Data and DAOs [find me on Twitter](https://twitter.com/paulapivat).
