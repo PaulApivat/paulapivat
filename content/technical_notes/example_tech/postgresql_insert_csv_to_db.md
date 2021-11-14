@@ -20,11 +20,12 @@ First, you'd have to create a table with the right columns in pgAdmin before ins
 
 To create in Excel, you'd need a function to copy the values from the dataframe into a tuple of string values. Data is cut short to keep the example manageable.
 
+**Note**: There needs to be a comma between columns below or else it throws an error. This example is for a table with 7 columns; your situation may differ. 
+
 ```{python}
 # In Excel
-=CONCATENATE("('",C2,"','",A2,"','",B2,"','",E2,"','",D2,"'),")
+=CONCATENATE("('",B2,"','",C2,"','",D2,"','",E2,"','",F2,"','",G2,"','",H2,"'),")
 
-=CONCATENATE("('",amount_display,"','",from_address,"','",id,"','",timestamp,"','",to_address,"'),")
 
 # sample tuple format
 ('0x7a250d5630b4cf539739df2c5dacb4c659f2488d','14897.1883870177','0x59c1349bc6f28a427e78ddb6130ec669c2f39b48','0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23','1620159318','Tue, 04 May 2021 20:15:18 GMT'),

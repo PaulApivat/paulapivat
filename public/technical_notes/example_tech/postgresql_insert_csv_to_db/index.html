@@ -951,10 +951,10 @@
 <p><strong>Situation</strong>: If you have a CSV file, you can manually load it into PostgreSQL through the pgAdmin client. This may require creating the data values in Excel first.</p>
 <p>First, you&rsquo;d have to create a table with the right columns in pgAdmin before inserting data in.</p>
 <p>To create in Excel, you&rsquo;d need a function to copy the values from the dataframe into a tuple of string values. Data is cut short to keep the example manageable.</p>
+<p><strong>Note</strong>: There needs to be a comma between columns below or else it throws an error. This example is for a table with 7 columns; your situation may differ.</p>
 <pre><code class="language-{python}"># In Excel
-=CONCATENATE(&quot;('&quot;,C2,&quot;','&quot;,A2,&quot;','&quot;,B2,&quot;','&quot;,E2,&quot;','&quot;,D2,&quot;'),&quot;)
+=CONCATENATE(&quot;('&quot;,B2,&quot;','&quot;,C2,&quot;','&quot;,D2,&quot;','&quot;,E2,&quot;','&quot;,F2,&quot;','&quot;,G2,&quot;','&quot;,H2,&quot;'),&quot;)
 
-=CONCATENATE(&quot;('&quot;,amount_display,&quot;','&quot;,from_address,&quot;','&quot;,id,&quot;','&quot;,timestamp,&quot;','&quot;,to_address,&quot;'),&quot;)
 
 # sample tuple format
 ('0x7a250d5630b4cf539739df2c5dacb4c659f2488d','14897.1883870177','0x59c1349bc6f28a427e78ddb6130ec669c2f39b48','0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23','1620159318','Tue, 04 May 2021 20:15:18 GMT'),

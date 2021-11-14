@@ -1257,10 +1257,10 @@ with db.connect() as conn:
 &lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: If you have a CSV file, you can manually load it into PostgreSQL through the pgAdmin client. This may require creating the data values in Excel first.&lt;/p&gt;
 &lt;p&gt;First, you&amp;rsquo;d have to create a table with the right columns in pgAdmin before inserting data in.&lt;/p&gt;
 &lt;p&gt;To create in Excel, you&amp;rsquo;d need a function to copy the values from the dataframe into a tuple of string values. Data is cut short to keep the example manageable.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: There needs to be a comma between columns below or else it throws an error. This example is for a table with 7 columns; your situation may differ.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# In Excel
-=CONCATENATE(&amp;quot;(&#39;&amp;quot;,C2,&amp;quot;&#39;,&#39;&amp;quot;,A2,&amp;quot;&#39;,&#39;&amp;quot;,B2,&amp;quot;&#39;,&#39;&amp;quot;,E2,&amp;quot;&#39;,&#39;&amp;quot;,D2,&amp;quot;&#39;),&amp;quot;)
+=CONCATENATE(&amp;quot;(&#39;&amp;quot;,B2,&amp;quot;&#39;,&#39;&amp;quot;,C2,&amp;quot;&#39;,&#39;&amp;quot;,D2,&amp;quot;&#39;,&#39;&amp;quot;,E2,&amp;quot;&#39;,&#39;&amp;quot;,F2,&amp;quot;&#39;,&#39;&amp;quot;,G2,&amp;quot;&#39;,&#39;&amp;quot;,H2,&amp;quot;&#39;),&amp;quot;)
 
-=CONCATENATE(&amp;quot;(&#39;&amp;quot;,amount_display,&amp;quot;&#39;,&#39;&amp;quot;,from_address,&amp;quot;&#39;,&#39;&amp;quot;,id,&amp;quot;&#39;,&#39;&amp;quot;,timestamp,&amp;quot;&#39;,&#39;&amp;quot;,to_address,&amp;quot;&#39;),&amp;quot;)
 
 # sample tuple format
 (&#39;0x7a250d5630b4cf539739df2c5dacb4c659f2488d&#39;,&#39;14897.1883870177&#39;,&#39;0x59c1349bc6f28a427e78ddb6130ec669c2f39b48&#39;,&#39;0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23&#39;,&#39;1620159318&#39;,&#39;Tue, 04 May 2021 20:15:18 GMT&#39;),
