@@ -84,4 +84,35 @@ INSERT INTO bankless_snapshot_header_1(
 ('4','QmXrfAHMoRcu5Vy3DsRTfokqLBTEKR6tqKVecLvkgw5NZf','Bankless DAO Season 1 ','1623985200','1624590000');
 ```
 
+## Demo 2
+
+**Context**: For the Snapshot data pipeline, I had to create two pipes - one for proposals and one for votes. This is the process for votes, it's similar, but there are differences:
+
+I initially set `FOREIGN KEY (proposal_id)`, but got a syntax error, there's a [specific way to set up foreign key constraints first](https://www.postgresqltutorial.com/postgresql-foreign-key/) before explicitly define foreign key during `CREATE TABLE` events.
+
+Also, some rows at non-explicit null values (''), so I had to manually go line-by-line to set to `NULL`.
+
+```{python}
+# Create Table in Postgresql
+
+CREATE TABLE IF NOT EXISTS stg_bankless_snapshot_1(
+	id SERIAL,
+	vote_id VARCHAR(100),
+	voter VARCHAR(100),
+	created BIGINT,
+	choice REAL,
+	__typename VARCHAR(20),
+	proposal_id VARCHAR(100)
+)
+
+# Insert data
+INSERT INTO stg_bankless_snapshot_1(
+	id, vote_id, voter, created, choice, __typename, proposal_id)
+	VALUES
+('0','QmQFvHkah7w2qAcY4iECn6THDbaypto8JVF5G6YQaneZRV','0xD00dF71434Cf40b2CDb65ff73bD9789933adA44A','1620413879','1','Vote','QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS'),
+('1','QmSS2x2xBRwTigXR5vucVp75FqCP5ns3CLYK3dLgNQonkC','0x910176D294AFA2cD017928cA92a0bf5a01152194','1620413347','1','Vote','QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS'),
+('2','QmSa7QFD3vsV6bhsfSKGW1tUtQyJk3umMTgVkFS1H8fnXJ','0x37bf9E28E099335DCec53a8b7FadeFDE6DbF108d','1620410370','1','Vote','QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS'),
+
+```
+
 For more content on Data and DAOs [find me on Twitter](https://twitter.com/paulapivat).

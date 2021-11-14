@@ -13,6 +13,26 @@
     </image>
     
     <item>
+      <title>Picking columns, rows in Pandas</title>
+      <link>/technical_notes/example_tech/pandas_pick_df_rows_columns/</link>
+      <pubDate>Sun, 14 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/pandas_pick_df_rows_columns/</guid>
+      <description>&lt;h2 id=&#34;picking-columns-rows-in-pandas&#34;&gt;Picking columns, rows in Pandas&lt;/h2&gt;
+&lt;p&gt;Note: To identify a specific cell, it&amp;rsquo;s good to have at least a unique &lt;code&gt;id&lt;/code&gt; column to reference.&lt;/p&gt;
+&lt;p&gt;This part grabs the specific row: &lt;code&gt;df.loc[df[&#39;id&#39;] == number]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This part grabs the specific column: &lt;code&gt;[&#39;column_name&#39;]&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# generic
+df.loc[df[&#39;id&#39;] == number][&#39;column_name&#39;]
+
+# specific
+concat_frames_4.loc[concat_frames_4[&#39;id&#39;] == 1983][&#39;choice&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on Data and DAOs 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Use string interpolation to query GraphQL</title>
       <link>/technical_notes/example_tech/python_string_interpolation_graphql/</link>
       <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>
@@ -1286,6 +1306,32 @@ INSERT INTO bankless_snapshot_header_1(
 (&#39;2&#39;,&#39;QmYvsZ7AU2XyhpBL8g4QRQbLRX6uU3t5CHNdFQbs5r7ypJ&#39;,&#39;Badge Distribution for Second Airdrop&#39;,&#39;1620759600&#39;,&#39;1621018800&#39;),
 (&#39;3&#39;,&#39;QmQX2DQcDTZzCpM6DTVNJutQJwWXtxJDTMpBoFjbnaM9i2&#39;,&#39;Reward Season 0 Active Members &#39;,&#39;1623196800&#39;,&#39;1623456000&#39;),
 (&#39;4&#39;,&#39;QmXrfAHMoRcu5Vy3DsRTfokqLBTEKR6tqKVecLvkgw5NZf&#39;,&#39;Bankless DAO Season 1 &#39;,&#39;1623985200&#39;,&#39;1624590000&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;demo-2&#34;&gt;Demo 2&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: For the Snapshot data pipeline, I had to create two pipes - one for proposals and one for votes. This is the process for votes, it&amp;rsquo;s similar, but there are differences:&lt;/p&gt;
+&lt;p&gt;I initially set &lt;code&gt;FOREIGN KEY (proposal_id)&lt;/code&gt;, but got a syntax error, there&amp;rsquo;s a 
+&lt;a href=&#34;https://www.postgresqltutorial.com/postgresql-foreign-key/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;specific way to set up foreign key constraints first&lt;/a&gt; before explicitly define foreign key during &lt;code&gt;CREATE TABLE&lt;/code&gt; events.&lt;/p&gt;
+&lt;p&gt;Also, some rows at non-explicit null values (&#39;&#39;), so I had to manually go line-by-line to set to &lt;code&gt;NULL&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Create Table in Postgresql
+
+CREATE TABLE IF NOT EXISTS stg_bankless_snapshot_1(
+	id SERIAL,
+	vote_id VARCHAR(100),
+	voter VARCHAR(100),
+	created BIGINT,
+	choice REAL,
+	__typename VARCHAR(20),
+	proposal_id VARCHAR(100)
+)
+
+# Insert data
+INSERT INTO stg_bankless_snapshot_1(
+	id, vote_id, voter, created, choice, __typename, proposal_id)
+	VALUES
+(&#39;0&#39;,&#39;QmQFvHkah7w2qAcY4iECn6THDbaypto8JVF5G6YQaneZRV&#39;,&#39;0xD00dF71434Cf40b2CDb65ff73bD9789933adA44A&#39;,&#39;1620413879&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
+(&#39;1&#39;,&#39;QmSS2x2xBRwTigXR5vucVp75FqCP5ns3CLYK3dLgNQonkC&#39;,&#39;0x910176D294AFA2cD017928cA92a0bf5a01152194&#39;,&#39;1620413347&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
+(&#39;2&#39;,&#39;QmSa7QFD3vsV6bhsfSKGW1tUtQyJk3umMTgVkFS1H8fnXJ&#39;,&#39;0x37bf9E28E099335DCec53a8b7FadeFDE6DbF108d&#39;,&#39;1620410370&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For more content on Data and DAOs 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;

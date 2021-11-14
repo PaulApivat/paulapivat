@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/technical_notes/example_tech/pandas_pick_df_rows_columns/</loc>
+    <lastmod>2021-11-14T00:00:00+01:00</lastmod>
+  </url><url>
     <loc>/technical_notes/example_tech/python_string_interpolation_graphql/</loc>
     <lastmod>2021-11-07T00:00:00+01:00</lastmod>
   </url><url>
@@ -171,7 +174,7 @@
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url><url>
     <loc>/technical_notes/</loc>
-    <lastmod>2021-11-11T00:00:00+01:00</lastmod>
+    <lastmod>2021-11-14T00:00:00+01:00</lastmod>
   </url><url>
     <loc>/tag/analytics/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
