@@ -27,8 +27,8 @@
   
     
   
-  <meta name="description" content="Setting up dotenv Files Use Case: We have sensitive API Keys and Secret Keys we don&rsquo;t want to put into version control, but we need to access.
-The best practice is to create a .">
+  <meta name="description" content="Overview FIRST steps for any project are:
+ Go to the directory&rsquo;s root and create .gitignore file. Add .env (dot env) to .gitignore to hide from GitHub. note: Use one .">
 
   
   <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_dotenv/">
@@ -238,15 +238,15 @@ The best practice is to create a .">
   
   <meta property="og:site_name" content="Paul Apivat">
   <meta property="og:url" content="/technical_notes/example_tech/python_dotenv/">
-  <meta property="og:title" content="Setting dotenv to Access Sensitive API Keys | Paul Apivat">
-  <meta property="og:description" content="Setting up dotenv Files Use Case: We have sensitive API Keys and Secret Keys we don&rsquo;t want to put into version control, but we need to access.
-The best practice is to create a ."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:title" content="Setting .env to store sensitive info without pushing to GitHub | Paul Apivat">
+  <meta property="og:description" content="Overview FIRST steps for any project are:
+ Go to the directory&rsquo;s root and create .gitignore file. Add .env (dot env) to .gitignore to hide from GitHub. note: Use one ."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-01-07T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-11-17T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-01-07T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-11-17T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +265,7 @@ The best practice is to create a ."><meta property="og:image" content="/images/i
 
 
 
-  <title>Setting dotenv to Access Sensitive API Keys | Paul Apivat</title>
+  <title>Setting .env to store sensitive info without pushing to GitHub | Paul Apivat</title>
 
 </head>
 
@@ -724,6 +724,19 @@ The best practice is to create a ."><meta property="og:image" content="/images/i
   </div>
   
   <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/technical_notes/example_tech/graphql_comparison_operators/">GraphQL</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="/technical_notes/example_tech/graphql_comparison_operators/">Comparison Operators</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  <div class="docs-toc-item">
     <a class="docs-toc-link" href="/technical_notes/example_tech/mongodb_crud/">Mongodb</a>
     <ul class="nav docs-sidenav">
       
@@ -803,10 +816,6 @@ The best practice is to create a ."><meta property="og:image" content="/images/i
         <a href="/technical_notes/example_tech/python_tip2/">Creating and Looping through DataFrames</a>
       </li>
       
-      <li class="active">
-        <a href="/technical_notes/example_tech/python_dotenv/">dotenv in Python</a>
-      </li>
-      
       <li >
         <a href="/technical_notes/example_tech/python_faker/">Faker in Python</a>
       </li>
@@ -817,6 +826,10 @@ The best practice is to create a ."><meta property="og:image" content="/images/i
       
       <li >
         <a href="/technical_notes/example_tech/python_json_to_df/">JSON to Dataframes with Pandas</a>
+      </li>
+      
+      <li class="active">
+        <a href="/technical_notes/example_tech/python_dotenv/">Prevent sensitive info pushed to GitHub</a>
       </li>
       
       <li >
@@ -931,6 +944,7 @@ The best practice is to create a ."><meta property="og:image" content="/images/i
 
       <nav id="TableOfContents">
   <ul>
+    <li><a href="#overview">Overview</a></li>
     <li><a href="#setting-up-dotenv-files">Setting up dotenv Files</a></li>
     <li><a href="#installing-dotenv-module">Installing dotenv module</a></li>
   </ul>
@@ -945,12 +959,22 @@ The best practice is to create a ."><meta property="og:image" content="/images/i
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Setting dotenv to Access Sensitive API Keys</h1>
+          <h1>Setting .env to store sensitive info without pushing to GitHub</h1>
 
           <div class="article-style">
-            <h2 id="setting-up-dotenv-files">Setting up dotenv Files</h2>
+            <h2 id="overview">Overview</h2>
+<p>FIRST steps for any project are:</p>
+<ol>
+<li>Go to the directory&rsquo;s root and create <code>.gitignore</code> file.</li>
+<li>Add <code>.env</code> (dot env) to <code>.gitignore</code> to 
+<a href="https://stackoverflow.com/questions/30696930/how-to-hide-env-file-from-github" target="_blank" rel="noopener">hide from GitHub</a>.</li>
+<li><strong>note</strong>: Use one <code>.env</code> file per project, you can store multiple API Keys, passwords and other sensitive info.</li>
+<li>Best practice to store <code>.env</code> on same root directory as <code>.gitignore</code>.</li>
+</ol>
+<h2 id="setting-up-dotenv-files">Setting up dotenv Files</h2>
 <p><strong>Use Case</strong>: We have sensitive API Keys and Secret Keys we don&rsquo;t want to put into version control, but we need to access.</p>
-<p>The best practice is to create a <code>.env</code> file at the root of your project and store the keys in there, and <strong>most importantly</strong>, making sure to include <code>.env</code> in a <code>.gitignore</code> file so it <em>does not</em> get included in versioning.</p>
+<p>The best practice is to create a <code>.env</code> file at the root of your project and store the keys in there, and <strong>most importantly</strong>, making sure to include <code>.env</code> in a <code>.gitignore</code> file so it <em>does not</em> get included in versioning. 
+<a href="https://dev.to/biplov/handling-passwords-and-secret-keys-using-environment-variables-2ei0" target="_blank" rel="noopener">source</a></p>
 <p>The challenge is to install the <code>dotenv</code> module to access the <code>load_dotenv</code> function in order to access the data in the environment variable (<code>.env</code>).</p>
 <p>First, here&rsquo;s how the structure of the directory <em>could</em> look like:</p>
 <pre><code>.
@@ -962,7 +986,7 @@ The best practice is to create a ."><meta property="og:image" content="/images/i
 └── project_directory_2
         └── another_file.py
 </code></pre>
-<p>The key things to pay attention here are <code>.env</code>, <code>settings.py</code> and <code>.gitignore</code>.</p>
+<p>The key things to pay attention here are <code>.env</code>, <code>your_python_script.py</code> and <code>.gitignore</code>.</p>
 <p>For the present hypothetical project, here&rsquo;s what needs to be in the <code>.gitignore</code> file:</p>
 <pre><code>#.gitignore
 
@@ -975,16 +999,30 @@ The best practice is to create a ."><meta property="og:image" content="/images/i
 TWITTER_CONSUMER_KEY=fakeconsumerkey
 TWITTER_CONSUMER_SECRET=fakeconsumersecret
 </code></pre>
-<p>Within the <code>settings.py</code> file, you&rsquo;ll have:</p>
-<pre><code>from dotenv import load_dotenv
-load_dotenv()
+<p>Within the <code>your_python_script.py</code> file, you&rsquo;ll 
+<a href="https://dev.to/biplov/handling-passwords-and-secret-keys-using-environment-variables-2ei0" target="_blank" rel="noopener">have</a>:</p>
+<pre><code>from dotenv import load_dotenv   #for python-dotenv method
+load_dotenv()                    #for python-dotenv method
+
+import os 
+
+user_name = os.environ.get('USER')
+password = os.environ.get('password')
+
+print(user_name, password)
+
+# output
+
+username password
 </code></pre>
-<p>From there you&rsquo;ll go into <code>file.py</code> and use the dotenv module to access environment variables (sensitive API Keys). The example below accesses Twitter API.</p>
+<p>From there you&rsquo;ll go into <code>file.py</code> and use the dotenv module to access environment variables (sensitive API Keys).</p>
+<p>The example below accesses Twitter API.</p>
 <pre><code>#file.py
 
 # for python-dotenv method of access environment variables
 from twython import Twython
 import webbrowser
+
 import os
 import dotenv
 from dotenv import load_dotenv
@@ -1011,16 +1049,22 @@ CONSUMER_KEY  # 'fakeconsumerkey'
 <p>First, because we&rsquo;re using Python3, anything that involves <code>pip install</code> should  be <code>pip3 install</code>.</p>
 <p>I had to uninstall, then re-install <code>dotenv</code>, and what worked was following this 
 <a href="https://stackoverflow.com/questions/58943578/i-have-installed-python-dotenv-but-python-cannot-find-it" target="_blank" rel="noopener">Stack Overflow answer</a>:</p>
-<pre><code>conda install -c conda-forge python-dotenv
+<pre><code># update Nov 17, 2021, this works
+$ pip3 install -U python-dotenv
+
+# old installation
+conda install -c conda-forge python-dotenv
 </code></pre>
 <p>Sometimes having both <code>dotenv</code> and <code>python-dotenv</code> install can cause conflict. In which case, in your virtual environment, try below. Based on 
 <a href="https://stackoverflow.com/questions/58943578/i-have-installed-python-dotenv-but-python-cannot-find-it" target="_blank" rel="noopener">this answer</a>.</p>
-<pre><code>pip3 uninstall dotenv
+<pre><code># update Nov 17, 2021 - use python-dotenv method
+
+pip3 uninstall dotenv
 pip3 uninstall python-dotenv
 pip3 install python-dotenv
 </code></pre>
 <p>You&rsquo;ll know you have something working when you run the following code in the command line:</p>
-<pre><code>dotenv --version   # dotenv, version 0.15.0
+<pre><code>dotenv --version   # dotenv, version 0.19.2   (Nov 17, 2021)
 </code></pre>
 
           </div>
@@ -1037,15 +1081,8 @@ pip3 install python-dotenv
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/python_faker/" rel="next">Using Faker to simulate fake data with Python</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_poetry/" rel="prev">Setting up Poetry for Dependency Management</a>
+    <a href="/technical_notes/example_tech/pandas_pick_df_rows_columns/" rel="prev">Picking columns, rows in Pandas</a>
   </div>
   
 </div>
@@ -1055,7 +1092,7 @@ pip3 install python-dotenv
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Jan 7, 2021</p>
+          <p>Last updated on Nov 17, 2021</p>
 
           
 

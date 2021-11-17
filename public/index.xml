@@ -13,6 +13,118 @@
     </image>
     
     <item>
+      <title>Setting .env to store sensitive info without pushing to GitHub</title>
+      <link>/technical_notes/example_tech/python_dotenv/</link>
+      <pubDate>Wed, 17 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_dotenv/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;FIRST steps for any project are:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Go to the directory&amp;rsquo;s root and create &lt;code&gt;.gitignore&lt;/code&gt; file.&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;.env&lt;/code&gt; (dot env) to &lt;code&gt;.gitignore&lt;/code&gt; to 
+&lt;a href=&#34;https://stackoverflow.com/questions/30696930/how-to-hide-env-file-from-github&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;hide from GitHub&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;note&lt;/strong&gt;: Use one &lt;code&gt;.env&lt;/code&gt; file per project, you can store multiple API Keys, passwords and other sensitive info.&lt;/li&gt;
+&lt;li&gt;Best practice to store &lt;code&gt;.env&lt;/code&gt; on same root directory as &lt;code&gt;.gitignore&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;setting-up-dotenv-files&#34;&gt;Setting up dotenv Files&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Use Case&lt;/strong&gt;: We have sensitive API Keys and Secret Keys we don&amp;rsquo;t want to put into version control, but we need to access.&lt;/p&gt;
+&lt;p&gt;The best practice is to create a &lt;code&gt;.env&lt;/code&gt; file at the root of your project and store the keys in there, and &lt;strong&gt;most importantly&lt;/strong&gt;, making sure to include &lt;code&gt;.env&lt;/code&gt; in a &lt;code&gt;.gitignore&lt;/code&gt; file so it &lt;em&gt;does not&lt;/em&gt; get included in versioning. 
+&lt;a href=&#34;https://dev.to/biplov/handling-passwords-and-secret-keys-using-environment-variables-2ei0&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The challenge is to install the &lt;code&gt;dotenv&lt;/code&gt; module to access the &lt;code&gt;load_dotenv&lt;/code&gt; function in order to access the data in the environment variable (&lt;code&gt;.env&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;First, here&amp;rsquo;s how the structure of the directory &lt;em&gt;could&lt;/em&gt; look like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;.
+├── .env
+└── settings.py
+└── .gitignore
+└── project_directory_1
+        └── file.py
+└── project_directory_2
+        └── another_file.py
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The key things to pay attention here are &lt;code&gt;.env&lt;/code&gt;, &lt;code&gt;your_python_script.py&lt;/code&gt; and &lt;code&gt;.gitignore&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For the present hypothetical project, here&amp;rsquo;s what needs to be in the &lt;code&gt;.gitignore&lt;/code&gt; file:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#.gitignore
+
+# Environents
+.env
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s what needs to be in &lt;code&gt;.env&lt;/code&gt;. The example here is accessing Twitter API. The first time you&amp;rsquo;re setting this up, I&amp;rsquo;d recommend using a &amp;ldquo;fake&amp;rdquo; CONSUMER_KEY (aka API Key) and CONSUMER_SECRET (API Secret Key) just to test it out and make sure that it doesn&amp;rsquo;t get inadvertently added to version control (&lt;strong&gt;note&lt;/strong&gt;: see setting up &lt;code&gt;.gitignore&lt;/code&gt; above).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# you&#39;ll put your actual API Keys and Secrete Keys here
+
+TWITTER_CONSUMER_KEY=fakeconsumerkey
+TWITTER_CONSUMER_SECRET=fakeconsumersecret
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Within the &lt;code&gt;your_python_script.py&lt;/code&gt; file, you&amp;rsquo;ll 
+&lt;a href=&#34;https://dev.to/biplov/handling-passwords-and-secret-keys-using-environment-variables-2ei0&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;have&lt;/a&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;from dotenv import load_dotenv   #for python-dotenv method
+load_dotenv()                    #for python-dotenv method
+
+import os 
+
+user_name = os.environ.get(&#39;USER&#39;)
+password = os.environ.get(&#39;password&#39;)
+
+print(user_name, password)
+
+# output
+
+username password
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From there you&amp;rsquo;ll go into &lt;code&gt;file.py&lt;/code&gt; and use the dotenv module to access environment variables (sensitive API Keys).&lt;/p&gt;
+&lt;p&gt;The example below accesses Twitter API.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#file.py
+
+# for python-dotenv method of access environment variables
+from twython import Twython
+import webbrowser
+
+import os
+import dotenv
+from dotenv import load_dotenv
+load_dotenv()
+
+###### TWITTER API ######
+
+# IMPORTANT: PLUG YOUR KEY AND SECRET IN DIRECTLY (without os.environ.get())
+CONSUMER_KEY = os.environ.get(&amp;quot;TWITTER_CONSUMER_KEY&amp;quot;)         # API Key
+CONSUMER_SECRET = os.environ.get(&amp;quot;TWITTER_CONSUMER_SECRET&amp;quot;)   # API Secret Key
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Assuming everything is setup properly, you should be able to run the following code within &lt;code&gt;IPython&lt;/code&gt; and have &lt;code&gt;CONSUMER_KEY&lt;/code&gt; return a string:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import os
+import dotenv
+from dotenv import load_dotenv
+
+load_dotenv() # True
+CONSUMER_KEY = os.environ.get(&amp;quot;TWITTER_CONSUMER_KEY&amp;quot;)
+
+CONSUMER_KEY  # &#39;fakeconsumerkey&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;installing-dotenv-module&#34;&gt;Installing dotenv module&lt;/h2&gt;
+&lt;p&gt;This is the challenging part. I had installed &lt;code&gt;dotenv&lt;/code&gt; but was unable to access it within &lt;code&gt;settings.py&lt;/code&gt; and &lt;code&gt;file.py&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;First, because we&amp;rsquo;re using Python3, anything that involves &lt;code&gt;pip install&lt;/code&gt; should  be &lt;code&gt;pip3 install&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I had to uninstall, then re-install &lt;code&gt;dotenv&lt;/code&gt;, and what worked was following this 
+&lt;a href=&#34;https://stackoverflow.com/questions/58943578/i-have-installed-python-dotenv-but-python-cannot-find-it&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Stack Overflow answer&lt;/a&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# update Nov 17, 2021, this works
+$ pip3 install -U python-dotenv
+
+# old installation
+conda install -c conda-forge python-dotenv
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Sometimes having both &lt;code&gt;dotenv&lt;/code&gt; and &lt;code&gt;python-dotenv&lt;/code&gt; install can cause conflict. In which case, in your virtual environment, try below. Based on 
+&lt;a href=&#34;https://stackoverflow.com/questions/58943578/i-have-installed-python-dotenv-but-python-cannot-find-it&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this answer&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# update Nov 17, 2021 - use python-dotenv method
+
+pip3 uninstall dotenv
+pip3 uninstall python-dotenv
+pip3 install python-dotenv
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You&amp;rsquo;ll know you have something working when you run the following code in the command line:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dotenv --version   # dotenv, version 0.19.2   (Nov 17, 2021)
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Picking columns, rows in Pandas</title>
       <link>/technical_notes/example_tech/pandas_pick_df_rows_columns/</link>
       <pubDate>Sun, 14 Nov 2021 00:00:00 +0100</pubDate>
@@ -603,88 +715,6 @@ print(&amp;quot;Done.&amp;quot;)
     </item>
     
     <item>
-      <title>Setting dotenv to Access Sensitive API Keys</title>
-      <link>/technical_notes/example_tech/python_dotenv/</link>
-      <pubDate>Thu, 07 Jan 2021 00:00:00 +0100</pubDate>
-      <guid>/technical_notes/example_tech/python_dotenv/</guid>
-      <description>&lt;h2 id=&#34;setting-up-dotenv-files&#34;&gt;Setting up dotenv Files&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Use Case&lt;/strong&gt;: We have sensitive API Keys and Secret Keys we don&amp;rsquo;t want to put into version control, but we need to access.&lt;/p&gt;
-&lt;p&gt;The best practice is to create a &lt;code&gt;.env&lt;/code&gt; file at the root of your project and store the keys in there, and &lt;strong&gt;most importantly&lt;/strong&gt;, making sure to include &lt;code&gt;.env&lt;/code&gt; in a &lt;code&gt;.gitignore&lt;/code&gt; file so it &lt;em&gt;does not&lt;/em&gt; get included in versioning.&lt;/p&gt;
-&lt;p&gt;The challenge is to install the &lt;code&gt;dotenv&lt;/code&gt; module to access the &lt;code&gt;load_dotenv&lt;/code&gt; function in order to access the data in the environment variable (&lt;code&gt;.env&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;First, here&amp;rsquo;s how the structure of the directory &lt;em&gt;could&lt;/em&gt; look like:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;.
-├── .env
-└── settings.py
-└── .gitignore
-└── project_directory_1
-        └── file.py
-└── project_directory_2
-        └── another_file.py
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The key things to pay attention here are &lt;code&gt;.env&lt;/code&gt;, &lt;code&gt;settings.py&lt;/code&gt; and &lt;code&gt;.gitignore&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;For the present hypothetical project, here&amp;rsquo;s what needs to be in the &lt;code&gt;.gitignore&lt;/code&gt; file:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#.gitignore
-
-# Environents
-.env
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here&amp;rsquo;s what needs to be in &lt;code&gt;.env&lt;/code&gt;. The example here is accessing Twitter API. The first time you&amp;rsquo;re setting this up, I&amp;rsquo;d recommend using a &amp;ldquo;fake&amp;rdquo; CONSUMER_KEY (aka API Key) and CONSUMER_SECRET (API Secret Key) just to test it out and make sure that it doesn&amp;rsquo;t get inadvertently added to version control (&lt;strong&gt;note&lt;/strong&gt;: see setting up &lt;code&gt;.gitignore&lt;/code&gt; above).&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# you&#39;ll put your actual API Keys and Secrete Keys here
-
-TWITTER_CONSUMER_KEY=fakeconsumerkey
-TWITTER_CONSUMER_SECRET=fakeconsumersecret
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Within the &lt;code&gt;settings.py&lt;/code&gt; file, you&amp;rsquo;ll have:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;from dotenv import load_dotenv
-load_dotenv()
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;From there you&amp;rsquo;ll go into &lt;code&gt;file.py&lt;/code&gt; and use the dotenv module to access environment variables (sensitive API Keys). The example below accesses Twitter API.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#file.py
-
-# for python-dotenv method of access environment variables
-from twython import Twython
-import webbrowser
-import os
-import dotenv
-from dotenv import load_dotenv
-load_dotenv()
-
-###### TWITTER API ######
-
-# IMPORTANT: PLUG YOUR KEY AND SECRET IN DIRECTLY (without os.environ.get())
-CONSUMER_KEY = os.environ.get(&amp;quot;TWITTER_CONSUMER_KEY&amp;quot;)         # API Key
-CONSUMER_SECRET = os.environ.get(&amp;quot;TWITTER_CONSUMER_SECRET&amp;quot;)   # API Secret Key
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Assuming everything is setup properly, you should be able to run the following code within &lt;code&gt;IPython&lt;/code&gt; and have &lt;code&gt;CONSUMER_KEY&lt;/code&gt; return a string:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;import os
-import dotenv
-from dotenv import load_dotenv
-
-load_dotenv() # True
-CONSUMER_KEY = os.environ.get(&amp;quot;TWITTER_CONSUMER_KEY&amp;quot;)
-
-CONSUMER_KEY  # &#39;fakeconsumerkey&#39;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;installing-dotenv-module&#34;&gt;Installing dotenv module&lt;/h2&gt;
-&lt;p&gt;This is the challenging part. I had installed &lt;code&gt;dotenv&lt;/code&gt; but was unable to access it within &lt;code&gt;settings.py&lt;/code&gt; and &lt;code&gt;file.py&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;First, because we&amp;rsquo;re using Python3, anything that involves &lt;code&gt;pip install&lt;/code&gt; should  be &lt;code&gt;pip3 install&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;I had to uninstall, then re-install &lt;code&gt;dotenv&lt;/code&gt;, and what worked was following this 
-&lt;a href=&#34;https://stackoverflow.com/questions/58943578/i-have-installed-python-dotenv-but-python-cannot-find-it&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Stack Overflow answer&lt;/a&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;conda install -c conda-forge python-dotenv
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Sometimes having both &lt;code&gt;dotenv&lt;/code&gt; and &lt;code&gt;python-dotenv&lt;/code&gt; install can cause conflict. In which case, in your virtual environment, try below. Based on 
-&lt;a href=&#34;https://stackoverflow.com/questions/58943578/i-have-installed-python-dotenv-but-python-cannot-find-it&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this answer&lt;/a&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;pip3 uninstall dotenv
-pip3 uninstall python-dotenv
-pip3 install python-dotenv
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You&amp;rsquo;ll know you have something working when you run the following code in the command line:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;dotenv --version   # dotenv, version 0.15.0
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Setting up Poetry for Dependency Management</title>
       <link>/technical_notes/example_tech/python_poetry/</link>
       <pubDate>Tue, 22 Dec 2020 00:00:00 +0100</pubDate>
@@ -994,6 +1024,41 @@ Python 2.7.16
 &lt;p&gt;Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.&lt;/p&gt;
 &lt;p&gt;Suspendisse a tincidunt lacus. Curabitur at urna sagittis, dictum ante sit amet, euismod magna. Sed rutrum massa id tortor commodo, vitae elementum turpis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean purus turpis, venenatis a ullamcorper nec, tincidunt et massa. Integer posuere quam rutrum arcu vehicula imperdiet. Mauris ullamcorper quam vitae purus congue, quis euismod magna eleifend. Vestibulum semper vel augue eget tincidunt. Fusce eget justo sodales, dapibus odio eu, ultrices lorem. Duis condimentum lorem id eros commodo, in facilisis mauris scelerisque. Morbi sed auctor leo. Nullam volutpat a lacus quis pharetra. Nulla congue rutrum magna a ornare.&lt;/p&gt;
 &lt;p&gt;Aliquam in turpis accumsan, malesuada nibh ut, hendrerit justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque sed erat nec justo posuere suscipit. Donec ut efficitur arcu, in malesuada neque. Nunc dignissim nisl massa, id vulputate nunc pretium nec. Quisque eget urna in risus suscipit ultricies. Pellentesque odio odio, tincidunt in eleifend sed, posuere a diam. Nam gravida nisl convallis semper elementum. Morbi vitae felis faucibus, vulputate orci placerat, aliquet nisi. Aliquam erat volutpat. Maecenas sagittis pulvinar purus, sed porta quam laoreet at.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Comparison Operators with GraphQL</title>
+      <link>/technical_notes/example_tech/graphql_comparison_operators/</link>
+      <pubDate>Wed, 17 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/graphql_comparison_operators/</guid>
+      <description>&lt;h2 id=&#34;comparison-operators-with-graphql&#34;&gt;Comparison Operators with GraphQL&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: When querying a GraphQL endpoint, you might need to query from the &lt;em&gt;latest&lt;/em&gt; timestamp. You&amp;rsquo;ll need a &lt;strong&gt;comparison operator&lt;/strong&gt; for that.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s are the operators, taken from 
+&lt;a href=&#34;https://stackoverflow.com/questions/45674423/how-to-filter-greater-than-in-graphql&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this stackoverflow answer&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;note&lt;/strong&gt;: You can add these operators to any key, for example if the column name was &amp;ldquo;created&amp;rdquo; (i.e., created at 123456789 timestamp), a query might include &lt;code&gt;created_gt&lt;/code&gt; to mean &amp;ldquo;timestamp greater than&amp;rdquo;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# sample query
+votes(first: 1000, where: {created_gt: 123456789}) {
+        id
+        vote_id
+        voter
+        created
+        proposal {
+                id
+        }
+}
+
+# Other comparison operators
+_gt (greater than)
+_lt (less than)
+_gte (greater than or equal to)
+_lte (less than or equal to)
+_in (equal to)
+_not_in (not equal to)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
