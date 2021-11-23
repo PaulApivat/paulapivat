@@ -1064,6 +1064,27 @@ db.bounties.find({&amp;quot;reward.amount&amp;quot;: {$lt: 100}}).pretty()
     </item>
     
     <item>
+      <title>Importing a Collection</title>
+      <link>/technical_notes/example_tech/mongodb_import_data/</link>
+      <pubDate>Tue, 23 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_import_data/</guid>
+      <description>&lt;h2 id=&#34;importing-data&#34;&gt;Importing Data&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You need to import an array of objects (i.e., a collection) in Mongo.&lt;/p&gt;
+&lt;p&gt;Assuming you have the collection already stored in a JSON file, here&amp;rsquo;s the &lt;code&gt;shell&lt;/code&gt; command to import:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;$ mongoimport file-name.json -d databaseName -c collectionName --jsonArray --drop
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The breakdown is:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;-d databaseName
+-c collectionName
+--jsonArray  # importing an array of objects
+--drop       # drop existing collection of same name to use most recent (optional)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>One-to-One Relations, Reference approach</title>
       <link>/technical_notes/example_tech/mongodb_joins/</link>
       <pubDate>Tue, 23 Nov 2021 00:00:00 +0100</pubDate>
