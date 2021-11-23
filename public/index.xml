@@ -1054,6 +1054,58 @@ db.bounties.find({&amp;quot;reward.amount&amp;quot;: {$lt: 100}}).pretty()
     </item>
     
     <item>
+      <title>Notable data types and common commands</title>
+      <link>/technical_notes/example_tech/mongodb_data_types/</link>
+      <pubDate>Tue, 23 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_data_types/</guid>
+      <description>&lt;h2 id=&#34;data-types&#34;&gt;Data Types&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: These are specific for querying in Mongo. Good to keep these in mind:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Text (&amp;ldquo;Max&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;Boolean (true)&lt;/li&gt;
+&lt;li&gt;Integer (int32) (55)&lt;/li&gt;
+&lt;li&gt;NumberLong (int64) (10000000000)&lt;/li&gt;
+&lt;li&gt;NumberDecimal (12.99)&lt;/li&gt;
+&lt;li&gt;ObjectId  (ObjectId(&amp;ldquo;sfasd&amp;rdquo;))&lt;/li&gt;
+&lt;li&gt;ISODate  (ISODate(&amp;ldquo;2021-11-23&amp;rdquo;))&lt;/li&gt;
+&lt;li&gt;Timestamp (Timestamp(11421532))&lt;/li&gt;
+&lt;li&gt;Embedded Document (&amp;ldquo;a&amp;rdquo;: {&amp;hellip;})&lt;/li&gt;
+&lt;li&gt;Array             (&amp;ldquo;a&amp;rdquo;: [&amp;hellip;])&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;common-commands-in-mongo-shell&#34;&gt;Common Commands in Mongo Shell&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;To pull up quick descriptive stats for any database, type:
+&lt;code&gt;db.stats()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;To delete a collection, type:
+&lt;code&gt;db.nameOfCollection.drop()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>One-to-One Relations, Reference approach</title>
+      <link>/technical_notes/example_tech/mongodb_joins/</link>
+      <pubDate>Tue, 23 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_joins/</guid>
+      <description>&lt;h2 id=&#34;joining&#34;&gt;Joining&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: Among many possible relationships, this is a one-to-one relation between two tables using the &amp;ldquo;Reference&amp;rdquo; &lt;strong&gt;instead&lt;/strong&gt; of the &amp;ldquo;Embedded Document&amp;rdquo; approach.&lt;/p&gt;
+&lt;p&gt;Here i&amp;rsquo;m joining a &lt;code&gt;bounties&lt;/code&gt; collection with the &lt;code&gt;customers&lt;/code&gt; collection through the &lt;code&gt;customer_id&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties.aggregate([
+                        {$lookup: {from: &amp;quot;customers&amp;quot;, 
+                                   localField: &amp;quot;customer_id&amp;quot;,
+                                   foreignField: &amp;quot;customer_id&amp;quot;, 
+                                   as:&amp;quot;customerName&amp;quot;}
+                        }
+                      ])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Comparison Operators with GraphQL</title>
       <link>/technical_notes/example_tech/graphql_comparison_operators/</link>
       <pubDate>Wed, 17 Nov 2021 00:00:00 +0100</pubDate>

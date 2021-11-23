@@ -27,11 +27,11 @@
   
     
   
-  <meta name="description" content="Git commit messages Context: You&rsquo;ve merged a branch to master/main and you get this message. See original stackoverflow question for more context:
- Please enter a commit message to explain why this merge is necessary, especially if it merges an updated upstream into a topic branch.">
+  <meta name="description" content="Data Types Situation: These are specific for querying in Mongo. Good to keep these in mind:
+ Text (&ldquo;Max&rdquo;) Boolean (true) Integer (int32) (55) NumberLong (int64) (10000000000) NumberDecimal (12.99) ObjectId (ObjectId(&ldquo;sfasd&rdquo;)) ISODate (ISODate(&ldquo;2021-11-23&rdquo;)) Timestamp (Timestamp(11421532)) Embedded Document (&ldquo;a&rdquo;: {&hellip;}) Array (&ldquo;a&rdquo;: [&hellip;])  Common Commands in Mongo Shell  To pull up quick descriptive stats for any database, type: db.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/git_commit_message/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_data_types-copy/">
 
   
 
@@ -218,7 +218,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/git_commit_message/">
+  <link rel="canonical" href="/technical_notes/example_tech/mongodb_data_types-copy/">
 
   
   
@@ -237,16 +237,16 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/git_commit_message/">
-  <meta property="og:title" content="Writing a git commit message | Paul Apivat">
-  <meta property="og:description" content="Git commit messages Context: You&rsquo;ve merged a branch to master/main and you get this message. See original stackoverflow question for more context:
- Please enter a commit message to explain why this merge is necessary, especially if it merges an updated upstream into a topic branch."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/mongodb_data_types-copy/">
+  <meta property="og:title" content="Notable data types and common commands | Paul Apivat">
+  <meta property="og:description" content="Data Types Situation: These are specific for querying in Mongo. Good to keep these in mind:
+ Text (&ldquo;Max&rdquo;) Boolean (true) Integer (int32) (55) NumberLong (int64) (10000000000) NumberDecimal (12.99) ObjectId (ObjectId(&ldquo;sfasd&rdquo;)) ISODate (ISODate(&ldquo;2021-11-23&rdquo;)) Timestamp (Timestamp(11421532)) Embedded Document (&ldquo;a&rdquo;: {&hellip;}) Array (&ldquo;a&rdquo;: [&hellip;])  Common Commands in Mongo Shell  To pull up quick descriptive stats for any database, type: db."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-11-28T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-11-23T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-11-28T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-11-23T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +265,7 @@
 
 
 
-  <title>Writing a git commit message | Paul Apivat</title>
+  <title>Notable data types and common commands | Paul Apivat</title>
 
 </head>
 
@@ -697,7 +697,7 @@
         <a href="/technical_notes/example_tech/github_make_repo/">Creating a Github Repo</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/git_commit_message/">Git Commit Message</a>
       </li>
       
@@ -748,12 +748,8 @@
         <a href="/technical_notes/example_tech/mongodb_data_retrieval/">Data Retrieval</a>
       </li>
       
-      <li >
-        <a href="/technical_notes/example_tech/mongodb_data_types/">Data Types &amp; Common Commands (Mongo)</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/mongodb_joins/">Joins in Mongo</a>
+      <li class="active">
+        <a href="/technical_notes/example_tech/mongodb_data_types-copy/">Data Types &amp; Common Commands (Mongo)</a>
       </li>
       
     </ul>
@@ -956,7 +952,8 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#git-commit-messages">Git commit messages</a></li>
+    <li><a href="#data-types">Data Types</a></li>
+    <li><a href="#common-commands-in-mongo-shell">Common Commands in Mongo Shell</a></li>
   </ul>
 </nav>
 
@@ -969,25 +966,32 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Writing a git commit message</h1>
+          <h1>Notable data types and common commands</h1>
 
           <div class="article-style">
-            <h2 id="git-commit-messages">Git commit messages</h2>
-<p><strong>Context</strong>: You&rsquo;ve merged a branch to master/main and you get this message. See 
-<a href="https://stackoverflow.com/questions/19085807/please-enter-a-commit-message-to-explain-why-this-merge-is-necessary-especially" target="_blank" rel="noopener">original stackoverflow</a> question for more context:</p>
-<blockquote>
-<p>Please enter a commit message to explain why this merge is necessary,
-especially if it merges an updated upstream into a topic branch.</p>
-</blockquote>
-<p>You try typing a message or hitting enter or escaping and <strong>nothing</strong> happens.
-This is <strong>not</strong> an error message. Git is using your default editor. Here&rsquo;s what to do:</p>
-<ol>
-<li>press &ldquo;i&rdquo; (i for insert)</li>
-<li>write your merge message</li>
-<li>press &ldquo;esc&rdquo; (escape)</li>
-<li>write &ldquo;:wq&rdquo; (write &amp; quite)</li>
-<li>then press enter</li>
-</ol>
+            <h2 id="data-types">Data Types</h2>
+<p><strong>Situation</strong>: These are specific for querying in Mongo. Good to keep these in mind:</p>
+<ul>
+<li>Text (&ldquo;Max&rdquo;)</li>
+<li>Boolean (true)</li>
+<li>Integer (int32) (55)</li>
+<li>NumberLong (int64) (10000000000)</li>
+<li>NumberDecimal (12.99)</li>
+<li>ObjectId  (ObjectId(&ldquo;sfasd&rdquo;))</li>
+<li>ISODate  (ISODate(&ldquo;2021-11-23&rdquo;))</li>
+<li>Timestamp (Timestamp(11421532))</li>
+<li>Embedded Document (&ldquo;a&rdquo;: {&hellip;})</li>
+<li>Array             (&ldquo;a&rdquo;: [&hellip;])</li>
+</ul>
+<h2 id="common-commands-in-mongo-shell">Common Commands in Mongo Shell</h2>
+<ul>
+<li>To pull up quick descriptive stats for any database, type:
+<code>db.stats()</code></li>
+<li>To delete a collection, type:
+<code>db.nameOfCollection.drop()</code></li>
+</ul>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -1004,14 +1008,14 @@ This is <strong>not</strong> an error message. Git is using your default editor.
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/python_poetry/" rel="next">Setting up Poetry for Dependency Management</a>
+    <a href="/technical_notes/example_tech/mongodb_data_retrieval/" rel="next">Retrieving data in MongoDB</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_virtualenv/" rel="prev">Setting up Conda Virtual Env and IPython</a>
+    <a href="/technical_notes/example_tech/mongodb_data_types/" rel="prev">Notable data types and common commands</a>
   </div>
   
 </div>
@@ -1021,7 +1025,7 @@ This is <strong>not</strong> an error message. Git is using your default editor.
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Nov 28, 2020</p>
+          <p>Last updated on Nov 23, 2021</p>
 
           
 
@@ -1033,7 +1037,7 @@ This is <strong>not</strong> an error message. Git is using your default editor.
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/git_commit_message.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/mongodb_data_types%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
