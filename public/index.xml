@@ -1028,6 +1028,32 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Retrieving data in MongoDB</title>
+      <link>/technical_notes/example_tech/mongodb_data_retrieval/</link>
+      <pubDate>Tue, 23 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_data_retrieval/</guid>
+      <description>&lt;h2 id=&#34;using-projection-to-limit-set-of-fields-retrieved&#34;&gt;Using Projection to Limit Set of Fields Retrieved&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to query a list of discordHandles or customerNames from a collection of documents (list of objects) and you don&amp;rsquo;t want &lt;em&gt;every&lt;/em&gt; field.&lt;/p&gt;
+&lt;h3 id=&#34;returning-only-one-field-in-a-document&#34;&gt;Returning only one field in a document&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# list only customer names without their id
+db.customers.find({}, {customerName: 1, _id: 0}).pretty()
+
+# list discord handles without the id
+db.bounties.find({}, {&amp;quot;createdBy.discordHandle&amp;quot;: 1, _id: 0}).pretty()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;using-comparison-operators-to-limit-number-of-documents-retrieved&#34;&gt;Using comparison operators to limit number of documents retrieved&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# list all bounties with reward amount greater than 100
+db.bounties.find({&amp;quot;reward.amount&amp;quot;: {$gt: 100}}).pretty()
+
+# list all bounties with reward less than 100
+db.bounties.find({&amp;quot;reward.amount&amp;quot;: {$lt: 100}}).pretty()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Comparison Operators with GraphQL</title>
       <link>/technical_notes/example_tech/graphql_comparison_operators/</link>
       <pubDate>Wed, 17 Nov 2021 00:00:00 +0100</pubDate>
