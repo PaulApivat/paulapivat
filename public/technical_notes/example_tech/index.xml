@@ -1079,6 +1079,29 @@ db.bounties.find({&amp;quot;reward.amount&amp;quot;: {$lt: 100}}).pretty()
                         }
                       ])
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;joining-and-displaying-specific-fields&#34;&gt;Joining and Displaying Specific Fields&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: After joining two collections, you don&amp;rsquo;t want to print everything out, only a specific set of key-value pairs.&lt;/p&gt;
+&lt;p&gt;Here I&amp;rsquo;m joining the &lt;code&gt;bounties&lt;/code&gt; and &lt;code&gt;customers&lt;/code&gt; collection and only want to display the &lt;code&gt;title&lt;/code&gt; of the bounty and the &lt;code&gt;customerName&lt;/code&gt; of the customer. (&lt;strong&gt;note&lt;/strong&gt;: To omit the &amp;ldquo;_id&amp;rdquo;, set it to &lt;code&gt;0&lt;/code&gt;.)&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties.aggregate([{
+    $lookup: {
+        from: &amp;quot;customers&amp;quot;, 
+        localField: &amp;quot;customer_id&amp;quot;, 
+        foreignField: &amp;quot;customer_id&amp;quot;, 
+        as: &amp;quot;customerName&amp;quot;
+    }
+}, {
+    $unwind: &amp;quot;$customerName&amp;quot;
+}, {$project: {
+        &amp;quot;_id&amp;quot;: 0,
+        &amp;quot;title&amp;quot;: 1, 
+        &amp;quot;customerName.customerName&amp;quot;: 1
+    } 
+}
+]);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;pipelines-in-mongo&#34;&gt;Pipelines in Mongo&lt;/h2&gt;
+&lt;p&gt;The &amp;ldquo;pipeline&amp;rdquo; here is &lt;code&gt;$lookup&lt;/code&gt; -&amp;gt; &lt;code&gt;$unwind&lt;/code&gt; -&amp;gt; &lt;code&gt;$project&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Use &lt;code&gt;$lookup&lt;/code&gt; to create the join. Then &lt;code&gt;$unwind&lt;/code&gt; to focus on the &amp;ldquo;result&amp;rdquo; of the &lt;code&gt;$lookup&lt;/code&gt; (&amp;ldquo;as:&amp;hellip;&amp;quot;). Finally, &lt;code&gt;$project&lt;/code&gt; to specify the specific key-value pairs you want.&lt;/p&gt;
 &lt;p&gt;For more content on data science, R, and Python 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>

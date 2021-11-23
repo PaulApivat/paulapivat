@@ -957,6 +957,8 @@ Here i&rsquo;m joining a bounties collection with the customers collection throu
       <nav id="TableOfContents">
   <ul>
     <li><a href="#joining">Joining</a></li>
+    <li><a href="#joining-and-displaying-specific-fields">Joining and Displaying Specific Fields</a></li>
+    <li><a href="#pipelines-in-mongo">Pipelines in Mongo</a></li>
   </ul>
 </nav>
 
@@ -983,6 +985,29 @@ Here i&rsquo;m joining a bounties collection with the customers collection throu
                         }
                       ])
 </code></pre>
+<h2 id="joining-and-displaying-specific-fields">Joining and Displaying Specific Fields</h2>
+<p><strong>Situation</strong>: After joining two collections, you don&rsquo;t want to print everything out, only a specific set of key-value pairs.</p>
+<p>Here I&rsquo;m joining the <code>bounties</code> and <code>customers</code> collection and only want to display the <code>title</code> of the bounty and the <code>customerName</code> of the customer. (<strong>note</strong>: To omit the &ldquo;_id&rdquo;, set it to <code>0</code>.)</p>
+<pre><code class="language-{python}">db.bounties.aggregate([{
+    $lookup: {
+        from: &quot;customers&quot;, 
+        localField: &quot;customer_id&quot;, 
+        foreignField: &quot;customer_id&quot;, 
+        as: &quot;customerName&quot;
+    }
+}, {
+    $unwind: &quot;$customerName&quot;
+}, {$project: {
+        &quot;_id&quot;: 0,
+        &quot;title&quot;: 1, 
+        &quot;customerName.customerName&quot;: 1
+    } 
+}
+]);
+</code></pre>
+<h2 id="pipelines-in-mongo">Pipelines in Mongo</h2>
+<p>The &ldquo;pipeline&rdquo; here is <code>$lookup</code> -&gt; <code>$unwind</code> -&gt; <code>$project</code>.</p>
+<p>Use <code>$lookup</code> to create the join. Then <code>$unwind</code> to focus on the &ldquo;result&rdquo; of the <code>$lookup</code> (&ldquo;as:&hellip;&quot;). Finally, <code>$project</code> to specify the specific key-value pairs you want.</p>
 <p>For more content on data science, R, and Python 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
