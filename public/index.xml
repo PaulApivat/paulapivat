@@ -1028,6 +1028,23 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Fixing linting errors</title>
+      <link>/technical_notes/example_tech/webdev_linting_error/</link>
+      <pubDate>Wed, 24 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/webdev_linting_error/</guid>
+      <description>&lt;h2 id=&#34;fixing-linting-errors&#34;&gt;Fixing Linting Errors&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to push up a Pull Request, but if any files has &lt;strong&gt;linting errors&lt;/strong&gt; it&amp;rsquo;ll be problematic with the PR.&lt;/p&gt;
+&lt;h2 id=&#34;indicators-of-linting-errors&#34;&gt;Indicators of Linting Errors&lt;/h2&gt;
+&lt;p&gt;When you open &lt;code&gt;terminal&lt;/code&gt; and see the &amp;ldquo;Problem&amp;rdquo; tab, linting errors will be show here. You can also see &lt;code&gt;red&lt;/code&gt; lines on any file itself. Sometimes your machine expects &amp;ldquo;tabs&amp;rdquo;, but you used &amp;ldquo;spaces&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;The command to fix linting error for a particular file (change directory into the problematic file):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;$ yarn linting file_name.js --fix
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Retrieving data in MongoDB</title>
       <link>/technical_notes/example_tech/mongodb_data_retrieval/</link>
       <pubDate>Tue, 23 Nov 2021 00:00:00 +0100</pubDate>

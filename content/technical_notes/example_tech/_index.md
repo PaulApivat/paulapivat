@@ -14,6 +14,22 @@ type: docs
 weight: 1
 ---
 
+## Technical Notes Table of Contents
+
+- Data Cleaning Tips
+- Data Viz Tips
+- Database
+- Git & GitHub
+- Google Cloud Tips
+- GraphQL
+- MongoDB
+- Pandas
+- Pipeline
+- PostgreSQL
+- Python Tips
+- Rstats Tips
+- SQL
+
 ## Flexibility
 
 Add Technical Notes.
