@@ -31,6 +31,31 @@
     </item>
     
     <item>
+      <title>Update local branch to upstream origin</title>
+      <link>/technical_notes/example_tech/github_update_local_branch_to_origin/</link>
+      <pubDate>Sun, 28 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/github_update_local_branch_to_origin/</guid>
+      <description>&lt;h2 id=&#34;update-local-branch-to-upstream-origin&#34;&gt;Update local branch to upstream origin&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: The branch you&amp;rsquo;re working off has fallen behind from the origin, you need to get it up-to-date. &lt;em&gt;This&lt;/em&gt; allow you to get your local branch up-to-date with &amp;lsquo;origin&amp;rsquo; &lt;strong&gt;without&lt;/strong&gt; having to switch over the &lt;code&gt;develop&lt;/code&gt; branch to run &lt;code&gt;git pull&lt;/code&gt;, you can do it right in the current branch.&lt;/p&gt;
+&lt;p&gt;This is the command to run in terminal. Make sure you&amp;rsquo;re in the appropriate project directory.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# ensure we are working off the latest version of the upstream repo
+git pull origin
+
+# bring the latest changes into our local branch
+git merge develop
+
+# resolve conflicts...
+
+# push the latest version of the local branch...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;See this 
+&lt;a href=&#34;https://stackoverflow.com/questions/7773939/show-git-ahead-and-behind-info-for-all-branches-including-remotes/20499690#20499690&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;stack overflow&lt;/a&gt; for a command to see ahead/behind for all branches.&lt;/p&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Setting .env to store sensitive info without pushing to GitHub</title>
       <link>/technical_notes/example_tech/python_dotenv/</link>
       <pubDate>Wed, 17 Nov 2021 00:00:00 +0100</pubDate>
