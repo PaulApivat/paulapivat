@@ -27,12 +27,10 @@
   
     
   
-  <meta name="description" content="One principle of tidy data is to change from wide to long; and conversely, long to wide.
-Here&rsquo;s a concrete example:
-Using spread() The first part of the below pre-processing steps include subsetting the original data frame (data) by selecting two countries for comparison (Morocco and Qatar) on specific variables such as: GeoAreaName, TimePeriod, Sex, Type of skill and Value.">
+  <meta name="description" content="Show ahead/behind for all local branches Situation: You can do git status to see how far ahead or behind the current branch your work is, but sometimes you want to see the status of all branches.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip2/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/github_check_status_branches/">
 
   
 
@@ -219,7 +217,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip2/">
+  <link rel="canonical" href="/technical_notes/example_tech/github_check_status_branches/">
 
   
   
@@ -238,17 +236,15 @@ Using spread() The first part of the below pre-processing steps include subsetti
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip2/">
-  <meta property="og:title" content="Use the spread() function | Paul Apivat">
-  <meta property="og:description" content="One principle of tidy data is to change from wide to long; and conversely, long to wide.
-Here&rsquo;s a concrete example:
-Using spread() The first part of the below pre-processing steps include subsetting the original data frame (data) by selecting two countries for comparison (Morocco and Qatar) on specific variables such as: GeoAreaName, TimePeriod, Sex, Type of skill and Value."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/github_check_status_branches/">
+  <meta property="og:title" content="Show ahead/behind for all local branches | Paul Apivat">
+  <meta property="og:description" content="Show ahead/behind for all local branches Situation: You can do git status to see how far ahead or behind the current branch your work is, but sometimes you want to see the status of all branches."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-08-25T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-11-28T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-08-25T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-11-28T00:00:00&#43;01:00">
   
 
   
@@ -267,7 +263,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
 
 
 
-  <title>Use the spread() function | Paul Apivat</title>
+  <title>Show ahead/behind for all local branches | Paul Apivat</title>
 
 </head>
 
@@ -707,7 +703,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
         <a href="/technical_notes/example_tech/github_make_pr/">Making a Pull Request</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/github_check_status_branches/">Show ahead/behind all branches</a>
       </li>
       
@@ -923,7 +919,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
         <a href="/technical_notes/example_tech/rstats_tip3/">Tidy Data - pivot_wider</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/rstats_tip2/">Tidy Data - Spread</a>
       </li>
       
@@ -979,7 +975,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#using-spread">Using spread()</a></li>
+    <li><a href="#show-aheadbehind-for-all-local-branches">Show ahead/behind for all local branches</a></li>
   </ul>
 </nav>
 
@@ -992,28 +988,19 @@ Using spread() The first part of the below pre-processing steps include subsetti
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Use the spread() function</h1>
+          <h1>Show ahead/behind for all local branches</h1>
 
           <div class="article-style">
-            <p>One principle of <code>tidy</code> data is to change from wide to long; and conversely, long to wide.</p>
-<p>Here&rsquo;s a concrete example:</p>
-<h2 id="using-spread">Using spread()</h2>
-<p>The first part of the below pre-processing steps include subsetting the original data frame (data) by selecting two countries for comparison (Morocco and Qatar) on specific variables such as: <code>GeoAreaName</code>, <code>TimePeriod</code>, <code>Sex</code>, <code>Type of skill</code> and <code>Value</code>.</p>
-<p>Then employing <code>group_by</code> to ensure all rows are unique. The next line is key as it addresses an error that each row must be marked by a unique id key.</p>
-<p>Finally, the <code>spread()</code> function allows us to see each countries' relative performance on various 
-<a href="http://tcg.uis.unesco.org/4-4-1-proportion-of-youth-and-adults-with-information-and-communications-technology-ict-skills-by-type-of-skill/" target="_blank" rel="noopener">ICT skills</a>. Please consult meta-data for more details.</p>
-<pre><code>data %&gt;%
-    filter(GeoAreaName==&quot;Morocco&quot; | GeoAreaName==&quot;Qatar&quot;) %&gt;% 
-    select(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
-    group_by(GeoAreaName, TimePeriod, Sex, `Type of skill`, Value) %&gt;%
-	
-    # Error: Each row of output must be identified by a unique combination of keys.
-    # rowid_to_column() address this error
-	
-    tibble::rowid_to_column() %&gt;%
-    spread(key = `Type of skill`, value = Value)
+            <h2 id="show-aheadbehind-for-all-local-branches">Show ahead/behind for all local branches</h2>
+<p><strong>Situation</strong>: You can do <code>git status</code> to see how far ahead or behind the <em>current</em> branch your work is, but sometimes you want to see the status of <strong>all</strong> branches.</p>
+<p>This is the command to run in terminal. Make sure you&rsquo;re in the appropriate project directory.</p>
+<pre><code class="language-{python}">$ git for-each-ref --format=&quot;%(refname:short) %(upstream:track) %(upstream:remotename)&quot; refs/heads
 
 </code></pre>
+<p>See this 
+<a href="https://stackoverflow.com/questions/7773939/show-git-ahead-and-behind-info-for-all-branches-including-remotes/20499690#20499690" target="_blank" rel="noopener">stack overflow</a>.</p>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -1029,15 +1016,8 @@ Using spread() The first part of the below pre-processing steps include subsetti
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_tip3/" rel="next">Using the pivot_wider() function</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_tip1/" rel="prev">Make your work reproducible</a>
+    <a href="/technical_notes/example_tech/python_dotenv/" rel="prev">Setting .env to store sensitive info without pushing to GitHub</a>
   </div>
   
 </div>
@@ -1047,7 +1027,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Aug 25, 2020</p>
+          <p>Last updated on Nov 28, 2021</p>
 
           
 
@@ -1059,7 +1039,7 @@ Using spread() The first part of the below pre-processing steps include subsetti
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip2.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/github_check_status_branches.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

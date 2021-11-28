@@ -13,6 +13,24 @@
     </image>
     
     <item>
+      <title>Show ahead/behind for all local branches</title>
+      <link>/technical_notes/example_tech/github_check_status_branches/</link>
+      <pubDate>Sun, 28 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/github_check_status_branches/</guid>
+      <description>&lt;h2 id=&#34;show-aheadbehind-for-all-local-branches&#34;&gt;Show ahead/behind for all local branches&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You can do &lt;code&gt;git status&lt;/code&gt; to see how far ahead or behind the &lt;em&gt;current&lt;/em&gt; branch your work is, but sometimes you want to see the status of &lt;strong&gt;all&lt;/strong&gt; branches.&lt;/p&gt;
+&lt;p&gt;This is the command to run in terminal. Make sure you&amp;rsquo;re in the appropriate project directory.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;$ git for-each-ref --format=&amp;quot;%(refname:short) %(upstream:track) %(upstream:remotename)&amp;quot; refs/heads
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;See this 
+&lt;a href=&#34;https://stackoverflow.com/questions/7773939/show-git-ahead-and-behind-info-for-all-branches-including-remotes/20499690#20499690&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;stack overflow&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Setting .env to store sensitive info without pushing to GitHub</title>
       <link>/technical_notes/example_tech/python_dotenv/</link>
       <pubDate>Wed, 17 Nov 2021 00:00:00 +0100</pubDate>
