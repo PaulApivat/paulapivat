@@ -1071,6 +1071,41 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Reverse Plotting</title>
+      <link>/technical_notes/example_tech/rstats_tip_reverse_plotting/</link>
+      <pubDate>Mon, 29 Nov 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_tip_reverse_plotting/</guid>
+      <description>&lt;h2 id=&#34;left-to-right&#34;&gt;Left to Right&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: The &lt;em&gt;easiest&lt;/em&gt; way to flip bar chart arrangement on x-axis &lt;em&gt;after&lt;/em&gt; you&amp;rsquo;ve &amp;ldquo;reorder&amp;rdquo; by the y-axis values is to put a &amp;ldquo;minus&amp;rdquo; in front of the y variable:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# note the minus in front of content_count
+df %&amp;gt;%
+   ggplot(aes(x = reorder(username, -content_count), 
+              y = content_count, 
+              fill = num_roles_bin))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The more complicated way is to change the &lt;strong&gt;factor levels&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;top-to-bottom&#34;&gt;Top to Bottom&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: AFTER you display bar charts in a specific order because you successfully specified the 
+&lt;a href=&#34;https://paulapivat.com/technical_notes/example_tech/rstats_tip_manually_order_factors/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;factor levels order&lt;/a&gt;, you simply want to reverse the order (from top-to-bottom).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: I&amp;rsquo;ve created a specific factor order and simply want to reverse the order so what was on top is now on the bottom, using &lt;code&gt;scale_y_descrete(limits = rev())&lt;/code&gt;, the &lt;code&gt;rev()&lt;/code&gt; and &lt;code&gt;levels()&lt;/code&gt; function are used in tandem to specific the reverse.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;
+new %&amp;gt;%
+    count(name) %&amp;gt;%
+    ggplot(aes(x = n, y = name, fill = name)) +
+    geom_col() +
+    geom_text(aes(label = n), hjust = -0.2, color = &amp;quot;white&amp;quot;) +
+    # reverse from top to bottom on the y-axis
+    # note levels for a specific column new$name already set previously
+    scale_y_discrete(limits = rev(levels(new$name))) 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;right-to-left&#34;&gt;Right to Left&lt;/h2&gt;
+&lt;p&gt;Works the same way, but using &lt;code&gt;scale_x_discrete&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Fixing linting errors</title>
       <link>/technical_notes/example_tech/webdev_linting_error/</link>
       <pubDate>Wed, 24 Nov 2021 00:00:00 +0100</pubDate>
@@ -2974,32 +3009,6 @@ gov_partcipation %&amp;gt;%
     # turns a continuous sequence (2.5) into a discrete one (1,2,3...)
     scale_x_continuous(breaks=seq(1,10, 1))
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For more content on data science, R, and Python 
-&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Reverse Plotting</title>
-      <link>/technical_notes/example_tech/rstats_tip_reverse_plotting/</link>
-      <pubDate>Sat, 09 Oct 2021 00:00:00 +0100</pubDate>
-      <guid>/technical_notes/example_tech/rstats_tip_reverse_plotting/</guid>
-      <description>&lt;h2 id=&#34;top-to-bottom&#34;&gt;Top to Bottom&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: AFTER you display bar charts in a specific order because you successfully specified the 
-&lt;a href=&#34;https://paulapivat.com/technical_notes/example_tech/rstats_tip_manually_order_factors/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;factor levels order&lt;/a&gt;, you simply want to reverse the order (from top-to-bottom).&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: I&amp;rsquo;ve created a specific factor order and simply want to reverse the order so what was on top is now on the bottom, using &lt;code&gt;scale_y_descrete(limits = rev())&lt;/code&gt;, the &lt;code&gt;rev()&lt;/code&gt; and &lt;code&gt;levels()&lt;/code&gt; function are used in tandem to specific the reverse.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;
-new %&amp;gt;%
-    count(name) %&amp;gt;%
-    ggplot(aes(x = n, y = name, fill = name)) +
-    geom_col() +
-    geom_text(aes(label = n), hjust = -0.2, color = &amp;quot;white&amp;quot;) +
-    # reverse from top to bottom on the y-axis
-    # note levels for a specific column new$name already set previously
-    scale_y_discrete(limits = rev(levels(new$name))) 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;right-to-left&#34;&gt;Right to Left&lt;/h2&gt;
-&lt;p&gt;Works the same way, but using &lt;code&gt;scale_x_discrete&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;For more content on data science, R, and Python 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>

@@ -1,5 +1,5 @@
 ---
-date: "2021-10-09T00:00:00+01:00"
+date: "2021-11-29T00:00:00+01:00"
 draft: false
 linktitle: Reverse Plotting
 menu:
@@ -11,6 +11,21 @@ toc: true
 type: docs
 weight: 2
 ---
+
+
+## Left to Right
+
+**Situation**: The *easiest* way to flip bar chart arrangement on x-axis *after* you've "reorder" by the y-axis values is to put a "minus" in front of the y variable:
+
+```{python}
+# note the minus in front of content_count
+df %>%
+   ggplot(aes(x = reorder(username, -content_count), 
+              y = content_count, 
+              fill = num_roles_bin))
+```
+
+The more complicated way is to change the **factor levels**.
 
 ## Top to Bottom
 

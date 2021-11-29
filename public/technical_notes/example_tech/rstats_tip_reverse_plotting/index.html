@@ -27,7 +27,7 @@
   
     
   
-  <meta name="description" content="Top to Bottom Situation: AFTER you display bar charts in a specific order because you successfully specified the factor levels order, you simply want to reverse the order (from top-to-bottom).">
+  <meta name="description" content="Left to Right Situation: The easiest way to flip bar chart arrangement on x-axis after you&rsquo;ve &ldquo;reorder&rdquo; by the y-axis values is to put a &ldquo;minus&rdquo; in front of the y variable:">
 
   
   <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip_reverse_plotting/">
@@ -238,13 +238,13 @@
   <meta property="og:site_name" content="Paul Apivat">
   <meta property="og:url" content="/technical_notes/example_tech/rstats_tip_reverse_plotting/">
   <meta property="og:title" content="Reverse Plotting | Paul Apivat">
-  <meta property="og:description" content="Top to Bottom Situation: AFTER you display bar charts in a specific order because you successfully specified the factor levels order, you simply want to reverse the order (from top-to-bottom)."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:description" content="Left to Right Situation: The easiest way to flip bar chart arrangement on x-axis after you&rsquo;ve &ldquo;reorder&rdquo; by the y-axis values is to put a &ldquo;minus&rdquo; in front of the y variable:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-10-09T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-11-29T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-10-09T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-11-29T00:00:00&#43;01:00">
   
 
   
@@ -979,6 +979,7 @@
 
       <nav id="TableOfContents">
   <ul>
+    <li><a href="#left-to-right">Left to Right</a></li>
     <li><a href="#top-to-bottom">Top to Bottom</a></li>
     <li><a href="#right-to-left">Right to Left</a></li>
   </ul>
@@ -996,7 +997,16 @@
           <h1>Reverse Plotting</h1>
 
           <div class="article-style">
-            <h2 id="top-to-bottom">Top to Bottom</h2>
+            <h2 id="left-to-right">Left to Right</h2>
+<p><strong>Situation</strong>: The <em>easiest</em> way to flip bar chart arrangement on x-axis <em>after</em> you&rsquo;ve &ldquo;reorder&rdquo; by the y-axis values is to put a &ldquo;minus&rdquo; in front of the y variable:</p>
+<pre><code class="language-{python}"># note the minus in front of content_count
+df %&gt;%
+   ggplot(aes(x = reorder(username, -content_count), 
+              y = content_count, 
+              fill = num_roles_bin))
+</code></pre>
+<p>The more complicated way is to change the <strong>factor levels</strong>.</p>
+<h2 id="top-to-bottom">Top to Bottom</h2>
 <p><strong>Situation</strong>: AFTER you display bar charts in a specific order because you successfully specified the 
 <a href="https://paulapivat.com/technical_notes/example_tech/rstats_tip_manually_order_factors/" target="_blank" rel="noopener">factor levels order</a>, you simply want to reverse the order (from top-to-bottom).</p>
 <p><strong>Context</strong>: I&rsquo;ve created a specific factor order and simply want to reverse the order so what was on top is now on the bottom, using <code>scale_y_descrete(limits = rev())</code>, the <code>rev()</code> and <code>levels()</code> function are used in tandem to specific the reverse.</p>
@@ -1030,14 +1040,14 @@ new %&gt;%
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/rstats_tip_continuous_to_discrete_plot/" rel="next">Continuous to Discrete Plotting</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/rstats_viz_2_y_axes/" rel="prev">Two Y-Axes</a>
+    <a href="/technical_notes/example_tech/webdev_linting_error/" rel="prev">Fixing linting errors</a>
   </div>
   
 </div>
@@ -1047,7 +1057,7 @@ new %&gt;%
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Oct 9, 2021</p>
+          <p>Last updated on Nov 29, 2021</p>
 
           
 
