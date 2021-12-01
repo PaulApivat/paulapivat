@@ -45,7 +45,7 @@ Enabling capital, coordination and culture on Web3 through on- and off-chain dat
 
 Core contributor at [Bankless DAO](https://www.bankless.community/) ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)). We're creating infrastructure with [DAO Dash](https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828) to enable data insights for Guilds and Projects at Bankless DAO. I'm also part of the [Bounty Board](https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90) team working to coordinate talent and capital.
 
-I work primarily in the Analytics and Developer's Guild to support other guilds including Education, Treasury, Marketing, Writing and Operations (see our [Notion](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f)). 
+I work primarily in the Analytics and Developer's Guild to support other guilds including Education, Treasury, Marketing, Writing and Operations (see our [Notion](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f)). Here are [forum posts](https://forum.bankless.community/u/paulapivat/activity/topics) sharing data and other ideas with the community. 
 
 **On-Chain Data**
 
