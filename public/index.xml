@@ -1071,6 +1071,30 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Full white background for any ggplot chart</title>
+      <link>/technical_notes/example_tech/rstats_viz_white_background/</link>
+      <pubDate>Wed, 01 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_viz_white_background/</guid>
+      <description>&lt;h2 id=&#34;full-white-background-for-any-ggplot-chart&#34;&gt;Full white background for any ggplot chart&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want a clean white background for your chart in GGPLOT, however you don&amp;rsquo;t remember how to adjust the theme().&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;
+df %&amp;gt;%
+  ggplot() +
+  geom_col() +
+  # white background
+  theme_minimal() +
+  theme(
+        legend.position = &amp;quot;bottom&amp;quot;,
+        panel.grid.major = element_line(colour = &amp;quot;white&amp;quot;),
+        panel.grid.minor = element_line(colour = &amp;quot;white&amp;quot;)
+  )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Reverse Plotting</title>
       <link>/technical_notes/example_tech/rstats_tip_reverse_plotting/</link>
       <pubDate>Mon, 29 Nov 2021 00:00:00 +0100</pubDate>

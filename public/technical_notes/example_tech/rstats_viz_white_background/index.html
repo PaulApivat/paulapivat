@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Check Equality of Two Columns Situation: There are two tables with two columns with different names. You want a simple script to check if the rows of those columns are equal, so the two tables can be joined.">
+  <meta name="description" content="Full white background for any ggplot chart Situation: You want a clean white background for your chart in GGPLOT, however you don&rsquo;t remember how to adjust the theme().
+df %&gt;% ggplot() &#43; geom_col() &#43; # white background theme_minimal() &#43; theme( legend.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/sql_check_equality_two_columns/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_viz_white_background/">
 
   
 
@@ -217,7 +218,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/sql_check_equality_two_columns/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_viz_white_background/">
 
   
   
@@ -236,15 +237,16 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/sql_check_equality_two_columns/">
-  <meta property="og:title" content="Check Equality of Two Columns | Paul Apivat">
-  <meta property="og:description" content="Check Equality of Two Columns Situation: There are two tables with two columns with different names. You want a simple script to check if the rows of those columns are equal, so the two tables can be joined."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_viz_white_background/">
+  <meta property="og:title" content="Full white background for any ggplot chart | Paul Apivat">
+  <meta property="og:description" content="Full white background for any ggplot chart Situation: You want a clean white background for your chart in GGPLOT, however you don&rsquo;t remember how to adjust the theme().
+df %&gt;% ggplot() &#43; geom_col() &#43; # white background theme_minimal() &#43; theme( legend."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-11-01T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-12-01T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-11-01T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-12-01T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +265,7 @@
 
 
 
-  <title>Check Equality of Two Columns | Paul Apivat</title>
+  <title>Full white background for any ggplot chart | Paul Apivat</title>
 
 </head>
 
@@ -648,7 +650,7 @@
         <a href="/technical_notes/example_tech/data_viz_tip1/">Visualize Dendrograms</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/rstats_viz_white_background/">White background for ggplot</a>
       </li>
       
@@ -944,7 +946,7 @@
     <a class="docs-toc-link" href="/technical_notes/example_tech/sql_check_equality_two_columns/">SQL</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/sql_check_equality_two_columns/">SQL Check Columns Equality</a>
       </li>
       
@@ -983,7 +985,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#check-equality-of-two-columns">Check Equality of Two Columns</a></li>
+    <li><a href="#full-white-background-for-any-ggplot-chart">Full white background for any ggplot chart</a></li>
   </ul>
 </nav>
 
@@ -996,37 +998,22 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Check Equality of Two Columns</h1>
+          <h1>Full white background for any ggplot chart</h1>
 
           <div class="article-style">
-            <h2 id="check-equality-of-two-columns">Check Equality of Two Columns</h2>
-<p><strong>Situation</strong>: There are two tables with two columns with different names. You want a simple script to check if the rows of those columns are equal, so the two tables can be joined.</p>
-<p>Here&rsquo;s the SQL script, taken from 
-<a href="https://stackoverflow.com/questions/1632792/how-do-i-compare-two-columns-for-equality-in-sql-server/1632831" target="_blank" rel="noopener">this stackoverflow answer</a>.</p>
+            <h2 id="full-white-background-for-any-ggplot-chart">Full white background for any ggplot chart</h2>
+<p><strong>Situation</strong>: You want a clean white background for your chart in GGPLOT, however you don&rsquo;t remember how to adjust the theme().</p>
 <pre><code class="language-{python}">
-SELECT 
-  CASE WHEN COLUMN1 = COLUMN2 
-    THEN '1' 
-    ELSE '0' 
-  END 
-  AS MyDesiredResult
-FROM Table1
-INNER JOIN Table2 ON Table1.PrimaryKey = Table2.ForeignKey
-
-</code></pre>
-<p>Here&rsquo;s an application of this script used in <strong>DAO Dash</strong>. We are comparing two tables - <code>discord_user</code> and <code>discord_messages</code> by these two columns respectively:</p>
-<ol>
-<li><code>discord_user_id</code></li>
-<li><code>author_user_id</code></li>
-</ol>
-<pre><code class="language-{r}">SELECT 
-  CASE WHEN discord_user_id = author_user_id 
-    THEN '1'
-    ELSE '0'
-  END
-  AS AreColumnsEqual
-FROM discord_user d
-INNER JOIN discord_messages m ON d.discord_user_id = m.author_user_id 
+df %&gt;%
+  ggplot() +
+  geom_col() +
+  # white background
+  theme_minimal() +
+  theme(
+        legend.position = &quot;bottom&quot;,
+        panel.grid.major = element_line(colour = &quot;white&quot;),
+        panel.grid.minor = element_line(colour = &quot;white&quot;)
+  )
 </code></pre>
 <p>For more content on data science, R, and Python 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
@@ -1046,14 +1033,14 @@ INNER JOIN discord_messages m ON d.discord_user_id = m.author_user_id
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/" rel="next">Use pgAdmin to upload CSV to Postgres</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/database_design_tips/" rel="prev">Database Design Course by Caleb Curry</a>
+    <a href="/technical_notes/example_tech/rstats_tip_reverse_plotting/" rel="prev">Reverse Plotting</a>
   </div>
   
 </div>
@@ -1063,7 +1050,7 @@ INNER JOIN discord_messages m ON d.discord_user_id = m.author_user_id
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Nov 1, 2021</p>
+          <p>Last updated on Dec 1, 2021</p>
 
           
 
@@ -1075,7 +1062,7 @@ INNER JOIN discord_messages m ON d.discord_user_id = m.author_user_id
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/sql_check_equality_two_columns.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_viz_white_background.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
