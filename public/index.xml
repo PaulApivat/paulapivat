@@ -1071,6 +1071,28 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Sort by Two Column</title>
+      <link>/technical_notes/example_tech/postgresql_sort_two_columns/</link>
+      <pubDate>Fri, 03 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/postgresql_sort_two_columns/</guid>
+      <description>&lt;h2 id=&#34;sort-by-two-column&#34;&gt;Sort by Two Column&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You have a &lt;code&gt;Month&lt;/code&gt; and &lt;code&gt;Day&lt;/code&gt; column and you want to sort &lt;strong&gt;both&lt;/strong&gt; in descending order.&lt;/p&gt;
+&lt;p&gt;Note: the last line.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;SELECT
+  user_name,
+  month,
+  day,
+  COUNT(content) AS content_count
+FROM cte 
+GROUP BY 1,2,3
+ORDER BY month DESC, day DESC;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on Data and DAOs 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Full white background for any ggplot chart</title>
       <link>/technical_notes/example_tech/rstats_viz_white_background/</link>
       <pubDate>Wed, 01 Dec 2021 00:00:00 +0100</pubDate>
