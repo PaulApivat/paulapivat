@@ -86,8 +86,20 @@ library(data.table)
 setDT(a1)[!a1$b %chin% a2$b]
 ```
 
+## Double check in Excel
 
+Check if values column `a1` exists in column `a2`. You're going to create a middle column between the two with values of either `Exist`, where both emails exists or `Not Exist`, where one column is missing. 
 
+Assuming `a1` starts on cell A4.
+Assuming `a2` starts on cell C4.
+
+In the scenario of Full Email List vs Emails Sent case, `a1` (Full Email List) had 4286 rows, while `a2` (Emails Sent) had 2373 rows. Here's the Excel function:
+
+```{python}
+# Excel
+=IF(ISERROR(VLOOKUP(C2,$A$2:$A$4286, 1, FALSE)),"Not Exist","Exist" )
+```
+[source](https://www.extendoffice.com/documents/excel/3040-excel-check-if-value-is-in-another-column.html)
 
 ## Finding Non-Matching Rows: anti_join()
 

@@ -994,6 +994,7 @@ The first condition to test is that the full and already_sent lists are mutually
     <li><a href="#dplyr-anti_join">Dplyr: anti_join</a></li>
     <li><a href="#dplyr-setdiff">Dplyr: setdiff</a></li>
     <li><a href="#datatable-setdt">Data.Table: setDT</a></li>
+    <li><a href="#double-check-in-excel">Double check in Excel</a></li>
     <li><a href="#finding-non-matching-rows-anti_join">Finding Non-Matching Rows: anti_join()</a></li>
   </ul>
 </nav>
@@ -1096,6 +1097,16 @@ data.frame(setdiff(a1$b, a2$b))
 
 setDT(a1)[!a1$b %chin% a2$b]
 </code></pre>
+<h2 id="double-check-in-excel">Double check in Excel</h2>
+<p>Check if values column <code>a1</code> exists in column <code>a2</code>. You&rsquo;re going to create a middle column between the two with values of either <code>Exist</code>, where both emails exists or <code>Not Exist</code>, where one column is missing.</p>
+<p>Assuming <code>a1</code> starts on cell A4.
+Assuming <code>a2</code> starts on cell C4.</p>
+<p>In the scenario of Full Email List vs Emails Sent case, <code>a1</code> (Full Email List) had 4286 rows, while <code>a2</code> (Emails Sent) had 2373 rows. Here&rsquo;s the Excel function:</p>
+<pre><code class="language-{python}"># Excel
+=IF(ISERROR(VLOOKUP(C2,$A$2:$A$4286, 1, FALSE)),&quot;Not Exist&quot;,&quot;Exist&quot; )
+</code></pre>
+<p>
+<a href="https://www.extendoffice.com/documents/excel/3040-excel-check-if-value-is-in-another-column.html" target="_blank" rel="noopener">source</a></p>
 <h2 id="finding-non-matching-rows-anti_join">Finding Non-Matching Rows: anti_join()</h2>
 <p>We often need to join two columns from different data frames. Rows to be joined are <em>assumed</em> to have the same value.</p>
 <p>Even different casing means those values will not be joined. For example: &ldquo;Nigeria&rdquo; and &ldquo;NIGERIA&rdquo; will not be joined.</p>

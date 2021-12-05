@@ -1161,6 +1161,16 @@ data.frame(setdiff(a1$b, a2$b))
 
 setDT(a1)[!a1$b %chin% a2$b]
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;double-check-in-excel&#34;&gt;Double check in Excel&lt;/h2&gt;
+&lt;p&gt;Check if values column &lt;code&gt;a1&lt;/code&gt; exists in column &lt;code&gt;a2&lt;/code&gt;. You&amp;rsquo;re going to create a middle column between the two with values of either &lt;code&gt;Exist&lt;/code&gt;, where both emails exists or &lt;code&gt;Not Exist&lt;/code&gt;, where one column is missing.&lt;/p&gt;
+&lt;p&gt;Assuming &lt;code&gt;a1&lt;/code&gt; starts on cell A4.
+Assuming &lt;code&gt;a2&lt;/code&gt; starts on cell C4.&lt;/p&gt;
+&lt;p&gt;In the scenario of Full Email List vs Emails Sent case, &lt;code&gt;a1&lt;/code&gt; (Full Email List) had 4286 rows, while &lt;code&gt;a2&lt;/code&gt; (Emails Sent) had 2373 rows. Here&amp;rsquo;s the Excel function:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Excel
+=IF(ISERROR(VLOOKUP(C2,$A$2:$A$4286, 1, FALSE)),&amp;quot;Not Exist&amp;quot;,&amp;quot;Exist&amp;quot; )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://www.extendoffice.com/documents/excel/3040-excel-check-if-value-is-in-another-column.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;source&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;finding-non-matching-rows-anti_join&#34;&gt;Finding Non-Matching Rows: anti_join()&lt;/h2&gt;
 &lt;p&gt;We often need to join two columns from different data frames. Rows to be joined are &lt;em&gt;assumed&lt;/em&gt; to have the same value.&lt;/p&gt;
 &lt;p&gt;Even different casing means those values will not be joined. For example: &amp;ldquo;Nigeria&amp;rdquo; and &amp;ldquo;NIGERIA&amp;rdquo; will not be joined.&lt;/p&gt;
