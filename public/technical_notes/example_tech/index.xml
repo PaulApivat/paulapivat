@@ -1050,6 +1050,114 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Approaches to finding Non-Matching Rows between Two Columns</title>
+      <link>/technical_notes/example_tech/rstats_tip6/</link>
+      <pubDate>Sun, 05 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_tip6/</guid>
+      <description>&lt;h2 id=&#34;approaches-to-finding-non-matching-rows-between-2-columns&#34;&gt;Approaches to finding non-matching rows between 2 columns&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You have two email lists - a full and already_sent. The latter is a subset of the former.&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;first&lt;/strong&gt; condition to test is that the &lt;code&gt;full&lt;/code&gt; and &lt;code&gt;already_sent&lt;/code&gt; lists are mutually exclusive.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Second&lt;/strong&gt;, the examples below assume the columns are in different dataframes.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Third&lt;/strong&gt;, you generally put the longer column first in a function.&lt;/p&gt;
+&lt;p&gt;Then, you want to find non-matching rows.&lt;/p&gt;
+&lt;h2 id=&#34;demo-two-tables&#34;&gt;Demo Two Tables&lt;/h2&gt;
+&lt;p&gt;Table 1: a1&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;a&lt;/th&gt;
+&lt;th&gt;b&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;a&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;b&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;c&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;d&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;e&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Table 2: a2&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;a&lt;/th&gt;
+&lt;th&gt;b&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;a&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;b&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;c&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# generate two dataframes to demo
+a1 &amp;lt;- data.frame(a = 1:5, b=letters[1:5])
+a2 &amp;lt;- data.frame(a = 1:3, b=letters[1:3])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;dplyr-anti_join&#34;&gt;Dplyr: anti_join&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;anti_join&lt;/code&gt; function comes with &lt;code&gt;dplyr&lt;/code&gt;. You will find non-matching rows between 2 tables;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;library(dplyr)
+
+anti_join(a1, a2, by = &#39;b&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;dplyr-setdiff&#34;&gt;Dplyr: setdiff&lt;/h2&gt;
+&lt;p&gt;This returns the non-matching rows by individual characters. You&amp;rsquo;ll need to wrap the output in a &lt;code&gt;data.frame()&lt;/code&gt;. This solution is not as clean as a &lt;code&gt;anti_join&lt;/code&gt; or the &lt;code&gt;setDT&lt;/code&gt; down below.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;library(dplyr)
+
+# individual characters
+setdiff(a1$b, a2$b)
+
+# wrapped in a dataframe
+data.frame(setdiff(a1$b, a2$b))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;datatable-setdt&#34;&gt;Data.Table: setDT&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;library(data.table)
+
+setDT(a1)[!a1$b %chin% a2$b]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;finding-non-matching-rows-anti_join&#34;&gt;Finding Non-Matching Rows: anti_join()&lt;/h2&gt;
+&lt;p&gt;We often need to join two columns from different data frames. Rows to be joined are &lt;em&gt;assumed&lt;/em&gt; to have the same value.&lt;/p&gt;
+&lt;p&gt;Even different casing means those values will not be joined. For example: &amp;ldquo;Nigeria&amp;rdquo; and &amp;ldquo;NIGERIA&amp;rdquo; will not be joined.&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s particularly useful to know which values are &lt;strong&gt;not&lt;/strong&gt; in sync when you have a list of countries and you want to join with one of the &lt;code&gt;map&lt;/code&gt; libraries (e.g., &lt;code&gt;ggmap&lt;/code&gt;). If the country is spelt differently, the join doesn&amp;rsquo;t happen.&lt;/p&gt;
+&lt;p&gt;Enter anti_join:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;world_map1 &amp;lt;- world_map %&amp;gt;%
+    mutate(id = region)
+
+df1 &amp;lt;- df %&amp;gt;%
+    mutate(id = country)
+    
+# use anti_join to figure out which rows are not aligned
+anti_join(world_map1, df1, by = &amp;quot;id&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Sort by Two Column</title>
       <link>/technical_notes/example_tech/postgresql_sort_two_columns/</link>
       <pubDate>Fri, 03 Dec 2021 00:00:00 +0100</pubDate>
@@ -3392,28 +3500,6 @@ ggraph(mygraph, layout = &#39;dendrogram&#39;, circular = TRUE) +
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For more content on data science, R, and Python 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Use Anti_Joins to Find Non-Matching Rows</title>
-      <link>/technical_notes/example_tech/rstats_tip6/</link>
-      <pubDate>Fri, 05 Feb 2021 00:00:00 +0100</pubDate>
-      <guid>/technical_notes/example_tech/rstats_tip6/</guid>
-      <description>&lt;h2 id=&#34;finding-non-matching-rows-before-joining-columns&#34;&gt;Finding Non-Matching Rows Before Joining Columns&lt;/h2&gt;
-&lt;p&gt;We often need to join two columns from different data frames. Rows to be joined are &lt;em&gt;assumed&lt;/em&gt; to have the same value.&lt;/p&gt;
-&lt;p&gt;Even different casing means those values will not be joined. For example: &amp;ldquo;Nigeria&amp;rdquo; and &amp;ldquo;NIGERIA&amp;rdquo; will not be joined.&lt;/p&gt;
-&lt;p&gt;It&amp;rsquo;s particularly useful to know which values are &lt;strong&gt;not&lt;/strong&gt; in sync when you have a list of countries and you want to join with one of the &lt;code&gt;map&lt;/code&gt; libraries (e.g., &lt;code&gt;ggmap&lt;/code&gt;). If the country is spelt differently, the join doesn&amp;rsquo;t happen.&lt;/p&gt;
-&lt;p&gt;Enter anti_join:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;world_map1 &amp;lt;- world_map %&amp;gt;%
-    mutate(id = region)
-
-df1 &amp;lt;- df %&amp;gt;%
-    mutate(id = country)
-    
-# use anti_join to figure out which rows are not aligned
-anti_join(world_map1, df1, by = &amp;quot;id&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
