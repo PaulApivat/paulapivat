@@ -1071,6 +1071,92 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Installing Error Tracking with Sentry</title>
+      <link>/technical_notes/example_tech/webdev_sentry_install/</link>
+      <pubDate>Sat, 11 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/webdev_sentry_install/</guid>
+      <description>&lt;h2 id=&#34;install-error-tracking-with-sentry&#34;&gt;Install Error Tracking with Sentry&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: Developers want error logging for their applications to track performance. Especially when deployed to actual users.&lt;/p&gt;
+&lt;p&gt;The following example features error tracking with &lt;strong&gt;Sentry.io&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;steps&#34;&gt;Steps&lt;/h2&gt;
+&lt;h3 id=&#34;sentry-setup&#34;&gt;Sentry Setup&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Figure out what frontend language your team is using, go through the installation guide (e.g., we used NextJS)&lt;/li&gt;
+&lt;li&gt;Install sentry&lt;/li&gt;
+&lt;li&gt;Install configuration files. Sentry.io had a convenient installation wizard.&lt;/li&gt;
+&lt;li&gt;You&amp;rsquo;ll need to add &lt;code&gt;options&lt;/code&gt; to two &lt;code&gt;Sentry.init()&lt;/code&gt; (i.e., client and server config files)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# example sentry.init() file from sentry.client.config.js
+Sentry.init({
+  dsn:
+    SENTRY_DSN ||
+    &amp;quot;https://8cd5c6d0a0a14e2ab48371d22a9535b4@o1071534.ingest.sentry.io/6069034&amp;quot;,
+  // Adjust this value in production, or use tracesSampler for greater control
+  tracesSampleRate: 1.0,
+  debug,
+  // ...
+  // Note: if you want to override the automatic release value, do not set a
+  // `release` value here - use the environment variable `SENTRY_RELEASE`, so
+  // that it will also get attached to your source maps
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Include SENTRY_DSN in &lt;code&gt;.env.local&lt;/code&gt; file:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# make sure the digits 8888888 match the sentry project when you login
+SENTRY_DSN = &amp;quot;https://8alphanumericstring4.ingest.sentry.io/8888888&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;Log into sentry account with username and password&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;setting-up-a-test-database-connection&#34;&gt;Setting up a Test Database connection&lt;/h3&gt;
+&lt;p&gt;You want to run a local instance of the App. One way to ensure you&amp;rsquo;re able to run your App locally is to also run a test database to confirm that data on the frontend, matches what&amp;rsquo;s in the test database.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Create a .env.local file to store database credentials (&lt;strong&gt;MONGODB_URI&lt;/strong&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# specific mongo connection
+MONGODB_URI=mongodb+srv://username:password@cluster0-m0sandbox.gamml.mongodb.net/project_name
+
+# default
+MONGODB_URI=mongodb://localhost:27017/project_name
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Make sure a Docker container with Mongo DB installed is running&lt;/li&gt;
+&lt;li&gt;In parallel to your application running, fire up a Mongo instance locally (note how it&amp;rsquo;s the &lt;strong&gt;same&lt;/strong&gt; string as whats in the &lt;code&gt;MONGODB_URI&lt;/code&gt; in your &lt;code&gt;.env.local&lt;/code&gt; file.)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# cd into project folder but mongo should be globally accessible
+$ mongosh “mongodb+srv://username:password@cluster0-m0sandbox.gamml.mongodb.net/project_name”
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Query something you see on the frontend (e.g., user_id) on the backend to see that data matches.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;run-local-instance-of-application&#34;&gt;Run local instance of Application&lt;/h3&gt;
+&lt;p&gt;note: Bounty-board App&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;cd into root directory of the &lt;code&gt;app&lt;/code&gt; (../packages/react-app)&lt;/li&gt;
+&lt;li&gt;yarn &amp;amp; yarn dev&lt;/li&gt;
+&lt;li&gt;enter &lt;code&gt;localhost:3000&lt;/code&gt; on your browser to see the App running.&lt;/li&gt;
+&lt;li&gt;Also note &lt;em&gt;sentry logging&lt;/em&gt; in your terminal&lt;/li&gt;
+&lt;li&gt;Query something you see on the frontend (e.g., user_id) on the backend to see that data matches.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;throw-an-error&#34;&gt;Throw an error&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Manually have sentry sent a message to the Sentry UI tool through &lt;code&gt;sentry.server.config.js&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;
+## capturing errors
+Sentry.captureMessage(&amp;quot;Insert message with captureMessage.&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Throw a naturally occuring error like a wrong API route in the browser&lt;/li&gt;
+&lt;li&gt;Check sentry.io account for error logging.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Approaches to finding Non-Matching Rows between Two Columns</title>
       <link>/technical_notes/example_tech/rstats_tip6/</link>
       <pubDate>Sun, 05 Dec 2021 00:00:00 +0100</pubDate>
