@@ -16,19 +16,20 @@ weight: 1
 
 ## Technical Notes Table of Contents
 
-- Data Cleaning Tips
-- Data Viz Tips
-- Database
-- Git & GitHub
-- Google Cloud Tips
-- GraphQL
-- MongoDB
-- Pandas
-- Pipeline
-- PostgreSQL
-- Python Tips
-- Rstats Tips
-- SQL
+- [Data Cleaning Tips](https://paulapivat.com/technical_notes/example_tech/data_cleaning_tip1/)
+- [Data Viz Tips](https://paulapivat.com/technical_notes/example_tech/rstats_viz_2_y_axes/)
+- [Database](https://paulapivat.com/technical_notes/example_tech/database_design_tips/)
+- [Git & GitHub](https://paulapivat.com/technical_notes/example_tech/github_make_repo/)
+- [Google Cloud Tips](https://paulapivat.com/technical_notes/example_tech/google_cloud_tip1/)
+- [GraphQL](https://paulapivat.com/technical_notes/example_tech/graphql_comparison_operators/)
+- [MongoDB](https://paulapivat.com/technical_notes/example_tech/mongodb_crud/)
+- [Pandas](https://paulapivat.com/technical_notes/example_tech/pandas_pick_df_rows_columns/)
+- [Pipeline](https://paulapivat.com/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/)
+- [PostgreSQL](https://paulapivat.com/technical_notes/example_tech/postgresql_create_table/)
+- [Python Tips](https://paulapivat.com/technical_notes/example_tech/python_tip2/)
+- [Rstats Tips](https://paulapivat.com/technical_notes/example_tech/rstats_tip4/)
+- [SQL](https://paulapivat.com/technical_notes/example_tech/sql_check_equality_two_columns/)
+- [Webdev](https://paulapivat.com/technical_notes/example_tech/webdev_linting_error/)
 
 ## Flexibility
 
