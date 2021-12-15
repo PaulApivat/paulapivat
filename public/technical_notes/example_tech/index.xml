@@ -1050,6 +1050,164 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Exploring Mongo&#39;s Aggregation Pipeline</title>
+      <link>/technical_notes/example_tech/mongodb_aggregation_pipeline/</link>
+      <pubDate>Wed, 15 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_aggregation_pipeline/</guid>
+      <description>&lt;h2 id=&#34;pipelines-in-mongo&#34;&gt;Pipelines in Mongo&lt;/h2&gt;
+&lt;p&gt;Previously, we looked at a &amp;ldquo;pipeline&amp;rdquo; &lt;code&gt;$lookup&lt;/code&gt; -&amp;gt; &lt;code&gt;$unwind&lt;/code&gt; -&amp;gt; &lt;code&gt;$project&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Use &lt;code&gt;$lookup&lt;/code&gt; to create the join. Then &lt;code&gt;$unwind&lt;/code&gt; to focus on the &amp;ldquo;result&amp;rdquo; of the &lt;code&gt;$lookup&lt;/code&gt; (&amp;ldquo;as:&amp;hellip;&amp;quot;). Finally, &lt;code&gt;$project&lt;/code&gt; to specify the specific key-value pairs you want.&lt;/p&gt;
+&lt;p&gt;Note: In &lt;strong&gt;Mongo Compass Charts&lt;/strong&gt;, you can &lt;em&gt;re-use&lt;/em&gt; either &lt;code&gt;queries&lt;/code&gt; &lt;code&gt;{}&lt;/code&gt; or &lt;code&gt;aggregation&lt;/code&gt; &lt;code&gt;[]&lt;/code&gt; entered into the query field&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s an example to join the &lt;code&gt;bounties&lt;/code&gt; and &lt;code&gt;customers&lt;/code&gt; collection from the Bounty Board project:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties.aggregate([
+  {
+    $lookup: {
+      from: &amp;quot;customers&amp;quot;,
+      localField: &amp;quot;customer_id&amp;quot;,
+      foreignField: &amp;quot;customer_id&amp;quot;,
+      as: &amp;quot;customerName&amp;quot;,
+    },
+  },
+  {
+    $unwind: &amp;quot;$customerName&amp;quot;,
+  },
+  {
+    $project: {
+      _id: 0,
+      title: 1,
+      &amp;quot;customerName.customerName&amp;quot;: 1,
+    },
+  },
+]);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;aggregation-framework&#34;&gt;Aggregation Framework&lt;/h2&gt;
+&lt;p&gt;Let&amp;rsquo;s breakdown aggregation pipelines further. Here are some variations:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;match-group-sort&lt;/li&gt;
+&lt;li&gt;match-sortByCount&lt;/li&gt;
+&lt;li&gt;match-sort-project&lt;/li&gt;
+&lt;li&gt;match-project-group-sort&lt;/li&gt;
+&lt;li&gt;project-sort&lt;/li&gt;
+&lt;li&gt;project-group&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This shows the flexibility of Aggregation pipelines and different ways to querying and displaying data.&lt;/p&gt;
+&lt;p&gt;Here are codes associated with the above examples:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;match-group-sort&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# seasonal filter
+# group by Bounty Creator, number of bounties per creator
+# average reward posted
+# sort by total bounties per person
+
+db.bounties
+  .aggregate([
+    { $match: { season: 2 } },
+    {
+      $group: {
+        _id: { creator_name: &amp;quot;$createdBy.discordHandle&amp;quot; },
+        num_bounties_created: { $sum: 1 },
+        avg_reward_amt: { $avg: &amp;quot;$reward.amount&amp;quot; },
+      },
+    },
+    { $sort: { num_bounties_created: -1 } },
+  ])
+  .pretty();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;match-sortByCount&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# short cut to grouping by Bounty Creator
+# can apply to Claimers and Submitters
+db.bounties.aggregate([
+  { $match: { season: 2 } },
+  { $sortByCount: &amp;quot;$createdBy.discordHandle&amp;quot; },
+]);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;match-sort-project&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# seasonal filter
+# sort by createdAt date, starting with most recent
+# project/display only title and createdAt date
+# note: can use &#39;$toDate&#39; instead of &#39;$convert, input, to&#39;
+db.bounties.aggregate([
+    { $match: { season: 2 } },
+    { $sort: { createdAt: -1 } },
+    {
+      $project: {
+        _id: 0,
+        title: 1,
+        createdAt: { $convert: { input: &amp;quot;$createdAt&amp;quot;, to: &amp;quot;date&amp;quot; } },
+      },
+    },
+  ]).pretty();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;match-project-group-sort&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# seasonal filter
+# display avg_reward bountied per week
+# group by week
+# sort by week, by week in descending order
+db.bounties.aggregate([
+  { $match: { season: 1 } },
+  {
+    $project: {
+      _id: 0,
+      season: 1,
+      &amp;quot;reward.amount&amp;quot;: 1,
+      createdAt: { $toDate: &amp;quot;$createdAt&amp;quot; },
+    },
+  },
+  {
+    $group: {
+      _id: { week: { $isoWeek: &amp;quot;$createdAt&amp;quot; } },
+      avg_reward: { $avg: &amp;quot;$reward.amount&amp;quot; },
+    },
+  },
+  { $sort: { week: -1 } },
+]);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;project-sort&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# display subset of fields in bounties
+# then, sort by reward amount
+db.bounties.aggregate([
+  {
+    $project: {
+      _id: 0,
+      season: 1,
+      title: 1,
+      &amp;quot;reward.amount&amp;quot;: 1,
+      &amp;quot;reward.currency&amp;quot;: 1,
+    },
+  },
+  { $sort: { &amp;quot;reward.amount&amp;quot;: -1 } },
+]);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;project-group&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# group bounty by Season,
+# average reward committed
+db.bounties.aggregate([
+  { $project: { _id: 0, season: 1, &amp;quot;reward.amount&amp;quot;: 1 } },
+  {
+    $group: {
+      _id: { bounty_season: &amp;quot;$season&amp;quot; },
+      avg_reward: { $avg: &amp;quot;$reward.amount&amp;quot; },
+    },
+  },
+]);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Installing Error Tracking with Sentry</title>
       <link>/technical_notes/example_tech/webdev_sentry_install/</link>
       <pubDate>Sat, 11 Dec 2021 00:00:00 +0100</pubDate>

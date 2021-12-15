@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Learn how to use Academic&#39;s docs layout for publishing technical notes and tutorials.">
+  <meta name="description" content="Pipelines in Mongo Previously, we looked at a &ldquo;pipeline&rdquo; $lookup -&gt; $unwind -&gt; $project.
+Use $lookup to create the join. Then $unwind to focus on the &ldquo;result&rdquo; of the $lookup (&ldquo;as:&hellip;&quot;).">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_aggregation_pipeline/">
 
   
 
@@ -212,14 +213,12 @@
   
 
   
-  <link rel="alternate" href="/technical_notes/example_tech/index.xml" type="application/rss+xml" title="Paul Apivat">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/">
+  <link rel="canonical" href="/technical_notes/example_tech/mongodb_aggregation_pipeline/">
 
   
   
@@ -238,29 +237,35 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/">
-  <meta property="og:title" content="Technical Notes Overview | Paul Apivat">
-  <meta property="og:description" content="Learn how to use Academic&#39;s docs layout for publishing technical notes and tutorials."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/mongodb_aggregation_pipeline/">
+  <meta property="og:title" content="Exploring Mongo&#39;s Aggregation Pipeline | Paul Apivat">
+  <meta property="og:description" content="Pipelines in Mongo Previously, we looked at a &ldquo;pipeline&rdquo; $lookup -&gt; $unwind -&gt; $project.
+Use $lookup to create the join. Then $unwind to focus on the &ldquo;result&rdquo; of the $lookup (&ldquo;as:&hellip;&quot;)."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    <meta property="og:updated_time" content="2018-09-09T00:00:00&#43;00:00">
+    
+      <meta property="article:published_time" content="2021-12-15T00:00:00&#43;01:00">
+    
+    <meta property="article:modified_time" content="2021-12-15T00:00:00&#43;01:00">
   
 
   
 
 
 
-
   
 
 
   
 
 
+  
 
 
 
-  <title>Technical Notes Overview | Paul Apivat</title>
+
+
+  <title>Exploring Mongo&#39;s Aggregation Pipeline | Paul Apivat</title>
 
 </head>
 
@@ -591,7 +596,7 @@
   
   
   
-  <div class="docs-toc-item active">
+  <div class="docs-toc-item">
     <a class="docs-toc-link" href="/technical_notes/example_tech/">Technical Notes Overview</a>
 
   </div>
@@ -747,7 +752,7 @@
     <a class="docs-toc-link" href="/technical_notes/example_tech/mongodb_aggregation_pipeline/">Mongodb</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/mongodb_aggregation_pipeline/">Aggregation Pipeline</a>
       </li>
       
@@ -992,11 +997,8 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#technical-notes-table-of-contents">Technical Notes Table of Contents</a></li>
-    <li><a href="#flexibility">Flexibility</a></li>
-    <li><a href="#delete-tutorials">Delete tutorials</a></li>
-    <li><a href="#update-site-menu">Update site menu</a></li>
-    <li><a href="#update-the-docs-menu">Update the docs menu</a></li>
+    <li><a href="#pipelines-in-mongo">Pipelines in Mongo</a></li>
+    <li><a href="#aggregation-framework">Aggregation Framework</a></li>
   </ul>
 </nav>
 
@@ -1009,67 +1011,159 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Technical Notes Overview</h1>
+          <h1>Exploring Mongo&#39;s Aggregation Pipeline</h1>
 
           <div class="article-style">
-            <h2 id="technical-notes-table-of-contents">Technical Notes Table of Contents</h2>
-<ul>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/data_cleaning_tip1/" target="_blank" rel="noopener">Data Cleaning Tips</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/rstats_viz_2_y_axes/" target="_blank" rel="noopener">Data Viz Tips</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/database_design_tips/" target="_blank" rel="noopener">Database</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/github_make_repo/" target="_blank" rel="noopener">Git &amp; GitHub</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/google_cloud_tip1/" target="_blank" rel="noopener">Google Cloud Tips</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/graphql_comparison_operators/" target="_blank" rel="noopener">GraphQL</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/mongodb_crud/" target="_blank" rel="noopener">MongoDB</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/pandas_pick_df_rows_columns/" target="_blank" rel="noopener">Pandas</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/" target="_blank" rel="noopener">Pipeline</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/postgresql_create_table/" target="_blank" rel="noopener">PostgreSQL</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/python_tip2/" target="_blank" rel="noopener">Python Tips</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/rstats_tip4/" target="_blank" rel="noopener">Rstats Tips</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/sql_check_equality_two_columns/" target="_blank" rel="noopener">SQL</a></li>
-<li>
-<a href="https://paulapivat.com/technical_notes/example_tech/webdev_linting_error/" target="_blank" rel="noopener">Webdev</a></li>
-</ul>
-<h2 id="flexibility">Flexibility</h2>
-<p>Add Technical Notes.</p>
-<p>This feature can be used for publishing content such as:</p>
-<ul>
-<li><strong>Online courses</strong></li>
-<li><strong>Project or software documentation</strong></li>
-<li><strong>Tutorials</strong></li>
-</ul>
-<p>The <code>courses</code> folder may be renamed. For example, we can rename it to <code>docs</code> for software/project documentation or <code>tutorials</code> for creating an online course.</p>
-<h2 id="delete-tutorials">Delete tutorials</h2>
-<p><strong>To remove these pages, delete the <code>courses</code> folder and see below to delete the associated menu link.</strong></p>
-<h2 id="update-site-menu">Update site menu</h2>
-<p>After renaming or deleting the <code>courses</code> folder, you may wish to update any <code>[[main]]</code> menu links to it by editing your menu configuration at <code>config/_default/menus.toml</code>.</p>
-<p>For example, if you delete this folder, you can remove the following from your menu configuration:</p>
-<pre><code class="language-toml">[[main]]
-  name = &quot;Courses&quot;
-  url = &quot;courses/&quot;
-  weight = 50
+            <h2 id="pipelines-in-mongo">Pipelines in Mongo</h2>
+<p>Previously, we looked at a &ldquo;pipeline&rdquo; <code>$lookup</code> -&gt; <code>$unwind</code> -&gt; <code>$project</code>.</p>
+<p>Use <code>$lookup</code> to create the join. Then <code>$unwind</code> to focus on the &ldquo;result&rdquo; of the <code>$lookup</code> (&ldquo;as:&hellip;&quot;). Finally, <code>$project</code> to specify the specific key-value pairs you want.</p>
+<p>Note: In <strong>Mongo Compass Charts</strong>, you can <em>re-use</em> either <code>queries</code> <code>{}</code> or <code>aggregation</code> <code>[]</code> entered into the query field</p>
+<p>Here&rsquo;s an example to join the <code>bounties</code> and <code>customers</code> collection from the Bounty Board project:</p>
+<pre><code class="language-{python}">db.bounties.aggregate([
+  {
+    $lookup: {
+      from: &quot;customers&quot;,
+      localField: &quot;customer_id&quot;,
+      foreignField: &quot;customer_id&quot;,
+      as: &quot;customerName&quot;,
+    },
+  },
+  {
+    $unwind: &quot;$customerName&quot;,
+  },
+  {
+    $project: {
+      _id: 0,
+      title: 1,
+      &quot;customerName.customerName&quot;: 1,
+    },
+  },
+]);
 </code></pre>
-<p>Or, if you are creating a software documentation site, you can rename the <code>courses</code> folder to <code>docs</code> and update the associated <em>Courses</em> menu configuration to:</p>
-<pre><code class="language-toml">[[main]]
-  name = &quot;Docs&quot;
-  url = &quot;docs/&quot;
-  weight = 50
+<h2 id="aggregation-framework">Aggregation Framework</h2>
+<p>Let&rsquo;s breakdown aggregation pipelines further. Here are some variations:</p>
+<ol>
+<li>match-group-sort</li>
+<li>match-sortByCount</li>
+<li>match-sort-project</li>
+<li>match-project-group-sort</li>
+<li>project-sort</li>
+<li>project-group</li>
+</ol>
+<p>This shows the flexibility of Aggregation pipelines and different ways to querying and displaying data.</p>
+<p>Here are codes associated with the above examples:</p>
+<ol>
+<li>match-group-sort</li>
+</ol>
+<pre><code class="language-{python}"># seasonal filter
+# group by Bounty Creator, number of bounties per creator
+# average reward posted
+# sort by total bounties per person
+
+db.bounties
+  .aggregate([
+    { $match: { season: 2 } },
+    {
+      $group: {
+        _id: { creator_name: &quot;$createdBy.discordHandle&quot; },
+        num_bounties_created: { $sum: 1 },
+        avg_reward_amt: { $avg: &quot;$reward.amount&quot; },
+      },
+    },
+    { $sort: { num_bounties_created: -1 } },
+  ])
+  .pretty();
 </code></pre>
-<h2 id="update-the-docs-menu">Update the docs menu</h2>
-<p>If you use the <em>docs</em> layout, note that the name of the menu in the front matter should be in the form <code>[menu.X]</code> where <code>X</code> is the folder name. Hence, if you rename the <code>courses/example/</code> folder, you should also rename the menu definitions in the front matter of files within <code>courses/example/</code> from <code>[menu.example]</code> to <code>[menu.&lt;NewFolderName&gt;]</code>.</p>
+<ol start="2">
+<li>match-sortByCount</li>
+</ol>
+<pre><code class="language-{python}"># short cut to grouping by Bounty Creator
+# can apply to Claimers and Submitters
+db.bounties.aggregate([
+  { $match: { season: 2 } },
+  { $sortByCount: &quot;$createdBy.discordHandle&quot; },
+]);
+</code></pre>
+<ol start="3">
+<li>match-sort-project</li>
+</ol>
+<pre><code class="language-{python}"># seasonal filter
+# sort by createdAt date, starting with most recent
+# project/display only title and createdAt date
+# note: can use '$toDate' instead of '$convert, input, to'
+db.bounties.aggregate([
+    { $match: { season: 2 } },
+    { $sort: { createdAt: -1 } },
+    {
+      $project: {
+        _id: 0,
+        title: 1,
+        createdAt: { $convert: { input: &quot;$createdAt&quot;, to: &quot;date&quot; } },
+      },
+    },
+  ]).pretty();
+</code></pre>
+<ol start="4">
+<li>match-project-group-sort</li>
+</ol>
+<pre><code class="language-{python}"># seasonal filter
+# display avg_reward bountied per week
+# group by week
+# sort by week, by week in descending order
+db.bounties.aggregate([
+  { $match: { season: 1 } },
+  {
+    $project: {
+      _id: 0,
+      season: 1,
+      &quot;reward.amount&quot;: 1,
+      createdAt: { $toDate: &quot;$createdAt&quot; },
+    },
+  },
+  {
+    $group: {
+      _id: { week: { $isoWeek: &quot;$createdAt&quot; } },
+      avg_reward: { $avg: &quot;$reward.amount&quot; },
+    },
+  },
+  { $sort: { week: -1 } },
+]);
+</code></pre>
+<ol start="5">
+<li>project-sort</li>
+</ol>
+<pre><code class="language-{python}"># display subset of fields in bounties
+# then, sort by reward amount
+db.bounties.aggregate([
+  {
+    $project: {
+      _id: 0,
+      season: 1,
+      title: 1,
+      &quot;reward.amount&quot;: 1,
+      &quot;reward.currency&quot;: 1,
+    },
+  },
+  { $sort: { &quot;reward.amount&quot;: -1 } },
+]);
+</code></pre>
+<ol start="6">
+<li>project-group</li>
+</ol>
+<pre><code class="language-{python}"># group bounty by Season,
+# average reward committed
+db.bounties.aggregate([
+  { $project: { _id: 0, season: 1, &quot;reward.amount&quot;: 1 } },
+  {
+    $group: {
+      _id: { bounty_season: &quot;$season&quot; },
+      avg_reward: { $avg: &quot;$reward.amount&quot; },
+    },
+  },
+]);
+</code></pre>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -1083,6 +1177,19 @@
 <div class="post-nav">
   
   
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
+  </div>
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/technical_notes/example_tech/webdev_sentry_install/" rel="prev">Installing Error Tracking with Sentry</a>
+  </div>
+  
 </div>
 
           </div>
@@ -1090,7 +1197,7 @@
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Sep 9, 2018</p>
+          <p>Last updated on Dec 15, 2021</p>
 
           
 
@@ -1102,7 +1209,7 @@
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/_index.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/mongodb_aggregation_pipeline.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
