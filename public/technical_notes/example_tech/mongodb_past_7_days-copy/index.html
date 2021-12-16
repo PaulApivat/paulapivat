@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Guide for contributing to another code base by making a pull request Public Repo  Identify a project you want to contribute to on GitHub Fork that project Clone it to your local machine*  note : Do not clone in another directory that was already cloned from another repo.">
+  <meta name="description" content="Retrieving past 7-days data Situation: You want to query a collection to get documents that were generated in the past 7 days.
+Note: This operation can be done in Mongo Shell, need to find another way to do it in Mongo Compass / Atlas.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/github_make_pr/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_past_7_days-copy/">
 
   
 
@@ -217,7 +218,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/github_make_pr/">
+  <link rel="canonical" href="/technical_notes/example_tech/mongodb_past_7_days-copy/">
 
   
   
@@ -236,15 +237,16 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/github_make_pr/">
-  <meta property="og:title" content="Making a Pull Request on a GitHub Repo | Paul Apivat">
-  <meta property="og:description" content="Guide for contributing to another code base by making a pull request Public Repo  Identify a project you want to contribute to on GitHub Fork that project Clone it to your local machine*  note : Do not clone in another directory that was already cloned from another repo."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/mongodb_past_7_days-copy/">
+  <meta property="og:title" content="Retrieving past 7-days data | Paul Apivat">
+  <meta property="og:description" content="Retrieving past 7-days data Situation: You want to query a collection to get documents that were generated in the past 7 days.
+Note: This operation can be done in Mongo Shell, need to find another way to do it in Mongo Compass / Atlas."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-07-16T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-12-17T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-07-16T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-12-17T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +265,7 @@
 
 
 
-  <title>Making a Pull Request on a GitHub Repo | Paul Apivat</title>
+  <title>Retrieving past 7-days data | Paul Apivat</title>
 
 </head>
 
@@ -703,7 +705,7 @@
         <a href="/technical_notes/example_tech/git_commit_message/">Git Commit Message</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/github_make_pr/">Making a Pull Request</a>
       </li>
       
@@ -755,14 +757,6 @@
       </li>
       
       <li >
-        <a href="/technical_notes/example_tech/mongodb_categorical_buckets/">Categorical Buckets</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/mongodb_concatenate_string/">Concatenate String</a>
-      </li>
-      
-      <li >
         <a href="/technical_notes/example_tech/mongodb_crud/">CRUD Operations</a>
       </li>
       
@@ -774,8 +768,8 @@
         <a href="/technical_notes/example_tech/mongodb_data_types/">Data Types &amp; Common Commands (Mongo)</a>
       </li>
       
-      <li >
-        <a href="/technical_notes/example_tech/mongodb_past_7_days/">Get past 7-days data</a>
+      <li class="active">
+        <a href="/technical_notes/example_tech/mongodb_past_7_days-copy/">Get past 7-days data</a>
       </li>
       
       <li >
@@ -1007,12 +1001,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#guide-for-contributing-to-another-code-base-by-making-a-pull-request">Guide for contributing to another code base by making a pull request</a></li>
-    <li><a href="#public-repo">Public Repo</a></li>
-    <li><a href="#private-repo">Private Repo</a></li>
-    <li><a href="#production-vs-development">Production vs Development</a></li>
-    <li><a href="#when-feature-branch-goes-out-of-sync-with-development">When Feature branch goes out of sync with Development</a></li>
-    <li><a href="#vim">VIM</a></li>
+    <li><a href="#retrieving-past-7-days-data">Retrieving past 7-days data</a></li>
   </ul>
 </nav>
 
@@ -1025,136 +1014,27 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Making a Pull Request on a GitHub Repo</h1>
+          <h1>Retrieving past 7-days data</h1>
 
           <div class="article-style">
-            <h2 id="guide-for-contributing-to-another-code-base-by-making-a-pull-request">Guide for contributing to another code base by making a pull request</h2>
-<h2 id="public-repo">Public Repo</h2>
-<ol>
-<li>Identify a project you want to contribute to on GitHub</li>
-<li>Fork that project</li>
-<li>Clone it to your local machine*</li>
-</ol>
-<p><strong>note</strong> : Do not clone in another directory that was <em>already</em> cloned from another repo. For example, when I cloned 
-<a href="https://github.com/PaulApivat/pytalentsolution" target="_blank" rel="noopener">pytalentsolution</a> on my local machine, I initially cloned it <em>inside</em> Saku directory, which was <em>itself</em> a clone of an already-existing-repo. The correct way was to create a <em>new</em> directory for pytalentsolution.</p>
-<ol start="4">
-<li>Make a new branch</li>
-</ol>
-<ul>
-<li>4a: <code>cd</code> into directory of the cloned repo</li>
-<li>4b: use <code>git branch</code> to confirm you&rsquo;re on the <code>*master</code> branch</li>
-<li>4c: use <code>git checkout -b name_of_new_branch</code></li>
-<li>4d: use <code>git branch</code> to check that you&rsquo;re on <code>name_of_new_branch</code></li>
-</ul>
-<ol start="5">
-<li>
-<p>Make changes</p>
-</li>
-<li>
-<p>Push it back to your repo</p>
-</li>
-</ol>
-<p><strong>note</strong> : You&rsquo;ll get a message <code>git push remote --</code> use this instead of the traditional <code>git push</code></p>
-<ol start="7">
-<li>(Go back to the forked repo in GitHub) Click the <strong>Compare &amp; Pull Request</strong> button.</li>
-</ol>
-<ul>
-<li>add a description to changes made in the pull request</li>
-</ul>
-<ol start="8">
-<li>Click <strong>Create pull request</strong> to open a new pull request</li>
-</ol>
-<h2 id="private-repo">Private Repo</h2>
-<p>1-3. You cannot fork a private repo</p>
-<ol start="4">
-<li>
-<p>Clone directly to local machine</p>
-</li>
-<li>
-<p><code>git branch -a</code> to see all branches in the project</p>
-</li>
-<li>
-<p><code>git branch</code> to confirm you&rsquo;re on master branch</p>
-</li>
-<li>
-<p>[important] <code>git status</code> to check if ahead or behind (if behind, use <code>git pull</code> to fetch and download content from a remote repository)</p>
-</li>
-<li>
-<p>[from git master] create a <strong>new</strong> branch use <code>git checkout -b name_of_new_branch</code></p>
-</li>
-<li>
-<p>Use <code>git branch</code> to make sure you&rsquo;re on new branch</p>
-</li>
-<li>
-<p>Make changes, then normal: git add, git commit -m &ldquo;message&rdquo;, git push</p>
-</li>
-</ol>
-<p><strong>note</strong> : You&rsquo;ll get a message <code>git push remote --</code> use this instead of the traditional <code>git push</code></p>
-<ol start="10">
-<li>(Go back to the forked repo in GitHub) Click the <strong>Compare &amp; Pull Request</strong> button.</li>
-</ol>
-<ul>
-<li>Add good PR description, 
-<a href="https://www.pullrequest.com/blog/writing-a-great-pull-request-description/" target="_blank" rel="noopener">see here</a></li>
-</ul>
-<ol start="11">
-<li>Click <strong>Create pull request</strong> to open a new pull request</li>
-</ol>
-<h2 id="production-vs-development">Production vs Development</h2>
-<p>Ongoing projects with several contributors will generally separate the <strong>main</strong> from <strong>develop</strong> branch. Making a PR in this context is <em>slighty</em> different:</p>
-<ol>
-<li>
-<p>In the command line, switch to development branch <code>git checkout develop</code> (even if you don&rsquo;t see the <code>develop</code> branch locally, you may just see <code>main</code> or a new branch you created <code>new_branch</code>).</p>
-</li>
-<li>
-<p>Now that you&rsquo;re <em>starting</em> on <code>develop</code> branch, do <code>git pull origin develop</code> to make sure that any prior changes from the <code>develop</code> branch is pulled in locally, and you&rsquo;re up-to-date.</p>
-</li>
-<li>
-<p>Then from <code>develop</code>, create a new <code>feature</code> branch like so: <code>git checkout feature/new-branch</code>. (note: <code>feature/new-branch</code> is a naming convention that explicitly says you&rsquo;re creating a new feature branch).</p>
-</li>
-<li>
-<p>Then make your changes or add new code.</p>
-</li>
-<li>
-<p>Then, <code>git push origin</code> (in this case, origin will be develop)</p>
-</li>
-<li>
-<p>Once you go back to github, if you see <code>compare and pull request</code>, make sure it is being merged into <code>develop</code> and <strong>not</strong> <code>main</code>.</p>
-</li>
-</ol>
-<h2 id="when-feature-branch-goes-out-of-sync-with-development">When Feature branch goes out of sync with Development</h2>
-<p>Sometimes you&rsquo;ve already pushed a pull request, but the development branch goes ahead of your proposed changes. Here&rsquo;s how to handle:</p>
-<ol>
-<li>Switch to a specific feature branch (no need to go back to develop): <code>git checkout branch_name</code></li>
-<li>Run <code>git pull origin develop</code></li>
-<li>Then <code>git push origin</code></li>
-</ol>
-<p>3a. If there&rsquo;s an <code>Index Error</code>, run</p>
-<ul>
-<li><code>git reset --hard</code> *</li>
-<li><code>git clean -df</code></li>
-</ul>
-<ul>
-<li><code>git reset</code> is to take the current branch and reset it to point somewhere else, also bringing the index and working tree along. Here&rsquo;s a more visual explanation (
-<a href="https://stackoverflow.com/questions/2530060/in-plain-english-what-does-git-reset-d" target="_blank" rel="noopener">source</a>)</li>
-</ul>
-<p>If your main branch is <code>C</code> and you want to point your current branch somewhere else:</p>
-<pre><code>- A - B - C (HEAD, main branch)
+            <h2 id="retrieving-past-7-days-data">Retrieving past 7-days data</h2>
+<p><strong>Situation</strong>: You want to query a collection to get documents that were generated in the past 7 days.</p>
+<p>Note: This operation can be done in <strong>Mongo Shell</strong>, need to find another way to do it in Mongo Compass / Atlas.</p>
+<pre><code class="language-{python}"># Compute the time 7 days ago to use in filtering the data
+# across all customers
+var d = new Date();
+d.setDate(d.getDate()-7);
+
+db.bounties.aggregate([
+    {$match: {season: 2, customer_id: '905250069463326740'}},
+    {$project: {_id: 1, title: 1, customer_id: 1, createdAt: {$toDate: &quot;$createdAt&quot;}}},
+    {$match: {'createdAt': {$gt: d}}},
+    {$unwind: '$createdAt'},
+    {$match: {'createdAt': {$gt: d}}}
+]).pretty()
 </code></pre>
-<p>and you want to point to <code>B</code>, not <code>C</code>, then you use <code>git reset B</code> to move it there:</p>
-<pre><code>- A - B (HEAD, main branch)  # - C is still here, but there's no branch pointing to it anymore
-</code></pre>
-<h2 id="vim">VIM</h2>
-<p>If for whatever reason you find yourself on VIM, you can escape by:</p>
-<ol>
-<li>Press <code>esc</code> (escape)</li>
-<li>Press <code>:</code> (colon)</li>
-<li>Press <code>wq</code> (write and quit)</li>
-</ol>
-<p>Or one-line command to get out of VIM</p>
-<ol start="4">
-<li>Press <code>:wq!</code> (colon, write and quit)</li>
-</ol>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -1171,14 +1051,14 @@
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/github_make_repo/" rel="next">Creating a Github Repo</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_faker/" rel="prev">Using Faker to simulate fake data with Python</a>
+    <a href="/technical_notes/example_tech/mongodb_past_7_days/" rel="prev">Retrieving past 7-days data</a>
   </div>
   
 </div>
@@ -1188,7 +1068,7 @@
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Jul 16, 2021</p>
+          <p>Last updated on Dec 17, 2021</p>
 
           
 
@@ -1200,7 +1080,7 @@
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/github_make_pr.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/mongodb_past_7_days%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

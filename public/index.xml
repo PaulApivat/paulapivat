@@ -1071,6 +1071,95 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Create Categorical Buckets</title>
+      <link>/technical_notes/example_tech/mongodb_categorical_buckets/</link>
+      <pubDate>Fri, 17 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_categorical_buckets/</guid>
+      <description>&lt;h2 id=&#34;create-categorical-buckets-from-a-continuous-variable&#34;&gt;Create categorical buckets from a continuous variable&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You have a continuous variable like &amp;ldquo;age&amp;rdquo; and want to create categorical buckets (i.e., ages 10-20, 21-30, 31-40 etc)&lt;/p&gt;
+&lt;p&gt;Note: We can create minimum ages here&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# creating age buckets
+# group documents into those buckets
+# summary statistics
+
+db.contacts.aggregate([
+    {$bucket: {groupBy: &amp;quot;$dob.age&amp;quot;, boundaries: [18, 30, 40, 50, 60, 120], output: {
+        numPersons: { $sum: 1},
+        averageAge: {$avg: &amp;quot;$dob.age&amp;quot;}
+    }}}
+]).pretty()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note: This version auto-generates buckets&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;// buckets auto
+// break continuous variable into categorical
+
+db.contacts.aggregate([
+ {
+     $bucketAuto: {
+         groupBy: &amp;quot;$dob.age&amp;quot;,
+         buckets: 5,
+         output: {
+            numPersons: { $sum: 1},
+            averageAge: {$avg: &amp;quot;$dob.age&amp;quot;}
+         }
+     }
+ }
+]).pretty()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Concatenate String</title>
+      <link>/technical_notes/example_tech/mongodb_concatenate_string/</link>
+      <pubDate>Fri, 17 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_concatenate_string/</guid>
+      <description>&lt;h2 id=&#34;combine-string-variables-to-use-in-aggregation-pipeline&#34;&gt;Combine string variables to use in Aggregation Pipeline&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You have a &amp;ldquo;first name&amp;rdquo; and &amp;ldquo;last name&amp;rdquo; you want to concatenate to use in a &lt;code&gt;$project&lt;/code&gt; stage.&lt;/p&gt;
+&lt;p&gt;Note: We filter for males only, then also limit results to 10 documents.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# match by gender first if want to filter for only male
+db.contacts.aggregate([
+    {$match: {gender: &amp;quot;male&amp;quot;}},
+    {$project: {_id: 0, name: {$concat: [&amp;quot;$name.first&amp;quot;, &amp;quot; &amp;quot;, &amp;quot;$name.last&amp;quot;]}, birthdate: {$toDate: &amp;quot;$dob.date&amp;quot;}}},
+    {$sort: {birthdate: 1}},
+    {$skip: 10},
+    {$limit: 10}
+]).pretty()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Retrieving past 7-days data</title>
+      <link>/technical_notes/example_tech/mongodb_past_7_days/</link>
+      <pubDate>Fri, 17 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_past_7_days/</guid>
+      <description>&lt;h2 id=&#34;retrieving-past-7-days-data&#34;&gt;Retrieving past 7-days data&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to query a collection to get documents that were generated in the past 7 days.&lt;/p&gt;
+&lt;p&gt;Note: This operation can be done in &lt;strong&gt;Mongo Shell&lt;/strong&gt;, need to find another way to do it in Mongo Compass / Atlas.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Compute the time 7 days ago to use in filtering the data
+# across all customers
+var d = new Date();
+d.setDate(d.getDate()-7);
+
+db.bounties.aggregate([
+    {$match: {season: 2, customer_id: &#39;905250069463326740&#39;}},
+    {$project: {_id: 1, title: 1, customer_id: 1, createdAt: {$toDate: &amp;quot;$createdAt&amp;quot;}}},
+    {$match: {&#39;createdAt&#39;: {$gt: d}}},
+    {$unwind: &#39;$createdAt&#39;},
+    {$match: {&#39;createdAt&#39;: {$gt: d}}}
+]).pretty()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Exploring Mongo&#39;s Aggregation Pipeline</title>
       <link>/technical_notes/example_tech/mongodb_aggregation_pipeline/</link>
       <pubDate>Wed, 15 Dec 2021 00:00:00 +0100</pubDate>
