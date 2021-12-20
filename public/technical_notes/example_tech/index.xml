@@ -13,6 +13,62 @@
     </image>
     
     <item>
+      <title>Establishing an API connection with the requests library</title>
+      <link>/technical_notes/example_tech/python_api_connection/</link>
+      <pubDate>Mon, 20 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_api_connection/</guid>
+      <description>&lt;h2 id=&#34;api-connection&#34;&gt;API Connection&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You need to use &lt;code&gt;requests&lt;/code&gt; to consume an API, but with authorization parameters.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: This pattern can be used across project, I used this to consume &lt;strong&gt;Coordinape&lt;/strong&gt; API data. You&amp;rsquo;ll want to set up a &lt;code&gt;dot env&lt;/code&gt; file to contain any secret API or authorization keys.&lt;/p&gt;
+&lt;p&gt;Referencing this 
+&lt;a href=&#34;https://stackoverflow.com/questions/19069701/python-requests-library-how-to-pass-authorization-header-with-single-token&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;stack overflow&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# ---- generic pattern
+
+# Request
+REQ = &#39;https://api.site.com/something/else/else&#39;
+
+# Token (stored in .env)
+AUTH_TOKEN = &#39;Bearer 8888|fliuzabuvdgfnsuczkncsq12454632&#39;
+
+# Use os library to pull Token from .env
+auth_token = os.environ.get(&#39;AUTH_TOKEN&#39;)
+
+# Create Header parameter
+HEADER = {&#39;Authorization&#39;: f&#39;{auth_token}&#39;}
+
+# Putting it all together
+response = requests.get(REQ, headers=HEADER)
+
+# Print result
+print(response.json())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here&amp;rsquo;s a real example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# request library to establish connection
+import requests
+from pprint import pprint
+
+# os library used with python-dotenv to grab AUTH_TOKEN from .env
+import os
+
+# using python-dotenv method
+from dotenv import load_dotenv
+load_dotenv()
+
+# authorization &amp;amp; header
+auth_token = os.environ.get(&#39;AUTH_TOKEN&#39;)
+HEADER = {&#39;Authorization&#39;: f&#39;{auth_token}&#39;}
+
+# ----- Data Endpoints
+
+# Coordinape Round -- OG Bankless(June): Circle id 24
+response24 = requests.get(
+    &#39;https://api.coordinape.com/api/v2/token-gifts?circle_id=24&#39;, headers=HEADER)
+pprint(response24.json())
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Show ahead/behind for all local branches</title>
       <link>/technical_notes/example_tech/github_check_status_branches/</link>
       <pubDate>Sun, 28 Nov 2021 00:00:00 +0100</pubDate>
