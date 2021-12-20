@@ -85,6 +85,28 @@ INSERT INTO bankless_snapshot_header_1(
 ('4','QmXrfAHMoRcu5Vy3DsRTfokqLBTEKR6tqKVecLvkgw5NZf','Bankless DAO Season 1 ','1623985200','1624590000');
 ```
 
+**NOTE**: Each row below "VALUES" is wrapped in a single parenthesis.
+
+```{python}
+# Correct
+INSERT INTO public.coordinape_rounds(
+        id, coord_id, recipient_address, sender_address, recipient_id, sender_id, tokens, circle_id, epoch_id, timestamp)
+        VALUES
+        ()
+        ()
+        ()
+        
+# Incorrect
+INSERT INTO public.coordinape_rounds(
+        id, coord_id, recipient_address, sender_address, recipient_id, sender_id, tokens, circle_id, epoch_id, timestamp)
+        VALUES
+        (       # <--- not needed
+        ()
+        ()
+        ()
+        )       # <--- not needed
+```
+
 ## Demo 2
 
 **Context**: For the Snapshot data pipeline, I had to create two pipes - one for proposals and one for votes. This is the process for votes, it's similar, but there are differences:
@@ -113,6 +135,29 @@ INSERT INTO stg_bankless_snapshot_1(
 ('0','QmQFvHkah7w2qAcY4iECn6THDbaypto8JVF5G6YQaneZRV','0xD00dF71434Cf40b2CDb65ff73bD9789933adA44A','1620413879','1','Vote','QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS'),
 ('1','QmSS2x2xBRwTigXR5vucVp75FqCP5ns3CLYK3dLgNQonkC','0x910176D294AFA2cD017928cA92a0bf5a01152194','1620413347','1','Vote','QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS'),
 ('2','QmSa7QFD3vsV6bhsfSKGW1tUtQyJk3umMTgVkFS1H8fnXJ','0x37bf9E28E099335DCec53a8b7FadeFDE6DbF108d','1620410370','1','Vote','QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS'),
+
+```
+
+## Demo 3
+
+Demonstrating creation of table for a recent project (i.e., Coordinape data).
+
+**NOTE**: Timestamp would ideally be TIMESTAMP, not DECIMAL.
+
+```{python}
+CREATE TABLE IF NOT EXISTS coordinape_rounds (
+	id BIGINT,
+	coord_id BIGINT,
+	recipient_address VARCHAR(200),
+	sender_address VARCHAR(200),
+	recipient_id BIGINT,
+	sender_id BIGINT,
+	tokens BIGINT,
+	circle_id BIGINT,
+	epoch_id BIGINT,
+	timestamp DECIMAL,
+	PRIMARY KEY (coord_id)
+);
 
 ```
 

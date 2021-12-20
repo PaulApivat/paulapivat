@@ -2163,6 +2163,25 @@ INSERT INTO bankless_snapshot_header_1(
 (&#39;3&#39;,&#39;QmQX2DQcDTZzCpM6DTVNJutQJwWXtxJDTMpBoFjbnaM9i2&#39;,&#39;Reward Season 0 Active Members &#39;,&#39;1623196800&#39;,&#39;1623456000&#39;),
 (&#39;4&#39;,&#39;QmXrfAHMoRcu5Vy3DsRTfokqLBTEKR6tqKVecLvkgw5NZf&#39;,&#39;Bankless DAO Season 1 &#39;,&#39;1623985200&#39;,&#39;1624590000&#39;);
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: Each row below &amp;ldquo;VALUES&amp;rdquo; is wrapped in a single parenthesis.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Correct
+INSERT INTO public.coordinape_rounds(
+        id, coord_id, recipient_address, sender_address, recipient_id, sender_id, tokens, circle_id, epoch_id, timestamp)
+        VALUES
+        ()
+        ()
+        ()
+        
+# Incorrect
+INSERT INTO public.coordinape_rounds(
+        id, coord_id, recipient_address, sender_address, recipient_id, sender_id, tokens, circle_id, epoch_id, timestamp)
+        VALUES
+        (       # &amp;lt;--- not needed
+        ()
+        ()
+        ()
+        )       # &amp;lt;--- not needed
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;demo-2&#34;&gt;Demo 2&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: For the Snapshot data pipeline, I had to create two pipes - one for proposals and one for votes. This is the process for votes, it&amp;rsquo;s similar, but there are differences:&lt;/p&gt;
 &lt;p&gt;I initially set &lt;code&gt;FOREIGN KEY (proposal_id)&lt;/code&gt;, but got a syntax error, there&amp;rsquo;s a 
@@ -2187,6 +2206,24 @@ INSERT INTO stg_bankless_snapshot_1(
 (&#39;0&#39;,&#39;QmQFvHkah7w2qAcY4iECn6THDbaypto8JVF5G6YQaneZRV&#39;,&#39;0xD00dF71434Cf40b2CDb65ff73bD9789933adA44A&#39;,&#39;1620413879&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
 (&#39;1&#39;,&#39;QmSS2x2xBRwTigXR5vucVp75FqCP5ns3CLYK3dLgNQonkC&#39;,&#39;0x910176D294AFA2cD017928cA92a0bf5a01152194&#39;,&#39;1620413347&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
 (&#39;2&#39;,&#39;QmSa7QFD3vsV6bhsfSKGW1tUtQyJk3umMTgVkFS1H8fnXJ&#39;,&#39;0x37bf9E28E099335DCec53a8b7FadeFDE6DbF108d&#39;,&#39;1620410370&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;demo-3&#34;&gt;Demo 3&lt;/h2&gt;
+&lt;p&gt;Demonstrating creation of table for a recent project (i.e., Coordinape data).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: Timestamp would ideally be TIMESTAMP, not DECIMAL.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;CREATE TABLE IF NOT EXISTS coordinape_rounds (
+	id BIGINT,
+	coord_id BIGINT,
+	recipient_address VARCHAR(200),
+	sender_address VARCHAR(200),
+	recipient_id BIGINT,
+	sender_id BIGINT,
+	tokens BIGINT,
+	circle_id BIGINT,
+	epoch_id BIGINT,
+	timestamp DECIMAL,
+	PRIMARY KEY (coord_id)
+);
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For more content on Data and DAOs 
