@@ -68,6 +68,15 @@
     <loc>/technical_notes/example_tech/</loc>
     <lastmod>2018-09-09T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/technical_notes/example_tech/mongodb_aggregation_pipeline/</loc>
+    <lastmod>2021-12-21T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>/technical_notes/example_tech/mongodb_display_data_in_order/</loc>
+    <lastmod>2021-12-21T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>/technical_notes/example_tech/mongodb_filter_multiple_condition/</loc>
+    <lastmod>2021-12-21T00:00:00+01:00</lastmod>
+  </url><url>
     <loc>/technical_notes/example_tech/mongodb_categorical_buckets/</loc>
     <lastmod>2021-12-17T00:00:00+01:00</lastmod>
   </url><url>
@@ -76,9 +85,6 @@
   </url><url>
     <loc>/technical_notes/example_tech/mongodb_past_7_days/</loc>
     <lastmod>2021-12-17T00:00:00+01:00</lastmod>
-  </url><url>
-    <loc>/technical_notes/example_tech/mongodb_aggregation_pipeline/</loc>
-    <lastmod>2021-12-15T00:00:00+01:00</lastmod>
   </url><url>
     <loc>/technical_notes/example_tech/webdev_sentry_install/</loc>
     <lastmod>2021-12-11T00:00:00+01:00</lastmod>
@@ -222,7 +228,7 @@
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url><url>
     <loc>/technical_notes/</loc>
-    <lastmod>2021-12-20T00:00:00+01:00</lastmod>
+    <lastmod>2021-12-21T00:00:00+01:00</lastmod>
   </url><url>
     <loc>/tag/analytics/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>

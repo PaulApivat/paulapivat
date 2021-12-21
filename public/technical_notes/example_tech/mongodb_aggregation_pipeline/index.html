@@ -244,9 +244,9 @@ Use $lookup to create the join. Then $unwind to focus on the &ldquo;result&rdquo
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-12-15T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-12-21T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-12-15T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-12-21T00:00:00&#43;01:00">
   
 
   
@@ -777,6 +777,14 @@ Use $lookup to create the join. Then $unwind to focus on the &ldquo;result&rdquo
       </li>
       
       <li >
+        <a href="/technical_notes/example_tech/mongodb_display_data_in_order/">Display data in order</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/mongodb_filter_multiple_condition/">Filter multiple conditions</a>
+      </li>
+      
+      <li >
         <a href="/technical_notes/example_tech/mongodb_past_7_days/">Get past 7-days data</a>
       </li>
       
@@ -1063,6 +1071,7 @@ Use $lookup to create the join. Then $unwind to focus on the &ldquo;result&rdquo
 <li>match-sortByCount</li>
 <li>match-sort-project</li>
 <li>match-project-group-sort</li>
+<li>match-project-group</li>
 <li>project-sort</li>
 <li>project-group</li>
 </ol>
@@ -1146,6 +1155,17 @@ db.bounties.aggregate([
 ]);
 </code></pre>
 <ol start="5">
+<li>match-project-group</li>
+</ol>
+<p>Here you can filter by multiple conditions, then project the columns you want to see and then group to get a summation.</p>
+<p>This was useful to tally total values in Bounties given and/or claimed.</p>
+<pre><code class="language-{python}">db.bounties.aggregate([
+    {$match: {&quot;$and&quot;: [{season: 2}, {customer_id: '905250069463326740'}, {status: &quot;Completed&quot;}]}},
+    {$project: {_id: 0, customer_id: 1, &quot;reward.amount&quot;: 1, &quot;reward.currency&quot;: 1, status: 1}},
+    {$group: {_id: &quot;$customer_id&quot;, sum: {$sum: &quot;$reward.amount&quot;}}}
+])
+</code></pre>
+<ol start="6">
 <li>project-sort</li>
 </ol>
 <pre><code class="language-{python}"># display subset of fields in bounties
@@ -1163,7 +1183,7 @@ db.bounties.aggregate([
   { $sort: { &quot;reward.amount&quot;: -1 } },
 ]);
 </code></pre>
-<ol start="6">
+<ol start="7">
 <li>project-group</li>
 </ol>
 <pre><code class="language-{python}"># group bounty by Season,
@@ -1196,14 +1216,14 @@ db.bounties.aggregate([
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/mongodb_past_7_days/" rel="next">Retrieving past 7-days data</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/webdev_sentry_install/" rel="prev">Installing Error Tracking with Sentry</a>
+    <a href="/technical_notes/example_tech/mongodb_display_data_in_order/" rel="prev">Use $project to display data in a specific order</a>
   </div>
   
 </div>
@@ -1213,7 +1233,7 @@ db.bounties.aggregate([
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Dec 15, 2021</p>
+          <p>Last updated on Dec 21, 2021</p>
 
           
 

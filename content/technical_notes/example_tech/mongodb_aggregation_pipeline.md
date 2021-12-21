@@ -1,5 +1,5 @@
 ---
-date: "2021-12-15T00:00:00+01:00"
+date: "2021-12-21T00:00:00+01:00"
 draft: false
 linktitle: Aggregation Pipeline
 menu:
@@ -53,8 +53,9 @@ Let's breakdown aggregation pipelines further. Here are some variations:
 2. match-sortByCount
 3. match-sort-project
 4. match-project-group-sort
-5. project-sort
-6. project-group
+5. match-project-group
+6. project-sort
+7. project-group
 
 This shows the flexibility of Aggregation pipelines and different ways to querying and displaying data.
 
@@ -139,7 +140,23 @@ db.bounties.aggregate([
   { $sort: { week: -1 } },
 ]);
 ```
-5. project-sort
+5. match-project-group
+
+Here you can filter by multiple conditions, then project the columns you want to see and then group to get a summation.
+
+This was useful to tally total values in Bounties given and/or claimed. 
+
+```{python}
+db.bounties.aggregate([
+    {$match: {"$and": [{season: 2}, {customer_id: '905250069463326740'}, {status: "Completed"}]}},
+    {$project: {_id: 0, customer_id: 1, "reward.amount": 1, "reward.currency": 1, status: 1}},
+    {$group: {_id: "$customer_id", sum: {$sum: "$reward.amount"}}}
+])
+```
+
+
+
+6. project-sort
 
 ```{python}
 # display subset of fields in bounties
@@ -157,7 +174,7 @@ db.bounties.aggregate([
   { $sort: { "reward.amount": -1 } },
 ]);
 ```
-6. project-group
+7. project-group
 
 ```{python}
 # group bounty by Season,
