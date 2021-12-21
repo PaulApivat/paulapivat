@@ -1326,6 +1326,27 @@ db.bounties.aggregate([
     </item>
     
     <item>
+      <title>Get time elapsed between two Timestamps</title>
+      <link>/technical_notes/example_tech/mongodb_subtract_timestamps/</link>
+      <pubDate>Tue, 21 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_subtract_timestamps/</guid>
+      <description>&lt;h2 id=&#34;get-time-elapsed-between-two-events&#34;&gt;Get time elapsed between two events&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to figure out how much time has elapsed between two timestamps.&lt;/p&gt;
+&lt;p&gt;The example below uses &lt;code&gt;$project&lt;/code&gt; 3 consecutive times.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: You have to convert timestamps (in string) to Date object with &lt;code&gt;$toDate&lt;/code&gt; conversion. Another assumption is that timetsamps provide milliseconds so we need to subtract two dates by milliseconds, then convert those to either hours, days etc.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties.aggregate([
+    {$match: {&amp;quot;$and&amp;quot;: [{season: 2}, {customer_id: &#39;905250069463326740&#39;}, {status: &amp;quot;Completed&amp;quot;}]}},
+    {$project: {_id: 0, _customer_id: &amp;quot;$customer_id&amp;quot;, _title: &amp;quot;$title&amp;quot;, _status: &amp;quot;$status&amp;quot;, _createdAt: &amp;quot;$createdAt&amp;quot;, _claimedAt: &amp;quot;$claimedAt&amp;quot;, _submittedAt: &amp;quot;$submittedAt&amp;quot;, _reviewedAt: &amp;quot;$reviewedAt&amp;quot;}},
+    {$project: {_id: 0, customer_id: &amp;quot;$_customer_id&amp;quot;, title: &amp;quot;$_title&amp;quot;, status: &amp;quot;$_status&amp;quot;, createdAt: {$toDate: &amp;quot;$_createdAt&amp;quot;}, claimedAt: {$toDate: &amp;quot;$_claimedAt&amp;quot;}, submittedAt: {$toDate: &amp;quot;$_submittedAt&amp;quot;}, reviewedAt: {$toDate: &amp;quot;$_reviewedAt&amp;quot;}}},
+    {$project: {step_one: {$divide: [{$subtract: [&amp;quot;$claimedAt&amp;quot;, &amp;quot;$createdAt&amp;quot;]}, 8.64e+7]} }}
+]) 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Create Categorical Buckets</title>
       <link>/technical_notes/example_tech/mongodb_categorical_buckets/</link>
       <pubDate>Fri, 17 Dec 2021 00:00:00 +0100</pubDate>
