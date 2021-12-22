@@ -797,6 +797,10 @@ Use $lookup to create the join. Then $unwind to focus on the &ldquo;result&rdquo
       </li>
       
       <li >
+        <a href="/technical_notes/example_tech/mongodb_show_current_user/">Show current user</a>
+      </li>
+      
+      <li >
         <a href="/technical_notes/example_tech/mongodb_subtract_timestamps/">Subtract Timestamps</a>
       </li>
       
@@ -1078,6 +1082,7 @@ Use $lookup to create the join. Then $unwind to focus on the &ldquo;result&rdquo
 <li>match-project-group</li>
 <li>project-sort</li>
 <li>project-group</li>
+<li>(multiple $project) to project in a specific order</li>
 </ol>
 <p>This shows the flexibility of Aggregation pipelines and different ways to querying and displaying data.</p>
 <p>Here are codes associated with the above examples:</p>
@@ -1201,6 +1206,17 @@ db.bounties.aggregate([
     },
   },
 ]);
+</code></pre>
+<ol start="8">
+<li>(multiple $project) to project in a specific order</li>
+</ol>
+<p>Here I used <code>$project</code> twice consecutively. First time to put the key-value fields in a specific order (i.e., createdAt, then claimedAt, then submittedAt, then reviewedAt). Second time to get the original field names.</p>
+<pre><code class="language-{python}">db.bounties.aggregate([
+    {$match: {&quot;$and&quot;: [{season: 2}, {customer_id: '905250069463326740'}]}},
+    {$project: {_id: 0, _customer_id: &quot;$customer_id&quot;, _title: &quot;$title&quot;, _status: &quot;$status&quot;, _createdAt: &quot;$createdAt&quot;, _claimedAt: &quot;$claimedAt&quot;, _submittedAt: &quot;$submittedAt&quot;, _reviewedAt: &quot;$reviewedAt&quot;}},
+    {$project: {_id: 0, customer_id: &quot;$_customer_id&quot;, title: &quot;$_title&quot;, status: &quot;$_status&quot;, createdAt: &quot;$_createdAt&quot;, claimedAt: &quot;$_claimedAt&quot;, submittedAt: &quot;$_submittedAt&quot;, reviewedAt: &quot;$_reviewedAt&quot;}}
+])
+
 </code></pre>
 <p>For more content on data science, R, and Python 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>

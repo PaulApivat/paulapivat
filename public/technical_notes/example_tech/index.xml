@@ -1106,6 +1106,21 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Show current user, db access and role</title>
+      <link>/technical_notes/example_tech/mongodb_show_current_user/</link>
+      <pubDate>Wed, 22 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_show_current_user/</guid>
+      <description>&lt;h2 id=&#34;show-current-user&#34;&gt;Show current user&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to grab &lt;em&gt;your&lt;/em&gt; own info as the current user of MongoDB.&lt;/p&gt;
+&lt;p&gt;Run this command in Mongo Shell.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.name_of_collection.runCommand({connectionStatus: 1})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Get time elapsed between two Timestamps</title>
       <link>/technical_notes/example_tech/mongodb_subtract_timestamps/</link>
       <pubDate>Wed, 22 Dec 2021 00:00:00 +0100</pubDate>
@@ -1178,6 +1193,7 @@ db.bounties.aggregate([
 &lt;li&gt;match-project-group&lt;/li&gt;
 &lt;li&gt;project-sort&lt;/li&gt;
 &lt;li&gt;project-group&lt;/li&gt;
+&lt;li&gt;(multiple $project) to project in a specific order&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;This shows the flexibility of Aggregation pipelines and different ways to querying and displaying data.&lt;/p&gt;
 &lt;p&gt;Here are codes associated with the above examples:&lt;/p&gt;
@@ -1301,6 +1317,17 @@ db.bounties.aggregate([
     },
   },
 ]);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;8&#34;&gt;
+&lt;li&gt;(multiple $project) to project in a specific order&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Here I used &lt;code&gt;$project&lt;/code&gt; twice consecutively. First time to put the key-value fields in a specific order (i.e., createdAt, then claimedAt, then submittedAt, then reviewedAt). Second time to get the original field names.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties.aggregate([
+    {$match: {&amp;quot;$and&amp;quot;: [{season: 2}, {customer_id: &#39;905250069463326740&#39;}]}},
+    {$project: {_id: 0, _customer_id: &amp;quot;$customer_id&amp;quot;, _title: &amp;quot;$title&amp;quot;, _status: &amp;quot;$status&amp;quot;, _createdAt: &amp;quot;$createdAt&amp;quot;, _claimedAt: &amp;quot;$claimedAt&amp;quot;, _submittedAt: &amp;quot;$submittedAt&amp;quot;, _reviewedAt: &amp;quot;$reviewedAt&amp;quot;}},
+    {$project: {_id: 0, customer_id: &amp;quot;$_customer_id&amp;quot;, title: &amp;quot;$_title&amp;quot;, status: &amp;quot;$_status&amp;quot;, createdAt: &amp;quot;$_createdAt&amp;quot;, claimedAt: &amp;quot;$_claimedAt&amp;quot;, submittedAt: &amp;quot;$_submittedAt&amp;quot;, reviewedAt: &amp;quot;$_reviewedAt&amp;quot;}}
+])
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For more content on data science, R, and Python 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;

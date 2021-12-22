@@ -27,12 +27,12 @@
   
     
   
-  <meta name="description" content="Get time elapsed between two events Situation: You want to figure out how much time has elapsed between two timestamps.
-The example below uses $project 3 consecutive times.
-NOTE: You have to convert timestamps (in string) to Date object with $toDate conversion.">
+  <meta name="description" content="Show current user Situation: You want to grab your own info as the current user of MongoDB.
+Run this command in Mongo Shell.
+db.name_of_collection.runCommand({connectionStatus: 1})  For more content on data find me on Twitter.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_subtract_timestamps/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_show_current_user/">
 
   
 
@@ -219,7 +219,7 @@ NOTE: You have to convert timestamps (in string) to Date object with $toDate con
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/mongodb_subtract_timestamps/">
+  <link rel="canonical" href="/technical_notes/example_tech/mongodb_show_current_user/">
 
   
   
@@ -238,11 +238,11 @@ NOTE: You have to convert timestamps (in string) to Date object with $toDate con
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/mongodb_subtract_timestamps/">
-  <meta property="og:title" content="Get time elapsed between two Timestamps | Paul Apivat">
-  <meta property="og:description" content="Get time elapsed between two events Situation: You want to figure out how much time has elapsed between two timestamps.
-The example below uses $project 3 consecutive times.
-NOTE: You have to convert timestamps (in string) to Date object with $toDate conversion."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/mongodb_show_current_user/">
+  <meta property="og:title" content="Show current user, db access and role | Paul Apivat">
+  <meta property="og:description" content="Show current user Situation: You want to grab your own info as the current user of MongoDB.
+Run this command in Mongo Shell.
+db.name_of_collection.runCommand({connectionStatus: 1})  For more content on data find me on Twitter."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
@@ -267,7 +267,7 @@ NOTE: You have to convert timestamps (in string) to Date object with $toDate con
 
 
 
-  <title>Get time elapsed between two Timestamps | Paul Apivat</title>
+  <title>Show current user, db access and role | Paul Apivat</title>
 
 </head>
 
@@ -798,11 +798,11 @@ NOTE: You have to convert timestamps (in string) to Date object with $toDate con
         <a href="/technical_notes/example_tech/mongodb_joins/">Joins in Mongo</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/mongodb_show_current_user/">Show current user</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/mongodb_subtract_timestamps/">Subtract Timestamps</a>
       </li>
       
@@ -1031,8 +1031,7 @@ NOTE: You have to convert timestamps (in string) to Date object with $toDate con
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#get-time-elapsed-between-two-events">Get time elapsed between two events</a></li>
-    <li><a href="#calculate-time-difference-in-hours">Calculate Time Difference in Hours</a></li>
+    <li><a href="#show-current-user">Show current user</a></li>
   </ul>
 </nav>
 
@@ -1045,30 +1044,13 @@ NOTE: You have to convert timestamps (in string) to Date object with $toDate con
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Get time elapsed between two Timestamps</h1>
+          <h1>Show current user, db access and role</h1>
 
           <div class="article-style">
-            <h2 id="get-time-elapsed-between-two-events">Get time elapsed between two events</h2>
-<p><strong>Situation</strong>: You want to figure out how much time has elapsed between two timestamps.</p>
-<p>The example below uses <code>$project</code> 3 consecutive times.</p>
-<p><strong>NOTE</strong>: You have to convert timestamps (in string) to Date object with <code>$toDate</code> conversion. Another assumption is that timetsamps provide milliseconds so we need to subtract two dates by milliseconds, then convert those to either hours, days etc.</p>
-<pre><code class="language-{python}">db.bounties.aggregate([
-    {$match: {&quot;$and&quot;: [{season: 2}, {customer_id: '905250069463326740'}, {status: &quot;Completed&quot;}]}},
-    {$project: {_id: 0, _customer_id: &quot;$customer_id&quot;, _title: &quot;$title&quot;, _status: &quot;$status&quot;, _createdAt: &quot;$createdAt&quot;, _claimedAt: &quot;$claimedAt&quot;, _submittedAt: &quot;$submittedAt&quot;, _reviewedAt: &quot;$reviewedAt&quot;}},
-    {$project: {_id: 0, customer_id: &quot;$_customer_id&quot;, title: &quot;$_title&quot;, status: &quot;$_status&quot;, createdAt: {$toDate: &quot;$_createdAt&quot;}, claimedAt: {$toDate: &quot;$_claimedAt&quot;}, submittedAt: {$toDate: &quot;$_submittedAt&quot;}, reviewedAt: {$toDate: &quot;$_reviewedAt&quot;}}},
-    {$project: {step_one: {$divide: [{$subtract: [&quot;$claimedAt&quot;, &quot;$createdAt&quot;]}, 8.64e+7]} }}
-]) 
-</code></pre>
-<h2 id="calculate-time-difference-in-hours">Calculate Time Difference in Hours</h2>
-<p>Here I make the <em>third</em> <code>$project</code> step more explicit by renaming the time stamps to reflect stages in bounty development.</p>
-<p><strong>Note</strong>: There are 3600000 milli-seconds in an hour.</p>
-<pre><code class="language-{python}"># subtract two timestamps - prod
-db.bounties.aggregate([
-    {$match: {&quot;$and&quot;: [{season: 2}, {customer_id: '834499078434979890'}, {status: &quot;Completed&quot;}]}},
-    {$project: {_id: 0, _customer_id: &quot;$customer_id&quot;, _title: &quot;$title&quot;, _status: &quot;$status&quot;, _createdAt: &quot;$createdAt&quot;, _claimedAt: &quot;$claimedAt&quot;, _submittedAt: &quot;$submittedAt&quot;, _reviewedAt: &quot;$reviewedAt&quot;}},
-    {$project: {_id: 0, customer_id: &quot;$_customer_id&quot;, title: &quot;$_title&quot;, status: &quot;$_status&quot;, createdAt: {$toDate: &quot;$_createdAt&quot;}, claimedAt: {$toDate: &quot;$_claimedAt&quot;}, submittedAt: {$toDate: &quot;$_submittedAt&quot;}, reviewedAt: {$toDate: &quot;$_reviewedAt&quot;}}},
-    {$project: {title: 1, time_to_claim: {$divide: [{$subtract: [&quot;$claimedAt&quot;, &quot;$createdAt&quot;]}, 3600000]}, time_to_submit: {$divide: [{$subtract: [&quot;$submittedAt&quot;, &quot;$claimedAt&quot;]}, 3600000]}, time_to_review: {$divide: [{$subtract: [&quot;$reviewedAt&quot;, &quot;$submittedAt&quot;]}, 3600000]} }}
-]) 
+            <h2 id="show-current-user">Show current user</h2>
+<p><strong>Situation</strong>: You want to grab <em>your</em> own info as the current user of MongoDB.</p>
+<p>Run this command in Mongo Shell.</p>
+<pre><code class="language-{python}">db.name_of_collection.runCommand({connectionStatus: 1})
 </code></pre>
 <p>For more content on data 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
@@ -1088,14 +1070,14 @@ db.bounties.aggregate([
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/mongodb_show_current_user/" rel="next">Show current user, db access and role</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/mongodb_aggregation_pipeline/" rel="prev">Exploring Mongo&#39;s Aggregation Pipeline</a>
+    <a href="/technical_notes/example_tech/mongodb_subtract_timestamps/" rel="prev">Get time elapsed between two Timestamps</a>
   </div>
   
 </div>
@@ -1117,7 +1099,7 @@ db.bounties.aggregate([
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/mongodb_subtract_timestamps.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/mongodb_show_current_user.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
