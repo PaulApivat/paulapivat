@@ -1127,6 +1127,64 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Retrieving past 7-days data</title>
+      <link>/technical_notes/example_tech/mongodb_past_7_days/</link>
+      <pubDate>Wed, 22 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_past_7_days/</guid>
+      <description>&lt;h2 id=&#34;retrieving-past-7-days-data&#34;&gt;Retrieving past 7-days data&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to query a collection to get documents that were generated in the past 7 days.&lt;/p&gt;
+&lt;h2 id=&#34;no-hard-coding&#34;&gt;No Hard Coding&lt;/h2&gt;
+&lt;p&gt;Reference this 
+&lt;a href=&#34;https://stackoverflow.com/questions/33194825/find-objects-created-in-last-week-in-mongo/46906862&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;stack overflow post&lt;/a&gt;. To calculate the past 7-days we need to multiply: 7 days * 24 hours per day * 60 minutes per hour * 60 seconds per minute * 1000 milliseconds per second.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: We want to get to milliseconds when dealing with timestamps.&lt;/p&gt;
+&lt;p&gt;This example shows this method in &lt;code&gt;find()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.collection.find({
+    timestamp: {
+        $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)
+    }
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;applied-to-aggregation-pipeline&#34;&gt;Applied to Aggregation Pipeline&lt;/h3&gt;
+&lt;p&gt;This query can be used in &lt;strong&gt;Shell&lt;/strong&gt; as well as on &lt;strong&gt;Mongo Chart/Compass&lt;/strong&gt;. Whne using in Mongo Chart, do &lt;strong&gt;not&lt;/strong&gt; use Format to preserve: &lt;code&gt;new Date(new Date())&lt;/code&gt;. This is from an example query for Bounty Board where we&amp;rsquo;re querying bounties created in the past 7-days.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties.aggregate([
+    {$match: {&amp;quot;$and&amp;quot;: [{season: 2}, {customer_id: &#39;834499078434979890&#39;} ]}},
+    {$project: {_id: 1, _customer_id: &amp;quot;$customer_id&amp;quot;, _title: &amp;quot;$title&amp;quot;, _status: &amp;quot;$status&amp;quot;, _createdAt: &amp;quot;$createdAt&amp;quot;, _claimedAt: &amp;quot;$claimedAt&amp;quot;, _submittedAt: &amp;quot;$submittedAt&amp;quot;, _reviewedAt: &amp;quot;$reviewedAt&amp;quot;}},
+    {$project: {_id: 1, customer_id: &amp;quot;$_customer_id&amp;quot;, title: &amp;quot;$_title&amp;quot;, status: &amp;quot;$_status&amp;quot;, createdAt: {$toDate: &amp;quot;$_createdAt&amp;quot;}, claimedAt: {$toDate: &amp;quot;$_claimedAt&amp;quot;}, submittedAt: {$toDate: &amp;quot;$_submittedAt&amp;quot;}, reviewedAt: {$toDate: &amp;quot;$_reviewedAt&amp;quot;}}},
+    {$match: {&amp;quot;createdAt&amp;quot;: {&amp;quot;$gt&amp;quot;: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)}}}
+])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;mongo-shell&#34;&gt;Mongo Shell&lt;/h2&gt;
+&lt;p&gt;Note: This operation can be done in &lt;strong&gt;Mongo Shell&lt;/strong&gt;, need to find another way to do it in Mongo Compass / Atlas.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Compute the time 7 days ago to use in filtering the data
+# across all customers
+var d = new Date();
+d.setDate(d.getDate()-7);
+
+db.bounties.aggregate([
+    {$match: {season: 2, customer_id: &#39;905250069463326740&#39;}},
+    {$project: {_id: 1, title: 1, customer_id: 1, createdAt: {$toDate: &amp;quot;$createdAt&amp;quot;}}},
+    {$match: {&#39;createdAt&#39;: {$gt: d}}},
+    {$unwind: &#39;$createdAt&#39;},
+    {$match: {&#39;createdAt&#39;: {$gt: d}}}
+]).pretty()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;hard-coded&#34;&gt;Hard Coded&lt;/h2&gt;
+&lt;p&gt;Break out in case of emergency, generally avoid.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Note: hardcoded ISODate
+
+db.bounties.aggregate([
+    {$match: {&amp;quot;$and&amp;quot;: [{season: 2}, {customer_id: &#39;834499078434979890&#39;} ]}},
+    {$project: {_id: 1, _customer_id: &amp;quot;$customer_id&amp;quot;, _title: &amp;quot;$title&amp;quot;, _status: &amp;quot;$status&amp;quot;, _createdAt: &amp;quot;$createdAt&amp;quot;, _claimedAt: &amp;quot;$claimedAt&amp;quot;, _submittedAt: &amp;quot;$submittedAt&amp;quot;, _reviewedAt: &amp;quot;$reviewedAt&amp;quot;}},
+    {$project: {_id: 1, customer_id: &amp;quot;$_customer_id&amp;quot;, title: &amp;quot;$_title&amp;quot;, status: &amp;quot;$_status&amp;quot;, createdAt: {$toDate: &amp;quot;$_createdAt&amp;quot;}, claimedAt: {$toDate: &amp;quot;$_claimedAt&amp;quot;}, submittedAt: {$toDate: &amp;quot;$_submittedAt&amp;quot;}, reviewedAt: {$toDate: &amp;quot;$_reviewedAt&amp;quot;}}},
+    {$match: {&amp;quot;createdAt&amp;quot;: {&amp;quot;$gte&amp;quot;: ISODate(&amp;quot;2021-12-15T00:00:00Z&amp;quot;)}}}
+]) 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Show current user, db access and role</title>
       <link>/technical_notes/example_tech/mongodb_show_current_user/</link>
       <pubDate>Wed, 22 Dec 2021 00:00:00 +0100</pubDate>
@@ -1135,6 +1193,9 @@ Python 2.7.16
 &lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to grab &lt;em&gt;your&lt;/em&gt; own info as the current user of MongoDB.&lt;/p&gt;
 &lt;p&gt;Run this command in Mongo Shell.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.name_of_collection.runCommand({connectionStatus: 1})
+
+# once you get user name, you can use this command
+db.getUser(&amp;quot;UserName&amp;quot;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For more content on data 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
@@ -1461,32 +1522,6 @@ db.contacts.aggregate([
     {$sort: {birthdate: 1}},
     {$skip: 10},
     {$limit: 10}
-]).pretty()
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For more content on data science, R, and Python 
-&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Retrieving past 7-days data</title>
-      <link>/technical_notes/example_tech/mongodb_past_7_days/</link>
-      <pubDate>Fri, 17 Dec 2021 00:00:00 +0100</pubDate>
-      <guid>/technical_notes/example_tech/mongodb_past_7_days/</guid>
-      <description>&lt;h2 id=&#34;retrieving-past-7-days-data&#34;&gt;Retrieving past 7-days data&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to query a collection to get documents that were generated in the past 7 days.&lt;/p&gt;
-&lt;p&gt;Note: This operation can be done in &lt;strong&gt;Mongo Shell&lt;/strong&gt;, need to find another way to do it in Mongo Compass / Atlas.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Compute the time 7 days ago to use in filtering the data
-# across all customers
-var d = new Date();
-d.setDate(d.getDate()-7);
-
-db.bounties.aggregate([
-    {$match: {season: 2, customer_id: &#39;905250069463326740&#39;}},
-    {$project: {_id: 1, title: 1, customer_id: 1, createdAt: {$toDate: &amp;quot;$createdAt&amp;quot;}}},
-    {$match: {&#39;createdAt&#39;: {$gt: d}}},
-    {$unwind: &#39;$createdAt&#39;},
-    {$match: {&#39;createdAt&#39;: {$gt: d}}}
 ]).pretty()
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For more content on data science, R, and Python 

@@ -29,7 +29,7 @@
   
   <meta name="description" content="Show current user Situation: You want to grab your own info as the current user of MongoDB.
 Run this command in Mongo Shell.
-db.name_of_collection.runCommand({connectionStatus: 1})  For more content on data find me on Twitter.">
+db.name_of_collection.runCommand({connectionStatus: 1}) # once you get user name, you can use this command db.">
 
   
   <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_show_current_user/">
@@ -242,7 +242,7 @@ db.name_of_collection.runCommand({connectionStatus: 1})  For more content on dat
   <meta property="og:title" content="Show current user, db access and role | Paul Apivat">
   <meta property="og:description" content="Show current user Situation: You want to grab your own info as the current user of MongoDB.
 Run this command in Mongo Shell.
-db.name_of_collection.runCommand({connectionStatus: 1})  For more content on data find me on Twitter."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+db.name_of_collection.runCommand({connectionStatus: 1}) # once you get user name, you can use this command db."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
@@ -1051,6 +1051,9 @@ db.name_of_collection.runCommand({connectionStatus: 1})  For more content on dat
 <p><strong>Situation</strong>: You want to grab <em>your</em> own info as the current user of MongoDB.</p>
 <p>Run this command in Mongo Shell.</p>
 <pre><code class="language-{python}">db.name_of_collection.runCommand({connectionStatus: 1})
+
+# once you get user name, you can use this command
+db.getUser(&quot;UserName&quot;)
 </code></pre>
 <p>For more content on data 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
@@ -1070,7 +1073,7 @@ db.name_of_collection.runCommand({connectionStatus: 1})  For more content on dat
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
+    <a href="/technical_notes/example_tech/mongodb_past_7_days/" rel="next">Retrieving past 7-days data</a>
   </div>
   
   

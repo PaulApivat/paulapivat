@@ -20,6 +20,9 @@ Run this command in Mongo Shell.
 
 ```{python}
 db.name_of_collection.runCommand({connectionStatus: 1})
+
+# once you get user name, you can use this command
+db.getUser("UserName")
 ```
 
 

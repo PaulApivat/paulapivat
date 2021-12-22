@@ -68,6 +68,9 @@
     <loc>/technical_notes/example_tech/</loc>
     <lastmod>2018-09-09T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/technical_notes/example_tech/mongodb_past_7_days/</loc>
+    <lastmod>2021-12-22T00:00:00+01:00</lastmod>
+  </url><url>
     <loc>/technical_notes/example_tech/mongodb_show_current_user/</loc>
     <lastmod>2021-12-22T00:00:00+01:00</lastmod>
   </url><url>
@@ -87,9 +90,6 @@
     <lastmod>2021-12-17T00:00:00+01:00</lastmod>
   </url><url>
     <loc>/technical_notes/example_tech/mongodb_concatenate_string/</loc>
-    <lastmod>2021-12-17T00:00:00+01:00</lastmod>
-  </url><url>
-    <loc>/technical_notes/example_tech/mongodb_past_7_days/</loc>
     <lastmod>2021-12-17T00:00:00+01:00</lastmod>
   </url><url>
     <loc>/technical_notes/example_tech/webdev_sentry_install/</loc>
