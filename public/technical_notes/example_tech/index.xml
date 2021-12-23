@@ -814,6 +814,29 @@ print(&amp;quot;Done.&amp;quot;)
     </item>
     
     <item>
+      <title>Git Stash vs Git Commit</title>
+      <link>/technical_notes/example_tech/git_stash/</link>
+      <pubDate>Wed, 23 Dec 2020 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/git_stash/</guid>
+      <description>&lt;h2 id=&#34;understanding-git-stash-vs-git-commit&#34;&gt;Understanding Git Stash vs Git Commit&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: You&amp;rsquo;re on a feature branch and you want to switch to another branch, but there could be conflicts between a file that was edited on a current branch and the destination branch you&amp;rsquo;re switching &lt;em&gt;into&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;This only happens because git tries to preserve your unstashed/unstaged changes across branches.&lt;/p&gt;
+&lt;p&gt;Your choices are to &lt;code&gt;commit&lt;/code&gt; or &lt;code&gt;stash&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In the future, you can run:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git restore name-of-conflicting-fie&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;and if its a file that &lt;em&gt;should be tracked&lt;/em&gt;, you can run:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git commit&lt;/code&gt; (but no need to run &lt;code&gt;git push&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;OR&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git stash&lt;/code&gt; to save the changes on name-of-conflicting-fie for future retrieval. When you need to apply the changes, you can run:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git stash apply&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Background&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git commit&lt;/code&gt; adds a commit to your local environment. Local is just for you - no one else can see that you&amp;rsquo;ve added a commit. They can only see that you&amp;rsquo;ve added a commit once you push the commit to a repo, which is what happened when you ran:
+&lt;code&gt;git push origin branch&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git push&lt;/code&gt; takes your local commit and adds the new commit to the remote repo referenced by origin and the branch specified in &lt;code&gt;branch&lt;/code&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Setting up Poetry for Dependency Management</title>
       <link>/technical_notes/example_tech/python_poetry/</link>
       <pubDate>Tue, 22 Dec 2020 00:00:00 +0100</pubDate>
