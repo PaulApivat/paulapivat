@@ -1150,6 +1150,29 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Get values from nested array</title>
+      <link>/technical_notes/example_tech/mongodb_grab_value_nested_array/</link>
+      <pubDate>Fri, 24 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_grab_value_nested_array/</guid>
+      <description>&lt;h2 id=&#34;grab-values-from-nested-arrays-in-a-document&#34;&gt;Grab values from nested arrays in a document&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to figure out how much time has elapsed between two timestamps. But those timestamps are nested in arrays.&lt;/p&gt;
+&lt;p&gt;This is similar to the operation in 
+&lt;a href=&#34;https://paulapivat.com/technical_notes/example_tech/mongodb_subtract_timestamps/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this post&lt;/a&gt;, with a key difference: the timestamps are nested within an &lt;strong&gt;array of objects&lt;/strong&gt;, so we have to get those values out, then convert &lt;code&gt;$toDate&lt;/code&gt;, then subtract.&lt;/p&gt;
+&lt;p&gt;Note: We&amp;rsquo;re &lt;strong&gt;not&lt;/strong&gt; using &lt;code&gt;$unwind&lt;/code&gt; here because we want multiple timestamps within the same document.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;db.bounties.aggregate([
+    {$match: {&amp;quot;$and&amp;quot;: [{season: 2}, {customer_id: &#39;905250069463326740&#39;}, {status: &amp;quot;Completed&amp;quot;}]}},
+    {$project: {&amp;quot;statusHistory.status&amp;quot;: 1, &amp;quot;statusHistory.setAt&amp;quot;: 1}},
+    {$project: {draft: {$arrayElemAt: [&amp;quot;$statusHistory&amp;quot;, 0]},  open: {$arrayElemAt: [&amp;quot;$statusHistory&amp;quot;, 1]}, in_progress: {$arrayElemAt: [&amp;quot;$statusHistory&amp;quot;, 2]}, in_review: {$arrayElemAt: [&amp;quot;$statusHistory&amp;quot;, 3]}, completed: {$arrayElemAt: [&amp;quot;$statusHistory&amp;quot;, 4]}}},
+    {$project: {draft: {$toDate: &amp;quot;$draft.setAt&amp;quot;}, open: {$toDate: &amp;quot;$open.setAt&amp;quot;}, in_progress: {$toDate: &amp;quot;$in_progress.setAt&amp;quot;}, in_review: {$toDate: &amp;quot;$in_review.setAt&amp;quot;}, completed: {$toDate: &amp;quot;$completed.setAt&amp;quot;} }},
+    {$project: {_id: 1, draft_to_open: {$divide: [{$subtract: [&amp;quot;$open&amp;quot;, &amp;quot;$draft&amp;quot;]}, 3600000]}, open_to_progress: {$divide: [{$subtract: [&amp;quot;$in_progress&amp;quot;, &amp;quot;$open&amp;quot;]}, 3600000]}, progress_to_review: {$divide: [{$subtract: [&amp;quot;$in_review&amp;quot;, &amp;quot;$in_progress&amp;quot;]}, 3600000]}, review_to_completed: {$divide: [{$subtract: [&amp;quot;$completed&amp;quot;, &amp;quot;$in_review&amp;quot;]}, 3600000]}}}
+])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Retrieving past 7-days data</title>
       <link>/technical_notes/example_tech/mongodb_past_7_days/</link>
       <pubDate>Wed, 22 Dec 2021 00:00:00 +0100</pubDate>

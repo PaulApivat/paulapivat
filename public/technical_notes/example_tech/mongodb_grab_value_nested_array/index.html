@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Use pgAdmin to upload CSV to Postgres (Quick &amp; Dirty) Situation: There are many ways to upload CSV into Postgres. This is the relatively quick and dirty way. This represents an infrequent step where we happen to be loading a 20,000&#43; rows as a one-time event with subsequent smaller, more regular, events.">
+  <meta name="description" content="Grab values from nested arrays in a document Situation: You want to figure out how much time has elapsed between two timestamps. But those timestamps are nested in arrays.
+This is similar to the operation in this post, with a key difference: the timestamps are nested within an array of objects, so we have to get those values out, then convert $toDate, then subtract.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_grab_value_nested_array/">
 
   
 
@@ -217,7 +218,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/">
+  <link rel="canonical" href="/technical_notes/example_tech/mongodb_grab_value_nested_array/">
 
   
   
@@ -236,15 +237,16 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/">
-  <meta property="og:title" content="Use pgAdmin to upload CSV to Postgres | Paul Apivat">
-  <meta property="og:description" content="Use pgAdmin to upload CSV to Postgres (Quick &amp; Dirty) Situation: There are many ways to upload CSV into Postgres. This is the relatively quick and dirty way. This represents an infrequent step where we happen to be loading a 20,000&#43; rows as a one-time event with subsequent smaller, more regular, events."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/mongodb_grab_value_nested_array/">
+  <meta property="og:title" content="Get values from nested array | Paul Apivat">
+  <meta property="og:description" content="Grab values from nested arrays in a document Situation: You want to figure out how much time has elapsed between two timestamps. But those timestamps are nested in arrays.
+This is similar to the operation in this post, with a key difference: the timestamps are nested within an array of objects, so we have to get those values out, then convert $toDate, then subtract."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-11-03T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-12-24T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-11-03T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-12-24T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +265,7 @@
 
 
 
-  <title>Use pgAdmin to upload CSV to Postgres | Paul Apivat</title>
+  <title>Get values from nested array | Paul Apivat</title>
 
 </head>
 
@@ -798,7 +800,7 @@
         <a href="/technical_notes/example_tech/mongodb_joins/">Joins in Mongo</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/mongodb_grab_value_nested_array/">Nested Documents in Arrays</a>
       </li>
       
@@ -996,7 +998,7 @@
         <a href="/technical_notes/example_tech/sql_check_equality_two_columns/">SQL Check Columns Equality</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin/">Upload CSV to Postgres with pgAdmin</a>
       </li>
       
@@ -1035,7 +1037,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#use-pgadmin-to-upload-csv-to-postgres-quick--dirty">Use pgAdmin to upload CSV to Postgres (Quick &amp; Dirty)</a></li>
+    <li><a href="#grab-values-from-nested-arrays-in-a-document">Grab values from nested arrays in a document</a></li>
   </ul>
 </nav>
 
@@ -1048,53 +1050,23 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Use pgAdmin to upload CSV to Postgres</h1>
+          <h1>Get values from nested array</h1>
 
           <div class="article-style">
-            <h2 id="use-pgadmin-to-upload-csv-to-postgres-quick--dirty">Use pgAdmin to upload CSV to Postgres (Quick &amp; Dirty)</h2>
-<p><strong>Situation</strong>: There are many ways to upload CSV into Postgres. This is the relatively quick and dirty way. This represents an infrequent step where we happen to be loading a 20,000+ rows as a one-time event with subsequent smaller, more regular, events.</p>
-<p><strong>Context</strong>: The example below is part of a larger process of querying GraphQL in JSON and converting it to Pandas dataframe before getting it into Postgres. Here we are using a mixture of Excel and pgAdmin (Postgres client) to get the job done.</p>
-<p><em>Note</em>: pgAdmin happens to be the Postgresql-client I&rsquo;m using, but any client could work.</p>
-<p><strong>Pre-requisite Steps</strong>:</p>
-<ol>
-<li>
-<p>Create a database table in pgAdmin. Ideally, the columns are defined and consistent with the CSV data that&rsquo;s about to be uploaded.
-1a. Assuming a table has already been created, we will be using the <code>INSERT</code> statement, otherwise, it would be a <code>CREATE TABLE</code>.</p>
-</li>
-<li>
-<p>To <code>INSERT</code> table, you&rsquo;ll right click on a table (here we&rsquo;re using, &lsquo;stg_subgraph_bank&rsquo;), select Scripts&hellip;,then <code>INSERT Scripts</code>.</p>
-</li>
-</ol>
-<p>The following or close variation should appear. Here we are <em>inserting into</em> the <code>stg_subgraph_bank</code> table. In this example, there are 6 columns: <code>to_address</code>, <code>amount_display</code>, <code>from_address</code>, <code>graph_id</code>, <code>tx_timestamp</code> and <code>timestamp_display</code>.</p>
-<ol start="3">
-<li>The <code>TRUNCATE TABLE</code> is to remove existing data before inserting new data (if needed).</li>
-</ol>
-<pre><code class="language-{python}">TRUNCATE TABLE public.stg_subgraph_bank;
-
-INSERT INTO public.stg_subgraph_bank(
-	to_address, amount_display, from_address, graph_id, tx_timestamp, timestamp_display)
-	VALUES (?, ?, ?, ?, ?, ?);
-
+            <h2 id="grab-values-from-nested-arrays-in-a-document">Grab values from nested arrays in a document</h2>
+<p><strong>Situation</strong>: You want to figure out how much time has elapsed between two timestamps. But those timestamps are nested in arrays.</p>
+<p>This is similar to the operation in 
+<a href="https://paulapivat.com/technical_notes/example_tech/mongodb_subtract_timestamps/" target="_blank" rel="noopener">this post</a>, with a key difference: the timestamps are nested within an <strong>array of objects</strong>, so we have to get those values out, then convert <code>$toDate</code>, then subtract.</p>
+<p>Note: We&rsquo;re <strong>not</strong> using <code>$unwind</code> here because we want multiple timestamps within the same document.</p>
+<pre><code class="language-{python}">db.bounties.aggregate([
+    {$match: {&quot;$and&quot;: [{season: 2}, {customer_id: '905250069463326740'}, {status: &quot;Completed&quot;}]}},
+    {$project: {&quot;statusHistory.status&quot;: 1, &quot;statusHistory.setAt&quot;: 1}},
+    {$project: {draft: {$arrayElemAt: [&quot;$statusHistory&quot;, 0]},  open: {$arrayElemAt: [&quot;$statusHistory&quot;, 1]}, in_progress: {$arrayElemAt: [&quot;$statusHistory&quot;, 2]}, in_review: {$arrayElemAt: [&quot;$statusHistory&quot;, 3]}, completed: {$arrayElemAt: [&quot;$statusHistory&quot;, 4]}}},
+    {$project: {draft: {$toDate: &quot;$draft.setAt&quot;}, open: {$toDate: &quot;$open.setAt&quot;}, in_progress: {$toDate: &quot;$in_progress.setAt&quot;}, in_review: {$toDate: &quot;$in_review.setAt&quot;}, completed: {$toDate: &quot;$completed.setAt&quot;} }},
+    {$project: {_id: 1, draft_to_open: {$divide: [{$subtract: [&quot;$open&quot;, &quot;$draft&quot;]}, 3600000]}, open_to_progress: {$divide: [{$subtract: [&quot;$in_progress&quot;, &quot;$open&quot;]}, 3600000]}, progress_to_review: {$divide: [{$subtract: [&quot;$in_review&quot;, &quot;$in_progress&quot;]}, 3600000]}, review_to_completed: {$divide: [{$subtract: [&quot;$completed&quot;, &quot;$in_review&quot;]}, 3600000]}}}
+])
 </code></pre>
-<p>Then, we&rsquo;re turning to Excel to prepare the data that will ultimately replace &ldquo;VALUE (?, ?, ?, ?, ?, ?)&rdquo;.</p>
-<p>There is a <code>CONCATENATE</code> function in Excel that converts data from rows/columns (CSV format) into parentheses of string values.</p>
-<pre><code class="language-{python}">=CONCATENATE(&quot;('&quot;,C2,&quot;','&quot;,A2,&quot;',&quot;,B2,&quot;','&quot;,E2,&quot;','&quot;,D2,&quot;'),&quot;)
-</code></pre>
-<p>After that&rsquo;s been created in Excel, we&rsquo;re copying and pasting all 20,000+ rows (or however many) back into pgAdmin.</p>
-<p>Here&rsquo;s a truncated version of the 20,000+ rows of data with the <code>TRUNCATE</code> command to remove existing data before inserting new data:</p>
-<pre><code class="language-{python}">TRUNCATE TABLE public.stg_subgraph_bank;
-
-INSERT INTO public.stg_subgraph_bank(
-	to_address, amount_display, from_address, graph_id, tx_timestamp, timestamp_display)
-	VALUES 
-	('0x7a250d5630b4cf539739df2c5dacb4c659f2488d','14897.1883870177','0x59c1349bc6f28a427e78ddb6130ec669c2f39b48','0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23','1620159318','Tue, 04 May 2021 20:15:18 GMT'),
-('0x156d3129b2fd634d5b0817132401aa68b0126098','14897.1883870177','0x7a250d5630b4cf539739df2c5dacb4c659f2488d','0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-27','1620159318','Tue, 04 May 2021 20:15:18 GMT'),
-('0x11ebc944350df20940fb10dd8782d654d6aad8c6','37422.0374220399','0x9d1f1847582261be41f5a54e8b60cad21400c74f','0x355666cd33644fd05b36a54e4ddcd14190a71eea08a291731b6cd9ec8950a199-387','1620159318','Tue, 04 May 2021 20:15:18 GMT'),
-('0x5e7a1573620e0df38e41dd302f68d7d8e5b99bba','3231.14250158999','0x9d1f1847582261be41f5a54e8b60cad21400c74f','0x98f688d6adcdbb1a395b21c8f30b81ef0da8454d863e6d6f9a03305c082bae82-263','1620159320','Tue, 04 May 2021 20:15:20 GMT'),
-('0x2db3c0f42022fdc8dfe70036fee85e48a24b88af','3949.39809822999','0xfe8cac7dc7ac38da9ba540eb4d1797d0417dcc41','0xc9e209771502f73334340eeea2b943f98d9663a9b1eb4370d23f34a3c860c007-106','1620159320','Tue, 04 May 2021 20:15:20 GMT');
-</code></pre>
-<p>Then run the query and the new data should populate the table.</p>
-<p>For more content on data science, R, and Python 
+<p>For more content on data 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
@@ -1112,14 +1084,14 @@ INSERT INTO public.stg_subgraph_bank(
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/postgresql_select_range_of_rows/" rel="next">Select a range of rows</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/sql_check_equality_two_columns/" rel="prev">Check Equality of Two Columns</a>
+    <a href="/technical_notes/example_tech/mongodb_past_7_days/" rel="prev">Retrieving past 7-days data</a>
   </div>
   
 </div>
@@ -1129,7 +1101,7 @@ INSERT INTO public.stg_subgraph_bank(
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Nov 3, 2021</p>
+          <p>Last updated on Dec 24, 2021</p>
 
           
 
@@ -1141,7 +1113,7 @@ INSERT INTO public.stg_subgraph_bank(
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/sql_upload_csv_postgres_pgadmin.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/mongodb_grab_value_nested_array.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
