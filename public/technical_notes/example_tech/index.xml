@@ -1129,6 +1129,54 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Writing dataframe to postgresql database</title>
+      <link>/technical_notes/example_tech/postgresql_sqlalchemy_upload_df/</link>
+      <pubDate>Sat, 25 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/postgresql_sqlalchemy_upload_df/</guid>
+      <description>&lt;h2 id=&#34;writing-dataframe-to-postgresql-database&#34;&gt;Writing dataframe to postgresql database&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You need to write data from an API endpoint into postgres. You can use SQLAlchemy and Python for the job. A benefit of this method is that you don&amp;rsquo;t need to rely on Excel.&lt;/p&gt;
+&lt;p&gt;In the example below, we query data from an API endpoint (Coordinape), and we&amp;rsquo;ve setup &lt;code&gt;.env&lt;/code&gt; to store authorization credentials. We used pandas to transform the data &lt;em&gt;before&lt;/em&gt; loading to postgres.&lt;/p&gt;
+&lt;p&gt;Now we want to use SQLAlchemy to write the dataframe to postgres.&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://pythontic.com/pandas/serialization/postgresql?fbclid=IwAR0fzgR7wBspGl6mAqWyt8N2lDwS7a36MvWLoFstDJBQDJsnBVMo7J0cwGc&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Source&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# libraries for database connection
+import time
+from sqlalchemy import create_engine
+import psycopg2
+
+# NOTE: By now a dataframe is ready for writing to postgres
+# here the dataframe = concat_frames_5
+
+# Use SQLAlchemy
+# INPUT DATABASE CONNECTION STRING
+conn_string = os.environ.get(&#39;CONN_STRING&#39;)
+print(conn_string)
+
+alchemyEngine = create_engine(conn_string)
+postgreSQLConnection = alchemyEngine.connect()
+
+postgreSQLTable = &amp;quot;coordinape_rounds_3&amp;quot;
+
+try:
+    frame = concat_frames_5.to_sql(
+        postgreSQLTable, postgreSQLConnection, if_exists=&#39;fail&#39;)
+except ValueError as vs:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    print(
+        f&amp;quot;PostgreSQL Table {postgreSQLTable} has been created successfully.&amp;quot;)
+finally:
+    postgreSQLConnection.close()
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on Data and DAOs 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Get values from nested array</title>
       <link>/technical_notes/example_tech/mongodb_grab_value_nested_array/</link>
       <pubDate>Fri, 24 Dec 2021 00:00:00 +0100</pubDate>

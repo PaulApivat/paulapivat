@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Create a Test Table then Insert data to establish a connection Situation: You want to create a quick &lsquo;test&rsquo; table via the sqlalchemy library in Python to establish a connection with your postgres db.">
+  <meta name="description" content="Writing dataframe to postgresql database Situation: You need to write data from an API endpoint into postgres. You can use SQLAlchemy and Python for the job. A benefit of this method is that you don&rsquo;t need to rely on Excel.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/postgresql_create_table/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/postgresql_sqlalchemy_upload_df/">
 
   
 
@@ -217,7 +217,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/postgresql_create_table/">
+  <link rel="canonical" href="/technical_notes/example_tech/postgresql_sqlalchemy_upload_df/">
 
   
   
@@ -236,15 +236,15 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/postgresql_create_table/">
-  <meta property="og:title" content="Create a table to established connection with SQLAlchemy | Paul Apivat">
-  <meta property="og:description" content="Create a Test Table then Insert data to establish a connection Situation: You want to create a quick &lsquo;test&rsquo; table via the sqlalchemy library in Python to establish a connection with your postgres db."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/postgresql_sqlalchemy_upload_df/">
+  <meta property="og:title" content="Writing dataframe to postgresql database | Paul Apivat">
+  <meta property="og:description" content="Writing dataframe to postgresql database Situation: You need to write data from an API endpoint into postgres. You can use SQLAlchemy and Python for the job. A benefit of this method is that you don&rsquo;t need to rely on Excel."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-11-09T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-12-25T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-11-09T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-12-25T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +263,7 @@
 
 
 
-  <title>Create a table to established connection with SQLAlchemy | Paul Apivat</title>
+  <title>Writing dataframe to postgresql database | Paul Apivat</title>
 
 </head>
 
@@ -845,7 +845,7 @@
     <a class="docs-toc-link" href="/technical_notes/example_tech/postgresql_create_table/">PostgreSQL</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/postgresql_create_table/">Create a table (establish connection)</a>
       </li>
       
@@ -873,7 +873,7 @@
         <a href="/technical_notes/example_tech/postgresql_sort_two_columns/">Sort by Two Column</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/postgresql_sqlalchemy_upload_df/">Upload DataFrame (SQLAlchemy)</a>
       </li>
       
@@ -1039,7 +1039,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#create-a-test-table-then-insert-data-to-establish-a-connection">Create a Test Table then Insert data to establish a connection</a></li>
+    <li><a href="#writing-dataframe-to-postgresql-database">Writing dataframe to postgresql database</a></li>
   </ul>
 </nav>
 
@@ -1052,25 +1052,48 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Create a table to established connection with SQLAlchemy</h1>
+          <h1>Writing dataframe to postgresql database</h1>
 
           <div class="article-style">
-            <h2 id="create-a-test-table-then-insert-data-to-establish-a-connection">Create a Test Table then Insert data to establish a connection</h2>
-<p><strong>Situation</strong>: You want to create a quick &lsquo;test&rsquo; table via the <code>sqlalchemy</code> library in Python to establish a connection with your postgres db.</p>
-<pre><code class="language-{python}"># Create TEST table to confirm connection
-db.execute(
-    &quot;CREATE TABLE IF NOT EXISTS films (title text, director text, year text)&quot;)
+            <h2 id="writing-dataframe-to-postgresql-database">Writing dataframe to postgresql database</h2>
+<p><strong>Situation</strong>: You need to write data from an API endpoint into postgres. You can use SQLAlchemy and Python for the job. A benefit of this method is that you don&rsquo;t need to rely on Excel.</p>
+<p>In the example below, we query data from an API endpoint (Coordinape), and we&rsquo;ve setup <code>.env</code> to store authorization credentials. We used pandas to transform the data <em>before</em> loading to postgres.</p>
+<p>Now we want to use SQLAlchemy to write the dataframe to postgres.</p>
+<p>
+<a href="https://pythontic.com/pandas/serialization/postgresql?fbclid=IwAR0fzgR7wBspGl6mAqWyt8N2lDwS7a36MvWLoFstDJBQDJsnBVMo7J0cwGc" target="_blank" rel="noopener">Source</a></p>
+<pre><code class="language-{python}"># libraries for database connection
+import time
+from sqlalchemy import create_engine
+import psycopg2
 
-# Insert data
-db.execute(
-    &quot;INSERT INTO films (title, director, year) VALUES ('Dune', 'Denis Villeneuve', '2021')&quot;)
+# NOTE: By now a dataframe is ready for writing to postgres
+# here the dataframe = concat_frames_5
 
-# Read data
-result_set = db.execute(&quot;SELECT * FROM films&quot;)
-for r in result_set:
-    print(r)
+# Use SQLAlchemy
+# INPUT DATABASE CONNECTION STRING
+conn_string = os.environ.get('CONN_STRING')
+print(conn_string)
+
+alchemyEngine = create_engine(conn_string)
+postgreSQLConnection = alchemyEngine.connect()
+
+postgreSQLTable = &quot;coordinape_rounds_3&quot;
+
+try:
+    frame = concat_frames_5.to_sql(
+        postgreSQLTable, postgreSQLConnection, if_exists='fail')
+except ValueError as vs:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    print(
+        f&quot;PostgreSQL Table {postgreSQLTable} has been created successfully.&quot;)
+finally:
+    postgreSQLConnection.close()
+
 </code></pre>
-<p>For more content on data science, R, and Python 
+<p>For more content on Data and DAOs 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
@@ -1088,14 +1111,14 @@ for r in result_set:
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/mongodb_crud/" rel="next">CRUD Operations in Mongo (Shell)</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/database_install_docker/" rel="prev">Testing databases in a Docker Container</a>
+    <a href="/technical_notes/example_tech/mongodb_grab_value_nested_array/" rel="prev">Get values from nested array</a>
   </div>
   
 </div>
@@ -1105,7 +1128,7 @@ for r in result_set:
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Nov 9, 2021</p>
+          <p>Last updated on Dec 25, 2021</p>
 
           
 
@@ -1117,7 +1140,7 @@ for r in result_set:
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/postgresql_create_table.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/postgresql_sqlalchemy_upload_df.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
