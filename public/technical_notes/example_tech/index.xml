@@ -13,6 +13,48 @@
     </image>
     
     <item>
+      <title>Looping through the 3 Main Data Structures in Python</title>
+      <link>/technical_notes/example_tech/python_looping_through_data_structures/</link>
+      <pubDate>Tue, 28 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_looping_through_data_structures/</guid>
+      <description>&lt;h2 id=&#34;looping-through-the-3-main-data-structures-in-python&#34;&gt;Looping through the 3 Main Data Structures in Python&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: An introduction to loops and data structures.&lt;/p&gt;
+&lt;p&gt;In Python, three main ones are &lt;code&gt;lists&lt;/code&gt;, &lt;code&gt;sets&lt;/code&gt; and &lt;code&gt;dictionaries&lt;/code&gt;. Here are some vignettes to show how they can be looped.&lt;/p&gt;
+&lt;h3 id=&#34;three-ways-to-loop&#34;&gt;Three ways to loop&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# set
+data = {&#39;Caleb&#39;, &#39;Jimmy&#39;, &#39;Sam&#39;, &#39;Monica&#39;, &#39;Caleb&#39;}
+
+# list
+data = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;]
+
+# dictionary
+data = {
+    &#39;Caleb&#39;: 5,
+    &#39;Jimmy&#39;: 10,
+    &#39;Sam&#39;: 12,
+    &#39;Monica&#39;: 20,
+    &#39;Caleb&#39;: 4
+}
+
+
+# direct
+for i in data:
+   print(i)
+   
+# range &amp;amp; len
+for i in range(len(data)):
+   print(i)
+
+
+# enumerate
+for i, letter in enumerate(data):
+   print(i, letter)
+   
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Establishing an API connection with the requests library</title>
       <link>/technical_notes/example_tech/python_api_connection/</link>
       <pubDate>Mon, 20 Dec 2021 00:00:00 +0100</pubDate>
