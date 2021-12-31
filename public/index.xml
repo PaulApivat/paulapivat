@@ -15,7 +15,7 @@
     <item>
       <title>Looping through the 3 Main Data Structures in Python</title>
       <link>/technical_notes/example_tech/python_looping_through_data_structures/</link>
-      <pubDate>Tue, 28 Dec 2021 00:00:00 +0100</pubDate>
+      <pubDate>Fri, 31 Dec 2021 00:00:00 +0100</pubDate>
       <guid>/technical_notes/example_tech/python_looping_through_data_structures/</guid>
       <description>&lt;h2 id=&#34;looping-through-the-3-main-data-structures-in-python&#34;&gt;Looping through the 3 Main Data Structures in Python&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: An introduction to loops and data structures.&lt;/p&gt;
@@ -47,9 +47,52 @@ for i in range(len(data)):
 
 
 # enumerate
+# grab index and key, not value
+# remove duplicate keys
 for i, letter in enumerate(data):
    print(i, letter)
    
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;iterating-through-dictionaries&#34;&gt;Iterating through Dictionaries&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;data = {
+    &#39;Caleb&#39;: 5,
+    &#39;Jimmy&#39;: 10,
+    &#39;Sam&#39;: 12,
+    &#39;Monica&#39;: 20,
+    &#39;Caleb&#39;: 4
+}
+
+# .items() method returns key &amp;amp; values
+for key, val in data.items():
+    print(key, val)
+    
+# enumerate gets index &amp;amp; key (no values)
+for index, value in enumerate(data):
+    print(index, value)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;updating-dictionaries&#34;&gt;Updating Dictionaries&lt;/h2&gt;
+&lt;p&gt;You have a dictionary with key, value pairs, you want to update values of &lt;em&gt;existing&lt;/em&gt; keys and find new keys and determine value.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;drinks_in_storage = {
+    &amp;quot;grape&amp;quot;: 5, 
+    &amp;quot;black cherry&amp;quot;: 3, 
+    &amp;quot;cola&amp;quot;: 4
+}
+
+# update with List of Lists
+drink_purchased = [[&#39;grape&#39;, 3], [&#39;black cherry&#39;, 1], [&#39;cola&#39;, 5], [&#39;orange&#39;, 12]]
+
+# can also update with List of Sets
+drink_purchased = [(&#39;grape&#39;, 3), (&#39;black cherry&#39;, 1), (&#39;cola&#39;, 5), (&#39;orange&#39;, 12)]
+
+# checking if a key is present before updating value
+for drink in drink_purchased:
+    if drinks_in_storage.get(drink[0]):
+        drinks_in_storage[drink[0]] += drink[1]
+    else:
+        drinks_in_storage[drink[0]] = drink[1]
+
+# see that drinks_in_storage added &#39;orange&#39;:12 to the dictionary
+print(drinks_in_storage) 
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
