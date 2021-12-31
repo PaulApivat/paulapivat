@@ -94,6 +94,63 @@ for drink in drink_purchased:
 # see that drinks_in_storage added &#39;orange&#39;:12 to the dictionary
 print(drinks_in_storage) 
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;using-defaultdict&#34;&gt;Using defaultdict&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# -------------------------- without defaultdict
+drink_purchased = [(&#39;grape&#39;, 3), (&#39;black cherry&#39;, 1), (&#39;cola&#39;, 5), (&#39;orange&#39;, 12)]
+
+# checking if a key is present before updating value
+for drink in drink_purchased:
+    if drinks_in_storage.get(drink[0]):
+        drinks_in_storage[drink[0]] += drink[1]
+    else:
+        drinks_in_storage[drink[0]] = drink[1]
+        
+        
+# -------------------------- with defaultdict
+drinks_in_storage = defaultdict(int, drinks_in_storage)
+
+drink_purchased = [[&#39;grape&#39;, 3], [&#39;black cherry&#39;, 1], [&#39;cola&#39;, 5], [&#39;orange&#39;, 12]]
+
+# cut out the &#39;else&#39;
+for drink in drink_purchased:
+        drinks_in_storage[drink[0]] += drink[1]
+
+
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ways to Join Sets</title>
+      <link>/technical_notes/example_tech/python_joining_sets/</link>
+      <pubDate>Fri, 31 Dec 2021 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_joining_sets/</guid>
+      <description>&lt;h2 id=&#34;4-operations-to-join-sets&#34;&gt;4 Operations to Join Sets&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You have sets containing strings, you can join, find intersections, or differences and symmetric differences.&lt;/p&gt;
+&lt;h3 id=&#34;4-operations&#34;&gt;4 Operations&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;my_drinks = {&#39;grape&#39;, &#39;cola&#39;, &#39;black cherry&#39;}
+her_drinks = {&#39;lime&#39;, &#39;cola&#39;}
+
+# position if not retained in a set
+print(my_drinks, her_drinks)
+
+# 4 operations to know about
+
+# union
+print(&amp;quot;Union&amp;quot;, my_drinks | her_drinks)
+
+
+# intersection
+print(&amp;quot;Intersection&amp;quot;, my_drinks &amp;amp; her_drinks)
+
+# difference
+print(&amp;quot;Difference&amp;quot;, my_drinks - her_drinks)
+
+
+# symmetric difference
+print(&amp;quot;Symmetric Difference&amp;quot;, my_drinks ^ her_drinks)
+   
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     

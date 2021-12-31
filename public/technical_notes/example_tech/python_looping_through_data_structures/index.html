@@ -909,6 +909,10 @@ In Python, three main ones are lists, sets and dictionaries. Here are some vigne
       </li>
       
       <li >
+        <a href="/technical_notes/example_tech/python_joining_sets/">Joining Sets</a>
+      </li>
+      
+      <li >
         <a href="/technical_notes/example_tech/python_json_to_df/">JSON to Dataframes with Pandas</a>
       </li>
       
@@ -1052,6 +1056,7 @@ In Python, three main ones are lists, sets and dictionaries. Here are some vigne
     </li>
     <li><a href="#iterating-through-dictionaries">Iterating through Dictionaries</a></li>
     <li><a href="#updating-dictionaries">Updating Dictionaries</a></li>
+    <li><a href="#using-defaultdict">Using defaultdict</a></li>
   </ul>
 </nav>
 
@@ -1144,6 +1149,29 @@ for drink in drink_purchased:
 # see that drinks_in_storage added 'orange':12 to the dictionary
 print(drinks_in_storage) 
 </code></pre>
+<h2 id="using-defaultdict">Using defaultdict</h2>
+<pre><code class="language-{python}"># -------------------------- without defaultdict
+drink_purchased = [('grape', 3), ('black cherry', 1), ('cola', 5), ('orange', 12)]
+
+# checking if a key is present before updating value
+for drink in drink_purchased:
+    if drinks_in_storage.get(drink[0]):
+        drinks_in_storage[drink[0]] += drink[1]
+    else:
+        drinks_in_storage[drink[0]] = drink[1]
+        
+        
+# -------------------------- with defaultdict
+drinks_in_storage = defaultdict(int, drinks_in_storage)
+
+drink_purchased = [['grape', 3], ['black cherry', 1], ['cola', 5], ['orange', 12]]
+
+# cut out the 'else'
+for drink in drink_purchased:
+        drinks_in_storage[drink[0]] += drink[1]
+
+
+</code></pre>
 
           </div>
 
@@ -1160,7 +1188,7 @@ print(drinks_in_storage)
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_api_connection/" rel="prev">Establishing an API connection with the requests library</a>
+    <a href="/technical_notes/example_tech/python_joining_sets/" rel="prev">Ways to Join Sets</a>
   </div>
   
 </div>

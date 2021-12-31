@@ -104,3 +104,29 @@ for drink in drink_purchased:
 # see that drinks_in_storage added 'orange':12 to the dictionary
 print(drinks_in_storage) 
 ```
+
+## Using defaultdict
+
+```{python}
+# -------------------------- without defaultdict
+drink_purchased = [('grape', 3), ('black cherry', 1), ('cola', 5), ('orange', 12)]
+
+# checking if a key is present before updating value
+for drink in drink_purchased:
+    if drinks_in_storage.get(drink[0]):
+        drinks_in_storage[drink[0]] += drink[1]
+    else:
+        drinks_in_storage[drink[0]] = drink[1]
+        
+        
+# -------------------------- with defaultdict
+drinks_in_storage = defaultdict(int, drinks_in_storage)
+
+drink_purchased = [['grape', 3], ['black cherry', 1], ['cola', 5], ['orange', 12]]
+
+# cut out the 'else'
+for drink in drink_purchased:
+        drinks_in_storage[drink[0]] += drink[1]
+
+
+```
