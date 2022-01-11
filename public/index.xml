@@ -1292,6 +1292,148 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Manually insert data to database</title>
+      <link>/technical_notes/example_tech/postgresql_insert_csv_to_db/</link>
+      <pubDate>Tue, 11 Jan 2022 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/postgresql_insert_csv_to_db/</guid>
+      <description>&lt;h2 id=&#34;delete-a-table&#34;&gt;Delete a table&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: If you have a CSV file, you can manually load it into PostgreSQL through the pgAdmin client. This may require creating the data values in Excel first.&lt;/p&gt;
+&lt;p&gt;First, you&amp;rsquo;d have to create a table with the right columns in pgAdmin before inserting data in.&lt;/p&gt;
+&lt;p&gt;To create in Excel, you&amp;rsquo;d need a function to copy the values from the dataframe into a tuple of string values. Data is cut short to keep the example manageable.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: There needs to be a comma between columns below or else it throws an error. This example is for a table with 7 columns; your situation may differ.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# In Excel
+=CONCATENATE(&amp;quot;(&#39;&amp;quot;,B2,&amp;quot;&#39;,&#39;&amp;quot;,C2,&amp;quot;&#39;,&#39;&amp;quot;,D2,&amp;quot;&#39;,&#39;&amp;quot;,E2,&amp;quot;&#39;,&#39;&amp;quot;,F2,&amp;quot;&#39;,&#39;&amp;quot;,G2,&amp;quot;&#39;,&#39;&amp;quot;,H2,&amp;quot;&#39;),&amp;quot;)
+
+
+# sample tuple format
+(&#39;0x7a250d5630b4cf539739df2c5dacb4c659f2488d&#39;,&#39;14897.1883870177&#39;,&#39;0x59c1349bc6f28a427e78ddb6130ec669c2f39b48&#39;,&#39;0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23&#39;,&#39;1620159318&#39;,&#39;Tue, 04 May 2021 20:15:18 GMT&#39;),
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once the data is prepped in Excel, you can manully paste into pgAdmin (note: can be error prone with 20,000+ rows). Data is cut short to keep the example manageable.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;INSERT INTO public.table_to_insert(
+        amount_display, from_address, id, timestamp, to_address)
+        VALUES
+        (&#39;14897.1883870177&#39;,&#39;0x59c1349bc6f28a427e78ddb6130ec669c2f39b48&#39;,&#39;0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23&#39;,&#39;1620159318&#39;,&#39;Tue, 04 May 2021 20:15:18 GMT&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note: this is similar to how it&amp;rsquo;s done using the &lt;code&gt;sqlalchemy&lt;/code&gt; library in python.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Sending Multiple Parameters
+with engine.connect() as conn:
+    conn.execute(
+        text(&amp;quot;INSERT INTO some_table (x, y) VALUES (:x, :y)&amp;quot;),
+        [{&amp;quot;x&amp;quot;: 11, &amp;quot;y&amp;quot;: 12}, {&amp;quot;x&amp;quot;: 13, &amp;quot;y&amp;quot;: 14}]
+    )
+    conn.commit()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;demo&#34;&gt;Demo&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You have to &lt;code&gt;CREATE TABLE&lt;/code&gt; &lt;em&gt;before&lt;/em&gt; you &lt;code&gt;INSERT INTO&lt;/code&gt;. Here&amp;rsquo;s a full example of creating a table in Postgres. The code is truncated to save time.&lt;/p&gt;
+&lt;p&gt;Incidentally, you have to delete the table if you mistakenly created it in Postgres (use SQL commands to &lt;em&gt;Create&lt;/em&gt; the table.)&lt;/p&gt;
+&lt;p&gt;NOTE: &lt;strong&gt;PGAdmin&lt;/strong&gt; is the client, but this should transfer across client.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# delete table (if needed)
+DROP TABLE bankless_snapshot_header_1;
+
+# create table before insert in postgres
+CREATE TABLE IF NOT EXISTS bankless_snapshot_header_1 (
+	id SERIAL,
+	proposal_id VARCHAR(100),
+	title VARCHAR(2000),
+	start_date BIGINT,
+	end_date BIGINT,
+	PRIMARY KEY (proposal_id)
+)
+
+# insert data (copied from csv) to postgres
+INSERT INTO bankless_snapshot_header_1(
+	id, proposal_id, title, start_date, end_date)
+	VALUES
+	(&#39;0&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;,&#39;Approve the Bankless DAO Genesis¬†Proposal?&#39;,&#39;1620154800&#39;,&#39;1620414000&#39;),
+(&#39;1&#39;,&#39;QmbCCAH3WbAFJS4FAUTvpWGmtgbaeMh1zoKgocdt3ZJmdr&#39;,&#39;What charity should CMS Holdings donate 100k towards? &#39;,&#39;1620327600&#39;,&#39;1620673200&#39;),
+(&#39;2&#39;,&#39;QmYvsZ7AU2XyhpBL8g4QRQbLRX6uU3t5CHNdFQbs5r7ypJ&#39;,&#39;Badge Distribution for Second Airdrop&#39;,&#39;1620759600&#39;,&#39;1621018800&#39;),
+(&#39;3&#39;,&#39;QmQX2DQcDTZzCpM6DTVNJutQJwWXtxJDTMpBoFjbnaM9i2&#39;,&#39;Reward Season 0 Active Members &#39;,&#39;1623196800&#39;,&#39;1623456000&#39;),
+(&#39;4&#39;,&#39;QmXrfAHMoRcu5Vy3DsRTfokqLBTEKR6tqKVecLvkgw5NZf&#39;,&#39;Bankless DAO Season 1 &#39;,&#39;1623985200&#39;,&#39;1624590000&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: Each row below &amp;ldquo;VALUES&amp;rdquo; is wrapped in a single parenthesis.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Correct
+INSERT INTO public.coordinape_rounds(
+        id, coord_id, recipient_address, sender_address, recipient_id, sender_id, tokens, circle_id, epoch_id, timestamp)
+        VALUES
+        ()
+        ()
+        ()
+        
+# Incorrect
+INSERT INTO public.coordinape_rounds(
+        id, coord_id, recipient_address, sender_address, recipient_id, sender_id, tokens, circle_id, epoch_id, timestamp)
+        VALUES
+        (       # &amp;lt;--- not needed
+        ()
+        ()
+        ()
+        )       # &amp;lt;--- not needed
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;demo-2&#34;&gt;Demo 2&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: For the Snapshot data pipeline, I had to create two pipes - one for proposals and one for votes. This is the process for votes, it&amp;rsquo;s similar, but there are differences:&lt;/p&gt;
+&lt;p&gt;I initially set &lt;code&gt;FOREIGN KEY (proposal_id)&lt;/code&gt;, but got a syntax error, there&amp;rsquo;s a 
+&lt;a href=&#34;https://www.postgresqltutorial.com/postgresql-foreign-key/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;specific way to set up foreign key constraints first&lt;/a&gt; before explicitly define foreign key during &lt;code&gt;CREATE TABLE&lt;/code&gt; events.&lt;/p&gt;
+&lt;p&gt;Also, some rows at non-explicit null values (&#39;&#39;), so I had to manually go line-by-line to set to &lt;code&gt;NULL&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Create Table in Postgresql
+
+CREATE TABLE IF NOT EXISTS stg_bankless_snapshot_1(
+	id SERIAL,
+	vote_id VARCHAR(100),
+	voter VARCHAR(100),
+	created BIGINT,
+	choice REAL,
+	__typename VARCHAR(20),
+	proposal_id VARCHAR(100)
+)
+
+# Insert data
+INSERT INTO stg_bankless_snapshot_1(
+	id, vote_id, voter, created, choice, __typename, proposal_id)
+	VALUES
+(&#39;0&#39;,&#39;QmQFvHkah7w2qAcY4iECn6THDbaypto8JVF5G6YQaneZRV&#39;,&#39;0xD00dF71434Cf40b2CDb65ff73bD9789933adA44A&#39;,&#39;1620413879&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
+(&#39;1&#39;,&#39;QmSS2x2xBRwTigXR5vucVp75FqCP5ns3CLYK3dLgNQonkC&#39;,&#39;0x910176D294AFA2cD017928cA92a0bf5a01152194&#39;,&#39;1620413347&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
+(&#39;2&#39;,&#39;QmSa7QFD3vsV6bhsfSKGW1tUtQyJk3umMTgVkFS1H8fnXJ&#39;,&#39;0x37bf9E28E099335DCec53a8b7FadeFDE6DbF108d&#39;,&#39;1620410370&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;demo-3&#34;&gt;Demo 3&lt;/h2&gt;
+&lt;p&gt;Demonstrating creation of table for a recent project (i.e., Coordinape data).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: Timestamp would ideally be TIMESTAMP, not DECIMAL.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;CREATE TABLE IF NOT EXISTS coordinape_rounds (
+	id BIGINT,
+	coord_id BIGINT,
+	recipient_address VARCHAR(200),
+	sender_address VARCHAR(200),
+	recipient_id BIGINT,
+	sender_id BIGINT,
+	tokens BIGINT,
+	circle_id BIGINT,
+	epoch_id BIGINT,
+	timestamp DECIMAL,
+	PRIMARY KEY (coord_id)
+);
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;demo-4-inserting-into-pre-existing-table&#34;&gt;Demo 4 Inserting into pre-existing table&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: &lt;code&gt;id&lt;/code&gt; values starting at 30. Existing table has id = 29 as last one.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;INSERT INTO bankless_wallet_entity_2(
+	id, human_readable, entity_type, wallet_address)
+	VALUES
+	(&#39;30&#39;,&#39;Education Guild Multisig&#39;, &#39;Guild Multisig&#39;, &#39;0xSAMPLEADDRESS&#39;),
+	(&#39;31&#39;, &#39;DevOps Infrastructure Multisig&#39;, &#39;Project Multisig&#39;, &#39;0xSAMPLEADDRESS&#39;),
+	(&#39;32&#39;, &#39;Balancer Multisig&#39;, &#39;Project Multisig&#39;, &#39;0xSAMPLEADDRESS&#39;),
+	(&#39;33&#39;, &#39;Balancer Liquidity Mining Program Multisig&#39;, &#39;Project Multisig&#39;, &#39;0xSAMPLEADDRESS&#39;),
+	(&#39;34&#39;, &#39;International Media Node Multisig&#39;, &#39;Project Multisig&#39;, &#39;0xSAMPLEADDRESS&#39;),
+	(&#39;35&#39;, &#39;Book Club Multisig&#39;, &#39;Project Multisig&#39;, &#39;0xSAMPLEADDRESS&#39;),
+	(&#39;36&#39;, &#39;Podcast Hatchery Multisig&#39;, &#39;Project Multisig&#39;, &#39;0xSAMPLEADDRESS&#39;),
+	(&#39;37&#39;, &#39;Flipper Zone Multisig&#39;, &#39;Project Multisig&#39;, &#39;0xSAMPLEADDRESS&#39;);
+	
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on Data and DAOs 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Writing dataframe to postgresql database</title>
       <link>/technical_notes/example_tech/postgresql_sqlalchemy_upload_df/</link>
       <pubDate>Sat, 25 Dec 2021 00:00:00 +0100</pubDate>
@@ -2489,133 +2631,6 @@ with db.connect() as conn:
         max_id = row.max_id
         print(&amp;quot;new max_tx_timestamp: &amp;quot;, max_tx_timestamp)
         print(&amp;quot;new max_id: &amp;quot;, max_id)
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For more content on Data and DAOs 
-&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Manually insert data to database</title>
-      <link>/technical_notes/example_tech/postgresql_insert_csv_to_db/</link>
-      <pubDate>Sun, 07 Nov 2021 00:00:00 +0100</pubDate>
-      <guid>/technical_notes/example_tech/postgresql_insert_csv_to_db/</guid>
-      <description>&lt;h2 id=&#34;delete-a-table&#34;&gt;Delete a table&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: If you have a CSV file, you can manually load it into PostgreSQL through the pgAdmin client. This may require creating the data values in Excel first.&lt;/p&gt;
-&lt;p&gt;First, you&amp;rsquo;d have to create a table with the right columns in pgAdmin before inserting data in.&lt;/p&gt;
-&lt;p&gt;To create in Excel, you&amp;rsquo;d need a function to copy the values from the dataframe into a tuple of string values. Data is cut short to keep the example manageable.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: There needs to be a comma between columns below or else it throws an error. This example is for a table with 7 columns; your situation may differ.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# In Excel
-=CONCATENATE(&amp;quot;(&#39;&amp;quot;,B2,&amp;quot;&#39;,&#39;&amp;quot;,C2,&amp;quot;&#39;,&#39;&amp;quot;,D2,&amp;quot;&#39;,&#39;&amp;quot;,E2,&amp;quot;&#39;,&#39;&amp;quot;,F2,&amp;quot;&#39;,&#39;&amp;quot;,G2,&amp;quot;&#39;,&#39;&amp;quot;,H2,&amp;quot;&#39;),&amp;quot;)
-
-
-# sample tuple format
-(&#39;0x7a250d5630b4cf539739df2c5dacb4c659f2488d&#39;,&#39;14897.1883870177&#39;,&#39;0x59c1349bc6f28a427e78ddb6130ec669c2f39b48&#39;,&#39;0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23&#39;,&#39;1620159318&#39;,&#39;Tue, 04 May 2021 20:15:18 GMT&#39;),
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Once the data is prepped in Excel, you can manully paste into pgAdmin (note: can be error prone with 20,000+ rows). Data is cut short to keep the example manageable.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;INSERT INTO public.table_to_insert(
-        amount_display, from_address, id, timestamp, to_address)
-        VALUES
-        (&#39;14897.1883870177&#39;,&#39;0x59c1349bc6f28a427e78ddb6130ec669c2f39b48&#39;,&#39;0x0f433138b2a8f2997ef387ffcebec7cd204ab2053c43f8d4a6efaa74eddc0e0c-23&#39;,&#39;1620159318&#39;,&#39;Tue, 04 May 2021 20:15:18 GMT&#39;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Note: this is similar to how it&amp;rsquo;s done using the &lt;code&gt;sqlalchemy&lt;/code&gt; library in python.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Sending Multiple Parameters
-with engine.connect() as conn:
-    conn.execute(
-        text(&amp;quot;INSERT INTO some_table (x, y) VALUES (:x, :y)&amp;quot;),
-        [{&amp;quot;x&amp;quot;: 11, &amp;quot;y&amp;quot;: 12}, {&amp;quot;x&amp;quot;: 13, &amp;quot;y&amp;quot;: 14}]
-    )
-    conn.commit()
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;demo&#34;&gt;Demo&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You have to &lt;code&gt;CREATE TABLE&lt;/code&gt; &lt;em&gt;before&lt;/em&gt; you &lt;code&gt;INSERT INTO&lt;/code&gt;. Here&amp;rsquo;s a full example of creating a table in Postgres. The code is truncated to save time.&lt;/p&gt;
-&lt;p&gt;Incidentally, you have to delete the table if you mistakenly created it in Postgres (use SQL commands to &lt;em&gt;Create&lt;/em&gt; the table.)&lt;/p&gt;
-&lt;p&gt;NOTE: &lt;strong&gt;PGAdmin&lt;/strong&gt; is the client, but this should transfer across client.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# delete table (if needed)
-DROP TABLE bankless_snapshot_header_1;
-
-# create table before insert in postgres
-CREATE TABLE IF NOT EXISTS bankless_snapshot_header_1 (
-	id SERIAL,
-	proposal_id VARCHAR(100),
-	title VARCHAR(2000),
-	start_date BIGINT,
-	end_date BIGINT,
-	PRIMARY KEY (proposal_id)
-)
-
-# insert data (copied from csv) to postgres
-INSERT INTO bankless_snapshot_header_1(
-	id, proposal_id, title, start_date, end_date)
-	VALUES
-	(&#39;0&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;,&#39;Approve the Bankless DAO Genesis¬†Proposal?&#39;,&#39;1620154800&#39;,&#39;1620414000&#39;),
-(&#39;1&#39;,&#39;QmbCCAH3WbAFJS4FAUTvpWGmtgbaeMh1zoKgocdt3ZJmdr&#39;,&#39;What charity should CMS Holdings donate 100k towards? &#39;,&#39;1620327600&#39;,&#39;1620673200&#39;),
-(&#39;2&#39;,&#39;QmYvsZ7AU2XyhpBL8g4QRQbLRX6uU3t5CHNdFQbs5r7ypJ&#39;,&#39;Badge Distribution for Second Airdrop&#39;,&#39;1620759600&#39;,&#39;1621018800&#39;),
-(&#39;3&#39;,&#39;QmQX2DQcDTZzCpM6DTVNJutQJwWXtxJDTMpBoFjbnaM9i2&#39;,&#39;Reward Season 0 Active Members &#39;,&#39;1623196800&#39;,&#39;1623456000&#39;),
-(&#39;4&#39;,&#39;QmXrfAHMoRcu5Vy3DsRTfokqLBTEKR6tqKVecLvkgw5NZf&#39;,&#39;Bankless DAO Season 1 &#39;,&#39;1623985200&#39;,&#39;1624590000&#39;);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: Each row below &amp;ldquo;VALUES&amp;rdquo; is wrapped in a single parenthesis.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Correct
-INSERT INTO public.coordinape_rounds(
-        id, coord_id, recipient_address, sender_address, recipient_id, sender_id, tokens, circle_id, epoch_id, timestamp)
-        VALUES
-        ()
-        ()
-        ()
-        
-# Incorrect
-INSERT INTO public.coordinape_rounds(
-        id, coord_id, recipient_address, sender_address, recipient_id, sender_id, tokens, circle_id, epoch_id, timestamp)
-        VALUES
-        (       # &amp;lt;--- not needed
-        ()
-        ()
-        ()
-        )       # &amp;lt;--- not needed
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;demo-2&#34;&gt;Demo 2&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: For the Snapshot data pipeline, I had to create two pipes - one for proposals and one for votes. This is the process for votes, it&amp;rsquo;s similar, but there are differences:&lt;/p&gt;
-&lt;p&gt;I initially set &lt;code&gt;FOREIGN KEY (proposal_id)&lt;/code&gt;, but got a syntax error, there&amp;rsquo;s a 
-&lt;a href=&#34;https://www.postgresqltutorial.com/postgresql-foreign-key/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;specific way to set up foreign key constraints first&lt;/a&gt; before explicitly define foreign key during &lt;code&gt;CREATE TABLE&lt;/code&gt; events.&lt;/p&gt;
-&lt;p&gt;Also, some rows at non-explicit null values (&#39;&#39;), so I had to manually go line-by-line to set to &lt;code&gt;NULL&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Create Table in Postgresql
-
-CREATE TABLE IF NOT EXISTS stg_bankless_snapshot_1(
-	id SERIAL,
-	vote_id VARCHAR(100),
-	voter VARCHAR(100),
-	created BIGINT,
-	choice REAL,
-	__typename VARCHAR(20),
-	proposal_id VARCHAR(100)
-)
-
-# Insert data
-INSERT INTO stg_bankless_snapshot_1(
-	id, vote_id, voter, created, choice, __typename, proposal_id)
-	VALUES
-(&#39;0&#39;,&#39;QmQFvHkah7w2qAcY4iECn6THDbaypto8JVF5G6YQaneZRV&#39;,&#39;0xD00dF71434Cf40b2CDb65ff73bD9789933adA44A&#39;,&#39;1620413879&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
-(&#39;1&#39;,&#39;QmSS2x2xBRwTigXR5vucVp75FqCP5ns3CLYK3dLgNQonkC&#39;,&#39;0x910176D294AFA2cD017928cA92a0bf5a01152194&#39;,&#39;1620413347&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
-(&#39;2&#39;,&#39;QmSa7QFD3vsV6bhsfSKGW1tUtQyJk3umMTgVkFS1H8fnXJ&#39;,&#39;0x37bf9E28E099335DCec53a8b7FadeFDE6DbF108d&#39;,&#39;1620410370&#39;,&#39;1&#39;,&#39;Vote&#39;,&#39;QmdoixPMMT76vSt6ewkE87JZJywS1piYsGC3nJJpcrPXKS&#39;),
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;demo-3&#34;&gt;Demo 3&lt;/h2&gt;
-&lt;p&gt;Demonstrating creation of table for a recent project (i.e., Coordinape data).&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: Timestamp would ideally be TIMESTAMP, not DECIMAL.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;CREATE TABLE IF NOT EXISTS coordinape_rounds (
-	id BIGINT,
-	coord_id BIGINT,
-	recipient_address VARCHAR(200),
-	sender_address VARCHAR(200),
-	recipient_id BIGINT,
-	sender_id BIGINT,
-	tokens BIGINT,
-	circle_id BIGINT,
-	epoch_id BIGINT,
-	timestamp DECIMAL,
-	PRIMARY KEY (coord_id)
-);
 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For more content on Data and DAOs 

@@ -1,5 +1,5 @@
 ---
-date: "2021-11-07T00:00:00+01:00"
+date: "2022-01-11T00:00:00+01:00"
 draft: false
 linktitle: Insert data to database
 menu:
@@ -159,6 +159,25 @@ CREATE TABLE IF NOT EXISTS coordinape_rounds (
 	PRIMARY KEY (coord_id)
 );
 
+```
+
+## Demo 4 Inserting into pre-existing table
+
+**Note**: `id` values starting at 30. Existing table has id = 29 as last one. 
+
+```{python}
+INSERT INTO bankless_wallet_entity_2(
+	id, human_readable, entity_type, wallet_address)
+	VALUES
+	('30','Education Guild Multisig', 'Guild Multisig', '0xSAMPLEADDRESS'),
+	('31', 'DevOps Infrastructure Multisig', 'Project Multisig', '0xSAMPLEADDRESS'),
+	('32', 'Balancer Multisig', 'Project Multisig', '0xSAMPLEADDRESS'),
+	('33', 'Balancer Liquidity Mining Program Multisig', 'Project Multisig', '0xSAMPLEADDRESS'),
+	('34', 'International Media Node Multisig', 'Project Multisig', '0xSAMPLEADDRESS'),
+	('35', 'Book Club Multisig', 'Project Multisig', '0xSAMPLEADDRESS'),
+	('36', 'Podcast Hatchery Multisig', 'Project Multisig', '0xSAMPLEADDRESS'),
+	('37', 'Flipper Zone Multisig', 'Project Multisig', '0xSAMPLEADDRESS');
+	
 ```
 
 For more content on Data and DAOs [find me on Twitter](https://twitter.com/paulapivat).
