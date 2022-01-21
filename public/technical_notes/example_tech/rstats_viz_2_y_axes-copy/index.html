@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Understanding Git Stash vs Git Commit Context: You&rsquo;re on a feature branch and you want to switch to another branch, but there could be conflicts between a file that was edited on a current branch and the destination branch you&rsquo;re switching into.">
+  <meta name="description" content="Creating 2 Y-Axes in a Plot Situation: You want to create two y-axes. The left y-axis measures an amount, while the right y-axis converts the amount to a percentage.
+Context: This may be useful when you have a bar chart depicting relative amounts (e.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/git_stash/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_viz_2_y_axes-copy/">
 
   
 
@@ -217,7 +218,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/git_stash/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_viz_2_y_axes-copy/">
 
   
   
@@ -236,15 +237,16 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/git_stash/">
-  <meta property="og:title" content="Git Stash vs Git Commit | Paul Apivat">
-  <meta property="og:description" content="Understanding Git Stash vs Git Commit Context: You&rsquo;re on a feature branch and you want to switch to another branch, but there could be conflicts between a file that was edited on a current branch and the destination branch you&rsquo;re switching into."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_viz_2_y_axes-copy/">
+  <meta property="og:title" content="Two Y-Axes | Paul Apivat">
+  <meta property="og:description" content="Creating 2 Y-Axes in a Plot Situation: You want to create two y-axes. The left y-axis measures an amount, while the right y-axis converts the amount to a percentage.
+Context: This may be useful when you have a bar chart depicting relative amounts (e."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-12-23T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-10-08T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-12-23T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-10-08T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +265,7 @@
 
 
 
-  <title>Git Stash vs Git Commit | Paul Apivat</title>
+  <title>Two Y-Axes | Paul Apivat</title>
 
 </head>
 
@@ -613,15 +615,11 @@
   </div>
   
   <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_viz_2_y_axes/">Data Viz Tips</a>
+    <a class="docs-toc-link" href="/technical_notes/example_tech/rstats_viz_2_y_axes-copy/">Data Viz Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li >
-        <a href="/technical_notes/example_tech/rstats_viz_2_y_axes/">2 y-axes</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/rstats_viz_comma_geom_text/">Add comma separator in geom_text label</a>
+      <li class="active">
+        <a href="/technical_notes/example_tech/rstats_viz_2_y_axes-copy/">2 y-axes</a>
       </li>
       
       <li >
@@ -707,7 +705,7 @@
         <a href="/technical_notes/example_tech/git_commit_message/">Git Commit Message</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/git_stash/">Git Stash</a>
       </li>
       
@@ -988,10 +986,6 @@
       </li>
       
       <li >
-        <a href="/technical_notes/example_tech/rstats_tip_sum_var_group/">Sum variable by group</a>
-      </li>
-      
-      <li >
         <a href="/technical_notes/example_tech/rstats_tip3/">Tidy Data - pivot_wider</a>
       </li>
       
@@ -1055,7 +1049,11 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#understanding-git-stash-vs-git-commit">Understanding Git Stash vs Git Commit</a></li>
+    <li><a href="#creating-2-y-axes-in-a-plot">Creating 2 Y-Axes in a Plot</a>
+      <ul>
+        <li><a href="#converting-second-y-axis-to-another-number-aside-from-percentage-">Converting Second Y-axis to another number aside from Percentage (%)</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -1068,24 +1066,76 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Git Stash vs Git Commit</h1>
+          <h1>Two Y-Axes</h1>
 
           <div class="article-style">
-            <h2 id="understanding-git-stash-vs-git-commit">Understanding Git Stash vs Git Commit</h2>
-<p><strong>Context</strong>: You&rsquo;re on a feature branch and you want to switch to another branch, but there could be conflicts between a file that was edited on a current branch and the destination branch you&rsquo;re switching <em>into</em>.</p>
-<p>This only happens because git tries to preserve your unstashed/unstaged changes across branches.</p>
-<p>Your choices are to <code>commit</code> or <code>stash</code>.</p>
-<p>In the future, you can run:</p>
-<p><code>git restore name-of-conflicting-fie</code></p>
-<p>and if its a file that <em>should be tracked</em>, you can run:</p>
-<p><code>git commit</code> (but no need to run <code>git push</code>)</p>
-<p>OR</p>
-<p><code>git stash</code> to save the changes on name-of-conflicting-fie for future retrieval. When you need to apply the changes, you can run:</p>
-<p><code>git stash apply</code></p>
-<p><strong>Background</strong>:</p>
-<p><code>git commit</code> adds a commit to your local environment. Local is just for you - no one else can see that you&rsquo;ve added a commit. They can only see that you&rsquo;ve added a commit once you push the commit to a repo, which is what happened when you ran:
-<code>git push origin branch</code>.</p>
-<p><code>git push</code> takes your local commit and adds the new commit to the remote repo referenced by origin and the branch specified in <code>branch</code>.</p>
+            <h2 id="creating-2-y-axes-in-a-plot">Creating 2 Y-Axes in a Plot</h2>
+<p><strong>Situation</strong>: You want to create <strong>two y-axes</strong>. The left y-axis measures an amount, while the <em>right</em> y-axis converts the amount to a percentage.</p>
+<p><strong>Context</strong>: This may be useful when you have a bar chart depicting relative amounts (e.g., membership numbers) and you require <em>another</em> y-axis (right side) to map <em>another</em> amount as a percentage of the former (e.g., % of members who successfully activated on their first day).</p>
+<p>This is exampe is taken from the 
+<a href="https://docs.google.com/presentation/d/18DGuSTsLgU2C2iNNcvoo2-27uL2Tcb1jfMaMGa9Zeyc/edit#slide=id.gf1c26dd130_1_11" target="_blank" rel="noopener">Bankless DAO Community Growth metrics</a> where we looked at:</p>
+<blockquote>
+<p>How many new members successfully activate on their first day?</p>
+</blockquote>
+<p>First, unlike typical use cases, we are <strong>not</strong> using <code>pivot_longer</code> in this example, but instead keep the data in a <em>wide</em> format (<code>pivot_wider</code>). We are visualizing 3 separate variables (columns) here, including: <code>new_members</code>, <code>pct_communicated</code> and <code>pct_opened_channels</code>.</p>
+<p>In addition, we&rsquo;ll have a hard-coded fourth line that represents the industry &ldquo;benchmark&rdquo;.</p>
+<p><em>Because</em> we are not using a <code>pivot_longer</code> function, we will have to <em>manually</em> create our own legend. This will be explained in the commented code below:</p>
+<pre><code class="language-{python}">first_activation %&gt;%
+    rename(
+        time = &quot;interval_start_timestamp&quot;,
+        new = &quot;new_members&quot;,
+        talked = &quot;pct_communicated&quot;,
+        visited = &quot;pct_opened_channels&quot;
+    ) %&gt;%
+    ggplot(aes(x = time)) +
+    # note: 3 separate charts: one bar and two lines
+    geom_bar(aes(y = new, color = &quot;New members&quot;), stat = &quot;identity&quot;, fill = &quot;black&quot;) +
+    # The left y-axis goes from 0-1500, 'talked' and 'visited' is multiplied by 1500/100 = 15
+    # color is set to a string so it can be repurposed in the manually created legend
+    geom_line(aes(y = talked*15, color = &quot;% talked (voice or text)&quot;), size = 1.5) +
+    geom_line(aes(y = visited*15, color = &quot;% visited more than 3 channels&quot;), size = 1.5) +
+    geom_line(y = 480, color = &quot;orange&quot;, size = 0.2) +
+    # scale_y_continuous(sec.axis) is the key to having two y-axes
+    # The left y-axis goes from 0-1500, so sec.axis has ~./1500*100
+    # name indicates both left and right y-axis label
+    scale_y_continuous(
+        name = &quot;New Members&quot;,
+        sec.axis = sec_axis(trans = ~./1500*100, name = &quot;% Activated&quot;)
+    ) +
+    # We have to manually set color because we didn't actually set color in geom_line above
+    scale_color_manual(values = c(&quot;white&quot;, &quot;red&quot;, &quot;black&quot;)) +
+    # setting the color = &quot;Legend&quot; allows us to indicate on the chart where legend is
+    labs(
+        title = &quot;How many new members successfully activate on their first day?&quot;,
+        x = &quot;&quot;,
+        color = &quot;Legend&quot;
+    )
+
+</code></pre>
+<h3 id="converting-second-y-axis-to-another-number-aside-from-percentage-">Converting Second Y-axis to another number aside from Percentage (%)</h3>
+<p>This is similar to the example above, except the math is adjusted so that if you wanted to convert <strong>two scales</strong> (and neither is a %). This is appropriate for when visualizing both a <em>total amount</em> (Messages sent) and <em>average amount</em> (Messages per communicator).</p>
+<pre><code class="language-{python}">
+msg_avg %&gt;%
+    rename(
+        time = &quot;interval_start_timestamp&quot;,
+        per = &quot;messages_per_communicator&quot;
+    ) %&gt;%
+    ggplot(aes(x = time)) +
+    geom_bar(aes(y = messages, color = &quot;Messages sent&quot;), stat = &quot;identity&quot;, fill = &quot;black&quot;) +
+    # conversion between two y-axis (similar to % conversion)
+    # Here we convert 6000 to 12
+    geom_line(aes(y = per*6000/12, color = &quot;Messages per communicator&quot;), size = 1.5) +
+    geom_line(y = 5000, color = &quot;orange&quot;, size = 0.2) +
+    scale_y_continuous(
+        name = &quot;Messages sent&quot;,
+        sec.axis = sec_axis(trans = ~./6000*12, name = &quot;Message per ommunicator&quot;)
+    ) +
+    scale_color_manual(values = c(&quot;red&quot;, &quot;black&quot;))
+
+
+</code></pre>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -1102,14 +1152,14 @@
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/python_faker/" rel="next">Using Faker to simulate fake data with Python</a>
+    <a href="/technical_notes/example_tech/rstats_tip_sum_var_group/" rel="next">Continuous to Discrete Plotting</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_poetry/" rel="prev">Setting up Poetry for Dependency Management</a>
+    <a href="/technical_notes/example_tech/rstats_viz_2_y_axes/" rel="prev">Two Y-Axes</a>
   </div>
   
 </div>
@@ -1119,7 +1169,7 @@
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Dec 23, 2020</p>
+          <p>Last updated on Oct 8, 2021</p>
 
           
 
@@ -1131,7 +1181,7 @@
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/git_stash.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_viz_2_y_axes%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

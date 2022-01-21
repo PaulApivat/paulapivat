@@ -1292,6 +1292,44 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Add comma separator in geom_text label</title>
+      <link>/technical_notes/example_tech/rstats_viz_comma_geom_text/</link>
+      <pubDate>Fri, 21 Jan 2022 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_viz_comma_geom_text/</guid>
+      <description>&lt;h2 id=&#34;add-comma-separator-in-geom_text-label&#34;&gt;Add comma separator in geom_text label&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to create &lt;strong&gt;two y-axes&lt;/strong&gt;. The left y-axis measures an amount, while the &lt;em&gt;right&lt;/em&gt; y-axis converts the amount to a percentage.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;
+df %&amp;gt;%
+   ggplot(aes(x = var1, y = var2)) +
+   geom_col() +
+   geom_text(aes(label = scales::comma(Count_variable)), size = 15)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data, tech and web3 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Sum variable by group</title>
+      <link>/technical_notes/example_tech/rstats_tip_sum_var_group/</link>
+      <pubDate>Fri, 21 Jan 2022 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/rstats_tip_sum_var_group/</guid>
+      <description>&lt;h2 id=&#34;sum-variable-by-group&#34;&gt;Sum variable by group&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to sum by group. Assuming the dataframe has at least two columns, &lt;code&gt;category&lt;/code&gt; and &lt;code&gt;value&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Check out 
+&lt;a href=&#34;https://stackoverflow.com/questions/1660124/how-to-sum-a-variable-by-group&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;original answer&lt;/a&gt; on stack overflow.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;library(dplyr)
+
+df %&amp;gt;%
+   group_by(category) %&amp;gt;%
+   summarise(summed_value = sum(value))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data, tech and web3 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Manually insert data to database</title>
       <link>/technical_notes/example_tech/postgresql_insert_csv_to_db/</link>
       <pubDate>Tue, 11 Jan 2022 00:00:00 +0100</pubDate>

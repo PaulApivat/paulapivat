@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Understanding Git Stash vs Git Commit Context: You&rsquo;re on a feature branch and you want to switch to another branch, but there could be conflicts between a file that was edited on a current branch and the destination branch you&rsquo;re switching into.">
+  <meta name="description" content="Continuous to Discrete Plotting Situation: When plotting integers on the x-axis, it shows up in a ggplot like 2.5, 5, 7.5 and we want each bar to be plotted discretely (e.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/git_stash/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_tip_sum_var_group-copy/">
 
   
 
@@ -217,7 +217,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/git_stash/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_tip_sum_var_group-copy/">
 
   
   
@@ -236,15 +236,15 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/git_stash/">
-  <meta property="og:title" content="Git Stash vs Git Commit | Paul Apivat">
-  <meta property="og:description" content="Understanding Git Stash vs Git Commit Context: You&rsquo;re on a feature branch and you want to switch to another branch, but there could be conflicts between a file that was edited on a current branch and the destination branch you&rsquo;re switching into."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_tip_sum_var_group-copy/">
+  <meta property="og:title" content="Continuous to Discrete Plotting | Paul Apivat">
+  <meta property="og:description" content="Continuous to Discrete Plotting Situation: When plotting integers on the x-axis, it shows up in a ggplot like 2.5, 5, 7.5 and we want each bar to be plotted discretely (e."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-12-23T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-10-09T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-12-23T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-10-09T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +263,7 @@
 
 
 
-  <title>Git Stash vs Git Commit | Paul Apivat</title>
+  <title>Continuous to Discrete Plotting | Paul Apivat</title>
 
 </head>
 
@@ -621,10 +621,6 @@
       </li>
       
       <li >
-        <a href="/technical_notes/example_tech/rstats_viz_comma_geom_text/">Add comma separator in geom_text label</a>
-      </li>
-      
-      <li >
         <a href="/technical_notes/example_tech/rstats_viz_circular_dendrogram/">Circular Dendrogram</a>
       </li>
       
@@ -707,7 +703,7 @@
         <a href="/technical_notes/example_tech/git_commit_message/">Git Commit Message</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/git_stash/">Git Stash</a>
       </li>
       
@@ -988,10 +984,6 @@
       </li>
       
       <li >
-        <a href="/technical_notes/example_tech/rstats_tip_sum_var_group/">Sum variable by group</a>
-      </li>
-      
-      <li >
         <a href="/technical_notes/example_tech/rstats_tip3/">Tidy Data - pivot_wider</a>
       </li>
       
@@ -1055,7 +1047,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#understanding-git-stash-vs-git-commit">Understanding Git Stash vs Git Commit</a></li>
+    <li><a href="#continuous-to-discrete-plotting">Continuous to Discrete Plotting</a></li>
   </ul>
 </nav>
 
@@ -1068,24 +1060,22 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Git Stash vs Git Commit</h1>
+          <h1>Continuous to Discrete Plotting</h1>
 
           <div class="article-style">
-            <h2 id="understanding-git-stash-vs-git-commit">Understanding Git Stash vs Git Commit</h2>
-<p><strong>Context</strong>: You&rsquo;re on a feature branch and you want to switch to another branch, but there could be conflicts between a file that was edited on a current branch and the destination branch you&rsquo;re switching <em>into</em>.</p>
-<p>This only happens because git tries to preserve your unstashed/unstaged changes across branches.</p>
-<p>Your choices are to <code>commit</code> or <code>stash</code>.</p>
-<p>In the future, you can run:</p>
-<p><code>git restore name-of-conflicting-fie</code></p>
-<p>and if its a file that <em>should be tracked</em>, you can run:</p>
-<p><code>git commit</code> (but no need to run <code>git push</code>)</p>
-<p>OR</p>
-<p><code>git stash</code> to save the changes on name-of-conflicting-fie for future retrieval. When you need to apply the changes, you can run:</p>
-<p><code>git stash apply</code></p>
-<p><strong>Background</strong>:</p>
-<p><code>git commit</code> adds a commit to your local environment. Local is just for you - no one else can see that you&rsquo;ve added a commit. They can only see that you&rsquo;ve added a commit once you push the commit to a repo, which is what happened when you ran:
-<code>git push origin branch</code>.</p>
-<p><code>git push</code> takes your local commit and adds the new commit to the remote repo referenced by origin and the branch specified in <code>branch</code>.</p>
+            <h2 id="continuous-to-discrete-plotting">Continuous to Discrete Plotting</h2>
+<p><strong>Situation</strong>: When plotting integers on the x-axis, it shows up in a ggplot like 2.5, 5, 7.5 and we want each bar to be plotted discretely (e.g. 1,2,3,4,5&hellip;)</p>
+<pre><code class="language-{python}">
+gov_partcipation %&gt;%
+    ggplot(aes(x = n, y = nn)) +
+    geom_col(aes(fill = as.factor(n))) +
+    geom_text(aes(label = nn), vjust = -0.5, color = &quot;white&quot;) +
+    # this sets the sequence from 1 to 10 with a break of 1
+    # turns a continuous sequence (2.5) into a discrete one (1,2,3...)
+    scale_x_continuous(breaks=seq(1,10, 1))
+</code></pre>
+<p>For more content on data science, R, and Python 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -1102,14 +1092,14 @@
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/python_faker/" rel="next">Using Faker to simulate fake data with Python</a>
+    <a href="/technical_notes/example_tech/rstats_tip_continuous_to_discrete_plot/" rel="next">Continuous to Discrete Plotting</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_poetry/" rel="prev">Setting up Poetry for Dependency Management</a>
+    <a href="/technical_notes/example_tech/rstats_tip_sum_var_group/" rel="prev">Continuous to Discrete Plotting</a>
   </div>
   
 </div>
@@ -1119,7 +1109,7 @@
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Dec 23, 2020</p>
+          <p>Last updated on Oct 9, 2021</p>
 
           
 
@@ -1131,7 +1121,7 @@
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/git_stash.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_tip_sum_var_group%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

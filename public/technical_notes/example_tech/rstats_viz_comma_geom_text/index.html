@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Understanding Git Stash vs Git Commit Context: You&rsquo;re on a feature branch and you want to switch to another branch, but there could be conflicts between a file that was edited on a current branch and the destination branch you&rsquo;re switching into.">
+  <meta name="description" content="Add comma separator in geom_text label Situation: You want to create two y-axes. The left y-axis measures an amount, while the right y-axis converts the amount to a percentage.
+df %&gt;% ggplot(aes(x = var1, y = var2)) &#43; geom_col() &#43; geom_text(aes(label = scales::comma(Count_variable)), size = 15)  For more content on data, tech and web3 find me on Twitter.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/git_stash/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/rstats_viz_comma_geom_text/">
 
   
 
@@ -217,7 +218,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/git_stash/">
+  <link rel="canonical" href="/technical_notes/example_tech/rstats_viz_comma_geom_text/">
 
   
   
@@ -236,15 +237,16 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/git_stash/">
-  <meta property="og:title" content="Git Stash vs Git Commit | Paul Apivat">
-  <meta property="og:description" content="Understanding Git Stash vs Git Commit Context: You&rsquo;re on a feature branch and you want to switch to another branch, but there could be conflicts between a file that was edited on a current branch and the destination branch you&rsquo;re switching into."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/rstats_viz_comma_geom_text/">
+  <meta property="og:title" content="Add comma separator in geom_text label | Paul Apivat">
+  <meta property="og:description" content="Add comma separator in geom_text label Situation: You want to create two y-axes. The left y-axis measures an amount, while the right y-axis converts the amount to a percentage.
+df %&gt;% ggplot(aes(x = var1, y = var2)) &#43; geom_col() &#43; geom_text(aes(label = scales::comma(Count_variable)), size = 15)  For more content on data, tech and web3 find me on Twitter."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-12-23T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2022-01-21T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2020-12-23T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2022-01-21T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +265,7 @@
 
 
 
-  <title>Git Stash vs Git Commit | Paul Apivat</title>
+  <title>Add comma separator in geom_text label | Paul Apivat</title>
 
 </head>
 
@@ -620,7 +622,7 @@
         <a href="/technical_notes/example_tech/rstats_viz_2_y_axes/">2 y-axes</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/rstats_viz_comma_geom_text/">Add comma separator in geom_text label</a>
       </li>
       
@@ -707,7 +709,7 @@
         <a href="/technical_notes/example_tech/git_commit_message/">Git Commit Message</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/git_stash/">Git Stash</a>
       </li>
       
@@ -1055,7 +1057,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#understanding-git-stash-vs-git-commit">Understanding Git Stash vs Git Commit</a></li>
+    <li><a href="#add-comma-separator-in-geom_text-label">Add comma separator in geom_text label</a></li>
   </ul>
 </nav>
 
@@ -1068,24 +1070,19 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Git Stash vs Git Commit</h1>
+          <h1>Add comma separator in geom_text label</h1>
 
           <div class="article-style">
-            <h2 id="understanding-git-stash-vs-git-commit">Understanding Git Stash vs Git Commit</h2>
-<p><strong>Context</strong>: You&rsquo;re on a feature branch and you want to switch to another branch, but there could be conflicts between a file that was edited on a current branch and the destination branch you&rsquo;re switching <em>into</em>.</p>
-<p>This only happens because git tries to preserve your unstashed/unstaged changes across branches.</p>
-<p>Your choices are to <code>commit</code> or <code>stash</code>.</p>
-<p>In the future, you can run:</p>
-<p><code>git restore name-of-conflicting-fie</code></p>
-<p>and if its a file that <em>should be tracked</em>, you can run:</p>
-<p><code>git commit</code> (but no need to run <code>git push</code>)</p>
-<p>OR</p>
-<p><code>git stash</code> to save the changes on name-of-conflicting-fie for future retrieval. When you need to apply the changes, you can run:</p>
-<p><code>git stash apply</code></p>
-<p><strong>Background</strong>:</p>
-<p><code>git commit</code> adds a commit to your local environment. Local is just for you - no one else can see that you&rsquo;ve added a commit. They can only see that you&rsquo;ve added a commit once you push the commit to a repo, which is what happened when you ran:
-<code>git push origin branch</code>.</p>
-<p><code>git push</code> takes your local commit and adds the new commit to the remote repo referenced by origin and the branch specified in <code>branch</code>.</p>
+            <h2 id="add-comma-separator-in-geom_text-label">Add comma separator in geom_text label</h2>
+<p><strong>Situation</strong>: You want to create <strong>two y-axes</strong>. The left y-axis measures an amount, while the <em>right</em> y-axis converts the amount to a percentage.</p>
+<pre><code class="language-{python}">
+df %&gt;%
+   ggplot(aes(x = var1, y = var2)) +
+   geom_col() +
+   geom_text(aes(label = scales::comma(Count_variable)), size = 15)
+</code></pre>
+<p>For more content on data, tech and web3 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
@@ -1102,14 +1099,14 @@
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/python_faker/" rel="next">Using Faker to simulate fake data with Python</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_poetry/" rel="prev">Setting up Poetry for Dependency Management</a>
+    <a href="/technical_notes/example_tech/rstats_tip_sum_var_group/" rel="prev">Sum variable by group</a>
   </div>
   
 </div>
@@ -1119,7 +1116,7 @@
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Dec 23, 2020</p>
+          <p>Last updated on Jan 21, 2022</p>
 
           
 
@@ -1131,7 +1128,7 @@
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/git_stash.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/rstats_viz_comma_geom_text.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
