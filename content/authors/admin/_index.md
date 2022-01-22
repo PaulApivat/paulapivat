@@ -47,6 +47,12 @@ Core contributor at [Bankless DAO](https://www.bankless.community/) ([POAPs](htt
 
 I work primarily in the Analytics and Developer's Guild to support other guilds including Education, Treasury, Marketing, Writing and Operations (see our [Notion](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f)). Here are [forum posts](https://forum.bankless.community/u/paulapivat/activity/topics) sharing data and other ideas with the community. 
 
+**Season 2**
+- [Bankless DAO Growth in Bytes: Season 3 Launch](https://docs.google.com/presentation/d/1CIUPeTDyRga9fOOnpsPjA6pS3nR6oZKHX6aUfRMmXbI/edit?usp=sharing) ||  [Jan 21, 2022, Thread](https://twitter.com/paulapivat/status/1484455204137279490?s=20)
+
+**Pipelines**
+- [Bank Subgraph, Snapshot Proposal, Snapshot Votes](https://github.com/BanklessDAO/analytics/tree/main/graphql/exploratory)
+
 **On-Chain Data**
 
 - [Bankless DAO Membership Categories Dashboard](https://duneanalytics.com/paulapivat/dollarBANK-Members)
@@ -63,7 +69,7 @@ I work primarily in the Analytics and Developer's Guild to support other guilds 
 
 **Off-Chain Data**
 
-- [Bankless DAO Community Growth, Season 2 Launch](https://docs.google.com/presentation/d/18DGuSTsLgU2C2iNNcvoo2-27uL2Tcb1jfMaMGa9Zeyc/edit?usp=sharing)
+- [Bankless DAO Community Growth, Season 2 Launch](https://docs.google.com/presentation/d/18DGuSTsLgU2C2iNNcvoo2-27uL2Tcb1jfMaMGa9Zeyc/edit?usp=sharing) ||  [Oct 8, 2021, Thread](https://twitter.com/paulapivat/status/1446484367736328199?s=20)
 - [DAOs: The New Coordination Frontier (Gitcoin & BanklessDAO)](https://docs.google.com/presentation/d/1fLJvPOvibcCUpJ9ES44_cdoX5Hb7LpDaloGWz5FbUEM/edit#slide=id.gec41538503_0_399)
 - [Bankless DAO Twitter Analytics](https://forum.bankless.community/t/bankless-dao-twitter-analytics-june-2021-edition/1200)
 - [Exploring Discord Data: Bankless DAO Engagement](https://forum.bankless.community/t/exploring-discord-data-bankless-dao-engagement/1100)
