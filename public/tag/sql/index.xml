@@ -5,12 +5,42 @@
     <link>/tag/sql/</link>
       <atom:link href="/tag/sql/index.xml" rel="self" type="application/rss+xml" />
     <description>SQL</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Tue, 11 May 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Fri, 28 Jan 2022 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>SQL</title>
       <link>/tag/sql/</link>
     </image>
+    
+    <item>
+      <title>Using Inspect Element to Grab API Endpoints and Tokens</title>
+      <link>/post/grab_api_inspect_element/</link>
+      <pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate>
+      <guid>/post/grab_api_inspect_element/</guid>
+      <description>&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;When maintaining data pipelines, sometimes API endpoints get changed or authorization tokens expire prompting a need to grab new &lt;strong&gt;API endpoints&lt;/strong&gt; and &lt;strong&gt;bearer tokens&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;This post provide a brief walk-through on how to use &lt;strong&gt;Inspect Element&lt;/strong&gt; on a web browser to grab this data. Which represents a powerful way to access a project&amp;rsquo;s API &lt;em&gt;before&lt;/em&gt; reaching out to the team.&lt;/p&gt;
+&lt;h3 id=&#34;scenario&#34;&gt;Scenario&lt;/h3&gt;
+&lt;p&gt;We have a data pipeline to ingest 
+&lt;a href=&#34;https://coordinape.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Coordinape&lt;/a&gt; data but after two months, the pipeline script returns a &lt;code&gt;Response 401&lt;/code&gt; error, suggesting a connection could not be made. We want a way to explore what&amp;rsquo;s going on.&lt;/p&gt;
+&lt;h4 id=&#34;api-endpoint-with-inspect-element&#34;&gt;API Endpoint with Inspect Element&lt;/h4&gt;
+&lt;p&gt;We go to the Coordinape application and sign-in with our Ethereum wallet. Then, I left click on go to &lt;code&gt;inspect element&lt;/code&gt;, navigating to the &lt;strong&gt;Network&lt;/strong&gt; tab as shown here:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./network_xhr.png&#34; alt=&#34;inspect_element&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Once in the &lt;strong&gt;Network&lt;/strong&gt; tab, select &lt;strong&gt;Fetch/XHR&lt;/strong&gt; (XHR stands for XMLHttpRequest, but XML is phased out for JSON). Then we should see a list of events.&lt;/p&gt;
+&lt;p&gt;The event highlighted in red indicates a &lt;strong&gt;Request URL&lt;/strong&gt; that shows the &lt;em&gt;current&lt;/em&gt; API endpoint (in Header)&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the endpoint: &lt;code&gt;https://api.coordinape.com/api/v2/manifest?circle_id=63&lt;/code&gt; (&lt;strong&gt;note&amp;amp;&lt;/strong&gt;: in the old endpoint, manifest was token-gifts. It looks like the team has consolidated it&amp;rsquo;s API endpoints)&lt;/p&gt;
+&lt;h4 id=&#34;authorization&#34;&gt;Authorization&lt;/h4&gt;
+&lt;p&gt;To grab the authorization, &lt;strong&gt;bearer token&lt;/strong&gt;, scroll down in &lt;strong&gt;Header&lt;/strong&gt; down to &lt;strong&gt;Request Headers&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./network_xhr_1.png&#34; alt=&#34;authorization&#34;&gt;&lt;/p&gt;
+&lt;p&gt;This is the information you&amp;rsquo;d store in the &lt;code&gt;.env&lt;/code&gt; file.&lt;/p&gt;
+&lt;h3 id=&#34;data-structure&#34;&gt;Data Structure&lt;/h3&gt;
+&lt;p&gt;Finally, you can also get a sense for what kind of data will be returned with this new API endpoint by navigating to the &lt;strong&gt;Preview&lt;/strong&gt; tab next to &lt;strong&gt;Headers&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./network_xhr_2.png&#34; alt=&#34;preview&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Here we see circle, circles, myUsers and profile. It looks like we have nested JSON that will need to be flattened.&lt;/p&gt;
+&lt;p&gt;For more use of data to explore DAOs and web3 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Learn Foundational Ethereum Topics with SQL</title>

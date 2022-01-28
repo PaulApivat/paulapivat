@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="data in web3">
+  <meta name="description" content="A brief explainer on grabing API endpoints and bearer tokens for authorization through a web browser">
 
   
-  <link rel="alternate" hreflang="en-us" href="/tag/analytics/">
+  <link rel="alternate" hreflang="en-us" href="/post/grab_api_inspect_element/">
 
   
 
@@ -212,14 +212,12 @@
   
 
   
-  <link rel="alternate" href="/tag/analytics/index.xml" type="application/rss+xml" title="Paul Apivat">
-  
 
   <link rel="manifest" href="/index.webmanifest">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/tag/analytics/">
+  <link rel="canonical" href="/post/grab_api_inspect_element/">
 
   
   
@@ -238,18 +236,63 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/tag/analytics/">
-  <meta property="og:title" content="Analytics | Paul Apivat">
-  <meta property="og:description" content="data in web3"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/post/grab_api_inspect_element/">
+  <meta property="og:title" content="Using Inspect Element to Grab API Endpoints and Tokens | Paul Apivat">
+  <meta property="og:description" content="A brief explainer on grabing API endpoints and bearer tokens for authorization through a web browser"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    <meta property="og:updated_time" content="2022-01-28T00:00:00&#43;00:00">
+    
+      <meta property="article:published_time" content="2022-01-28T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2022-01-28T00:00:00&#43;00:00">
   
 
   
 
 
+    
 
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/grab_api_inspect_element/"
+  },
+  "headline": "Using Inspect Element to Grab API Endpoints and Tokens",
+  
+  "datePublished": "2022-01-28T00:00:00Z",
+  "dateModified": "2022-01-28T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Paul Apivat"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Paul Apivat",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "A brief explainer on grabing API endpoints and bearer tokens for authorization through a web browser"
+}
+</script>
+
+  
 
   
 
@@ -257,10 +300,13 @@
   
 
 
+  
 
 
 
-  <title>Analytics | Paul Apivat</title>
+
+
+  <title>Using Inspect Element to Grab API Endpoints and Tokens | Paul Apivat</title>
 
 </head>
 
@@ -556,81 +602,380 @@
 </nav>
 
 
-  
-
-
-
-
-
-
-
-
-
-
-
+  <article class="article">
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
   
   
+  
+<div class="article-container pt-3">
+  <h1>Using Inspect Element to Grab API Endpoints and Tokens</h1>
+
+  
+  <p class="page-subtitle">Grab API info with inspect element</p>
+  
+
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>Analytics</h1>
+
+
+<div class="article-metadata">
 
   
+  
+  
+  
+  <div>
+    
+
+  
+  <span><a href="/author/paul-apivat/">Paul Apivat</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jan 28, 2022
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 </div>
 
 
 
-<div class="universal-wrapper">
-  
+  <div class="article-container">
 
-  
-  
-    
-    
-    
-    <div>
-      <h2><a href="/post/grab_api_inspect_element/" >Using Inspect Element to Grab API Endpoints and Tokens</a></h2>
-      <div class="article-style">
-        
-          A brief explainer on grabing API endpoints and bearer tokens for authorization through a web browser
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/post/query_ethereum/" >Learn Foundational Ethereum Topics with SQL</a></h2>
-      <div class="article-style">
-        
-          A tutorial to help readers learn how Ethereum works by running SQL queries and getting a feel for on-chain data
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/post/twitter_analytics/" >Analyzing Your Twitter Data</a></h2>
-      <div class="article-style">
-        
-          Using R to Explore Twitter Data
-        
-      </div>
-    </div>
-  
+    <div class="article-style">
+      <h3 id="introduction">Introduction</h3>
+<p>When maintaining data pipelines, sometimes API endpoints get changed or authorization tokens expire prompting a need to grab new <strong>API endpoints</strong> and <strong>bearer tokens</strong>.</p>
+<p>This post provide a brief walk-through on how to use <strong>Inspect Element</strong> on a web browser to grab this data. Which represents a powerful way to access a project&rsquo;s API <em>before</em> reaching out to the team.</p>
+<h3 id="scenario">Scenario</h3>
+<p>We have a data pipeline to ingest 
+<a href="https://coordinape.com/" target="_blank" rel="noopener">Coordinape</a> data but after two months, the pipeline script returns a <code>Response 401</code> error, suggesting a connection could not be made. We want a way to explore what&rsquo;s going on.</p>
+<h4 id="api-endpoint-with-inspect-element">API Endpoint with Inspect Element</h4>
+<p>We go to the Coordinape application and sign-in with our Ethereum wallet. Then, I left click on go to <code>inspect element</code>, navigating to the <strong>Network</strong> tab as shown here:</p>
+<p><img src="./network_xhr.png" alt="inspect_element"></p>
+<p>Once in the <strong>Network</strong> tab, select <strong>Fetch/XHR</strong> (XHR stands for XMLHttpRequest, but XML is phased out for JSON). Then we should see a list of events.</p>
+<p>The event highlighted in red indicates a <strong>Request URL</strong> that shows the <em>current</em> API endpoint (in Header)</p>
+<p>Here&rsquo;s the endpoint: <code>https://api.coordinape.com/api/v2/manifest?circle_id=63</code> (<strong>note&amp;</strong>: in the old endpoint, manifest was token-gifts. It looks like the team has consolidated it&rsquo;s API endpoints)</p>
+<h4 id="authorization">Authorization</h4>
+<p>To grab the authorization, <strong>bearer token</strong>, scroll down in <strong>Header</strong> down to <strong>Request Headers</strong>:</p>
+<p><img src="./network_xhr_1.png" alt="authorization"></p>
+<p>This is the information you&rsquo;d store in the <code>.env</code> file.</p>
+<h3 id="data-structure">Data Structure</h3>
+<p>Finally, you can also get a sense for what kind of data will be returned with this new API endpoint by navigating to the <strong>Preview</strong> tab next to <strong>Headers</strong>.</p>
+<p><img src="./network_xhr_2.png" alt="preview"></p>
+<p>Here we see circle, circles, myUsers and profile. It looks like we have nested JSON that will need to be flattened.</p>
+<p>For more use of data to explore DAOs and web3 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
-  
+    </div>
 
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/ethereum/">Ethereum</a>
+  
+  <a class="badge badge-light" href="/tag/sql/">SQL</a>
+  
+  <a class="badge badge-light" href="/tag/dune-analytics/">Dune Analytics</a>
+  
+  <a class="badge badge-light" href="/tag/querying/">Querying</a>
+  
+  <a class="badge badge-light" href="/tag/analytics/">Analytics</a>
+  
 </div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/grab_api_inspect_element/&amp;text=Using%20Inspect%20Element%20to%20Grab%20API%20Endpoints%20and%20Tokens" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/grab_api_inspect_element/&amp;t=Using%20Inspect%20Element%20to%20Grab%20API%20Endpoints%20and%20Tokens" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Using%20Inspect%20Element%20to%20Grab%20API%20Endpoints%20and%20Tokens&amp;body=/post/grab_api_inspect_element/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/grab_api_inspect_element/&amp;title=Using%20Inspect%20Element%20to%20Grab%20API%20Endpoints%20and%20Tokens" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Using%20Inspect%20Element%20to%20Grab%20API%20Endpoints%20and%20Tokens%20/post/grab_api_inspect_element/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/grab_api_inspect_element/&amp;title=Using%20Inspect%20Element%20to%20Grab%20API%20Endpoints%20and%20Tokens" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+    
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/paul-apivat/red_avatar_hu778b3f11a1de0c4347a39921f12f8b6b_139774_270x270_fill_q90_lanczos_center.jpg" alt="Paul Apivat">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="/">Paul Apivat</a></h5>
+        <h6 class="card-subtitle">data in web3</h6>
+        <p class="card-text">My interests include data science, machine learning and R/Python programming.</p>
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/paulapivat/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/paulapivat" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/post/query_ethereum/">Learn Foundational Ethereum Topics with SQL</a></li>
+      
+      <li><a href="/post/crypto_price_attack/">The More a Network is Worth, the Harder it is to Attack</a></li>
+      
+      <li><a href="/post/twitter_analytics/">Analyzing Your Twitter Data</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+
+  </div>
+</article>
 
       
 
