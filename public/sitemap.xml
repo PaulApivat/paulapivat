@@ -254,28 +254,28 @@
     <loc>/talk/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tag/analytics/</loc>
+    <loc>/tag/api/</loc>
     <lastmod>2022-01-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/authors/</loc>
     <lastmod>2022-01-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tag/dune-analytics/</loc>
+    <loc>/tag/data-engineer/</loc>
     <lastmod>2022-01-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tag/ethereum/</loc>
+    <loc>/tag/data-ingestion/</loc>
+    <lastmod>2022-01-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/dune-pipeline/</loc>
+    <lastmod>2022-01-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/inspect-element/</loc>
     <lastmod>2022-01-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/author/paul-apivat/</loc>
     <lastmod>2022-01-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/post/</loc>
-    <lastmod>2022-01-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/querying/</loc>
-    <lastmod>2022-01-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/sql/</loc>
     <lastmod>2022-01-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/</loc>
@@ -287,7 +287,22 @@
     <loc>/technical_notes/</loc>
     <lastmod>2022-01-21T00:00:00+01:00</lastmod>
   </url><url>
+    <loc>/tag/analytics/</loc>
+    <lastmod>2021-05-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/dune-analytics/</loc>
+    <lastmod>2021-05-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/ethereum/</loc>
+    <lastmod>2021-05-11T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/post/query_ethereum/</loc>
+    <lastmod>2021-05-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/querying/</loc>
+    <lastmod>2021-05-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/sql/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/data-viz/</loc>

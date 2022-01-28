@@ -12,7 +12,7 @@ lastMod: "2022-01-28T00:00:00Z"
 projects: []
 subtitle: Grab API info with inspect element
 summary: A brief explainer on grabing API endpoints and bearer tokens for authorization through a web browser
-tags: ["Ethereum", "SQL", "Dune Analytics", "Querying", "Analytics"]
+tags: ["API", "Data Ingestion", "Dune Pipeline", "Data Engineer", "Inspect Element"]
 title: Using Inspect Element to Grab API Endpoints and Tokens
 ---
 
