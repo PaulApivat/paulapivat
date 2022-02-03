@@ -207,6 +207,37 @@ response24 = requests.get(
     &#39;https://api.coordinape.com/api/v2/token-gifts?circle_id=24&#39;, headers=HEADER)
 pprint(response24.json())
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;navigating-nested-json-data&#34;&gt;Navigating Nested JSON Data&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;import requests
+from pprint import pprint
+import os
+import pandas as pd
+
+# using python-dotenv method
+from dotenv import load_dotenv
+load_dotenv()
+
+# api endpoints, authorization &amp;amp; header
+auth_token = os.environ.get(&#39;AUTH_TOKEN&#39;)
+api_endpoint_manifest = os.environ.get(&#39;API_ENDPOINT_MANIFEST&#39;)
+api_endpoint_users = os.environ.get(&#39;API_ENDPOINT_USERS&#39;)
+HEADER = {&#39;Authorization&#39;: f&#39;{auth_token}&#39;}
+
+# --- Primary steps to explore nested data ------
+response = requests.get(f&#39;{api_endpoint_manifest}&#39;, headers=HEADER)
+result = response.json()
+dataframe = pd.json_normalize(result)
+list_of_column_names = list(dataframe)
+
+# dataframe is [1 rows x 48 columns]
+# unpack dataframe using f-string
+for item in list_of_column_names:
+    print(dataframe[f&#39;{item}&#39;])
+
+# ------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data and web3 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     

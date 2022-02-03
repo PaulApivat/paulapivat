@@ -1062,6 +1062,7 @@ Note: This pattern can be used across project, I used this to consume Coordinape
       <nav id="TableOfContents">
   <ul>
     <li><a href="#api-connection">API Connection</a></li>
+    <li><a href="#navigating-nested-json-data">Navigating Nested JSON Data</a></li>
   </ul>
 </nav>
 
@@ -1125,6 +1126,37 @@ response24 = requests.get(
     'https://api.coordinape.com/api/v2/token-gifts?circle_id=24', headers=HEADER)
 pprint(response24.json())
 </code></pre>
+<h2 id="navigating-nested-json-data">Navigating Nested JSON Data</h2>
+<pre><code class="language-{python}">import requests
+from pprint import pprint
+import os
+import pandas as pd
+
+# using python-dotenv method
+from dotenv import load_dotenv
+load_dotenv()
+
+# api endpoints, authorization &amp; header
+auth_token = os.environ.get('AUTH_TOKEN')
+api_endpoint_manifest = os.environ.get('API_ENDPOINT_MANIFEST')
+api_endpoint_users = os.environ.get('API_ENDPOINT_USERS')
+HEADER = {'Authorization': f'{auth_token}'}
+
+# --- Primary steps to explore nested data ------
+response = requests.get(f'{api_endpoint_manifest}', headers=HEADER)
+result = response.json()
+dataframe = pd.json_normalize(result)
+list_of_column_names = list(dataframe)
+
+# dataframe is [1 rows x 48 columns]
+# unpack dataframe using f-string
+for item in list_of_column_names:
+    print(dataframe[f'{item}'])
+
+# ------------------------------------------------
+</code></pre>
+<p>For more content on data and web3 
+<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
 
