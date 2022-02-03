@@ -28,7 +28,7 @@
     
   
   <meta name="description" content="Retrieving past 7-days data Situation: You want to query a collection to get documents that were generated in the past 7 days.
-Note: This operation can be done in Mongo Shell, need to find another way to do it in Mongo Compass / Atlas.">
+No Hard Coding Reference this stack overflow post. To calculate the past 7-days we need to multiply: 7 days * 24 hours per day * 60 minutes per hour * 60 seconds per minute * 1000 milliseconds per second.">
 
   
   <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_past_7_days-copy/">
@@ -240,13 +240,13 @@ Note: This operation can be done in Mongo Shell, need to find another way to do 
   <meta property="og:url" content="/technical_notes/example_tech/mongodb_past_7_days-copy/">
   <meta property="og:title" content="Retrieving past 7-days data | Paul Apivat">
   <meta property="og:description" content="Retrieving past 7-days data Situation: You want to query a collection to get documents that were generated in the past 7 days.
-Note: This operation can be done in Mongo Shell, need to find another way to do it in Mongo Compass / Atlas."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+No Hard Coding Reference this stack overflow post. To calculate the past 7-days we need to multiply: 7 days * 24 hours per day * 60 minutes per hour * 60 seconds per minute * 1000 milliseconds per second."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-12-17T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-12-22T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-12-17T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-12-22T00:00:00&#43;01:00">
   
 
   
@@ -623,6 +623,10 @@ Note: This operation can be done in Mongo Shell, need to find another way to do 
       </li>
       
       <li >
+        <a href="/technical_notes/example_tech/rstats_viz_comma_geom_text/">Add comma separator in geom_text label</a>
+      </li>
+      
+      <li >
         <a href="/technical_notes/example_tech/rstats_viz_circular_dendrogram/">Circular Dendrogram</a>
       </li>
       
@@ -706,6 +710,10 @@ Note: This operation can be done in Mongo Shell, need to find another way to do 
       </li>
       
       <li >
+        <a href="/technical_notes/example_tech/git_stash/">Git Stash</a>
+      </li>
+      
+      <li >
         <a href="/technical_notes/example_tech/github_make_pr/">Making a Pull Request</a>
       </li>
       
@@ -757,6 +765,14 @@ Note: This operation can be done in Mongo Shell, need to find another way to do 
       </li>
       
       <li >
+        <a href="/technical_notes/example_tech/mongodb_categorical_buckets/">Categorical Buckets</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/mongodb_concatenate_string/">Concatenate String</a>
+      </li>
+      
+      <li >
         <a href="/technical_notes/example_tech/mongodb_crud/">CRUD Operations</a>
       </li>
       
@@ -766,6 +782,14 @@ Note: This operation can be done in Mongo Shell, need to find another way to do 
       
       <li >
         <a href="/technical_notes/example_tech/mongodb_data_types/">Data Types &amp; Common Commands (Mongo)</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/mongodb_display_data_in_order/">Display data in order</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/mongodb_filter_multiple_condition/">Filter multiple conditions</a>
       </li>
       
       <li class="active">
@@ -778,6 +802,18 @@ Note: This operation can be done in Mongo Shell, need to find another way to do 
       
       <li >
         <a href="/technical_notes/example_tech/mongodb_joins/">Joins in Mongo</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/mongodb_grab_value_nested_array/">Nested Documents in Arrays</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/mongodb_show_current_user/">Show current user</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/mongodb_subtract_timestamps/">Subtract Timestamps</a>
       </li>
       
     </ul>
@@ -843,14 +879,22 @@ Note: This operation can be done in Mongo Shell, need to find another way to do 
         <a href="/technical_notes/example_tech/postgresql_sort_two_columns/">Sort by Two Column</a>
       </li>
       
+      <li >
+        <a href="/technical_notes/example_tech/postgresql_sqlalchemy_upload_df/">Upload DataFrame (SQLAlchemy)</a>
+      </li>
+      
     </ul>
     
 
   </div>
   
   <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/python_tip2/">Python Tips</a>
+    <a class="docs-toc-link" href="/technical_notes/example_tech/python_api_connection/">Python Tips</a>
     <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="/technical_notes/example_tech/python_api_connection/">Connect to API</a>
+      </li>
       
       <li >
         <a href="/technical_notes/example_tech/python_tip2/">Creating and Looping through DataFrames</a>
@@ -862,6 +906,14 @@ Note: This operation can be done in Mongo Shell, need to find another way to do 
       
       <li >
         <a href="/technical_notes/example_tech/python_poetry/">Installing Poetry</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/python_looping_through_data_structures/">Iterating and Updating data structures</a>
+      </li>
+      
+      <li >
+        <a href="/technical_notes/example_tech/python_joining_sets/">Joining Sets</a>
       </li>
       
       <li >
@@ -938,6 +990,10 @@ Note: This operation can be done in Mongo Shell, need to find another way to do 
       </li>
       
       <li >
+        <a href="/technical_notes/example_tech/rstats_tip_sum_var_group/">Sum variable by group</a>
+      </li>
+      
+      <li >
         <a href="/technical_notes/example_tech/rstats_tip3/">Tidy Data - pivot_wider</a>
       </li>
       
@@ -1002,6 +1058,13 @@ Note: This operation can be done in Mongo Shell, need to find another way to do 
       <nav id="TableOfContents">
   <ul>
     <li><a href="#retrieving-past-7-days-data">Retrieving past 7-days data</a></li>
+    <li><a href="#no-hard-coding">No Hard Coding</a>
+      <ul>
+        <li><a href="#applied-to-aggregation-pipeline">Applied to Aggregation Pipeline</a></li>
+      </ul>
+    </li>
+    <li><a href="#mongo-shell">Mongo Shell</a></li>
+    <li><a href="#hard-coded">Hard Coded</a></li>
   </ul>
 </nav>
 
@@ -1019,6 +1082,27 @@ Note: This operation can be done in Mongo Shell, need to find another way to do 
           <div class="article-style">
             <h2 id="retrieving-past-7-days-data">Retrieving past 7-days data</h2>
 <p><strong>Situation</strong>: You want to query a collection to get documents that were generated in the past 7 days.</p>
+<h2 id="no-hard-coding">No Hard Coding</h2>
+<p>Reference this 
+<a href="https://stackoverflow.com/questions/33194825/find-objects-created-in-last-week-in-mongo/46906862" target="_blank" rel="noopener">stack overflow post</a>. To calculate the past 7-days we need to multiply: 7 days * 24 hours per day * 60 minutes per hour * 60 seconds per minute * 1000 milliseconds per second.</p>
+<p><strong>Note</strong>: We want to get to milliseconds when dealing with timestamps.</p>
+<p>This example shows this method in <code>find()</code>.</p>
+<pre><code class="language-{python}">db.collection.find({
+    timestamp: {
+        $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)
+    }
+});
+</code></pre>
+<h3 id="applied-to-aggregation-pipeline">Applied to Aggregation Pipeline</h3>
+<p>This query can be used in <strong>Shell</strong> as well as on <strong>Mongo Chart/Compass</strong>. Whne using in Mongo Chart, do <strong>not</strong> use Format to preserve: <code>new Date(new Date())</code>. This is from an example query for Bounty Board where we&rsquo;re querying bounties created in the past 7-days.</p>
+<pre><code class="language-{python}">db.bounties.aggregate([
+    {$match: {&quot;$and&quot;: [{season: 2}, {customer_id: '834499078434979890'} ]}},
+    {$project: {_id: 1, _customer_id: &quot;$customer_id&quot;, _title: &quot;$title&quot;, _status: &quot;$status&quot;, _createdAt: &quot;$createdAt&quot;, _claimedAt: &quot;$claimedAt&quot;, _submittedAt: &quot;$submittedAt&quot;, _reviewedAt: &quot;$reviewedAt&quot;}},
+    {$project: {_id: 1, customer_id: &quot;$_customer_id&quot;, title: &quot;$_title&quot;, status: &quot;$_status&quot;, createdAt: {$toDate: &quot;$_createdAt&quot;}, claimedAt: {$toDate: &quot;$_claimedAt&quot;}, submittedAt: {$toDate: &quot;$_submittedAt&quot;}, reviewedAt: {$toDate: &quot;$_reviewedAt&quot;}}},
+    {$match: {&quot;createdAt&quot;: {&quot;$gt&quot;: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)}}}
+])
+</code></pre>
+<h2 id="mongo-shell">Mongo Shell</h2>
 <p>Note: This operation can be done in <strong>Mongo Shell</strong>, need to find another way to do it in Mongo Compass / Atlas.</p>
 <pre><code class="language-{python}"># Compute the time 7 days ago to use in filtering the data
 # across all customers
@@ -1032,6 +1116,17 @@ db.bounties.aggregate([
     {$unwind: '$createdAt'},
     {$match: {'createdAt': {$gt: d}}}
 ]).pretty()
+</code></pre>
+<h2 id="hard-coded">Hard Coded</h2>
+<p>Break out in case of emergency, generally avoid.</p>
+<pre><code class="language-{python}"># Note: hardcoded ISODate
+
+db.bounties.aggregate([
+    {$match: {&quot;$and&quot;: [{season: 2}, {customer_id: '834499078434979890'} ]}},
+    {$project: {_id: 1, _customer_id: &quot;$customer_id&quot;, _title: &quot;$title&quot;, _status: &quot;$status&quot;, _createdAt: &quot;$createdAt&quot;, _claimedAt: &quot;$claimedAt&quot;, _submittedAt: &quot;$submittedAt&quot;, _reviewedAt: &quot;$reviewedAt&quot;}},
+    {$project: {_id: 1, customer_id: &quot;$_customer_id&quot;, title: &quot;$_title&quot;, status: &quot;$_status&quot;, createdAt: {$toDate: &quot;$_createdAt&quot;}, claimedAt: {$toDate: &quot;$_claimedAt&quot;}, submittedAt: {$toDate: &quot;$_submittedAt&quot;}, reviewedAt: {$toDate: &quot;$_reviewedAt&quot;}}},
+    {$match: {&quot;createdAt&quot;: {&quot;$gte&quot;: ISODate(&quot;2021-12-15T00:00:00Z&quot;)}}}
+]) 
 </code></pre>
 <p>For more content on data science, R, and Python 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
@@ -1051,7 +1146,7 @@ db.bounties.aggregate([
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
+    <a href="/technical_notes/example_tech/mongodb_grab_value_nested_array/" rel="next">Get values from nested array</a>
   </div>
   
   
@@ -1068,7 +1163,7 @@ db.bounties.aggregate([
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Dec 17, 2021</p>
+          <p>Last updated on Dec 22, 2021</p>
 
           
 

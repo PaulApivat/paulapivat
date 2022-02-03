@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Create a Test Table then Insert data to establish a connection Situation: You want to create a quick &lsquo;test&rsquo; table via the sqlalchemy library in Python to establish a connection with your postgres db.">
+  <meta name="description" content="Getting Unique Users Situation: You want to query both total and unique users on a week-to-week basis. Here&rsquo;s an example with unique creators of bounties.
+Change the MongoDB code for claimer, submitter and reviewer.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/postgresql_create_table/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_unique_id/">
 
   
 
@@ -217,7 +218,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/postgresql_create_table/">
+  <link rel="canonical" href="/technical_notes/example_tech/mongodb_unique_id/">
 
   
   
@@ -236,15 +237,16 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/postgresql_create_table/">
-  <meta property="og:title" content="Create a table to established connection with SQLAlchemy | Paul Apivat">
-  <meta property="og:description" content="Create a Test Table then Insert data to establish a connection Situation: You want to create a quick &lsquo;test&rsquo; table via the sqlalchemy library in Python to establish a connection with your postgres db."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/mongodb_unique_id/">
+  <meta property="og:title" content="Get unique users, week-to-week | Paul Apivat">
+  <meta property="og:description" content="Getting Unique Users Situation: You want to query both total and unique users on a week-to-week basis. Here&rsquo;s an example with unique creators of bounties.
+Change the MongoDB code for claimer, submitter and reviewer."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-11-09T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2022-02-03T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-11-09T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2022-02-03T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +265,7 @@
 
 
 
-  <title>Create a table to established connection with SQLAlchemy | Paul Apivat</title>
+  <title>Get unique users, week-to-week | Paul Apivat</title>
 
 </head>
 
@@ -794,7 +796,7 @@
         <a href="/technical_notes/example_tech/mongodb_past_7_days/">Get past 7-days data</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/mongodb_unique_id/">Get unique users</a>
       </li>
       
@@ -853,7 +855,7 @@
     <a class="docs-toc-link" href="/technical_notes/example_tech/postgresql_create_table/">PostgreSQL</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/postgresql_create_table/">Create a table (establish connection)</a>
       </li>
       
@@ -1059,7 +1061,7 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#create-a-test-table-then-insert-data-to-establish-a-connection">Create a Test Table then Insert data to establish a connection</a></li>
+    <li><a href="#getting-unique-users">Getting Unique Users</a></li>
   </ul>
 </nav>
 
@@ -1072,23 +1074,41 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Create a table to established connection with SQLAlchemy</h1>
+          <h1>Get unique users, week-to-week</h1>
 
           <div class="article-style">
-            <h2 id="create-a-test-table-then-insert-data-to-establish-a-connection">Create a Test Table then Insert data to establish a connection</h2>
-<p><strong>Situation</strong>: You want to create a quick &lsquo;test&rsquo; table via the <code>sqlalchemy</code> library in Python to establish a connection with your postgres db.</p>
-<pre><code class="language-{python}"># Create TEST table to confirm connection
-db.execute(
-    &quot;CREATE TABLE IF NOT EXISTS films (title text, director text, year text)&quot;)
+            <h2 id="getting-unique-users">Getting Unique Users</h2>
+<p><strong>Situation</strong>: You want to query both <strong>total</strong> and <strong>unique</strong> users on a week-to-week basis. Here&rsquo;s an example with <em>unique creators</em> of bounties.</p>
+<p>Change the MongoDB code for claimer, submitter and reviewer.</p>
+<pre><code class="language-{python}"># Total and Unique Bounty Creators by Week
+# Jan 1 - Jan 31, 2022
+# NOTE: change MongoDB code with claimer, submitter or reviewer data
+db.bounties.aggregate([
+  {
+    $match: {
+      $and: [
+        { customer_id: &quot;8888888888888888&quot; },
+        { createdAt: { $gte: &quot;2022-01-01&quot; } },
+        { createdAt: { $lt: &quot;2022-02-01&quot; } },
+      ],
+    },
+  },
+  {
+    $project: {
+      _id: 1,
+      createdAt: { $toDate: &quot;$createdAt&quot; },
+      &quot;createdBy.discordHandle&quot;: 1,
+    },
+  },
+  {
+    $group: {
+      _id: { week: { $isoWeek: &quot;$createdAt&quot; } },
+      num_creators: { $sum: 1 },
+      unique_creators: { $addToSet: &quot;$createdBy.discordHandle&quot; },
+    },
+  },
+]);
 
-# Insert data
-db.execute(
-    &quot;INSERT INTO films (title, director, year) VALUES ('Dune', 'Denis Villeneuve', '2021')&quot;)
-
-# Read data
-result_set = db.execute(&quot;SELECT * FROM films&quot;)
-for r in result_set:
-    print(r)
 </code></pre>
 <p>For more content on data science, R, and Python 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
@@ -1108,14 +1128,14 @@ for r in result_set:
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/mongodb_crud/" rel="next">CRUD Operations in Mongo (Shell)</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/database_install_docker/" rel="prev">Testing databases in a Docker Container</a>
+    <a href="/technical_notes/example_tech/rstats_viz_comma_geom_text/" rel="prev">Add comma separator in geom_text label</a>
   </div>
   
 </div>
@@ -1125,7 +1145,7 @@ for r in result_set:
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Nov 9, 2021</p>
+          <p>Last updated on Feb 3, 2022</p>
 
           
 
@@ -1137,7 +1157,7 @@ for r in result_set:
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/postgresql_create_table.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/mongodb_unique_id.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

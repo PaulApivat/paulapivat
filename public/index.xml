@@ -1292,6 +1292,49 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Get unique users, week-to-week</title>
+      <link>/technical_notes/example_tech/mongodb_unique_id/</link>
+      <pubDate>Thu, 03 Feb 2022 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_unique_id/</guid>
+      <description>&lt;h2 id=&#34;getting-unique-users&#34;&gt;Getting Unique Users&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to query both &lt;strong&gt;total&lt;/strong&gt; and &lt;strong&gt;unique&lt;/strong&gt; users on a week-to-week basis. Here&amp;rsquo;s an example with &lt;em&gt;unique creators&lt;/em&gt; of bounties.&lt;/p&gt;
+&lt;p&gt;Change the MongoDB code for claimer, submitter and reviewer.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Total and Unique Bounty Creators by Week
+# Jan 1 - Jan 31, 2022
+# NOTE: change MongoDB code with claimer, submitter or reviewer data
+db.bounties.aggregate([
+  {
+    $match: {
+      $and: [
+        { customer_id: &amp;quot;8888888888888888&amp;quot; },
+        { createdAt: { $gte: &amp;quot;2022-01-01&amp;quot; } },
+        { createdAt: { $lt: &amp;quot;2022-02-01&amp;quot; } },
+      ],
+    },
+  },
+  {
+    $project: {
+      _id: 1,
+      createdAt: { $toDate: &amp;quot;$createdAt&amp;quot; },
+      &amp;quot;createdBy.discordHandle&amp;quot;: 1,
+    },
+  },
+  {
+    $group: {
+      _id: { week: { $isoWeek: &amp;quot;$createdAt&amp;quot; } },
+      num_creators: { $sum: 1 },
+      unique_creators: { $addToSet: &amp;quot;$createdBy.discordHandle&amp;quot; },
+    },
+  },
+]);
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data science, R, and Python 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Add comma separator in geom_text label</title>
       <link>/technical_notes/example_tech/rstats_viz_comma_geom_text/</link>
       <pubDate>Fri, 21 Jan 2022 00:00:00 +0100</pubDate>

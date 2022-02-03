@@ -77,6 +77,9 @@
     <loc>/technical_notes/example_tech/</loc>
     <lastmod>2018-09-09T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/technical_notes/example_tech/mongodb_unique_id/</loc>
+    <lastmod>2022-02-03T00:00:00+01:00</lastmod>
+  </url><url>
     <loc>/technical_notes/example_tech/rstats_viz_comma_geom_text/</loc>
     <lastmod>2022-01-21T00:00:00+01:00</lastmod>
   </url><url>
@@ -254,6 +257,9 @@
     <loc>/talk/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url><url>
+    <loc>/technical_notes/</loc>
+    <lastmod>2022-02-03T00:00:00+01:00</lastmod>
+  </url><url>
     <loc>/tag/api/</loc>
     <lastmod>2022-01-28T00:00:00+00:00</lastmod>
   </url><url>
@@ -283,9 +289,6 @@
   </url><url>
     <loc>/post/grab_api_inspect_element/</loc>
     <lastmod>2022-01-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/technical_notes/</loc>
-    <lastmod>2022-01-21T00:00:00+01:00</lastmod>
   </url><url>
     <loc>/tag/analytics/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
