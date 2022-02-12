@@ -27,11 +27,10 @@
   
     
   
-  <meta name="description" content="Retrieving past 7-days data Situation: You want to query a collection to get documents that were generated in the past 7 days.
-No Hard Coding Reference this stack overflow post. To calculate the past 7-days we need to multiply: 7 days * 24 hours per day * 60 minutes per hour * 60 seconds per minute * 1000 milliseconds per second.">
+  <meta name="description" content="Turning Nested JSON data into dataframes Situation: You&rsquo;ve connected to an API endpoint, that is structured as a nested json, here&rsquo;s how to loop through and select certain values into a dataframe for further processing.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_past_7_days/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_create_df_from_nested_json/">
 
   
 
@@ -218,7 +217,7 @@ No Hard Coding Reference this stack overflow post. To calculate the past 7-days 
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/mongodb_past_7_days/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_create_df_from_nested_json/">
 
   
   
@@ -237,16 +236,15 @@ No Hard Coding Reference this stack overflow post. To calculate the past 7-days 
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/mongodb_past_7_days/">
-  <meta property="og:title" content="Retrieving past 7-days data | Paul Apivat">
-  <meta property="og:description" content="Retrieving past 7-days data Situation: You want to query a collection to get documents that were generated in the past 7 days.
-No Hard Coding Reference this stack overflow post. To calculate the past 7-days we need to multiply: 7 days * 24 hours per day * 60 minutes per hour * 60 seconds per minute * 1000 milliseconds per second."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_create_df_from_nested_json/">
+  <meta property="og:title" content="Create DataFrames from Nested JSON data | Paul Apivat">
+  <meta property="og:description" content="Turning Nested JSON data into dataframes Situation: You&rsquo;ve connected to an API endpoint, that is structured as a nested json, here&rsquo;s how to loop through and select certain values into a dataframe for further processing."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-12-22T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2022-02-08T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-12-22T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2022-02-08T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +263,7 @@ No Hard Coding Reference this stack overflow post. To calculate the past 7-days 
 
 
 
-  <title>Retrieving past 7-days data | Paul Apivat</title>
+  <title>Create DataFrames from Nested JSON data | Paul Apivat</title>
 
 </head>
 
@@ -792,7 +790,7 @@ No Hard Coding Reference this stack overflow post. To calculate the past 7-days 
         <a href="/technical_notes/example_tech/mongodb_filter_multiple_condition/">Filter multiple conditions</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/mongodb_past_7_days/">Get past 7-days data</a>
       </li>
       
@@ -932,7 +930,7 @@ No Hard Coding Reference this stack overflow post. To calculate the past 7-days 
         <a href="/technical_notes/example_tech/python_json_to_df/">JSON to Dataframes with Pandas</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/python_create_df_from_nested_json/">Nested JSON to dataframe</a>
       </li>
       
@@ -1073,14 +1071,7 @@ No Hard Coding Reference this stack overflow post. To calculate the past 7-days 
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#retrieving-past-7-days-data">Retrieving past 7-days data</a></li>
-    <li><a href="#no-hard-coding">No Hard Coding</a>
-      <ul>
-        <li><a href="#applied-to-aggregation-pipeline">Applied to Aggregation Pipeline</a></li>
-      </ul>
-    </li>
-    <li><a href="#mongo-shell">Mongo Shell</a></li>
-    <li><a href="#hard-coded">Hard Coded</a></li>
+    <li><a href="#turning-nested-json-data-into-dataframes">Turning Nested JSON data into dataframes</a></li>
   </ul>
 </nav>
 
@@ -1093,58 +1084,53 @@ No Hard Coding Reference this stack overflow post. To calculate the past 7-days 
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Retrieving past 7-days data</h1>
+          <h1>Create DataFrames from Nested JSON data</h1>
 
           <div class="article-style">
-            <h2 id="retrieving-past-7-days-data">Retrieving past 7-days data</h2>
-<p><strong>Situation</strong>: You want to query a collection to get documents that were generated in the past 7 days.</p>
-<h2 id="no-hard-coding">No Hard Coding</h2>
-<p>Reference this 
-<a href="https://stackoverflow.com/questions/33194825/find-objects-created-in-last-week-in-mongo/46906862" target="_blank" rel="noopener">stack overflow post</a>. To calculate the past 7-days we need to multiply: 7 days * 24 hours per day * 60 minutes per hour * 60 seconds per minute * 1000 milliseconds per second.</p>
-<p><strong>Note</strong>: We want to get to milliseconds when dealing with timestamps.</p>
-<p>This example shows this method in <code>find()</code>.</p>
-<pre><code class="language-{python}">db.collection.find({
-    timestamp: {
-        $gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)
-    }
-});
-</code></pre>
-<h3 id="applied-to-aggregation-pipeline">Applied to Aggregation Pipeline</h3>
-<p>This query can be used in <strong>Shell</strong> as well as on <strong>Mongo Chart/Compass</strong>. Whne using in Mongo Chart, do <strong>not</strong> use Format to preserve: <code>new Date(new Date())</code>. This is from an example query for Bounty Board where we&rsquo;re querying bounties created in the past 7-days.</p>
-<pre><code class="language-{python}">db.bounties.aggregate([
-    {$match: {&quot;$and&quot;: [{season: 2}, {customer_id: '834499078434979890'} ]}},
-    {$project: {_id: 1, _customer_id: &quot;$customer_id&quot;, _title: &quot;$title&quot;, _status: &quot;$status&quot;, _createdAt: &quot;$createdAt&quot;, _claimedAt: &quot;$claimedAt&quot;, _submittedAt: &quot;$submittedAt&quot;, _reviewedAt: &quot;$reviewedAt&quot;}},
-    {$project: {_id: 1, customer_id: &quot;$_customer_id&quot;, title: &quot;$_title&quot;, status: &quot;$_status&quot;, createdAt: {$toDate: &quot;$_createdAt&quot;}, claimedAt: {$toDate: &quot;$_claimedAt&quot;}, submittedAt: {$toDate: &quot;$_submittedAt&quot;}, reviewedAt: {$toDate: &quot;$_reviewedAt&quot;}}},
-    {$match: {&quot;createdAt&quot;: {&quot;$gt&quot;: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)}}}
-])
-</code></pre>
-<h2 id="mongo-shell">Mongo Shell</h2>
-<p>Note: This operation can be done in <strong>Mongo Shell</strong>, need to find another way to do it in Mongo Compass / Atlas.</p>
-<pre><code class="language-{python}"># Compute the time 7 days ago to use in filtering the data
-# across all customers
-var d = new Date();
-d.setDate(d.getDate()-7);
+            <h2 id="turning-nested-json-data-into-dataframes">Turning Nested JSON data into dataframes</h2>
+<p><strong>Situation</strong>: You&rsquo;ve connected to an 
+<a href="https://paulapivat.com/technical_notes/example_tech/python_api_connection/" target="_blank" rel="noopener">API endpoint</a>, that is structured as a nested json, here&rsquo;s how to loop through and select certain values into a dataframe for further processing.</p>
+<p>In one example, we&rsquo;re looping through a particular endpoint from 
+<a href="https://coordinape.com/" target="_blank" rel="noopener">Coordinape</a>. We&rsquo;re going to loop through one level (list of dictionaries) and <strong>append</strong> data to <strong>empty lists</strong>.</p>
+<p>Second example, we&rsquo;ll <em>conditionally</em> loop through the <em>second level</em> (a dictionary) to grab specific values. As a <em>bonus</em>, we&rsquo;ll also use <strong>try-except</strong>(error handling) to handle an <code>AttributeError</code>.</p>
+<p>Finally, we&rsquo;ll create the <strong>dataframe from lists</strong>.</p>
+<pre><code class="language-{python}">
+# empty lists
+name_list_24 = []
+address_list_24 = []
+circle_id_list_24 = []
+discord_username_list_24 = []
+profile_address_24 = []
 
-db.bounties.aggregate([
-    {$match: {season: 2, customer_id: '905250069463326740'}},
-    {$project: {_id: 1, title: 1, customer_id: 1, createdAt: {$toDate: &quot;$createdAt&quot;}}},
-    {$match: {'createdAt': {$gt: d}}},
-    {$unwind: '$createdAt'},
-    {$match: {'createdAt': {$gt: d}}}
-]).pretty()
-</code></pre>
-<h2 id="hard-coded">Hard Coded</h2>
-<p>Break out in case of emergency, generally avoid.</p>
-<pre><code class="language-{python}"># Note: hardcoded ISODate
 
-db.bounties.aggregate([
-    {$match: {&quot;$and&quot;: [{season: 2}, {customer_id: '834499078434979890'} ]}},
-    {$project: {_id: 1, _customer_id: &quot;$customer_id&quot;, _title: &quot;$title&quot;, _status: &quot;$status&quot;, _createdAt: &quot;$createdAt&quot;, _claimedAt: &quot;$claimedAt&quot;, _submittedAt: &quot;$submittedAt&quot;, _reviewedAt: &quot;$reviewedAt&quot;}},
-    {$project: {_id: 1, customer_id: &quot;$_customer_id&quot;, title: &quot;$_title&quot;, status: &quot;$_status&quot;, createdAt: {$toDate: &quot;$_createdAt&quot;}, claimedAt: {$toDate: &quot;$_claimedAt&quot;}, submittedAt: {$toDate: &quot;$_submittedAt&quot;}, reviewedAt: {$toDate: &quot;$_reviewedAt&quot;}}},
-    {$match: {&quot;createdAt&quot;: {&quot;$gte&quot;: ISODate(&quot;2021-12-15T00:00:00Z&quot;)}}}
-]) 
+# loop through level 1
+for dct in df_manifest_24['circle.users'][0]:
+    name_list_24.append(dct['name'])
+    address_list_24.append(dct['address'])
+    circle_id_list_24.append(dct['circle_id'])
+
+
+# conditionally loop through level 2 
+# use try-except
+for dct in df_manifest_24['circle.users'][0]:
+    try:
+        for k, v in dct['profile'].items():
+            if k == 'discord_username':
+                discord_username_list_24.append(v)
+            elif k == 'address':
+                profile_address_24.append(v)
+            else:
+                print(&quot;Done.&quot;)
+    except:
+        AttributeError
+    pass
+
+# create dataframe from lists
+df_24 = pd.DataFrame(list(zip(name_list_24, address_list_24, circle_id_list_24)),
+                     columns=['Name', 'Address', 'Circle_Id'])
+
 </code></pre>
-<p>For more content on data science, R, and Python 
+<p>For more content on data and web3 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
@@ -1162,14 +1148,14 @@ db.bounties.aggregate([
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/mongodb_grab_value_nested_array/" rel="next">Get values from nested array</a>
+    <a href="/technical_notes/example_tech/pandas_concat_df/" rel="next">Use concat to merge dataframes</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/mongodb_show_current_user/" rel="prev">Show current user, db access and role</a>
+    <a href="/technical_notes/example_tech/python_looping_through_data_structures/" rel="prev">Looping through the 3 Main Data Structures in Python</a>
   </div>
   
 </div>
@@ -1179,7 +1165,7 @@ db.bounties.aggregate([
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Dec 22, 2021</p>
+          <p>Last updated on Feb 8, 2022</p>
 
           
 
@@ -1191,7 +1177,7 @@ db.bounties.aggregate([
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/mongodb_past_7_days.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_create_df_from_nested_json.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
