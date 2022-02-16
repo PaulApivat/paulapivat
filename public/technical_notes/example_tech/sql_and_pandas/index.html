@@ -27,11 +27,11 @@
   
     
   
-  <meta name="description" content="Grab values from nested arrays in a document Situation: You want to figure out how much time has elapsed between two timestamps. But those timestamps are nested in arrays.
-This is similar to the operation in this post, with a key difference: the timestamps are nested within an array of objects, so we have to get those values out, then convert $toDate, then subtract.">
+  <meta name="description" content="Pandas and SQL Situation: You want to further manipulate SQL data in Python. You can use SQLAlchemy and pandas to achieve this.
+# Load Libraries import pandas as pd from sqlalchemy import create_engine # for python-dotenv method import os from dotenv import load_dotenv load_dotenv() # db connection sql_db_connection = os.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_grab_value_nested_array/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/sql_and_pandas/">
 
   
 
@@ -218,7 +218,7 @@ This is similar to the operation in this post, with a key difference: the timest
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/mongodb_grab_value_nested_array/">
+  <link rel="canonical" href="/technical_notes/example_tech/sql_and_pandas/">
 
   
   
@@ -237,16 +237,16 @@ This is similar to the operation in this post, with a key difference: the timest
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/mongodb_grab_value_nested_array/">
-  <meta property="og:title" content="Get values from nested array | Paul Apivat">
-  <meta property="og:description" content="Grab values from nested arrays in a document Situation: You want to figure out how much time has elapsed between two timestamps. But those timestamps are nested in arrays.
-This is similar to the operation in this post, with a key difference: the timestamps are nested within an array of objects, so we have to get those values out, then convert $toDate, then subtract."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/sql_and_pandas/">
+  <meta property="og:title" content="Use pandas with SQL queries | Paul Apivat">
+  <meta property="og:description" content="Pandas and SQL Situation: You want to further manipulate SQL data in Python. You can use SQLAlchemy and pandas to achieve this.
+# Load Libraries import pandas as pd from sqlalchemy import create_engine # for python-dotenv method import os from dotenv import load_dotenv load_dotenv() # db connection sql_db_connection = os."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-12-24T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2022-02-16T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-12-24T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2022-02-16T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +265,7 @@ This is similar to the operation in this post, with a key difference: the timest
 
 
 
-  <title>Get values from nested array | Paul Apivat</title>
+  <title>Use pandas with SQL queries | Paul Apivat</title>
 
 </head>
 
@@ -808,7 +808,7 @@ This is similar to the operation in this post, with a key difference: the timest
         <a href="/technical_notes/example_tech/mongodb_joins/">Joins in Mongo</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/mongodb_grab_value_nested_array/">Nested Documents in Arrays</a>
       </li>
       
@@ -1030,7 +1030,7 @@ This is similar to the operation in this post, with a key difference: the timest
     <a class="docs-toc-link" href="/technical_notes/example_tech/sql_and_pandas/">SQL</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/sql_and_pandas/">SQL and Pandas</a>
       </li>
       
@@ -1077,7 +1077,7 @@ This is similar to the operation in this post, with a key difference: the timest
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#grab-values-from-nested-arrays-in-a-document">Grab values from nested arrays in a document</a></li>
+    <li><a href="#pandas-and-sql">Pandas and SQL</a></li>
   </ul>
 </nav>
 
@@ -1090,23 +1090,40 @@ This is similar to the operation in this post, with a key difference: the timest
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Get values from nested array</h1>
+          <h1>Use pandas with SQL queries</h1>
 
           <div class="article-style">
-            <h2 id="grab-values-from-nested-arrays-in-a-document">Grab values from nested arrays in a document</h2>
-<p><strong>Situation</strong>: You want to figure out how much time has elapsed between two timestamps. But those timestamps are nested in arrays.</p>
-<p>This is similar to the operation in 
-<a href="https://paulapivat.com/technical_notes/example_tech/mongodb_subtract_timestamps/" target="_blank" rel="noopener">this post</a>, with a key difference: the timestamps are nested within an <strong>array of objects</strong>, so we have to get those values out, then convert <code>$toDate</code>, then subtract.</p>
-<p>Note: We&rsquo;re <strong>not</strong> using <code>$unwind</code> here because we want multiple timestamps within the same document.</p>
-<pre><code class="language-{python}">db.bounties.aggregate([
-    {$match: {&quot;$and&quot;: [{season: 2}, {customer_id: '905250069463326740'}, {status: &quot;Completed&quot;}]}},
-    {$project: {&quot;statusHistory.status&quot;: 1, &quot;statusHistory.setAt&quot;: 1}},
-    {$project: {draft: {$arrayElemAt: [&quot;$statusHistory&quot;, 0]},  open: {$arrayElemAt: [&quot;$statusHistory&quot;, 1]}, in_progress: {$arrayElemAt: [&quot;$statusHistory&quot;, 2]}, in_review: {$arrayElemAt: [&quot;$statusHistory&quot;, 3]}, completed: {$arrayElemAt: [&quot;$statusHistory&quot;, 4]}}},
-    {$project: {draft: {$toDate: &quot;$draft.setAt&quot;}, open: {$toDate: &quot;$open.setAt&quot;}, in_progress: {$toDate: &quot;$in_progress.setAt&quot;}, in_review: {$toDate: &quot;$in_review.setAt&quot;}, completed: {$toDate: &quot;$completed.setAt&quot;} }},
-    {$project: {_id: 1, draft_to_open: {$divide: [{$subtract: [&quot;$open&quot;, &quot;$draft&quot;]}, 3600000]}, open_to_progress: {$divide: [{$subtract: [&quot;$in_progress&quot;, &quot;$open&quot;]}, 3600000]}, progress_to_review: {$divide: [{$subtract: [&quot;$in_review&quot;, &quot;$in_progress&quot;]}, 3600000]}, review_to_completed: {$divide: [{$subtract: [&quot;$completed&quot;, &quot;$in_review&quot;]}, 3600000]}}}
-])
+            <h2 id="pandas-and-sql">Pandas and SQL</h2>
+<p><strong>Situation</strong>: You want to further manipulate SQL data in Python. You can use <code>SQLAlchemy</code> and <code>pandas</code> to achieve this.</p>
+<pre><code class="language-{python}"># Load Libraries
+import pandas as pd
+from sqlalchemy import create_engine
+
+# for python-dotenv method
+import os
+from dotenv import load_dotenv   
+load_dotenv()    
+
+# db connection
+sql_db_connection = os.environ.get(&quot;SQL_DB_CONNECTION&quot;)  # os.environ.get('postgres:///data.db')
+
+# Create database engine
+engine = create_engine(sql_db_connection)
+
+# write query to get records with filter
+query = &quot;&quot;&quot;SELECT *
+             FROM table 
+            WHERE borough = 'BRONX'
+               OR borough = 'BROOKLYN'
+&quot;&quot;&quot;
+
+# query the database
+bronx_query = pd.read_sql(query, engine)
+
+print(bronx_query.unique())  # print distinct records
+print(bronx_query.shape())   # print shape of data
 </code></pre>
-<p>For more content on data 
+<p>For more content on data in web3 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
@@ -1124,14 +1141,14 @@ This is similar to the operation in this post, with a key difference: the timest
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/postgresql_sqlalchemy_upload_df/" rel="next">Writing dataframe to postgresql database</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/mongodb_past_7_days/" rel="prev">Retrieving past 7-days data</a>
+    <a href="/technical_notes/example_tech/mongodb_unique_id/" rel="prev">Get unique users, week-to-week</a>
   </div>
   
 </div>
@@ -1141,7 +1158,7 @@ This is similar to the operation in this post, with a key difference: the timest
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Dec 24, 2021</p>
+          <p>Last updated on Feb 16, 2022</p>
 
           
 
@@ -1153,7 +1170,7 @@ This is similar to the operation in this post, with a key difference: the timest
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/mongodb_grab_value_nested_array.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/sql_and_pandas.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

@@ -1479,6 +1479,46 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Use pandas with SQL queries</title>
+      <link>/technical_notes/example_tech/sql_and_pandas/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/sql_and_pandas/</guid>
+      <description>&lt;h2 id=&#34;pandas-and-sql&#34;&gt;Pandas and SQL&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You want to further manipulate SQL data in Python. You can use &lt;code&gt;SQLAlchemy&lt;/code&gt; and &lt;code&gt;pandas&lt;/code&gt; to achieve this.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# Load Libraries
+import pandas as pd
+from sqlalchemy import create_engine
+
+# for python-dotenv method
+import os
+from dotenv import load_dotenv   
+load_dotenv()    
+
+# db connection
+sql_db_connection = os.environ.get(&amp;quot;SQL_DB_CONNECTION&amp;quot;)  # os.environ.get(&#39;postgres:///data.db&#39;)
+
+# Create database engine
+engine = create_engine(sql_db_connection)
+
+# write query to get records with filter
+query = &amp;quot;&amp;quot;&amp;quot;SELECT *
+             FROM table 
+            WHERE borough = &#39;BRONX&#39;
+               OR borough = &#39;BROOKLYN&#39;
+&amp;quot;&amp;quot;&amp;quot;
+
+# query the database
+bronx_query = pd.read_sql(query, engine)
+
+print(bronx_query.unique())  # print distinct records
+print(bronx_query.shape())   # print shape of data
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data in web3 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Get unique users, week-to-week</title>
       <link>/technical_notes/example_tech/mongodb_unique_id/</link>
       <pubDate>Thu, 03 Feb 2022 00:00:00 +0100</pubDate>
