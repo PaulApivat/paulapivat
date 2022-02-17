@@ -65,6 +65,71 @@ df_24 = pd.DataFrame(list(zip(name_list_24, address_list_24, circle_id_list_24))
 
 ```
 
+## Loading Nested Data `json_normalize`
+
+**Situation**: Before creating a dataframe as we saw above, sometimes we just need to convert *nested* JSON data.
+
+**Data breakdown**:
+
+- `data` is variable we save json dump coming in from http request.
+- flatten a portion of `data`, data['businesses'] and load into dataframe, 'bookstores'
+- the 'bookstores' dataframe has many columns, some of which is a *column of arrays*
+- one column, `categories` is a column of arrays (deeply nested data)
+- now, flatten **that** data (categories) setting parameters to `json_normalize`, including
+- data, sep, record_path, meta and meta-prefix
+
+
+```{python}
+# import json_normalize
+import pandas as pd
+import requests
+from pandas.io.json import json_normalize
+
+# use dotenv to hide token info
+import os
+from dotenv import load_dotenv   
+load_dotenv()    
+
+# headers
+api_url = os.environ.get("API_URL")
+api_key = os.environ.get("API_KEY")
+headers = {"Authorization": "Bearer {}".format(api_key)}
+params = {"term": "bookstore",
+          "location": "San Francisco"}
+          
+# make API call and extract JSON data
+response = requests.get(api_url,
+                        headers=headers,
+                        params=params)
+                        
+# data is entire json dump                       
+data = response.json()
+
+# data is also nested json
+# flatten data and load to dataframe with _ separator
+bookstores = json_normalize(data['businesses'], sep="_")
+print(list(bookstores))
+
+# print deeply nested data
+# within bookstores dataframe, choose "categories" column
+print(bookstores.categories.head())
+
+# flatten categories data, bring in business details
+df = json_normalize(data['businesses'],
+                    sep="_",
+                    record_path = "categories",
+                    meta = ["name",
+                            "alias",
+                            "rating",
+                            ["coordinates", "latitude"],
+                            ["coordinates", "longitude"]],
+                    meta_prefix="biz_")
+
+
+
+
+
+```
 
 For more content on data and web3 [find me on Twitter](https://twitter.com/paulapivat).
 

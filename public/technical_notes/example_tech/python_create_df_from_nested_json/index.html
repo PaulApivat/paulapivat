@@ -1076,6 +1076,7 @@
       <nav id="TableOfContents">
   <ul>
     <li><a href="#turning-nested-json-data-into-dataframes">Turning Nested JSON data into dataframes</a></li>
+    <li><a href="#loading-nested-data-json_normalize">Loading Nested Data <code>json_normalize</code></a></li>
   </ul>
 </nav>
 
@@ -1132,6 +1133,67 @@ for dct in df_manifest_24['circle.users'][0]:
 # create dataframe from lists
 df_24 = pd.DataFrame(list(zip(name_list_24, address_list_24, circle_id_list_24)),
                      columns=['Name', 'Address', 'Circle_Id'])
+
+</code></pre>
+<h2 id="loading-nested-data-json_normalize">Loading Nested Data <code>json_normalize</code></h2>
+<p><strong>Situation</strong>: Before creating a dataframe as we saw above, sometimes we just need to convert <em>nested</em> JSON data.</p>
+<p><strong>Data breakdown</strong>:</p>
+<ul>
+<li><code>data</code> is variable we save json dump coming in from http request.</li>
+<li>flatten a portion of <code>data</code>, data[&lsquo;businesses&rsquo;] and load into dataframe, &lsquo;bookstores&rsquo;</li>
+<li>the &lsquo;bookstores&rsquo; dataframe has many columns, some of which is a <em>column of arrays</em></li>
+<li>one column, <code>categories</code> is a column of arrays (deeply nested data)</li>
+<li>now, flatten <strong>that</strong> data (categories) setting parameters to <code>json_normalize</code>, including</li>
+<li>data, sep, record_path, meta and meta-prefix</li>
+</ul>
+<pre><code class="language-{python}"># import json_normalize
+import pandas as pd
+import requests
+from pandas.io.json import json_normalize
+
+# use dotenv to hide token info
+import os
+from dotenv import load_dotenv   
+load_dotenv()    
+
+# headers
+api_url = os.environ.get(&quot;API_URL&quot;)
+api_key = os.environ.get(&quot;API_KEY&quot;)
+headers = {&quot;Authorization&quot;: &quot;Bearer {}&quot;.format(api_key)}
+params = {&quot;term&quot;: &quot;bookstore&quot;,
+          &quot;location&quot;: &quot;San Francisco&quot;}
+          
+# make API call and extract JSON data
+response = requests.get(api_url,
+                        headers=headers,
+                        params=params)
+                        
+# data is entire json dump                       
+data = response.json()
+
+# data is also nested json
+# flatten data and load to dataframe with _ separator
+bookstores = json_normalize(data['businesses'], sep=&quot;_&quot;)
+print(list(bookstores))
+
+# print deeply nested data
+# within bookstores dataframe, choose &quot;categories&quot; column
+print(bookstores.categories.head())
+
+# flatten categories data, bring in business details
+df = json_normalize(data['businesses'],
+                    sep=&quot;_&quot;,
+                    record_path = &quot;categories&quot;,
+                    meta = [&quot;name&quot;,
+                            &quot;alias&quot;,
+                            &quot;rating&quot;,
+                            [&quot;coordinates&quot;, &quot;latitude&quot;],
+                            [&quot;coordinates&quot;, &quot;longitude&quot;]],
+                    meta_prefix=&quot;biz_&quot;)
+
+
+
+
 
 </code></pre>
 <p>For more content on data and web3 
