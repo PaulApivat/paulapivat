@@ -13,6 +13,285 @@
     </image>
     
     <item>
+      <title>Functions in Python</title>
+      <link>/technical_notes/example_tech/python_functions/</link>
+      <pubDate>Thu, 17 Feb 2022 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_functions/</guid>
+      <description>&lt;h2 id=&#34;docstrings&#34;&gt;Docstrings&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;def function(arg_1, arg_2=42):
+&amp;quot;&amp;quot;&amp;quot; Description of function
+
+Args: 
+   arg_1(str): description of argument one
+   arg_2(int, optional): 
+   
+Returns:
+   bool: description of return value
+   
+Raises:
+   ValueError: include errors that function intentionally raises (if applicable)
+   
+Note: any notes here
+&amp;quot;&amp;quot;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;immutable-vs-mutable&#34;&gt;Immutable vs Mutable&lt;/h2&gt;
+&lt;h3 id=&#34;immutable&#34;&gt;Immutable&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;int&lt;/li&gt;
+&lt;li&gt;float&lt;/li&gt;
+&lt;li&gt;bool&lt;/li&gt;
+&lt;li&gt;string&lt;/li&gt;
+&lt;li&gt;bytes&lt;/li&gt;
+&lt;li&gt;tuple&lt;/li&gt;
+&lt;li&gt;frozenset&lt;/li&gt;
+&lt;li&gt;None&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;mutable&#34;&gt;Mutable&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;list&lt;/li&gt;
+&lt;li&gt;dict&lt;/li&gt;
+&lt;li&gt;set&lt;/li&gt;
+&lt;li&gt;bytearray&lt;/li&gt;
+&lt;li&gt;objects&lt;/li&gt;
+&lt;li&gt;functions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;context-managers-function-based&#34;&gt;Context Managers (function-based)&lt;/h2&gt;
+&lt;p&gt;Creating a context manager, basic structure:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Define a function&lt;/li&gt;
+&lt;li&gt;(optional) Add any setup code your context needs&lt;/li&gt;
+&lt;li&gt;Use the &amp;lsquo;yield&amp;rsquo; keyword&lt;/li&gt;
+&lt;li&gt;(optional) Add any teardown code your context needs&lt;/li&gt;
+&lt;li&gt;Add the &lt;code&gt;@contextlib.contextmanager&lt;/code&gt; &lt;strong&gt;decorator&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;yield-keyword&#34;&gt;Yield keyword&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;@contextlib.contextmanager
+def my_context():
+    # Add any set up code you need
+    yield
+    # Add any teardown code you need
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;open-a-file&#34;&gt;Open a file&lt;/h3&gt;
+&lt;p&gt;Generic structure and example using &lt;code&gt;open()&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# generic structure
+with &amp;lt;context-manager&amp;gt;(&amp;lt;args&amp;gt;) as &amp;lt;variable-name&amp;gt;:
+    # Run code here
+    # This code is running &#39;inside the context&#39;
+# This code runs after the context is removed
+
+with open(&#39;my_file.txt&#39;) as my_file:
+    text = my_file.read()
+    length = len(text)
+    
+print(&#39;The file is {} characters long&#39;.format(length))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;read-file&#34;&gt;Read file&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;@contextlib.context.manager
+def open_read_only(filename):
+    &amp;quot;&amp;quot;&amp;quot;description: open a file in read-only mode
+    
+    args: filename(str): location of file to read
+    
+    yields: file object
+    &amp;quot;&amp;quot;&amp;quot;
+    read_only_file = open(filename, mode=&#39;r&#39;)
+    # Yield read_only_file so it can be assigned to my_file
+    yield read_only_file
+    # close read_only_file
+    read_only_file.close()
+    
+with open_read_only(&#39;my_file.txt&#39;) as my_file:
+    print(my_file.read())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;count-words&#34;&gt;Count words&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;with open(&amp;quot;alice.txt&amp;quot;) as file:
+    text = file.read()
+    
+n = 0
+for word in text.split():
+    if word.lower() in [&#39;cat&#39;, &#39;cats&#39;]:
+        n += 1
+
+print(&#39;Lewis Carroll used the word &amp;quot;cat&amp;quot; {} times&#39;.format(n))
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;set-a-timer&#34;&gt;Set a timer&lt;/h3&gt;
+&lt;p&gt;Time how long a function takes to run&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;image = get_image_from_instagram()
+
+# time how long Numpy takes to run
+with timer():
+    print(&#39;Numpy version&#39;)
+    process_with_numpy(image)
+
+# timer with context manager
+@contextlib.contextmanager
+def timer():
+    &amp;quot;&amp;quot;&amp;quot;description: time the execution of a context block
+    
+    Yields: None
+    &amp;quot;&amp;quot;&amp;quot;
+    start = time.time()
+    # send control back to the context block
+    yield
+    end = time.time()
+    print(&#39;Elapsed: {:.2f}s&#39;.format(end - start))
+    
+with timer():
+    print(&#39;This should take approx 0.25 seconds&#39;)
+    time.sleep(0.25)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;setup-and-teardown-db-connection-example&#34;&gt;Setup and teardown (db connection example)&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;@contextlib.contextmanager
+def database(url):
+    # set up database connection
+    db = postgres.connect(url)
+    
+    yield db
+    
+    # tear down database connection
+    db.disconnect()
+
+url = &#39;http://domain.name/data&#39;
+with database(url) as my_db:
+    course_list = my_db.execute(
+    &#39;SELECT * FROM courses&#39;
+    )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;using-a-decorator&#34;&gt;Using a decorator&lt;/h3&gt;
+&lt;h2 id=&#34;advanced-topics&#34;&gt;Advanced Topics&lt;/h2&gt;
+&lt;h3 id=&#34;nested-contexts&#34;&gt;Nested Contexts&lt;/h3&gt;
+&lt;p&gt;Use nested loop with a context manager. This is legal in python.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;def copy(src, dst):
+    &amp;quot;&amp;quot;&amp;quot;copy the content of one file to another
+    
+    args: 
+        src (str): file name of file to be copied
+        dst (str): where to write the new file
+    &amp;quot;&amp;quot;&amp;quot;
+    # open both files
+    with open(src) as f_src:
+        with open(dst) as f_dst:
+            # read and write each line, one at a time
+            for line in f_src:
+                f_dst.write(line)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;handling-errors&#34;&gt;Handling errors&lt;/h3&gt;
+&lt;p&gt;Use:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;try&lt;/li&gt;
+&lt;li&gt;except&lt;/li&gt;
+&lt;li&gt;finally&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;def get_printer(ip):
+    p = connect_to_printer(ip)
+    
+    try:
+        yield
+    finally:
+        p.disconnect()
+        print(&#39;disconnected from printer&#39;)
+        
+doc = {&#39;text&#39;: &#39;This is a test.&#39;}
+
+with get_printer(&#39;10.0.34.111&#39;) as printer:
+    printer.print_page(doc[&#39;txt&#39;])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;patterns&#34;&gt;Patterns&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Open Close&lt;/li&gt;
+&lt;li&gt;Lock Release&lt;/li&gt;
+&lt;li&gt;Change Reset&lt;/li&gt;
+&lt;li&gt;Enter Exit&lt;/li&gt;
+&lt;li&gt;Start Stop&lt;/li&gt;
+&lt;li&gt;Setup Teardown&lt;/li&gt;
+&lt;li&gt;Connect Disconnect&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;decorators&#34;&gt;Decorators&lt;/h2&gt;
+&lt;p&gt;Decorators use:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;functions as objects&lt;/li&gt;
+&lt;li&gt;nested functions&lt;/li&gt;
+&lt;li&gt;nonlocal scope&lt;/li&gt;
+&lt;li&gt;closures&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;lists-and-dictionaries-of-functions&#34;&gt;Lists and dictionaries of functions&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;store function in a dictionary&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;dict_of_functions = {
+    &#39;funct1&#39;: open,
+    &#39;funct2&#39;: print
+}
+
+dict_of_functions[&#39;funct2&#39;](&#39;I am printing with the value of a dictionary&#39;)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;pass function into another function&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;scope&#34;&gt;Scope&lt;/h2&gt;
+&lt;h3 id=&#34;global&#34;&gt;global&lt;/h3&gt;
+&lt;p&gt;Use &lt;strong&gt;global&lt;/strong&gt; key word to update a variable from inside the function:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;call_count = 0
+
+def my_function():
+    # use a keyword that lets us update call_count
+    global call_count
+    call_count += 1
+    
+    print(&amp;quot;You&#39;ve called my_function() {} times!&amp;quot;.format(
+        call_count
+    ))
+
+for _ in range(20):
+    my_function()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;nonlocal&#34;&gt;nonlocal&lt;/h3&gt;
+&lt;p&gt;Use &lt;strong&gt;nonlocal&lt;/strong&gt; keyword to update a variable in nested function.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;def read_files():
+    file_contents = None
+    
+    def save_contents(filename):
+        # Add a keyword that lets us modify file_contents
+        nonlocal file_contents
+        if file_contents is None:
+            file_contents = []
+        with open(filename) as fin:
+            file_contents.append(fin.read())
+            
+    for filename in [&#39;bitcoin.txt&#39;, &#39;sovindividual.txt&#39; ,&#39;smartcontracts.txt&#39;]:
+        save_contents(filename)
+    
+    return file_contents
+    
+print(&#39;\n&#39;.join(read_files()))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;closures&#34;&gt;Closures&lt;/h2&gt;
+&lt;p&gt;A closure is python&amp;rsquo;s way of attaching a &lt;strong&gt;nonlocal&lt;/strong&gt; variable to a return function so that the function can operate even when called outside of parent scope.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;def parent(arg_1, arg_2):
+    value = 22
+    my_dict = {&#39;chocolate&#39;: &#39;yummy&#39;}
+    
+    def child():
+        print(2 * value)
+        print(my_dict[&#39;chocolate&#39;])
+        print(arg_1 + arg_2)
+        
+    return child
+    
+new_function = parent(3, 4)
+
+print([cell.cell_contents for cell in new_function.__closure__])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;deletion&#34;&gt;deletion&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;overwriting&#34;&gt;overwriting&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Use concat to merge dataframes</title>
       <link>/technical_notes/example_tech/pandas_concat_df/</link>
       <pubDate>Tue, 08 Feb 2022 00:00:00 +0100</pubDate>
@@ -51,120 +330,6 @@ final_frames = specific_col_frames.rename(columns={&#39;level_0&#39;: &#39;index
       <link>/technical_notes/example_tech/python_create_df_from_nested_json/</link>
       <pubDate>Tue, 08 Feb 2022 00:00:00 +0100</pubDate>
       <guid>/technical_notes/example_tech/python_create_df_from_nested_json/</guid>
-      <description>&lt;h2 id=&#34;turning-nested-json-data-into-dataframes&#34;&gt;Turning Nested JSON data into dataframes&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You&amp;rsquo;ve connected to an 
-&lt;a href=&#34;https://paulapivat.com/technical_notes/example_tech/python_api_connection/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API endpoint&lt;/a&gt;, that is structured as a nested json, here&amp;rsquo;s how to loop through and select certain values into a dataframe for further processing.&lt;/p&gt;
-&lt;p&gt;In one example, we&amp;rsquo;re looping through a particular endpoint from 
-&lt;a href=&#34;https://coordinape.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Coordinape&lt;/a&gt;. We&amp;rsquo;re going to loop through one level (list of dictionaries) and &lt;strong&gt;append&lt;/strong&gt; data to &lt;strong&gt;empty lists&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Second example, we&amp;rsquo;ll &lt;em&gt;conditionally&lt;/em&gt; loop through the &lt;em&gt;second level&lt;/em&gt; (a dictionary) to grab specific values. As a &lt;em&gt;bonus&lt;/em&gt;, we&amp;rsquo;ll also use &lt;strong&gt;try-except&lt;/strong&gt;(error handling) to handle an &lt;code&gt;AttributeError&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Finally, we&amp;rsquo;ll create the &lt;strong&gt;dataframe from lists&lt;/strong&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;
-# empty lists
-name_list_24 = []
-address_list_24 = []
-circle_id_list_24 = []
-discord_username_list_24 = []
-profile_address_24 = []
-
-
-# loop through level 1
-for dct in df_manifest_24[&#39;circle.users&#39;][0]:
-    name_list_24.append(dct[&#39;name&#39;])
-    address_list_24.append(dct[&#39;address&#39;])
-    circle_id_list_24.append(dct[&#39;circle_id&#39;])
-
-
-# conditionally loop through level 2 
-# use try-except
-for dct in df_manifest_24[&#39;circle.users&#39;][0]:
-    try:
-        for k, v in dct[&#39;profile&#39;].items():
-            if k == &#39;discord_username&#39;:
-                discord_username_list_24.append(v)
-            elif k == &#39;address&#39;:
-                profile_address_24.append(v)
-            else:
-                print(&amp;quot;Done.&amp;quot;)
-    except:
-        AttributeError
-    pass
-
-# create dataframe from lists
-df_24 = pd.DataFrame(list(zip(name_list_24, address_list_24, circle_id_list_24)),
-                     columns=[&#39;Name&#39;, &#39;Address&#39;, &#39;Circle_Id&#39;])
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;loading-nested-data-json_normalize&#34;&gt;Loading Nested Data &lt;code&gt;json_normalize&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: Before creating a dataframe as we saw above, sometimes we just need to convert &lt;em&gt;nested&lt;/em&gt; JSON data.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Data breakdown&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;data&lt;/code&gt; is variable we save json dump coming in from http request.&lt;/li&gt;
-&lt;li&gt;flatten a portion of &lt;code&gt;data&lt;/code&gt;, data[&amp;lsquo;businesses&amp;rsquo;] and load into dataframe, &amp;lsquo;bookstores&amp;rsquo;&lt;/li&gt;
-&lt;li&gt;the &amp;lsquo;bookstores&amp;rsquo; dataframe has many columns, some of which is a &lt;em&gt;column of arrays&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;one column, &lt;code&gt;categories&lt;/code&gt; is a column of arrays (deeply nested data)&lt;/li&gt;
-&lt;li&gt;now, flatten &lt;strong&gt;that&lt;/strong&gt; data (categories) setting parameters to &lt;code&gt;json_normalize&lt;/code&gt;, including&lt;/li&gt;
-&lt;li&gt;data, sep, record_path, meta and meta-prefix&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# import json_normalize
-import pandas as pd
-import requests
-from pandas.io.json import json_normalize
-
-# use dotenv to hide token info
-import os
-from dotenv import load_dotenv   
-load_dotenv()    
-
-# headers
-api_url = os.environ.get(&amp;quot;API_URL&amp;quot;)
-api_key = os.environ.get(&amp;quot;API_KEY&amp;quot;)
-headers = {&amp;quot;Authorization&amp;quot;: &amp;quot;Bearer {}&amp;quot;.format(api_key)}
-params = {&amp;quot;term&amp;quot;: &amp;quot;bookstore&amp;quot;,
-          &amp;quot;location&amp;quot;: &amp;quot;San Francisco&amp;quot;}
-          
-# make API call and extract JSON data
-response = requests.get(api_url,
-                        headers=headers,
-                        params=params)
-                        
-# data is entire json dump                       
-data = response.json()
-
-# data is also nested json
-# flatten data and load to dataframe with _ separator
-bookstores = json_normalize(data[&#39;businesses&#39;], sep=&amp;quot;_&amp;quot;)
-print(list(bookstores))
-
-# print deeply nested data
-# within bookstores dataframe, choose &amp;quot;categories&amp;quot; column
-print(bookstores.categories.head())
-
-# flatten categories data, bring in business details
-df = json_normalize(data[&#39;businesses&#39;],
-                    sep=&amp;quot;_&amp;quot;,
-                    record_path = &amp;quot;categories&amp;quot;,
-                    meta = [&amp;quot;name&amp;quot;,
-                            &amp;quot;alias&amp;quot;,
-                            &amp;quot;rating&amp;quot;,
-                            [&amp;quot;coordinates&amp;quot;, &amp;quot;latitude&amp;quot;],
-                            [&amp;quot;coordinates&amp;quot;, &amp;quot;longitude&amp;quot;]],
-                    meta_prefix=&amp;quot;biz_&amp;quot;)
-
-
-
-
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For more content on data and web3 
-&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Create DataFrames from Nested JSON data</title>
-      <link>/technical_notes/example_tech/python_functions_overview/</link>
-      <pubDate>Tue, 08 Feb 2022 00:00:00 +0100</pubDate>
-      <guid>/technical_notes/example_tech/python_functions_overview/</guid>
       <description>&lt;h2 id=&#34;turning-nested-json-data-into-dataframes&#34;&gt;Turning Nested JSON data into dataframes&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You&amp;rsquo;ve connected to an 
 &lt;a href=&#34;https://paulapivat.com/technical_notes/example_tech/python_api_connection/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API endpoint&lt;/a&gt;, that is structured as a nested json, here&amp;rsquo;s how to loop through and select certain values into a dataframe for further processing.&lt;/p&gt;

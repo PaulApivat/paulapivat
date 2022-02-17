@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Prep dataframe to insert to database Situation: When inserting to postgresql with sqlalchemy, the to_sql() function works, but we need to make sure we&rsquo;re appending the id (primary key) column the right way &ndash; incrementally.">
+  <meta name="description" content="Docstrings def function(arg_1, arg_2=42): &quot;&quot;&quot; Description of function Args: arg_1(str): description of argument one arg_2(int, optional): Returns: bool: description of return value Raises: ValueError: include errors that function intentionally raises (if applicable) Note: any notes here &quot;&quot;&quot;  Immutable vs Mutable Immutable  int float bool string bytes tuple frozenset None  Mutable  list dict set bytearray objects functions  Context Managers (function-based) Creating a context manager, basic structure:">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_functions/">
 
   
 
@@ -217,7 +217,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_functions/">
 
   
   
@@ -236,15 +236,15 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">
-  <meta property="og:title" content="Prep dataframe to insert to database | Paul Apivat">
-  <meta property="og:description" content="Prep dataframe to insert to database Situation: When inserting to postgresql with sqlalchemy, the to_sql() function works, but we need to make sure we&rsquo;re appending the id (primary key) column the right way &ndash; incrementally."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_functions/">
+  <meta property="og:title" content="Functions in Python | Paul Apivat">
+  <meta property="og:description" content="Docstrings def function(arg_1, arg_2=42): &quot;&quot;&quot; Description of function Args: arg_1(str): description of argument one arg_2(int, optional): Returns: bool: description of return value Raises: ValueError: include errors that function intentionally raises (if applicable) Note: any notes here &quot;&quot;&quot;  Immutable vs Mutable Immutable  int float bool string bytes tuple frozenset None  Mutable  list dict set bytearray objects functions  Context Managers (function-based) Creating a context manager, basic structure:"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-11-07T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2022-02-17T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-11-07T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2022-02-17T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +263,7 @@
 
 
 
-  <title>Prep dataframe to insert to database | Paul Apivat</title>
+  <title>Functions in Python | Paul Apivat</title>
 
 </head>
 
@@ -844,7 +844,7 @@
     <a class="docs-toc-link" href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">Pipeline</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">Prep dataframe to insert to database</a>
       </li>
       
@@ -914,7 +914,7 @@
         <a href="/technical_notes/example_tech/python_faker/">Faker in Python</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/python_functions/">Functions in Python</a>
       </li>
       
@@ -1079,7 +1079,48 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#prep-dataframe-to-insert-to-database">Prep dataframe to insert to database</a></li>
+    <li><a href="#docstrings">Docstrings</a></li>
+    <li><a href="#immutable-vs-mutable">Immutable vs Mutable</a>
+      <ul>
+        <li><a href="#immutable">Immutable</a></li>
+        <li><a href="#mutable">Mutable</a></li>
+      </ul>
+    </li>
+    <li><a href="#context-managers-function-based">Context Managers (function-based)</a>
+      <ul>
+        <li><a href="#yield-keyword">Yield keyword</a></li>
+        <li><a href="#open-a-file">Open a file</a></li>
+        <li><a href="#read-file">Read file</a></li>
+        <li><a href="#count-words">Count words</a></li>
+        <li><a href="#set-a-timer">Set a timer</a></li>
+        <li><a href="#setup-and-teardown-db-connection-example">Setup and teardown (db connection example)</a></li>
+        <li><a href="#using-a-decorator">Using a decorator</a></li>
+      </ul>
+    </li>
+    <li><a href="#advanced-topics">Advanced Topics</a>
+      <ul>
+        <li><a href="#nested-contexts">Nested Contexts</a></li>
+        <li><a href="#handling-errors">Handling errors</a></li>
+        <li><a href="#patterns">Patterns</a></li>
+      </ul>
+    </li>
+    <li><a href="#decorators">Decorators</a>
+      <ul>
+        <li><a href="#lists-and-dictionaries-of-functions">Lists and dictionaries of functions</a></li>
+      </ul>
+    </li>
+    <li><a href="#scope">Scope</a>
+      <ul>
+        <li><a href="#global">global</a></li>
+        <li><a href="#nonlocal">nonlocal</a></li>
+      </ul>
+    </li>
+    <li><a href="#closures">Closures</a>
+      <ul>
+        <li><a href="#deletion">deletion</a></li>
+        <li><a href="#overwriting">overwriting</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -1092,39 +1133,280 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Prep dataframe to insert to database</h1>
+          <h1>Functions in Python</h1>
 
           <div class="article-style">
-            <h2 id="prep-dataframe-to-insert-to-database">Prep dataframe to insert to database</h2>
-<p><strong>Situation</strong>: When inserting to postgresql with sqlalchemy, the <code>to_sql()</code> function works, but we need to make sure we&rsquo;re appending the <code>id</code> (primary key) column the right way &ndash; incrementally.</p>
-<p>This will involve manipulating the dataframe with by incremeting with the <code>max_id</code> before using <code>reset_index()</code> to create an additional column using the natural index, then setting the <code>index=False</code> parameter.</p>
-<pre><code class="language-{python}"># change column name
-# id, graph_id, amount_display, from_address, to_address, tx_timestamp, timestamp_display
+            <h2 id="docstrings">Docstrings</h2>
+<pre><code class="language-{python}">def function(arg_1, arg_2=42):
+&quot;&quot;&quot; Description of function
 
-# use rename function to change Two column names, set inplace=False to preserve original dataframe column name
-df2 = df.rename(columns={'id': 'graph_id',
-                         'timestamp': 'tx_timestamp'}, inplace=False)
+Args: 
+   arg_1(str): description of argument one
+   arg_2(int, optional): 
+   
+Returns:
+   bool: description of return value
+   
+Raises:
+   ValueError: include errors that function intentionally raises (if applicable)
+   
+Note: any notes here
+&quot;&quot;&quot;
+</code></pre>
+<h2 id="immutable-vs-mutable">Immutable vs Mutable</h2>
+<h3 id="immutable">Immutable</h3>
+<ul>
+<li>int</li>
+<li>float</li>
+<li>bool</li>
+<li>string</li>
+<li>bytes</li>
+<li>tuple</li>
+<li>frozenset</li>
+<li>None</li>
+</ul>
+<h3 id="mutable">Mutable</h3>
+<ul>
+<li>list</li>
+<li>dict</li>
+<li>set</li>
+<li>bytearray</li>
+<li>objects</li>
+<li>functions</li>
+</ul>
+<h2 id="context-managers-function-based">Context Managers (function-based)</h2>
+<p>Creating a context manager, basic structure:</p>
+<ol>
+<li>Define a function</li>
+<li>(optional) Add any setup code your context needs</li>
+<li>Use the &lsquo;yield&rsquo; keyword</li>
+<li>(optional) Add any teardown code your context needs</li>
+<li>Add the <code>@contextlib.contextmanager</code> <strong>decorator</strong>.</li>
+</ol>
+<h3 id="yield-keyword">Yield keyword</h3>
+<pre><code class="language-{python}">@contextlib.contextmanager
+def my_context():
+    # Add any set up code you need
+    yield
+    # Add any teardown code you need
+</code></pre>
+<h3 id="open-a-file">Open a file</h3>
+<p>Generic structure and example using <code>open()</code></p>
+<pre><code class="language-{python}"># generic structure
+with &lt;context-manager&gt;(&lt;args&gt;) as &lt;variable-name&gt;:
+    # Run code here
+    # This code is running 'inside the context'
+# This code runs after the context is removed
 
+with open('my_file.txt') as my_file:
+    text = my_file.read()
+    length = len(text)
+    
+print('The file is {} characters long'.format(length))
+</code></pre>
+<h3 id="read-file">Read file</h3>
+<pre><code class="language-{python}">@contextlib.context.manager
+def open_read_only(filename):
+    &quot;&quot;&quot;description: open a file in read-only mode
+    
+    args: filename(str): location of file to read
+    
+    yields: file object
+    &quot;&quot;&quot;
+    read_only_file = open(filename, mode='r')
+    # Yield read_only_file so it can be assigned to my_file
+    yield read_only_file
+    # close read_only_file
+    read_only_file.close()
+    
+with open_read_only('my_file.txt') as my_file:
+    print(my_file.read())
+</code></pre>
+<h3 id="count-words">Count words</h3>
+<pre><code class="language-{python}">with open(&quot;alice.txt&quot;) as file:
+    text = file.read()
+    
+n = 0
+for word in text.split():
+    if word.lower() in ['cat', 'cats']:
+        n += 1
 
-# reorder dataframe column using list of names
-# list of names (in same order as stg_subgraph_bank)
-list_of_col_names = ['graph_id', 'amount_display', 'from_address',
-                     'to_address', 'tx_timestamp', 'timestamp_display']
-df2 = df2.filter(list_of_col_names)
+print('Lewis Carroll used the word &quot;cat&quot; {} times'.format(n))
 
 </code></pre>
-<p>This next part is KEY:</p>
-<pre><code class="language-{python}">df2.index += max_id  # increment with max_id
-df2 = df2.reset_index()  # reset index to later increment with max_id
+<h3 id="set-a-timer">Set a timer</h3>
+<p>Time how long a function takes to run</p>
+<pre><code class="language-{python}">image = get_image_from_instagram()
 
-df3 = df2.rename(columns={'index': 'id'}, inplace=False)
+# time how long Numpy takes to run
+with timer():
+    print('Numpy version')
+    process_with_numpy(image)
 
-# only do this step if you've made sure to duplicate a test table in postgresql, then ensure that the dataframe is in the same shape as the postgresql table
-df3.to_sql('stg_subgraph_bank_1', con=db, if_exists='append', index=False)
+# timer with context manager
+@contextlib.contextmanager
+def timer():
+    &quot;&quot;&quot;description: time the execution of a context block
+    
+    Yields: None
+    &quot;&quot;&quot;
+    start = time.time()
+    # send control back to the context block
+    yield
+    end = time.time()
+    print('Elapsed: {:.2f}s'.format(end - start))
+    
+with timer():
+    print('This should take approx 0.25 seconds')
+    time.sleep(0.25)
+</code></pre>
+<h3 id="setup-and-teardown-db-connection-example">Setup and teardown (db connection example)</h3>
+<pre><code class="language-{python}">@contextlib.contextmanager
+def database(url):
+    # set up database connection
+    db = postgres.connect(url)
+    
+    yield db
+    
+    # tear down database connection
+    db.disconnect()
+
+url = 'http://domain.name/data'
+with database(url) as my_db:
+    course_list = my_db.execute(
+    'SELECT * FROM courses'
+    )
+</code></pre>
+<h3 id="using-a-decorator">Using a decorator</h3>
+<h2 id="advanced-topics">Advanced Topics</h2>
+<h3 id="nested-contexts">Nested Contexts</h3>
+<p>Use nested loop with a context manager. This is legal in python.</p>
+<pre><code class="language-{python}">def copy(src, dst):
+    &quot;&quot;&quot;copy the content of one file to another
+    
+    args: 
+        src (str): file name of file to be copied
+        dst (str): where to write the new file
+    &quot;&quot;&quot;
+    # open both files
+    with open(src) as f_src:
+        with open(dst) as f_dst:
+            # read and write each line, one at a time
+            for line in f_src:
+                f_dst.write(line)
+</code></pre>
+<h3 id="handling-errors">Handling errors</h3>
+<p>Use:</p>
+<ul>
+<li>try</li>
+<li>except</li>
+<li>finally</li>
+</ul>
+<pre><code class="language-{python}">def get_printer(ip):
+    p = connect_to_printer(ip)
+    
+    try:
+        yield
+    finally:
+        p.disconnect()
+        print('disconnected from printer')
+        
+doc = {'text': 'This is a test.'}
+
+with get_printer('10.0.34.111') as printer:
+    printer.print_page(doc['txt'])
+</code></pre>
+<h3 id="patterns">Patterns</h3>
+<ul>
+<li>Open Close</li>
+<li>Lock Release</li>
+<li>Change Reset</li>
+<li>Enter Exit</li>
+<li>Start Stop</li>
+<li>Setup Teardown</li>
+<li>Connect Disconnect</li>
+</ul>
+<h2 id="decorators">Decorators</h2>
+<p>Decorators use:</p>
+<ul>
+<li>functions as objects</li>
+<li>nested functions</li>
+<li>nonlocal scope</li>
+<li>closures</li>
+</ul>
+<h3 id="lists-and-dictionaries-of-functions">Lists and dictionaries of functions</h3>
+<ul>
+<li>store function in a dictionary</li>
+</ul>
+<pre><code class="language-{python}">dict_of_functions = {
+    'funct1': open,
+    'funct2': print
+}
+
+dict_of_functions['funct2']('I am printing with the value of a dictionary')
 
 </code></pre>
-<p>For more content on data science, R, and Python 
-<a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
+<ul>
+<li>pass function into another function</li>
+</ul>
+<h2 id="scope">Scope</h2>
+<h3 id="global">global</h3>
+<p>Use <strong>global</strong> key word to update a variable from inside the function:</p>
+<pre><code class="language-{python}">call_count = 0
+
+def my_function():
+    # use a keyword that lets us update call_count
+    global call_count
+    call_count += 1
+    
+    print(&quot;You've called my_function() {} times!&quot;.format(
+        call_count
+    ))
+
+for _ in range(20):
+    my_function()
+</code></pre>
+<h3 id="nonlocal">nonlocal</h3>
+<p>Use <strong>nonlocal</strong> keyword to update a variable in nested function.</p>
+<pre><code class="language-{python}">def read_files():
+    file_contents = None
+    
+    def save_contents(filename):
+        # Add a keyword that lets us modify file_contents
+        nonlocal file_contents
+        if file_contents is None:
+            file_contents = []
+        with open(filename) as fin:
+            file_contents.append(fin.read())
+            
+    for filename in ['bitcoin.txt', 'sovindividual.txt' ,'smartcontracts.txt']:
+        save_contents(filename)
+    
+    return file_contents
+    
+print('\n'.join(read_files()))
+</code></pre>
+<h2 id="closures">Closures</h2>
+<p>A closure is python&rsquo;s way of attaching a <strong>nonlocal</strong> variable to a return function so that the function can operate even when called outside of parent scope.</p>
+<pre><code class="language-{python}">def parent(arg_1, arg_2):
+    value = 22
+    my_dict = {'chocolate': 'yummy'}
+    
+    def child():
+        print(2 * value)
+        print(my_dict['chocolate'])
+        print(arg_1 + arg_2)
+        
+    return child
+    
+new_function = parent(3, 4)
+
+print([cell.cell_contents for cell in new_function.__closure__])
+</code></pre>
+<h3 id="deletion">deletion</h3>
+<pre><code class="language-{python}"></code></pre>
+<h3 id="overwriting">overwriting</h3>
+<pre><code class="language-{python}"></code></pre>
 
           </div>
 
@@ -1140,15 +1422,8 @@ df3.to_sql('stg_subgraph_bank_1', con=db, if_exists='append', index=False)
   
   
   <div class="post-nav-item">
-    <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/postgresql_connecting_sqlalchemy/" rel="next">Connecting to postgresql database</a>
-  </div>
-  
-  
-  
-  <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/postgresql_select_range_of_rows/" rel="prev">Select a range of rows</a>
+    <a href="/technical_notes/example_tech/pandas_concat_df/" rel="prev">Use concat to merge dataframes</a>
   </div>
   
 </div>
@@ -1158,7 +1433,7 @@ df3.to_sql('stg_subgraph_bank_1', con=db, if_exists='append', index=False)
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Nov 7, 2021</p>
+          <p>Last updated on Feb 17, 2022</p>
 
           
 
@@ -1170,7 +1445,7 @@ df3.to_sql('stg_subgraph_bank_1', con=db, if_exists='append', index=False)
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_functions.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>

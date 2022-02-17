@@ -27,10 +27,11 @@
   
     
   
-  <meta name="description" content="Prep dataframe to insert to database Situation: When inserting to postgresql with sqlalchemy, the to_sql() function works, but we need to make sure we&rsquo;re appending the id (primary key) column the right way &ndash; incrementally.">
+  <meta name="description" content="API Connection Situation: You need to use requests to consume an API, but with authorization parameters.
+Note: This pattern can be used across project, I used this to consume Coordinape API data.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/python_api_connection-copy/">
 
   
 
@@ -217,7 +218,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">
+  <link rel="canonical" href="/technical_notes/example_tech/python_api_connection-copy/">
 
   
   
@@ -236,15 +237,16 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">
-  <meta property="og:title" content="Prep dataframe to insert to database | Paul Apivat">
-  <meta property="og:description" content="Prep dataframe to insert to database Situation: When inserting to postgresql with sqlalchemy, the to_sql() function works, but we need to make sure we&rsquo;re appending the id (primary key) column the right way &ndash; incrementally."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/python_api_connection-copy/">
+  <meta property="og:title" content="Establishing an API connection with the requests library | Paul Apivat">
+  <meta property="og:description" content="API Connection Situation: You need to use requests to consume an API, but with authorization parameters.
+Note: This pattern can be used across project, I used this to consume Coordinape API data."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2021-11-07T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2021-12-20T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2021-11-07T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2021-12-20T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +265,7 @@
 
 
 
-  <title>Prep dataframe to insert to database | Paul Apivat</title>
+  <title>Establishing an API connection with the requests library | Paul Apivat</title>
 
 </head>
 
@@ -844,7 +846,7 @@
     <a class="docs-toc-link" href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">Pipeline</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db/">Prep dataframe to insert to database</a>
       </li>
       
@@ -895,11 +897,11 @@
   </div>
   
   <div class="docs-toc-item">
-    <a class="docs-toc-link" href="/technical_notes/example_tech/python_api_connection/">Python Tips</a>
+    <a class="docs-toc-link" href="/technical_notes/example_tech/python_api_connection-copy/">Python Tips</a>
     <ul class="nav docs-sidenav">
       
-      <li >
-        <a href="/technical_notes/example_tech/python_api_connection/">Connect to API</a>
+      <li class="active">
+        <a href="/technical_notes/example_tech/python_api_connection-copy/">Connect to API</a>
       </li>
       
       <li >
@@ -912,10 +914,6 @@
       
       <li >
         <a href="/technical_notes/example_tech/python_faker/">Faker in Python</a>
-      </li>
-      
-      <li >
-        <a href="/technical_notes/example_tech/python_functions/">Functions in Python</a>
       </li>
       
       <li >
@@ -1079,7 +1077,8 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#prep-dataframe-to-insert-to-database">Prep dataframe to insert to database</a></li>
+    <li><a href="#api-connection">API Connection</a></li>
+    <li><a href="#navigating-nested-json-data">Navigating Nested JSON Data</a></li>
   </ul>
 </nav>
 
@@ -1092,38 +1091,87 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Prep dataframe to insert to database</h1>
+          <h1>Establishing an API connection with the requests library</h1>
 
           <div class="article-style">
-            <h2 id="prep-dataframe-to-insert-to-database">Prep dataframe to insert to database</h2>
-<p><strong>Situation</strong>: When inserting to postgresql with sqlalchemy, the <code>to_sql()</code> function works, but we need to make sure we&rsquo;re appending the <code>id</code> (primary key) column the right way &ndash; incrementally.</p>
-<p>This will involve manipulating the dataframe with by incremeting with the <code>max_id</code> before using <code>reset_index()</code> to create an additional column using the natural index, then setting the <code>index=False</code> parameter.</p>
-<pre><code class="language-{python}"># change column name
-# id, graph_id, amount_display, from_address, to_address, tx_timestamp, timestamp_display
+            <h2 id="api-connection">API Connection</h2>
+<p><strong>Situation</strong>: You need to use <code>requests</code> to consume an API, but with authorization parameters.</p>
+<p><strong>Note</strong>: This pattern can be used across project, I used this to consume <strong>Coordinape</strong> API data. You&rsquo;ll want to set up a <code>dot env</code> file to contain any secret API or authorization keys.</p>
+<p>Referencing this 
+<a href="https://stackoverflow.com/questions/19069701/python-requests-library-how-to-pass-authorization-header-with-single-token" target="_blank" rel="noopener">stack overflow</a>.</p>
+<pre><code class="language-{python}"># ---- generic pattern
 
-# use rename function to change Two column names, set inplace=False to preserve original dataframe column name
-df2 = df.rename(columns={'id': 'graph_id',
-                         'timestamp': 'tx_timestamp'}, inplace=False)
+# Request
+REQ = 'https://api.site.com/something/else/else'
 
+# Token (stored in .env)
+AUTH_TOKEN = 'Bearer 8888|fliuzabuvdgfnsuczkncsq12454632'
 
-# reorder dataframe column using list of names
-# list of names (in same order as stg_subgraph_bank)
-list_of_col_names = ['graph_id', 'amount_display', 'from_address',
-                     'to_address', 'tx_timestamp', 'timestamp_display']
-df2 = df2.filter(list_of_col_names)
+# Use os library to pull Token from .env
+auth_token = os.environ.get('AUTH_TOKEN')
 
+# Create Header parameter
+HEADER = {'Authorization': f'{auth_token}'}
+
+# Putting it all together
+response = requests.get(REQ, headers=HEADER)
+
+# Print result
+print(response.json())
 </code></pre>
-<p>This next part is KEY:</p>
-<pre><code class="language-{python}">df2.index += max_id  # increment with max_id
-df2 = df2.reset_index()  # reset index to later increment with max_id
+<p>Here&rsquo;s a real example:</p>
+<pre><code class="language-{python}"># request library to establish connection
+import requests
+from pprint import pprint
 
-df3 = df2.rename(columns={'index': 'id'}, inplace=False)
+# os library used with python-dotenv to grab AUTH_TOKEN from .env
+import os
 
-# only do this step if you've made sure to duplicate a test table in postgresql, then ensure that the dataframe is in the same shape as the postgresql table
-df3.to_sql('stg_subgraph_bank_1', con=db, if_exists='append', index=False)
+# using python-dotenv method
+from dotenv import load_dotenv
+load_dotenv()
 
+# authorization &amp; header
+auth_token = os.environ.get('AUTH_TOKEN')
+HEADER = {'Authorization': f'{auth_token}'}
+
+# ----- Data Endpoints
+
+# Coordinape Round -- OG Bankless(June): Circle id 24
+response24 = requests.get(
+    'https://api.coordinape.com/api/v2/token-gifts?circle_id=24', headers=HEADER)
+pprint(response24.json())
 </code></pre>
-<p>For more content on data science, R, and Python 
+<h2 id="navigating-nested-json-data">Navigating Nested JSON Data</h2>
+<pre><code class="language-{python}">import requests
+from pprint import pprint
+import os
+import pandas as pd
+
+# using python-dotenv method
+from dotenv import load_dotenv
+load_dotenv()
+
+# api endpoints, authorization &amp; header
+auth_token = os.environ.get('AUTH_TOKEN')
+api_endpoint_manifest = os.environ.get('API_ENDPOINT_MANIFEST')
+api_endpoint_users = os.environ.get('API_ENDPOINT_USERS')
+HEADER = {'Authorization': f'{auth_token}'}
+
+# --- Primary steps to explore nested data ------
+response = requests.get(f'{api_endpoint_manifest}', headers=HEADER)
+result = response.json()
+dataframe = pd.json_normalize(result)
+list_of_column_names = list(dataframe)
+
+# dataframe is [1 rows x 48 columns]
+# unpack dataframe using f-string
+for item in list_of_column_names:
+    print(dataframe[f'{item}'])
+
+# ------------------------------------------------
+</code></pre>
+<p>For more content on data and web3 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
@@ -1141,14 +1189,14 @@ df3.to_sql('stg_subgraph_bank_1', con=db, if_exists='append', index=False)
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/postgresql_connecting_sqlalchemy/" rel="next">Connecting to postgresql database</a>
+    <a href="/technical_notes/example_tech/python_joining_sets/" rel="next">Ways to Join Sets</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/postgresql_select_range_of_rows/" rel="prev">Select a range of rows</a>
+    <a href="/technical_notes/example_tech/python_api_connection/" rel="prev">Establishing an API connection with the requests library</a>
   </div>
   
 </div>
@@ -1158,7 +1206,7 @@ df3.to_sql('stg_subgraph_bank_1', con=db, if_exists='append', index=False)
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Nov 7, 2021</p>
+          <p>Last updated on Dec 20, 2021</p>
 
           
 
@@ -1170,7 +1218,7 @@ df3.to_sql('stg_subgraph_bank_1', con=db, if_exists='append', index=False)
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/pipeline_prep_index_before_insert_to_db.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/python_api_connection%20copy.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
