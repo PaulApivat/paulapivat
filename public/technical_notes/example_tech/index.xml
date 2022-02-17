@@ -161,6 +161,120 @@ df = json_normalize(data[&#39;businesses&#39;],
     </item>
     
     <item>
+      <title>Create DataFrames from Nested JSON data</title>
+      <link>/technical_notes/example_tech/python_functions_overview/</link>
+      <pubDate>Tue, 08 Feb 2022 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/python_functions_overview/</guid>
+      <description>&lt;h2 id=&#34;turning-nested-json-data-into-dataframes&#34;&gt;Turning Nested JSON data into dataframes&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: You&amp;rsquo;ve connected to an 
+&lt;a href=&#34;https://paulapivat.com/technical_notes/example_tech/python_api_connection/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;API endpoint&lt;/a&gt;, that is structured as a nested json, here&amp;rsquo;s how to loop through and select certain values into a dataframe for further processing.&lt;/p&gt;
+&lt;p&gt;In one example, we&amp;rsquo;re looping through a particular endpoint from 
+&lt;a href=&#34;https://coordinape.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Coordinape&lt;/a&gt;. We&amp;rsquo;re going to loop through one level (list of dictionaries) and &lt;strong&gt;append&lt;/strong&gt; data to &lt;strong&gt;empty lists&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Second example, we&amp;rsquo;ll &lt;em&gt;conditionally&lt;/em&gt; loop through the &lt;em&gt;second level&lt;/em&gt; (a dictionary) to grab specific values. As a &lt;em&gt;bonus&lt;/em&gt;, we&amp;rsquo;ll also use &lt;strong&gt;try-except&lt;/strong&gt;(error handling) to handle an &lt;code&gt;AttributeError&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Finally, we&amp;rsquo;ll create the &lt;strong&gt;dataframe from lists&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;
+# empty lists
+name_list_24 = []
+address_list_24 = []
+circle_id_list_24 = []
+discord_username_list_24 = []
+profile_address_24 = []
+
+
+# loop through level 1
+for dct in df_manifest_24[&#39;circle.users&#39;][0]:
+    name_list_24.append(dct[&#39;name&#39;])
+    address_list_24.append(dct[&#39;address&#39;])
+    circle_id_list_24.append(dct[&#39;circle_id&#39;])
+
+
+# conditionally loop through level 2 
+# use try-except
+for dct in df_manifest_24[&#39;circle.users&#39;][0]:
+    try:
+        for k, v in dct[&#39;profile&#39;].items():
+            if k == &#39;discord_username&#39;:
+                discord_username_list_24.append(v)
+            elif k == &#39;address&#39;:
+                profile_address_24.append(v)
+            else:
+                print(&amp;quot;Done.&amp;quot;)
+    except:
+        AttributeError
+    pass
+
+# create dataframe from lists
+df_24 = pd.DataFrame(list(zip(name_list_24, address_list_24, circle_id_list_24)),
+                     columns=[&#39;Name&#39;, &#39;Address&#39;, &#39;Circle_Id&#39;])
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;loading-nested-data-json_normalize&#34;&gt;Loading Nested Data &lt;code&gt;json_normalize&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: Before creating a dataframe as we saw above, sometimes we just need to convert &lt;em&gt;nested&lt;/em&gt; JSON data.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Data breakdown&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;data&lt;/code&gt; is variable we save json dump coming in from http request.&lt;/li&gt;
+&lt;li&gt;flatten a portion of &lt;code&gt;data&lt;/code&gt;, data[&amp;lsquo;businesses&amp;rsquo;] and load into dataframe, &amp;lsquo;bookstores&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;the &amp;lsquo;bookstores&amp;rsquo; dataframe has many columns, some of which is a &lt;em&gt;column of arrays&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;one column, &lt;code&gt;categories&lt;/code&gt; is a column of arrays (deeply nested data)&lt;/li&gt;
+&lt;li&gt;now, flatten &lt;strong&gt;that&lt;/strong&gt; data (categories) setting parameters to &lt;code&gt;json_normalize&lt;/code&gt;, including&lt;/li&gt;
+&lt;li&gt;data, sep, record_path, meta and meta-prefix&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# import json_normalize
+import pandas as pd
+import requests
+from pandas.io.json import json_normalize
+
+# use dotenv to hide token info
+import os
+from dotenv import load_dotenv   
+load_dotenv()    
+
+# headers
+api_url = os.environ.get(&amp;quot;API_URL&amp;quot;)
+api_key = os.environ.get(&amp;quot;API_KEY&amp;quot;)
+headers = {&amp;quot;Authorization&amp;quot;: &amp;quot;Bearer {}&amp;quot;.format(api_key)}
+params = {&amp;quot;term&amp;quot;: &amp;quot;bookstore&amp;quot;,
+          &amp;quot;location&amp;quot;: &amp;quot;San Francisco&amp;quot;}
+          
+# make API call and extract JSON data
+response = requests.get(api_url,
+                        headers=headers,
+                        params=params)
+                        
+# data is entire json dump                       
+data = response.json()
+
+# data is also nested json
+# flatten data and load to dataframe with _ separator
+bookstores = json_normalize(data[&#39;businesses&#39;], sep=&amp;quot;_&amp;quot;)
+print(list(bookstores))
+
+# print deeply nested data
+# within bookstores dataframe, choose &amp;quot;categories&amp;quot; column
+print(bookstores.categories.head())
+
+# flatten categories data, bring in business details
+df = json_normalize(data[&#39;businesses&#39;],
+                    sep=&amp;quot;_&amp;quot;,
+                    record_path = &amp;quot;categories&amp;quot;,
+                    meta = [&amp;quot;name&amp;quot;,
+                            &amp;quot;alias&amp;quot;,
+                            &amp;quot;rating&amp;quot;,
+                            [&amp;quot;coordinates&amp;quot;, &amp;quot;latitude&amp;quot;],
+                            [&amp;quot;coordinates&amp;quot;, &amp;quot;longitude&amp;quot;]],
+                    meta_prefix=&amp;quot;biz_&amp;quot;)
+
+
+
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data and web3 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Looping through the 3 Main Data Structures in Python</title>
       <link>/technical_notes/example_tech/python_looping_through_data_structures/</link>
       <pubDate>Fri, 31 Dec 2021 00:00:00 +0100</pubDate>
