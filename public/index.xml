@@ -1819,6 +1819,64 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Postgres DB Connection with Python</title>
+      <link>/technical_notes/example_tech/database_connection_python/</link>
+      <pubDate>Sat, 26 Feb 2022 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/database_connection_python/</guid>
+      <description>&lt;h2 id=&#34;postgres-database-connection&#34;&gt;Postgres Database Connection&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Description&lt;/strong&gt;: In this example, we&amp;rsquo;ll use Python, SQLAlchemy to connect to a Postgres database. Moreover, we&amp;rsquo;ll use Python context managers for cleaner 
+&lt;a href=&#34;https://paulapivat.com/technical_notes/example_tech/python_functions/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;functions&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This example is from a &lt;strong&gt;DAODash pipeline&lt;/strong&gt; to update the &lt;code&gt;bank_subgraph_transactions&lt;/code&gt; table.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: This example does not separate business logic from database connection, but has them in the same file.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# libraries for postgres connection
+import os
+from sqlalchemy import create_engine
+from sqlalchemy import text
+
+# using python-dotenv to access environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
+
+# db_string = &#39;postgresql://user:password@localhost:port/mydatabase&#39;
+
+db_string = os.environ.get(&#39;DB_STRING&#39;)
+
+@contextlib.contextmanager
+def get_postgres_conn(db_string):
+    &amp;quot;&amp;quot;&amp;quot;description:
+    Context manager to automatically close DB connection
+    Retrieve credentials from environment variables (.env)
+    yield: database connection
+    note: close database connection
+    &amp;quot;&amp;quot;&amp;quot;
+
+    db = create_engine(db_string)
+
+    yield db
+
+    db.dispose()
+
+
+# use get_postgres_conn context manager
+# note: interaction w/ subgraph_bank_transactions table from postgres db
+with get_postgres_conn(db_string) as conn:
+    result = conn.execute(
+        text(&amp;quot;SELECT MAX(tx_timestamp) AS max_tx_timestamp, MAX(id) AS max_id FROM subgraph_bank_transactions&amp;quot;)
+    )
+    for row in result:
+        max_tx_timestamp = row.max_tx_timestamp
+        max_id = row.max_id
+        print(&amp;quot;new max_tx_timestamp: &amp;quot;, max_tx_timestamp)
+        print(&amp;quot;new max_id: &amp;quot;, max_id)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on web3 data 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Use pandas with SQL queries</title>
       <link>/technical_notes/example_tech/sql_and_pandas/</link>
       <pubDate>Wed, 16 Feb 2022 00:00:00 +0100</pubDate>
