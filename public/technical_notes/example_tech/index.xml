@@ -1798,6 +1798,41 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>Method to retrieve latest document</title>
+      <link>/technical_notes/example_tech/mongodb_retrieve_latest_document/</link>
+      <pubDate>Tue, 01 Mar 2022 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/mongodb_retrieve_latest_document/</guid>
+      <description>&lt;h2 id=&#34;method-1-query-collection-for-latest-document&#34;&gt;Method 1: Query collection for latest document&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: To get the first document in a collection, the default &lt;code&gt;findOne()&lt;/code&gt; or &lt;code&gt;find_one()&lt;/code&gt; function works. However, how do we get the &lt;em&gt;latest&lt;/em&gt; document?&lt;/p&gt;
+&lt;p&gt;There are several approaches, but I think this one is the simplest:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# first get the total number of documents in the collection
+db.collection.count()
+
+# Then use skip()
+db.collection.find().skip(db.collection.count() - 1).pretty()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;heres-the-implementation-in-python&#34;&gt;Here&amp;rsquo;s the implementation in Python&lt;/h3&gt;
+&lt;p&gt;The example is taken from the 
+&lt;a href=&#34;https://twitter.com/daobountyboard&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Bounty Board project&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;# find latest document to inspect
+
+# client is a dictionary of databases
+db = client[&#39;bountyboard&#39;]
+
+# collections are attributes of databases
+bounties_col = db[&#39;bounties&#39;]
+
+
+latest_bounties_doc = bounties_col.find().skip(n_bounties - 1)
+
+print(list(latest_bounties_doc)[0].keys())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more content on data 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Postgres DB Connection with Python</title>
       <link>/technical_notes/example_tech/database_connection_python/</link>
       <pubDate>Sat, 26 Feb 2022 00:00:00 +0100</pubDate>

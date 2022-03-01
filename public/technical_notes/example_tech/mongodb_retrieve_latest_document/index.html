@@ -27,11 +27,10 @@
   
     
   
-  <meta name="description" content="Merge dataframes with concat Situation: You want to combine multiple dataframes into one, to later push into a database. Something like rbind or cbind in R.
-You&rsquo;ll need to reset index twice to push into a database.">
+  <meta name="description" content="Method 1: Query collection for latest document Situation: To get the first document in a collection, the default findOne() or find_one() function works. However, how do we get the latest document?">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/pandas_concat_df/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_retrieve_latest_document/">
 
   
 
@@ -218,7 +217,7 @@ You&rsquo;ll need to reset index twice to push into a database.">
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/pandas_concat_df/">
+  <link rel="canonical" href="/technical_notes/example_tech/mongodb_retrieve_latest_document/">
 
   
   
@@ -237,16 +236,15 @@ You&rsquo;ll need to reset index twice to push into a database.">
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/pandas_concat_df/">
-  <meta property="og:title" content="Use concat to merge dataframes | Paul Apivat">
-  <meta property="og:description" content="Merge dataframes with concat Situation: You want to combine multiple dataframes into one, to later push into a database. Something like rbind or cbind in R.
-You&rsquo;ll need to reset index twice to push into a database."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/mongodb_retrieve_latest_document/">
+  <meta property="og:title" content="Method to retrieve latest document | Paul Apivat">
+  <meta property="og:description" content="Method 1: Query collection for latest document Situation: To get the first document in a collection, the default findOne() or find_one() function works. However, how do we get the latest document?"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2022-02-08T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2022-03-01T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2022-02-08T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2022-03-01T00:00:00&#43;01:00">
   
 
   
@@ -265,7 +263,7 @@ You&rsquo;ll need to reset index twice to push into a database."><meta property=
 
 
 
-  <title>Use concat to merge dataframes | Paul Apivat</title>
+  <title>Method to retrieve latest document | Paul Apivat</title>
 
 </head>
 
@@ -816,7 +814,7 @@ You&rsquo;ll need to reset index twice to push into a database."><meta property=
         <a href="/technical_notes/example_tech/mongodb_grab_value_nested_array/">Nested Documents in Arrays</a>
       </li>
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/mongodb_retrieve_latest_document/">Retrieve latest document</a>
       </li>
       
@@ -837,7 +835,7 @@ You&rsquo;ll need to reset index twice to push into a database."><meta property=
     <a class="docs-toc-link" href="/technical_notes/example_tech/pandas_concat_df/">Pandas</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/pandas_concat_df/">Merge several dataframes into one</a>
       </li>
       
@@ -1089,7 +1087,11 @@ You&rsquo;ll need to reset index twice to push into a database."><meta property=
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#merge-dataframes-with-concat">Merge dataframes with concat</a></li>
+    <li><a href="#method-1-query-collection-for-latest-document">Method 1: Query collection for latest document</a>
+      <ul>
+        <li><a href="#heres-the-implementation-in-python">Here&rsquo;s the implementation in Python</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -1102,34 +1104,35 @@ You&rsquo;ll need to reset index twice to push into a database."><meta property=
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Use concat to merge dataframes</h1>
+          <h1>Method to retrieve latest document</h1>
 
           <div class="article-style">
-            <h2 id="merge-dataframes-with-concat">Merge dataframes with concat</h2>
-<p><strong>Situation</strong>: You want to combine multiple dataframes into one, to later push into a database. Something like <code>rbind</code> or <code>cbind</code> in R.</p>
-<p>You&rsquo;ll need to <strong>reset index</strong> twice to push into a database.</p>
-<pre><code class="language-{python}">
-# put dataframes into a list
-frames = [df_24, df_63, df_305, df_492, df_878]
+            <h2 id="method-1-query-collection-for-latest-document">Method 1: Query collection for latest document</h2>
+<p><strong>Situation</strong>: To get the first document in a collection, the default <code>findOne()</code> or <code>find_one()</code> function works. However, how do we get the <em>latest</em> document?</p>
+<p>There are several approaches, but I think this one is the simplest:</p>
+<pre><code class="language-{python}"># first get the total number of documents in the collection
+db.collection.count()
 
-# use pandas and concat function to combine
-concat_frames = pd.concat(frames)
-
-# reset index twice
-concat_frames_1 = concat_frames.reset_index()
-concat_frames_2 = concat_frames_1.reset_index()
-
-# OPTIONAL: select specific columns
-specific_col_frames = concat_frames_2[[
-    'level_0', 'Name', 'Address', 'Circle_Id']]
-
-# OPTIONAL: rename some columns
-# change column name 'level_0' -&gt; 'index'
-final_frames = specific_col_frames.rename(columns={'level_0': 'index'})
-  
-
+# Then use skip()
+db.collection.find().skip(db.collection.count() - 1).pretty()
 </code></pre>
-<p>For more content on Data and DAOs 
+<h3 id="heres-the-implementation-in-python">Here&rsquo;s the implementation in Python</h3>
+<p>The example is taken from the 
+<a href="https://twitter.com/daobountyboard" target="_blank" rel="noopener">Bounty Board project</a>.</p>
+<pre><code class="language-{python}"># find latest document to inspect
+
+# client is a dictionary of databases
+db = client['bountyboard']
+
+# collections are attributes of databases
+bounties_col = db['bounties']
+
+
+latest_bounties_doc = bounties_col.find().skip(n_bounties - 1)
+
+print(list(latest_bounties_doc)[0].keys())
+</code></pre>
+<p>For more content on data 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
@@ -1147,14 +1150,14 @@ final_frames = specific_col_frames.rename(columns={'level_0': 'index'})
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/python_functions/" rel="next">Functions in Python</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/python_create_df_from_nested_json/" rel="prev">Create DataFrames from Nested JSON data</a>
+    <a href="/technical_notes/example_tech/database_connection_python/" rel="prev">Postgres DB Connection with Python</a>
   </div>
   
 </div>
@@ -1164,7 +1167,7 @@ final_frames = specific_col_frames.rename(columns={'level_0': 'index'})
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Feb 8, 2022</p>
+          <p>Last updated on Mar 1, 2022</p>
 
           
 
@@ -1176,7 +1179,7 @@ final_frames = specific_col_frames.rename(columns={'level_0': 'index'})
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/pandas_concat_df.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/mongodb_retrieve_latest_document.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
