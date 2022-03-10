@@ -1819,6 +1819,53 @@ Python 2.7.16
     </item>
     
     <item>
+      <title>SQL Scripts to check for duplicates</title>
+      <link>/technical_notes/example_tech/sql_check_duplicates/</link>
+      <pubDate>Thu, 10 Mar 2022 00:00:00 +0100</pubDate>
+      <guid>/technical_notes/example_tech/sql_check_duplicates/</guid>
+      <description>&lt;h2 id=&#34;check-for-duplicate-rows-in-a-table&#34;&gt;Check for Duplicate Rows in a Table&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: When running a data pipeline, it is often easier to check for data duplicates &lt;em&gt;after load&lt;/em&gt; rather than during &lt;em&gt;extract&lt;/em&gt; or &lt;em&gt;transform&lt;/em&gt; (ETL).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: The script below checks for the &lt;code&gt;subgraph_bank_transactions&lt;/code&gt; table, a pipeline that pulls in data from the $BANK token subgraph into a postgres database. This is part of the DAODash project.&lt;/p&gt;
+&lt;h3 id=&#34;approach-1&#34;&gt;Approach 1&lt;/h3&gt;
+&lt;p&gt;If the &lt;code&gt;query returned no data&lt;/code&gt;, that means there are no duplicates.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;SELECT
+  id,
+  graph_id,
+  amount_display,
+  from_address,
+  to_address,
+  tx_timestamp,
+  timestamp_display,
+  COUNT(*)
+FROM subgraph_bank_transactions 
+GROUP BY id, graph_id, amount_display, from_address, to_address, tx_timestamp, timestamp_display 
+HAVING COUNT(*) &amp;gt; 1;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;approach-2&#34;&gt;Approach 2&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;SELECT 
+  a.*
+FROM subgraph_bank_transactions a
+JOIN (SELECT id, graph_id, amount_display, COUNT(*)
+      FROM subgraph_bank_transactions 
+      GROUP BY id, graph_id, amount_display
+      HAVING COUNT(*) &amp;gt; 1) b 
+ON a.id = b.id
+AND a.graph_id = b.graph_id
+AND a.amount_display = b.amount_display 
+ORDER BY a.id
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Sources&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://learnsql.com/cookbook/how-to-find-duplicate-rows-in-sql/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Learnsql.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://chartio.com/learn/databases/how-to-find-duplicate-values-in-a-sql-table/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Chartio Data Tutorials&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For more content on web3 data 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;find me on Twitter&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Method to retrieve latest document</title>
       <link>/technical_notes/example_tech/mongodb_retrieve_latest_document/</link>
       <pubDate>Tue, 01 Mar 2022 00:00:00 +0100</pubDate>

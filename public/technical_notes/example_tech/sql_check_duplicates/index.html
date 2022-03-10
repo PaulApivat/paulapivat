@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Method 1: Query collection for latest document Situation: To get the first document in a collection, the default findOne() or find_one() function works. However, how do we get the latest document?">
+  <meta name="description" content="Check for Duplicate Rows in a Table Situation: When running a data pipeline, it is often easier to check for data duplicates after load rather than during extract or transform (ETL).">
 
   
-  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/mongodb_retrieve_latest_document/">
+  <link rel="alternate" hreflang="en-us" href="/technical_notes/example_tech/sql_check_duplicates/">
 
   
 
@@ -217,7 +217,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/technical_notes/example_tech/mongodb_retrieve_latest_document/">
+  <link rel="canonical" href="/technical_notes/example_tech/sql_check_duplicates/">
 
   
   
@@ -236,15 +236,15 @@
   <meta property="twitter:creator" content="@paulapivat">
   
   <meta property="og:site_name" content="Paul Apivat">
-  <meta property="og:url" content="/technical_notes/example_tech/mongodb_retrieve_latest_document/">
-  <meta property="og:title" content="Method to retrieve latest document | Paul Apivat">
-  <meta property="og:description" content="Method 1: Query collection for latest document Situation: To get the first document in a collection, the default findOne() or find_one() function works. However, how do we get the latest document?"><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="og:url" content="/technical_notes/example_tech/sql_check_duplicates/">
+  <meta property="og:title" content="SQL Scripts to check for duplicates | Paul Apivat">
+  <meta property="og:description" content="Check for Duplicate Rows in a Table Situation: When running a data pipeline, it is often easier to check for data duplicates after load rather than during extract or transform (ETL)."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2022-03-01T00:00:00&#43;01:00">
+      <meta property="article:published_time" content="2022-03-10T00:00:00&#43;01:00">
     
-    <meta property="article:modified_time" content="2022-03-01T00:00:00&#43;01:00">
+    <meta property="article:modified_time" content="2022-03-10T00:00:00&#43;01:00">
   
 
   
@@ -263,7 +263,7 @@
 
 
 
-  <title>Method to retrieve latest document | Paul Apivat</title>
+  <title>SQL Scripts to check for duplicates | Paul Apivat</title>
 
 </head>
 
@@ -814,7 +814,7 @@
         <a href="/technical_notes/example_tech/mongodb_grab_value_nested_array/">Nested Documents in Arrays</a>
       </li>
       
-      <li class="active">
+      <li >
         <a href="/technical_notes/example_tech/mongodb_retrieve_latest_document/">Retrieve latest document</a>
       </li>
       
@@ -1040,7 +1040,7 @@
     <a class="docs-toc-link" href="/technical_notes/example_tech/sql_check_duplicates/">SQL</a>
     <ul class="nav docs-sidenav">
       
-      <li >
+      <li class="active">
         <a href="/technical_notes/example_tech/sql_check_duplicates/">Check for duplicates</a>
       </li>
       
@@ -1091,9 +1091,10 @@
 
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#method-1-query-collection-for-latest-document">Method 1: Query collection for latest document</a>
+    <li><a href="#check-for-duplicate-rows-in-a-table">Check for Duplicate Rows in a Table</a>
       <ul>
-        <li><a href="#heres-the-implementation-in-python">Here&rsquo;s the implementation in Python</a></li>
+        <li><a href="#approach-1">Approach 1</a></li>
+        <li><a href="#approach-2">Approach 2</a></li>
       </ul>
     </li>
   </ul>
@@ -1108,35 +1109,47 @@
       <article class="article">
 
         <div class="docs-article-container">
-          <h1>Method to retrieve latest document</h1>
+          <h1>SQL Scripts to check for duplicates</h1>
 
           <div class="article-style">
-            <h2 id="method-1-query-collection-for-latest-document">Method 1: Query collection for latest document</h2>
-<p><strong>Situation</strong>: To get the first document in a collection, the default <code>findOne()</code> or <code>find_one()</code> function works. However, how do we get the <em>latest</em> document?</p>
-<p>There are several approaches, but I think this one is the simplest:</p>
-<pre><code class="language-{python}"># first get the total number of documents in the collection
-db.collection.count()
-
-# Then use skip()
-db.collection.find().skip(db.collection.count() - 1).pretty()
+            <h2 id="check-for-duplicate-rows-in-a-table">Check for Duplicate Rows in a Table</h2>
+<p><strong>Situation</strong>: When running a data pipeline, it is often easier to check for data duplicates <em>after load</em> rather than during <em>extract</em> or <em>transform</em> (ETL).</p>
+<p><strong>Context</strong>: The script below checks for the <code>subgraph_bank_transactions</code> table, a pipeline that pulls in data from the $BANK token subgraph into a postgres database. This is part of the DAODash project.</p>
+<h3 id="approach-1">Approach 1</h3>
+<p>If the <code>query returned no data</code>, that means there are no duplicates.</p>
+<pre><code class="language-{python}">SELECT
+  id,
+  graph_id,
+  amount_display,
+  from_address,
+  to_address,
+  tx_timestamp,
+  timestamp_display,
+  COUNT(*)
+FROM subgraph_bank_transactions 
+GROUP BY id, graph_id, amount_display, from_address, to_address, tx_timestamp, timestamp_display 
+HAVING COUNT(*) &gt; 1;
 </code></pre>
-<h3 id="heres-the-implementation-in-python">Here&rsquo;s the implementation in Python</h3>
-<p>The example is taken from the 
-<a href="https://twitter.com/daobountyboard" target="_blank" rel="noopener">Bounty Board project</a>.</p>
-<pre><code class="language-{python}"># find latest document to inspect
+<h3 id="approach-2">Approach 2</h3>
+<pre><code class="language-{python}">SELECT 
+  a.*
+FROM subgraph_bank_transactions a
+JOIN (SELECT id, graph_id, amount_display, COUNT(*)
+      FROM subgraph_bank_transactions 
+      GROUP BY id, graph_id, amount_display
+      HAVING COUNT(*) &gt; 1) b 
+ON a.id = b.id
+AND a.graph_id = b.graph_id
+AND a.amount_display = b.amount_display 
+ORDER BY a.id
 
-# client is a dictionary of databases
-db = client['bountyboard']
-
-# collections are attributes of databases
-bounties_col = db['bounties']
-
-
-latest_bounties_doc = bounties_col.find().skip(n_bounties - 1)
-
-print(list(latest_bounties_doc)[0].keys())
 </code></pre>
-<p>For more content on data 
+<p><strong>Sources</strong>:</p>
+<p>
+<a href="https://learnsql.com/cookbook/how-to-find-duplicate-rows-in-sql/" target="_blank" rel="noopener">Learnsql.com</a></p>
+<p>
+<a href="https://chartio.com/learn/databases/how-to-find-duplicate-values-in-a-sql-table/" target="_blank" rel="noopener">Chartio Data Tutorials</a></p>
+<p>For more content on web3 data 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">find me on Twitter</a>.</p>
 
           </div>
@@ -1154,14 +1167,14 @@ print(list(latest_bounties_doc)[0].keys())
   
   <div class="post-nav-item">
     <div class="meta-nav">Previous</div>
-    <a href="/technical_notes/example_tech/sql_check_duplicates/" rel="next">SQL Scripts to check for duplicates</a>
+    <a href="/technical_notes/example_tech/technical_notes1/" rel="next">Technical Notes Page 1</a>
   </div>
   
   
   
   <div class="post-nav-item">
     <div class="meta-nav">Next</div>
-    <a href="/technical_notes/example_tech/database_connection_python/" rel="prev">Postgres DB Connection with Python</a>
+    <a href="/technical_notes/example_tech/mongodb_retrieve_latest_document/" rel="prev">Method to retrieve latest document</a>
   </div>
   
 </div>
@@ -1171,7 +1184,7 @@ print(list(latest_bounties_doc)[0].keys())
         </div>
 
         <div class="body-footer">
-          <p>Last updated on Mar 1, 2022</p>
+          <p>Last updated on Mar 10, 2022</p>
 
           
 
@@ -1183,7 +1196,7 @@ print(list(latest_bounties_doc)[0].keys())
   
 
 <p class="edit-page">
-  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/mongodb_retrieve_latest_document.md">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/technical_notes/example_tech/sql_check_duplicates.md">
     <i class="fas fa-pen pr-2"></i>Edit this page
   </a>
 </p>
