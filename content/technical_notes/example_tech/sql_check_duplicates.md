@@ -19,24 +19,41 @@ weight: 2
 
 **Context**: The script below checks for the `subgraph_bank_transactions` table, a pipeline that pulls in data from the $BANK token subgraph into a postgres database. This is part of the DAODash project. 
 
-### Approach 1
+### Approach 1: `id` has duplicates
 
 If the `query returned no data`, that means there are no duplicates.
+
+In this case, `id` *does* have duplicates.
 
 ```{python}
 SELECT
   id,
-  graph_id,
-  amount_display,
-  from_address,
-  to_address,
-  tx_timestamp,
-  timestamp_display,
-  COUNT(*)
+  COUNT(id)
 FROM subgraph_bank_transactions 
-GROUP BY id, graph_id, amount_display, from_address, to_address, tx_timestamp, timestamp_display 
-HAVING COUNT(*) > 1;
+GROUP BY id
+HAVING COUNT(id) > 1;
 ```
+
+| id    | count |
+|-------|-------|
+| 32165 | 2     |
+| 31561 | 2     |
+| 32657 | 4     |
+
+
+### Approach 1a: `graph_id` does **not** have duplicates
+
+```{python}
+SELECT
+  graph_id,
+  COUNT(graph_id)
+FROM subgraph_bank_transactions 
+GROUP BY graph_id
+HAVING COUNT(graph_id) > 1;
+```
+
+Result: `The query returned no data`
+
 
 ### Approach 2
 

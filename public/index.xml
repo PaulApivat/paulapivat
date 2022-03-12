@@ -1826,21 +1826,47 @@ Python 2.7.16
       <description>&lt;h2 id=&#34;check-for-duplicate-rows-in-a-table&#34;&gt;Check for Duplicate Rows in a Table&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Situation&lt;/strong&gt;: When running a data pipeline, it is often easier to check for data duplicates &lt;em&gt;after load&lt;/em&gt; rather than during &lt;em&gt;extract&lt;/em&gt; or &lt;em&gt;transform&lt;/em&gt; (ETL).&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Context&lt;/strong&gt;: The script below checks for the &lt;code&gt;subgraph_bank_transactions&lt;/code&gt; table, a pipeline that pulls in data from the $BANK token subgraph into a postgres database. This is part of the DAODash project.&lt;/p&gt;
-&lt;h3 id=&#34;approach-1&#34;&gt;Approach 1&lt;/h3&gt;
+&lt;h3 id=&#34;approach-1-id-has-duplicates&#34;&gt;Approach 1: &lt;code&gt;id&lt;/code&gt; has duplicates&lt;/h3&gt;
 &lt;p&gt;If the &lt;code&gt;query returned no data&lt;/code&gt;, that means there are no duplicates.&lt;/p&gt;
+&lt;p&gt;In this case, &lt;code&gt;id&lt;/code&gt; &lt;em&gt;does&lt;/em&gt; have duplicates.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;SELECT
   id,
-  graph_id,
-  amount_display,
-  from_address,
-  to_address,
-  tx_timestamp,
-  timestamp_display,
-  COUNT(*)
+  COUNT(id)
 FROM subgraph_bank_transactions 
-GROUP BY id, graph_id, amount_display, from_address, to_address, tx_timestamp, timestamp_display 
-HAVING COUNT(*) &amp;gt; 1;
+GROUP BY id
+HAVING COUNT(id) &amp;gt; 1;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;id&lt;/th&gt;
+&lt;th&gt;count&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;32165&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;31561&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;32657&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;approach-1a-graph_id-does-not-have-duplicates&#34;&gt;Approach 1a: &lt;code&gt;graph_id&lt;/code&gt; does &lt;strong&gt;not&lt;/strong&gt; have duplicates&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;SELECT
+  graph_id,
+  COUNT(graph_id)
+FROM subgraph_bank_transactions 
+GROUP BY graph_id
+HAVING COUNT(graph_id) &amp;gt; 1;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Result: &lt;code&gt;The query returned no data&lt;/code&gt;&lt;/p&gt;
 &lt;h3 id=&#34;approach-2&#34;&gt;Approach 2&lt;/h3&gt;
 &lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;SELECT 
   a.*

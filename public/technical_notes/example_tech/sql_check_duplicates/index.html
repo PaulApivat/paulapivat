@@ -1093,7 +1093,8 @@
   <ul>
     <li><a href="#check-for-duplicate-rows-in-a-table">Check for Duplicate Rows in a Table</a>
       <ul>
-        <li><a href="#approach-1">Approach 1</a></li>
+        <li><a href="#approach-1-id-has-duplicates">Approach 1: <code>id</code> has duplicates</a></li>
+        <li><a href="#approach-1a-graph_id-does-not-have-duplicates">Approach 1a: <code>graph_id</code> does <strong>not</strong> have duplicates</a></li>
         <li><a href="#approach-2">Approach 2</a></li>
       </ul>
     </li>
@@ -1115,21 +1116,47 @@
             <h2 id="check-for-duplicate-rows-in-a-table">Check for Duplicate Rows in a Table</h2>
 <p><strong>Situation</strong>: When running a data pipeline, it is often easier to check for data duplicates <em>after load</em> rather than during <em>extract</em> or <em>transform</em> (ETL).</p>
 <p><strong>Context</strong>: The script below checks for the <code>subgraph_bank_transactions</code> table, a pipeline that pulls in data from the $BANK token subgraph into a postgres database. This is part of the DAODash project.</p>
-<h3 id="approach-1">Approach 1</h3>
+<h3 id="approach-1-id-has-duplicates">Approach 1: <code>id</code> has duplicates</h3>
 <p>If the <code>query returned no data</code>, that means there are no duplicates.</p>
+<p>In this case, <code>id</code> <em>does</em> have duplicates.</p>
 <pre><code class="language-{python}">SELECT
   id,
-  graph_id,
-  amount_display,
-  from_address,
-  to_address,
-  tx_timestamp,
-  timestamp_display,
-  COUNT(*)
+  COUNT(id)
 FROM subgraph_bank_transactions 
-GROUP BY id, graph_id, amount_display, from_address, to_address, tx_timestamp, timestamp_display 
-HAVING COUNT(*) &gt; 1;
+GROUP BY id
+HAVING COUNT(id) &gt; 1;
 </code></pre>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>32165</td>
+<td>2</td>
+</tr>
+<tr>
+<td>31561</td>
+<td>2</td>
+</tr>
+<tr>
+<td>32657</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<h3 id="approach-1a-graph_id-does-not-have-duplicates">Approach 1a: <code>graph_id</code> does <strong>not</strong> have duplicates</h3>
+<pre><code class="language-{python}">SELECT
+  graph_id,
+  COUNT(graph_id)
+FROM subgraph_bank_transactions 
+GROUP BY graph_id
+HAVING COUNT(graph_id) &gt; 1;
+</code></pre>
+<p>Result: <code>The query returned no data</code></p>
 <h3 id="approach-2">Approach 2</h3>
 <pre><code class="language-{python}">SELECT 
   a.*
