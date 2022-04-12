@@ -2,14 +2,14 @@
 authors:
 - admin
 bio: My interests include data science, machine learning and R/Python programming.
-education:
+awards:
   courses:
-  - course: Data and Web technologies
-    institution: Self
-    year: 2018 - present
-  - course: Organizational Psychology (phd)
-    institution: Teachers College, Columbia University
-    year: 2014
+  - course: 
+    institution: 
+    year: 
+  - course: 
+    institution: 
+    year:
 email: ""
 interests:
 - Web3 Data, Analytics, Data Engineering

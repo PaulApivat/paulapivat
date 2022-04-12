@@ -95,6 +95,8 @@ active = true
 
 - path: paulapivat/content/authors/admin/\_index.md
 - change **profile pic** path: paulapivat/content/authors/admin/red_avatar.jpg
+- change 'award' to 'education' in yaml header for this section to re-appear 
+- **note**: education is a yaml parameter, must use "education" for this section to work.
 
 Remove title 'biography' from section head.
 
