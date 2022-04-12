@@ -41,17 +41,17 @@ user_groups:
 
 **Current**
 
-Seeking full-time web3 data position for on-chain analysis and research.
+Seeking full-time web3 data position for on-chain analysis and engineering.
 
 **2021**
 
 Core contributor at [Bankless DAO](https://www.bankless.community/)  ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)), providing insights through on- and off-chain data (see below).
 
-I founded our [Analytics Guild](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f), helping secure initial funding and governance structures. My colleagues and I built an in-house analytics platform called [DAO Dash](https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828) to provide insights on engagement, community health and governance.
+Founding member of our [Analytics Guild](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f), helping secure initial funding and governance structures. My colleagues and I built an in-house analytics platform called [DAO Dash](https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828) to provide insights on engagement, community health and governance.
 
 I contributed growth and usage metrics to the [BanklessDAO Bounty Board](https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90) while sharing insights with the broader community through [forum posts](https://forum.bankless.community/u/paulapivat/activity/topics). 
 
-
+I wrote about my journey to web3 data [here](https://paulapivat.com/post/before_crypto/).
 
 **Recent Projects**
 
