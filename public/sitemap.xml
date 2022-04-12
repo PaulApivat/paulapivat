@@ -281,13 +281,34 @@
     <loc>/talk/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url><url>
+    <loc>/authors/</loc>
+    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/crypto/</loc>
+    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/dune-analytics/</loc>
+    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/post/before_crypto/</loc>
+    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/paul-apivat/</loc>
+    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/post/</loc>
+    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/web3/</loc>
+    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/technical_notes/</loc>
     <lastmod>2022-03-10T00:00:00+01:00</lastmod>
   </url><url>
     <loc>/tag/api/</loc>
-    <lastmod>2022-01-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/authors/</loc>
     <lastmod>2022-01-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/data-engineer/</loc>
@@ -302,22 +323,10 @@
     <loc>/tag/inspect-element/</loc>
     <lastmod>2022-01-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/author/paul-apivat/</loc>
-    <lastmod>2022-01-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/post/</loc>
-    <lastmod>2022-01-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
-    <lastmod>2022-01-28T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/post/grab_api_inspect_element/</loc>
     <lastmod>2022-01-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/analytics/</loc>
-    <lastmod>2021-05-11T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/dune-analytics/</loc>
     <lastmod>2021-05-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/ethereum/</loc>

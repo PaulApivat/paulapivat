@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Crypto | Paul Apivat</title>
+    <link>/tag/crypto/</link>
+      <atom:link href="/tag/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <description>Crypto</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2020 Paul Apivat Hanvongse. All Rights Reserved.</copyright><lastBuildDate>Tue, 12 Apr 2022 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>Crypto</title>
+      <link>/tag/crypto/</link>
+    </image>
+    
+    <item>
+      <title>My journey to web3 data</title>
+      <link>/post/before_crypto/</link>
+      <pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate>
+      <guid>/post/before_crypto/</guid>
+      <description>&lt;h3 id=&#34;before-crypto&#34;&gt;Before Crypto&lt;/h3&gt;
+&lt;p&gt;I entered crypto in the fall of 2017, upon buying my first BTC &amp;amp; ETH as incentive to keep up with the industry, but my journey &lt;em&gt;actually&lt;/em&gt; started in 2012 when I took a Ruby on Rails Backend programming course. Up till that point, my training had been in organizational psychology, but the seeds for data work were planted then as I took the 1 train from 116th and Broadway to the Flat Iron district for evening classes at General Assembly.&lt;/p&gt;
+&lt;p&gt;After completing my 
+&lt;a href=&#34;https://www.proquest.com/openview/c6b31a2a839ca8d292087c35e86ec137/1?pq-origsite=gscholar&amp;amp;cbl=18750&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;dissertation&lt;/a&gt; in 2014, I worked in higher education, exploring how organizations balance social and financial goals. At the time, I was interested in how leaders helped their organizations manage the social-financial tension. When presented with an opportunity to see an 
+&lt;a href=&#34;https://www.learneducation.co.th/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;education company&lt;/a&gt; pursue both social and financial missions, I jumped in to the operational side. My partner and I led an in-house edtech startup, while supporting the parent company&amp;rsquo;s mission to subsidize education for low income schools.&lt;/p&gt;
+&lt;p&gt;I came away with two key thoughts:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Social enterprises are harder to operate than traditional for-profit enterprises. Good in theory, I have yet to find one that sustainably works in practice.&lt;/li&gt;
+&lt;li&gt;Social enterprises might be more of a bandaid to a systemic problem of underfunding public goods.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;By the 2017, I was looking for a change and bought BTC &amp;amp; ETH at the market top. I spent the next year absorbing white papers and attending conferences (Deconomy in Korea, Ethereum Community Conference in Toronto). Despite the market crash, I knew permissionless, censorship resistant, public networks were here to stay.&lt;/p&gt;
+&lt;p&gt;Having skin in the game got me down the rabbit hole. The interdisciplinary nature of the industry kept me staying. Crypto appeared to have implications for multiple strands in my life from economics, to software and data, to organizing and coordination, the intellectual stimulation of was endless.&lt;/p&gt;
+&lt;p&gt;I spent 2019 leveling up my technical skills, taking a web development bootcamp (Lambda School, now BloomTech), doing consulting (AWRL) and briefly working for a startup in the Cosmos ecosystem (TruStory).&lt;/p&gt;
+&lt;p&gt;Things started coalescing in 2020 as I placed 2nd in a data visualization competition to be presented at the Wharton People Analytics conference before Covid19 shut the world down. I continued to hone my data skills.&lt;/p&gt;
+&lt;p&gt;Another inflection point came with the Bankless membership airdrop in May 2021; I got in at the ground level and started contributing.&lt;/p&gt;
+&lt;p&gt;I spent 2021 enabling capital and coordination through on- and off-chain data at 
+&lt;a href=&#34;https://www.bankless.community/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Bankless DAO&lt;/a&gt; as a core contributor ( 
+&lt;a href=&#34;https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;POAPs&lt;/a&gt;), from genesis to season 3.&lt;/p&gt;
+&lt;p&gt;I was a founding member at the 
+&lt;a href=&#34;https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Analytics Guild&lt;/a&gt; where I shared insights with the community through 
+&lt;a href=&#34;https://forum.bankless.community/u/paulapivat/activity/topics&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;forum posts&lt;/a&gt;. My colleagues and I built 
+&lt;a href=&#34;https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;DAO Dash&lt;/a&gt;, an in-house analytics platform to provide insights to guilds and projects at BanklessDAO. I also provided growth and usage metrics for the BanklessDAO 
+&lt;a href=&#34;https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Bounty Board&lt;/a&gt; project.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m currently focused on leveling up my &lt;strong&gt;smart contract sleuthing&lt;/strong&gt; skills to analyze DeFi protocols.&lt;/p&gt;
+&lt;p&gt;I am working with the Bankless DeFi Innovation Index team to provide on-chain data overview of various projects that make up $GMI.&lt;/p&gt;
+&lt;p&gt;If you&amp;rsquo;d like help with on-chain analysis, please 
+&lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;get in touch&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
