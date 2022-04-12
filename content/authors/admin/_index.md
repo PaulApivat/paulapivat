@@ -39,20 +39,30 @@ user_groups:
 - Visitors
 ---
 
-Enabling capital, coordination and culture on Web3 through on- and off-chain data. 
+**Current**
 
-Core contributor at [Bankless DAO](https://www.bankless.community/) ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)). Enabling data insights for Guilds and Projects at Bankless DAO with [DAO Dash](https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828). Provide growth and usage metrics for the [Bounty Board](https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90) project.
+Seeking full-time web3 data position for on-chain analysis and research.
 
-Founding member at the Analytics Guild (see our [Notion](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f)). I also share data and ideas with the community through [forum posts](https://forum.bankless.community/u/paulapivat/activity/topics). 
+**2021**
 
-**Work-in-Progress**
+Core contributor at [Bankless DAO](https://www.bankless.community/)  ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)), providing insights through on- and off-chain data (see below).
 
+I founded our [Analytics Guild](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f), helping secure initial funding and governance structures. My colleagues and I built an in-house analytics platform called [DAO Dash](https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828) to provide insights on engagement, community health and governance.
+
+I contributed growth and usage metrics to the [BanklessDAO Bounty Board](https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90) while sharing insights with the broader community through [forum posts](https://forum.bankless.community/u/paulapivat/activity/topics). 
+
+
+
+**Recent Projects**
+
+- [GMI - Bankless DeFi Innovation Index overview](https://dune.xyz/paulapivat/dollarGMI)
 - [Ribbon Finance Vaults - $GMI Index](https://dune.xyz/paulapivat/Ribbon-Vaults)
+- [CultDAO Overview](https://dune.xyz/paulapivat/CultDAO)
+- [Bank Token Buy & Sell Volumne](https://dune.xyz/paulapivat/dollarBANK-Buy-and-Sell-Volume)
 
 
 **On-Chain Data**
 
-- [Bank Token Buy & Sell Volumne](https://dune.xyz/paulapivat/dollarBANK-Buy-and-Sell-Volume)
 - [Bankless DAO Membership Categories Dashboard](https://duneanalytics.com/paulapivat/dollarBANK-Members)
 - [Bankless DAO Membership Over Time](https://duneanalytics.com/paulapivat/dollarBANK-Members-Time-Series)
 - [Bankless DAO Treasury](https://duneanalytics.com/paulapivat/WIP-Bankless-DAO-Treasury)
@@ -79,9 +89,7 @@ Founding member at the Analytics Guild (see our [Notion](https://www.notion.so/b
 - [Bank Subgraph, Snapshot Proposal, Snapshot Votes](https://github.com/BanklessDAO/analytics/tree/main/daodash/etl_pipeline)
 
 
-I also enjoy [visualizing data](https://paulapivat.com/#gallery).
-
-Past writings can be found on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat), [Hashnode](https://paulapivat.hashnode.dev/) and [Notion](https://www.notion.so/Paul-Apivat-ec46608c3ecc412488d3ef57cd53211f).
+See my past [data visualizations](https://paulapivat.com/#gallery) and writings on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat) and  [Hashnode](https://paulapivat.hashnode.dev/).
 
 
 Find me on [Twitter](https://twitter.com/paulapivat).
