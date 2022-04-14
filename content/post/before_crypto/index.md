@@ -32,6 +32,18 @@ By the 2017, I was looking for a change and bought BTC & ETH at the market top. 
 
 Having skin in the game got me down the rabbit hole. The interdisciplinary nature of the industry kept me staying. Crypto appeared to have implications for multiple strands in my life from economics, to software and data, to organizing and coordination, the intellectual stimulation of was endless. 
 
+***
+
+Quick tangent. 
+
+My country has vacillated between democratically elected governments and autocratic military regimes since 1932. In the 70's, politically active college students (my parents' generation) protested military regime, resulting in a bloody clash. Fast foward 50 years and we *still* have people protesting. Several decades worth of empirical data suggest protesting to be headline grabbing, but ultimately unsustainable. 
+
+The fact that crypto represents the chance at a new system is compelling for me. The alternative is to reform old decaying institutions from within or wait for old dinosaurs to die out. I've seen that story and don't have another 50 years to wait around for evolution. Crypto represents a *chance* at punctuated equilibrium and i'm here for it.
+
+Insert "remind me in 20 years" tweet. 
+
+***
+
 I spent 2019 leveling up my technical skills, taking a web development bootcamp (Lambda School, now BloomTech), doing consulting (AWRL) and briefly working for a startup in the Cosmos ecosystem (TruStory).
 
 Things started coalescing in 2020 as I placed 2nd in a data visualization competition to be presented at the Wharton People Analytics conference before Covid19 shut the world down. I continued to hone my data skills.
