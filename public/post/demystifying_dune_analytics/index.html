@@ -663,7 +663,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    5 min read
+    2 min read
   </span>
   
 
@@ -740,81 +740,6 @@
 <p>Other 
 <a href="https://www.notion.so/Dune-Utility-Queries-6e6828030407476eac0bc12a021cb6c5" target="_blank" rel="noopener">useful Dune Utility Queries</a> can be found 
 <a href="https://www.notion.so/Dune-Utility-Queries-6e6828030407476eac0bc12a021cb6c5" target="_blank" rel="noopener">here</a>.</p>
-<h3 id="using-the-main-ethereum-tables">Using the main ethereum tables</h3>
-<p>Sometimes a contract has not been decoded and you can&rsquo;t afford to wait. You&rsquo;ll need to rely on the main <code>ethereum</code> tables.</p>
-<p>For example, I wanted to explore deposits and withdraws from the 
-<a href="https://app.ribbon.finance/v2/theta-vault/T-AAVE-C" target="_blank" rel="noopener">AAVE Theta Covered Call Vault</a> at Ribbon Finance.</p>
-<p>Here was my workflow:</p>
-<p>First, grab the smart contract address for this vault; check on etherscan:</p>
-<p><img src="./aave_theta_etherscan.png" alt="aave theta etherscan"></p>
-<p>Second, check to see if this contract has been 
-<a href="https://dune.xyz/0xBoxer/Is-my-Contract-decoded-yet?" target="_blank" rel="noopener">decoded</a>:</p>
-<p><img src="./aave_contract_decoded.png" alt="aave contract decoded"></p>
-<p>Third, run a simple query using the <strong>provided table name</strong> (i.e., RibbonThetaVault) filtering for this contract:</p>
-<p><img src="./aave_theta_sample_queries.png" alt="aave theta sample queries"></p>
-<p>I ran 4 sample queries filtering for the Aave Theta Vault contract address using the provided <code>RibbonThetaVault</code> table. Since I was interested in deposits and withdraws that&rsquo;s where I started. Out of the four tables, only the highlighted one turned up any results <code>ribbon.&quot;RibbonThetaVault_call_deposit&quot;</code>.</p>
-<p>Because I would need <strong>both</strong> deposits and withdraws, I opted not to rely on these tables and instead use:</p>
-<ul>
-<li><code>erc20.&quot;ERC20_evt_Transfer&quot;</code></li>
-<li><code>ethereum.&quot;logs&quot;</code></li>
-</ul>
-<p>The rationale being that we are interested in deposits and withdrawals of a the <code>Ribbon Aave Theta Vault</code> token, an <strong>ERC20</strong> token so the Dune abstraction table of <strong>erc20.ERC20_evt_Transfer</strong> can filter for transactions - &ldquo;to&rdquo;&quot; (deposit) and &ldquo;from&rdquo; (withdrawal) - involving this token. Moreover, <code>topic1</code> containing either a <strong>deposit</strong> or <strong>withdraw</strong> event can be decoded with:</p>
-<p><code>bytea2numeric( decode ( SUBSTRING ( encode(el.&quot;data&quot;, 'hex') , 1, 64 ), 'hex'))/10^18</code></p>
-<p>and filtered by either a deposit or withdraw event hash:</p>
-<pre><code class="language-{python}">WHERE el.topic1 = '\x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a15' -- Deposit into Vault 
-
-WHERE el.topic1 = '\xf279e6a1f5e320cca91135676d9cb6e44ca8a08c0b88342bcdb1144f6511b568' -- Withdraw from Vault
-
-</code></pre>
-<p>(h/t to Andrew Hong&rsquo;s 
-<a href="https://towardsdatascience.com/your-guide-to-intermediate-sql-while-learning-ethereum-at-the-same-time-7b25119ef1e2" target="_blank" rel="noopener">Intermediate SQL guide</a> for this technique.)</p>
-<p>I suspect there could be alternative solutions for getting deposit/withdraw from Ribbon vaults and will update this post with new information.</p>
-<h3 id="new-insights">New Insights</h3>
-<p>NOTE: It may be possible to rely only on the <code>erc20.ERC20_evt_Transfer</code> table without <code>ethereum.logs</code>.</p>
-<p>Distinguishing between:</p>
-<ul>
-<li>the <code>T-AAVE-C</code> vault contract <code>0xe63151A0Ed4e5fafdc951D877102cf0977Abd365</code></li>
-<li>the <code>rAAVE-THETA</code> Token Tracker: <code>0xe63151A0Ed4e5fafdc951D877102cf0977Abd365</code> (token received for depositing AAVE)</li>
-<li>AAVE Token: <code>0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9</code> (Frontend: Current Vault Deposits &amp; Max Vault Capacity in AAVE tokens)</li>
-</ul>
-<p>Here&rsquo;s a sample query integrating these two addresses to yield the Aave Token Holding within the <strong>contract wallet</strong>, not the 
-<a href="https://app.ribbon.finance/v2/theta-vault/T-AAVE-C" target="_blank" rel="noopener">Current Vault Deposits</a> on the frontend:</p>
-<pre><code class="language-{python}">WITH total_aave_vault_txns AS (
-SELECT 
-    &quot;from&quot;,
-    &quot;to&quot;,
-    value/10^18 AS aave_amt,
-    contract_address,
-    evt_block_time
-FROM erc20.&quot;ERC20_evt_Transfer&quot;
-WHERE contract_address = '\x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'
-AND &quot;to&quot; = '\xe63151A0Ed4e5fafdc951D877102cf0977Abd365'
-
-UNION ALL
-
-SELECT 
-    &quot;from&quot;,
-    &quot;to&quot;,
-    -value/10^18 AS aave_amt,
-    contract_address,
-    evt_block_time
-FROM erc20.&quot;ERC20_evt_Transfer&quot;
-WHERE contract_address = '\x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'
-AND &quot;from&quot; = '\xe63151A0Ed4e5fafdc951D877102cf0977Abd365'
-)
-SELECT
-    SUM(aave_amt)  -- 573.3053547183199
-FROM total_aave_vault_txns 
-</code></pre>
-<p>The above query yields the same number as Aave Token as assets in wallet <strong>not</strong> deposits in Vault. We may have to rely on <code>ethereum.logs</code> anyways.</p>
-<h3 id="further-exploration">Further exploration</h3>
-<ul>
-<li>Proxy Contracts: <code>AdminUpgradeabilityProxy</code></li>
-<li>reading smart contract function/events, on Github/Etherscan, and find it on 3 main ethereum tables</li>
-<li>query optimization</li>
-<li>Dune User generated views?</li>
-<li>Other abstractions: dex.trades, prices.usd, erc20._transfer, erc20._evt</li>
-</ul>
 <p>If you&rsquo;d like help with on-chain analysis, please 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">get in touch</a>.</p>
 
@@ -1052,6 +977,8 @@ FROM total_aave_vault_txns
   <div class="article-widget content-widget-hr">
     <h3>Related</h3>
     <ul>
+      
+      <li><a href="/post/case_ribbon_aave_vault/">Ribbon Finance Aave Theta Vault</a></li>
       
       <li><a href="/post/query_ethereum/">Learn Foundational Ethereum Topics with SQL</a></li>
       
