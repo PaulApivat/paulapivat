@@ -663,7 +663,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    2 min read
+    3 min read
   </span>
   
 
@@ -740,6 +740,17 @@
 <p>Other 
 <a href="https://www.notion.so/Dune-Utility-Queries-6e6828030407476eac0bc12a021cb6c5" target="_blank" rel="noopener">useful Dune Utility Queries</a> can be found 
 <a href="https://www.notion.so/Dune-Utility-Queries-6e6828030407476eac0bc12a021cb6c5" target="_blank" rel="noopener">here</a>.</p>
+<h3 id="converting-bytecode-to-numbers">Converting Bytecode to Numbers</h3>
+<p>We can decode <code>topic1</code> containing either a <strong>deposit</strong> or <strong>withdraw</strong> amount with:</p>
+<p><code>bytea2numeric( decode ( SUBSTRING ( encode(el.&quot;data&quot;, 'hex') , 1, 64 ), 'hex'))/10^18</code></p>
+<p>and filter by either a deposit or withdraw event hash:</p>
+<pre><code class="language-{python}">WHERE el.topic1 = '\x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a15' -- Deposit into Vault 
+
+WHERE el.topic1 = '\xf279e6a1f5e320cca91135676d9cb6e44ca8a08c0b88342bcdb1144f6511b568' -- Withdraw from Vault
+
+</code></pre>
+<p>(h/t to Andrew Hong&rsquo;s 
+<a href="https://towardsdatascience.com/your-guide-to-intermediate-sql-while-learning-ethereum-at-the-same-time-7b25119ef1e2" target="_blank" rel="noopener">Intermediate SQL guide</a> for this technique.)</p>
 <p>If you&rsquo;d like help with on-chain analysis, please 
 <a href="https://twitter.com/paulapivat" target="_blank" rel="noopener">get in touch</a>.</p>
 

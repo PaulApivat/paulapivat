@@ -18,53 +18,54 @@ title: Ribbon Finance Aave Theta Vault
 
 I wanted to explore deposits and withdraws from the [AAVE Theta Covered Call Vault](https://app.ribbon.finance/v2/theta-vault/T-AAVE-C) at Ribbon Finance.
 
+![aave vault frontend](./aave_vault_frontend.png)
+
+I am specifically trying to query the figures reported on their frontend (i.e., 5,725.12 AAVE as Current Vault Deposits).
+
 Here was my workflow:
 
-First, grab the smart contract address for this vault; check on etherscan:
+First, grab the smart contract address for this vault: `0xe63151A0Ed4e5fafdc951D877102cf0977Abd365`
+
+check on etherscan:
 
 ![aave theta etherscan](./aave_theta_etherscan.png)
 
-Second, check to see if this contract has been [decoded](https://dune.xyz/0xBoxer/Is-my-Contract-decoded-yet?):
+Second, check to see if this contract has been [decoded](https://dune.xyz/0xBoxer/Is-my-Contract-decoded-yet?contract_address_t419c6=0xe63151A0Ed4e5fafdc951D877102cf0977Abd365):
 
 ![aave contract decoded](./aave_contract_decoded.png)
 
-Third, run a simple query using the **provided table name** (i.e., RibbonThetaVault) filtering for this contract:
+It has been decoded at the following table: `ribbon.RibbonThetaVault`.
+
+Third, run simple queries using the **provided table name** filtering for this contract:
 
 ![aave theta sample queries](./aave_theta_sample_queries.png)
 
-I ran 4 sample queries filtering for the Aave Theta Vault contract address using the provided `RibbonThetaVault` table. Since I was interested in deposits and withdraws that's where I started. Out of the four tables, only the highlighted one turned up any results `ribbon."RibbonThetaVault_call_deposit"`.
+I ran 4 queries filtering for the `0xe63151A0Ed4e5fafdc951D877102cf0977Abd365` contract address (Aave Theta Vault). Since I was interested in deposits and withdraws that's where I started. 
 
-Because I would need **both** deposits and withdraws, I opted not to rely on these tables and instead use:
+> Question: If interested in deposits/withdraws from a smart contract, is it safe to assume either:
+
+- 'contractname_call_deposit', 
+- 'contractname_call_withdraw', 
+- 'contractname_evt_deposit', 
+- 'contractname_evt_withdraw' 
+
+> would be a good place to start?
+
+Out of the four tables, only `ribbon."RibbonThetaVault_call_deposit"` turned up any results. 
+
+Because I would need **both** deposits and withdraws, and only "_call_deposit" is returning any results, I am going to try an alternative abstraction table:
+
 - `erc20."ERC20_evt_Transfer"`
-- `ethereum."logs"`
 
-The rationale being that we are interested in deposits and withdrawals of a the `Ribbon Aave Theta Vault` token, an **ERC20** token so the Dune abstraction table of **erc20.ERC20_evt_Transfer** can filter for transactions - "to"" (deposit) and "from" (withdrawal) - involving this token. Moreover, `topic1` containing either a **deposit** or **withdraw** event can be decoded with:
+Since we are interested in deposits and withdrawals from the `Ribbon Aave Theta Vault` token, an **ERC20** token, the **erc20.ERC20_evt_Transfer** table can be filtered for transactions - "to"" (deposit) and "from" (withdrawal) - involving this token. 
 
-`bytea2numeric( decode ( SUBSTRING ( encode(el."data", 'hex') , 1, 64 ), 'hex'))/10^18` 
+To recap, the addresses involved are: 
 
-and filtered by either a deposit or withdraw event hash:
+- the `T-AAVE-C` [Vault contract]((https://app.ribbon.finance/v2/theta-vault/T-AAVE-C)) `0xe63151A0Ed4e5fafdc951D877102cf0977Abd365` (same as `rAAVE-THETA` Token)
 
-```{python}
-WHERE el.topic1 = '\x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a15' -- Deposit into Vault 
+- AAVE Token address: `0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9` (users of the vault need to deposit AAVE Tokens)
 
-WHERE el.topic1 = '\xf279e6a1f5e320cca91135676d9cb6e44ca8a08c0b88342bcdb1144f6511b568' -- Withdraw from Vault
-
-```
-
-(h/t to Andrew Hong's [Intermediate SQL guide](https://towardsdatascience.com/your-guide-to-intermediate-sql-while-learning-ethereum-at-the-same-time-7b25119ef1e2 ) for this technique.)
-
-I suspect there could be alternative solutions for getting deposit/withdraw from Ribbon vaults and will update this post with new information.
-
-### New Insights
-
-NOTE: It may be possible to rely only on the `erc20.ERC20_evt_Transfer` table without `ethereum.logs`.
-
-Distinguishing between:
-- the `T-AAVE-C` vault contract `0xe63151A0Ed4e5fafdc951D877102cf0977Abd365`
-- the `rAAVE-THETA` Token Tracker: `0xe63151A0Ed4e5fafdc951D877102cf0977Abd365` (token received for depositing AAVE)
-- AAVE Token: `0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9` (Frontend: Current Vault Deposits & Max Vault Capacity in AAVE tokens)
-
-Here's a sample query integrating these two addresses to yield the Aave Token Holding within the **contract wallet**, not the [Current Vault Deposits](https://app.ribbon.finance/v2/theta-vault/T-AAVE-C) on the frontend:
+Here's a sample query integrating these two addresses:
 
 ```{python}
 WITH total_aave_vault_txns AS (
@@ -91,13 +92,28 @@ WHERE contract_address = '\x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'
 AND "from" = '\xe63151A0Ed4e5fafdc951D877102cf0977Abd365'
 )
 SELECT
-    SUM(aave_amt)  -- 573.3053547183199
+    SUM(aave_amt)  -- 254.806773340645
 FROM total_aave_vault_txns 
 ```
 
-The above query yields the same number as Aave Token as assets in wallet **not** deposits in Vault. We may have to rely on `ethereum.logs` anyways.
+This [query](https://dune.xyz/queries/609486) yields the same number as Aave Token contained in the contract's wallet, which is `254.806773340645` at the time of this writing.
 
-### Further exploration
+![aave vault wallet](./aave_vault_wallet.png)
+
+This is fine and all, but not what I'm looking for 😢 Rather than the amount of AAVE token in the contract's wallet (~254), I'm looking to see how many AAVE tokens users have *deposited* in the vault (~5725), so now I'm going to dig into the contract. 
+
+### Exploring the Contract Code
+
+I search and found [Ribbon Finance V2's Vault repo](https://github.com/ribbon-finance/ribbon-v2/tree/master/contracts/vaults), which contains code for their most updated vaults. While some vaults, like stETH and Yearn, have their own folders, the Aave Theta vault does not so I navigate to "BaseVaults" to see solidity code for `RibbonThetaVault.sol`, which is the same contract name I found when checking to see if the `0xe63151A0Ed4e5fafdc951D877102cf0977Abd365` (Aave Theta vault) had been decoded (see above). 
+
+I looked through two files in the [BaseVaults](https://github.com/ribbon-finance/ribbon-v2/tree/master/contracts/vaults/BaseVaults):
+
+- RibbonThetaVault.sol
+- base/RibbonVault.sol 
+
+I start with `RibbonThetaVault.sol` as this matches the table name in Dune when checking if the contract address had been decoded. I ran a search for "deposit"
+
+
 
 - Proxy Contracts: `AdminUpgradeabilityProxy`
 - reading smart contract function/events, on Github/Etherscan, and find it on 3 main ethereum tables

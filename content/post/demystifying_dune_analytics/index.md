@@ -64,6 +64,23 @@ The team has done the heavy data-engineering lift of going through smart contrac
 
 Other [useful Dune Utility Queries](https://www.notion.so/Dune-Utility-Queries-6e6828030407476eac0bc12a021cb6c5) can be found [here](https://www.notion.so/Dune-Utility-Queries-6e6828030407476eac0bc12a021cb6c5).
 
+### Converting Bytecode to Numbers
+
+We can decode `topic1` containing either a **deposit** or **withdraw** amount with:
+
+`bytea2numeric( decode ( SUBSTRING ( encode(el."data", 'hex') , 1, 64 ), 'hex'))/10^18` 
+
+and filter by either a deposit or withdraw event hash:
+
+```{python}
+WHERE el.topic1 = '\x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a15' -- Deposit into Vault 
+
+WHERE el.topic1 = '\xf279e6a1f5e320cca91135676d9cb6e44ca8a08c0b88342bcdb1144f6511b568' -- Withdraw from Vault
+
+```
+
+(h/t to Andrew Hong's [Intermediate SQL guide](https://towardsdatascience.com/your-guide-to-intermediate-sql-while-learning-ethereum-at-the-same-time-7b25119ef1e2 ) for this technique.)
+
 
 
 If you'd like help with on-chain analysis, please [get in touch](https://twitter.com/paulapivat).

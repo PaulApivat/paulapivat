@@ -19,41 +19,48 @@
       <guid>/post/case_ribbon_aave_vault/</guid>
       <description>&lt;p&gt;I wanted to explore deposits and withdraws from the 
 &lt;a href=&#34;https://app.ribbon.finance/v2/theta-vault/T-AAVE-C&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AAVE Theta Covered Call Vault&lt;/a&gt; at Ribbon Finance.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./aave_vault_frontend.png&#34; alt=&#34;aave vault frontend&#34;&gt;&lt;/p&gt;
+&lt;p&gt;I am specifically trying to query the figures reported on their frontend (i.e., 5,725.12 AAVE as Current Vault Deposits).&lt;/p&gt;
 &lt;p&gt;Here was my workflow:&lt;/p&gt;
-&lt;p&gt;First, grab the smart contract address for this vault; check on etherscan:&lt;/p&gt;
+&lt;p&gt;First, grab the smart contract address for this vault: &lt;code&gt;0xe63151A0Ed4e5fafdc951D877102cf0977Abd365&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;check on etherscan:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./aave_theta_etherscan.png&#34; alt=&#34;aave theta etherscan&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Second, check to see if this contract has been 
-&lt;a href=&#34;https://dune.xyz/0xBoxer/Is-my-Contract-decoded-yet?&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;decoded&lt;/a&gt;:&lt;/p&gt;
+&lt;a href=&#34;https://dune.xyz/0xBoxer/Is-my-Contract-decoded-yet?contract_address_t419c6=0xe63151A0Ed4e5fafdc951D877102cf0977Abd365&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;decoded&lt;/a&gt;:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./aave_contract_decoded.png&#34; alt=&#34;aave contract decoded&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Third, run a simple query using the &lt;strong&gt;provided table name&lt;/strong&gt; (i.e., RibbonThetaVault) filtering for this contract:&lt;/p&gt;
+&lt;p&gt;It has been decoded at the following table: &lt;code&gt;ribbon.RibbonThetaVault&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Third, run simple queries using the &lt;strong&gt;provided table name&lt;/strong&gt; filtering for this contract:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./aave_theta_sample_queries.png&#34; alt=&#34;aave theta sample queries&#34;&gt;&lt;/p&gt;
-&lt;p&gt;I ran 4 sample queries filtering for the Aave Theta Vault contract address using the provided &lt;code&gt;RibbonThetaVault&lt;/code&gt; table. Since I was interested in deposits and withdraws that&amp;rsquo;s where I started. Out of the four tables, only the highlighted one turned up any results &lt;code&gt;ribbon.&amp;quot;RibbonThetaVault_call_deposit&amp;quot;&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Because I would need &lt;strong&gt;both&lt;/strong&gt; deposits and withdraws, I opted not to rely on these tables and instead use:&lt;/p&gt;
+&lt;p&gt;I ran 4 queries filtering for the &lt;code&gt;0xe63151A0Ed4e5fafdc951D877102cf0977Abd365&lt;/code&gt; contract address (Aave Theta Vault). Since I was interested in deposits and withdraws that&amp;rsquo;s where I started.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Question: If interested in deposits/withdraws from a smart contract, is it safe to assume either:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;lsquo;contractname_call_deposit&amp;rsquo;,&lt;/li&gt;
+&lt;li&gt;&amp;lsquo;contractname_call_withdraw&amp;rsquo;,&lt;/li&gt;
+&lt;li&gt;&amp;lsquo;contractname_evt_deposit&amp;rsquo;,&lt;/li&gt;
+&lt;li&gt;&amp;lsquo;contractname_evt_withdraw&amp;rsquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;would be a good place to start?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Out of the four tables, only &lt;code&gt;ribbon.&amp;quot;RibbonThetaVault_call_deposit&amp;quot;&lt;/code&gt; turned up any results.&lt;/p&gt;
+&lt;p&gt;Because I would need &lt;strong&gt;both&lt;/strong&gt; deposits and withdraws, and only &amp;ldquo;_call_deposit&amp;rdquo; is returning any results, I am going to try an alternative abstraction table:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;erc20.&amp;quot;ERC20_evt_Transfer&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ethereum.&amp;quot;logs&amp;quot;&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;The rationale being that we are interested in deposits and withdrawals of a the &lt;code&gt;Ribbon Aave Theta Vault&lt;/code&gt; token, an &lt;strong&gt;ERC20&lt;/strong&gt; token so the Dune abstraction table of &lt;strong&gt;erc20.ERC20_evt_Transfer&lt;/strong&gt; can filter for transactions - &amp;ldquo;to&amp;rdquo;&amp;quot; (deposit) and &amp;ldquo;from&amp;rdquo; (withdrawal) - involving this token. Moreover, &lt;code&gt;topic1&lt;/code&gt; containing either a &lt;strong&gt;deposit&lt;/strong&gt; or &lt;strong&gt;withdraw&lt;/strong&gt; event can be decoded with:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;bytea2numeric( decode ( SUBSTRING ( encode(el.&amp;quot;data&amp;quot;, &#39;hex&#39;) , 1, 64 ), &#39;hex&#39;))/10^18&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;and filtered by either a deposit or withdraw event hash:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;WHERE el.topic1 = &#39;\x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a15&#39; -- Deposit into Vault 
-
-WHERE el.topic1 = &#39;\xf279e6a1f5e320cca91135676d9cb6e44ca8a08c0b88342bcdb1144f6511b568&#39; -- Withdraw from Vault
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;(h/t to Andrew Hong&amp;rsquo;s 
-&lt;a href=&#34;https://towardsdatascience.com/your-guide-to-intermediate-sql-while-learning-ethereum-at-the-same-time-7b25119ef1e2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Intermediate SQL guide&lt;/a&gt; for this technique.)&lt;/p&gt;
-&lt;p&gt;I suspect there could be alternative solutions for getting deposit/withdraw from Ribbon vaults and will update this post with new information.&lt;/p&gt;
-&lt;h3 id=&#34;new-insights&#34;&gt;New Insights&lt;/h3&gt;
-&lt;p&gt;NOTE: It may be possible to rely only on the &lt;code&gt;erc20.ERC20_evt_Transfer&lt;/code&gt; table without &lt;code&gt;ethereum.logs&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Distinguishing between:&lt;/p&gt;
+&lt;p&gt;Since we are interested in deposits and withdrawals from the &lt;code&gt;Ribbon Aave Theta Vault&lt;/code&gt; token, an &lt;strong&gt;ERC20&lt;/strong&gt; token, the &lt;strong&gt;erc20.ERC20_evt_Transfer&lt;/strong&gt; table can be filtered for transactions - &amp;ldquo;to&amp;rdquo;&amp;quot; (deposit) and &amp;ldquo;from&amp;rdquo; (withdrawal) - involving this token.&lt;/p&gt;
+&lt;p&gt;To recap, the addresses involved are:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;the &lt;code&gt;T-AAVE-C&lt;/code&gt; vault contract &lt;code&gt;0xe63151A0Ed4e5fafdc951D877102cf0977Abd365&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;the &lt;code&gt;rAAVE-THETA&lt;/code&gt; Token Tracker: &lt;code&gt;0xe63151A0Ed4e5fafdc951D877102cf0977Abd365&lt;/code&gt; (token received for depositing AAVE)&lt;/li&gt;
-&lt;li&gt;AAVE Token: &lt;code&gt;0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9&lt;/code&gt; (Frontend: Current Vault Deposits &amp;amp; Max Vault Capacity in AAVE tokens)&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;the &lt;code&gt;T-AAVE-C&lt;/code&gt; 
+&lt;a href=&#34;%28https://app.ribbon.finance/v2/theta-vault/T-AAVE-C%29&#34;&gt;Vault contract&lt;/a&gt; &lt;code&gt;0xe63151A0Ed4e5fafdc951D877102cf0977Abd365&lt;/code&gt; (same as &lt;code&gt;rAAVE-THETA&lt;/code&gt; Token)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;AAVE Token address: &lt;code&gt;0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9&lt;/code&gt; (users of the vault need to deposit AAVE Tokens)&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Here&amp;rsquo;s a sample query integrating these two addresses to yield the Aave Token Holding within the &lt;strong&gt;contract wallet&lt;/strong&gt;, not the 
-&lt;a href=&#34;https://app.ribbon.finance/v2/theta-vault/T-AAVE-C&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Current Vault Deposits&lt;/a&gt; on the frontend:&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s a sample query integrating these two addresses:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;WITH total_aave_vault_txns AS (
 SELECT 
     &amp;quot;from&amp;quot;,
@@ -78,11 +85,23 @@ WHERE contract_address = &#39;\x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9&#39;
 AND &amp;quot;from&amp;quot; = &#39;\xe63151A0Ed4e5fafdc951D877102cf0977Abd365&#39;
 )
 SELECT
-    SUM(aave_amt)  -- 573.3053547183199
+    SUM(aave_amt)  -- 254.806773340645
 FROM total_aave_vault_txns 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The above query yields the same number as Aave Token as assets in wallet &lt;strong&gt;not&lt;/strong&gt; deposits in Vault. We may have to rely on &lt;code&gt;ethereum.logs&lt;/code&gt; anyways.&lt;/p&gt;
-&lt;h3 id=&#34;further-exploration&#34;&gt;Further exploration&lt;/h3&gt;
+&lt;p&gt;This 
+&lt;a href=&#34;https://dune.xyz/queries/609486&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;query&lt;/a&gt; yields the same number as Aave Token contained in the contract&amp;rsquo;s wallet, which is &lt;code&gt;254.806773340645&lt;/code&gt; at the time of this writing.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./aave_vault_wallet.png&#34; alt=&#34;aave vault wallet&#34;&gt;&lt;/p&gt;
+&lt;p&gt;This is fine and all, but not what I&amp;rsquo;m looking for 😢 Rather than the amount of AAVE token in the contract&amp;rsquo;s wallet (~254), I&amp;rsquo;m looking to see how many AAVE tokens users have &lt;em&gt;deposited&lt;/em&gt; in the vault (~5725), so now I&amp;rsquo;m going to dig into the contract.&lt;/p&gt;
+&lt;h3 id=&#34;exploring-the-contract-code&#34;&gt;Exploring the Contract Code&lt;/h3&gt;
+&lt;p&gt;I search and found 
+&lt;a href=&#34;https://github.com/ribbon-finance/ribbon-v2/tree/master/contracts/vaults&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Ribbon Finance V2&amp;rsquo;s Vault repo&lt;/a&gt;, which contains code for their most updated vaults. While some vaults, like stETH and Yearn, have their own folders, the Aave Theta vault does not so I navigate to &amp;ldquo;BaseVaults&amp;rdquo; to see solidity code for &lt;code&gt;RibbonThetaVault.sol&lt;/code&gt;, which is the same contract name I found when checking to see if the &lt;code&gt;0xe63151A0Ed4e5fafdc951D877102cf0977Abd365&lt;/code&gt; (Aave Theta vault) had been decoded (see above).&lt;/p&gt;
+&lt;p&gt;I looked through two files in the 
+&lt;a href=&#34;https://github.com/ribbon-finance/ribbon-v2/tree/master/contracts/vaults/BaseVaults&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BaseVaults&lt;/a&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;RibbonThetaVault.sol&lt;/li&gt;
+&lt;li&gt;base/RibbonVault.sol&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I start with &lt;code&gt;RibbonThetaVault.sol&lt;/code&gt; as this matches the table name in Dune when checking if the contract address had been decoded. I ran a search for &amp;ldquo;deposit&amp;rdquo;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Proxy Contracts: &lt;code&gt;AdminUpgradeabilityProxy&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;reading smart contract function/events, on Github/Etherscan, and find it on 3 main ethereum tables&lt;/li&gt;
@@ -141,6 +160,17 @@ FROM total_aave_vault_txns
 &lt;p&gt;Other 
 &lt;a href=&#34;https://www.notion.so/Dune-Utility-Queries-6e6828030407476eac0bc12a021cb6c5&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;useful Dune Utility Queries&lt;/a&gt; can be found 
 &lt;a href=&#34;https://www.notion.so/Dune-Utility-Queries-6e6828030407476eac0bc12a021cb6c5&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;converting-bytecode-to-numbers&#34;&gt;Converting Bytecode to Numbers&lt;/h3&gt;
+&lt;p&gt;We can decode &lt;code&gt;topic1&lt;/code&gt; containing either a &lt;strong&gt;deposit&lt;/strong&gt; or &lt;strong&gt;withdraw&lt;/strong&gt; amount with:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bytea2numeric( decode ( SUBSTRING ( encode(el.&amp;quot;data&amp;quot;, &#39;hex&#39;) , 1, 64 ), &#39;hex&#39;))/10^18&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;and filter by either a deposit or withdraw event hash:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;WHERE el.topic1 = &#39;\x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a15&#39; -- Deposit into Vault 
+
+WHERE el.topic1 = &#39;\xf279e6a1f5e320cca91135676d9cb6e44ca8a08c0b88342bcdb1144f6511b568&#39; -- Withdraw from Vault
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;(h/t to Andrew Hong&amp;rsquo;s 
+&lt;a href=&#34;https://towardsdatascience.com/your-guide-to-intermediate-sql-while-learning-ethereum-at-the-same-time-7b25119ef1e2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Intermediate SQL guide&lt;/a&gt; for this technique.)&lt;/p&gt;
 &lt;p&gt;If you&amp;rsquo;d like help with on-chain analysis, please 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;get in touch&lt;/a&gt;.&lt;/p&gt;
 </description>
