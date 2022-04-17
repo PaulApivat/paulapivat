@@ -20,7 +20,7 @@
       <description>&lt;p&gt;I wanted to explore deposits and withdraws from the 
 &lt;a href=&#34;https://app.ribbon.finance/v2/theta-vault/T-AAVE-C&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AAVE Theta Covered Call Vault&lt;/a&gt; at Ribbon Finance.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./aave_vault_frontend.png&#34; alt=&#34;aave vault frontend&#34;&gt;&lt;/p&gt;
-&lt;p&gt;I am specifically trying to query the figures reported on their frontend (i.e., 5,725.12 AAVE as Current Vault Deposits).&lt;/p&gt;
+&lt;p&gt;I am specifically trying to query the &lt;strong&gt;Current Vault Deposits&lt;/strong&gt; number (5725.12 AAVE in the screenshot take above).&lt;/p&gt;
 &lt;p&gt;Here was my workflow:&lt;/p&gt;
 &lt;p&gt;First, grab the smart contract address for this vault: &lt;code&gt;0xe63151A0Ed4e5fafdc951D877102cf0977Abd365&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;check on etherscan:&lt;/p&gt;
@@ -49,7 +49,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;erc20.&amp;quot;ERC20_evt_Transfer&amp;quot;&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Since we are interested in deposits and withdrawals from the &lt;code&gt;Ribbon Aave Theta Vault&lt;/code&gt; token, an &lt;strong&gt;ERC20&lt;/strong&gt; token, the &lt;strong&gt;erc20.ERC20_evt_Transfer&lt;/strong&gt; table can be filtered for transactions - &amp;ldquo;to&amp;rdquo;&amp;quot; (deposit) and &amp;ldquo;from&amp;rdquo; (withdrawal) - involving this token.&lt;/p&gt;
+&lt;p&gt;Since we are interested in deposits and withdrawals from the &lt;code&gt;Ribbon Aave Theta Vault&lt;/code&gt; the &lt;strong&gt;erc20.ERC20_evt_Transfer&lt;/strong&gt; table can be filtered for transactions &amp;ldquo;to&amp;rdquo;&amp;quot; (deposit) and &amp;ldquo;from&amp;rdquo; (withdrawal) the vault address.&lt;/p&gt;
 &lt;p&gt;To recap, the addresses involved are:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -91,7 +91,8 @@ FROM total_aave_vault_txns
 &lt;p&gt;This 
 &lt;a href=&#34;https://dune.xyz/queries/609486&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;query&lt;/a&gt; yields the same number as Aave Token contained in the contract&amp;rsquo;s wallet, which is &lt;code&gt;254.806773340645&lt;/code&gt; at the time of this writing.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./aave_vault_wallet.png&#34; alt=&#34;aave vault wallet&#34;&gt;&lt;/p&gt;
-&lt;p&gt;This is fine and all, but not what I&amp;rsquo;m looking for 😢 Rather than the amount of AAVE token in the contract&amp;rsquo;s wallet (~254), I&amp;rsquo;m looking to see how many AAVE tokens users have &lt;em&gt;deposited&lt;/em&gt; in the vault (~5725), so now I&amp;rsquo;m going to dig into the contract.&lt;/p&gt;
+&lt;p&gt;This is fine, but not what I&amp;rsquo;m looking for 😢&lt;/p&gt;
+&lt;p&gt;Rather than the amount of AAVE token in the contract&amp;rsquo;s wallet (~254), I&amp;rsquo;m looking to see how many AAVE tokens users have &lt;em&gt;deposited&lt;/em&gt; in the vault (~5725), so now I&amp;rsquo;m going to dig into the contract.&lt;/p&gt;
 &lt;h3 id=&#34;exploring-the-contract-code&#34;&gt;Exploring the Contract Code&lt;/h3&gt;
 &lt;p&gt;I search and found 
 &lt;a href=&#34;https://github.com/ribbon-finance/ribbon-v2/tree/master/contracts/vaults&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Ribbon Finance V2&amp;rsquo;s Vault repo&lt;/a&gt;, which contains code for their most updated vaults. While some vaults, like stETH and Yearn, have their own folders, the Aave Theta vault does not so I navigate to &amp;ldquo;BaseVaults&amp;rdquo; to see solidity code for &lt;code&gt;RibbonThetaVault.sol&lt;/code&gt;, which is the same contract name I found when checking to see if the &lt;code&gt;0xe63151A0Ed4e5fafdc951D877102cf0977Abd365&lt;/code&gt; (Aave Theta vault) had been decoded (see above).&lt;/p&gt;
@@ -101,14 +102,59 @@ FROM total_aave_vault_txns
 &lt;li&gt;RibbonThetaVault.sol&lt;/li&gt;
 &lt;li&gt;base/RibbonVault.sol&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;I start with &lt;code&gt;RibbonThetaVault.sol&lt;/code&gt; as this matches the table name in Dune when checking if the contract address had been decoded. I ran a search for &amp;ldquo;deposit&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;I start with &lt;code&gt;RibbonThetaVault.sol&lt;/code&gt; as this matches the table name in Dune when checking if the contract address had been decoded. I ran a search for &amp;ldquo;deposit&amp;rdquo; and &amp;ldquo;withdraw&amp;rdquo; and found the following:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Proxy Contracts: &lt;code&gt;AdminUpgradeabilityProxy&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;reading smart contract function/events, on Github/Etherscan, and find it on 3 main ethereum tables&lt;/li&gt;
-&lt;li&gt;query optimization&lt;/li&gt;
-&lt;li&gt;Dune User generated views?&lt;/li&gt;
-&lt;li&gt;Other abstractions: dex.trades, prices.usd, erc20._transfer, erc20._evt&lt;/li&gt;
+&lt;li&gt;OpenShort&lt;/li&gt;
+&lt;li&gt;CloseShort&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;./aave_vault_open_close_short.png&#34; alt=&#34;aave vault open close short&#34;&gt;&lt;/p&gt;
+&lt;p&gt;I created the following 
+&lt;a href=&#34;https://dune.xyz/queries/609785&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;query&lt;/a&gt; in Dune to see if this could get me closer to the desired &amp;ldquo;Current Vault Deposits&amp;rdquo;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-{python}&#34;&gt;WITH deposit_withdraw AS (
+SELECT 
+    &amp;quot;depositAmount&amp;quot;/10^18 AS aave_amt,
+    contract_address,
+    evt_tx_hash,
+    evt_block_time
+FROM ribbon.&amp;quot;RibbonThetaVault_evt_OpenShort&amp;quot;
+WHERE contract_address = &#39;\xe63151A0Ed4e5fafdc951D877102cf0977Abd365&#39;
+
+UNION ALL
+
+SELECT
+    -&amp;quot;withdrawAmount&amp;quot;/10^18 AS aave_amt,
+    contract_address,
+    evt_tx_hash,
+    evt_block_time
+FROM ribbon.&amp;quot;RibbonThetaVault_evt_CloseShort&amp;quot;
+WHERE contract_address = &#39;\xe63151A0Ed4e5fafdc951D877102cf0977Abd365&#39;
+)
+SELECT
+    *
+FROM deposit_withdraw
+ORDER BY evt_block_time DESC
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This query did manage to get &lt;strong&gt;Vault Activity&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./aave_vault_activity.png&#34; alt=&#34;aave_vault_activity.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./aave_vault_activity2.png&#34; alt=&#34;aave_vault_activity2.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Getting closer, but not quite there yet. I did notice one interesting descriptor in the 
+&lt;a href=&#34;https://github.com/ribbon-finance/ribbon-v2/blob/master/contracts/vaults/BaseVaults/RibbonThetaVault.sol&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RibbonThetaVault code&lt;/a&gt; on line 24:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;RibbonThetaVault should not inherit from any other contract aside from RibbonVault, RibbonThetaVaultStorage&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Within the same directory, I&amp;rsquo;m now looking at &lt;code&gt;RibbonVault.sol&lt;/code&gt; and I see a &amp;ldquo;Deposit &amp;amp; Withdraws&amp;rdquo; section,&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./ribbon_vault_deposit_withdraws.png&#34; alt=&#34;ribbon_vault_deposit_withdraws&#34;&gt;&lt;/p&gt;
+&lt;p&gt;with the following events &lt;strong&gt;emit&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;emit Deposit(creditor, amount, currentRound);&lt;/li&gt;
+&lt;li&gt;emit InitiateWithdraw(msg.sender, numShares, currentRound);&lt;/li&gt;
+&lt;li&gt;emit Withdraw(msg.sender, withdrawAmount, withdrawalShares);&lt;/li&gt;
+&lt;li&gt;emit Redeem(msg.sender, numShares, depositReceipt.round);&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This leads me back to where we started, both Deposit and Withdraw events did &lt;em&gt;not&lt;/em&gt; yield results when filtering for the AAVE Theta Vault contract address, while InitiateWithdraw and Redeem did.&lt;/p&gt;
+&lt;p&gt;For context, I had 
+&lt;a href=&#34;https://dune.xyz/queries/537056/1010779&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;previously&lt;/a&gt; tried joining &lt;code&gt;erc20.&amp;quot;ERC20_evt_Transfer&amp;quot;&lt;/code&gt; and &lt;code&gt;ethereum.&amp;quot;logs&amp;quot;&lt;/code&gt; to produce a slower query, but &lt;em&gt;that&lt;/em&gt; did not get me the desired &amp;lsquo;Current Vault Deposit&amp;rsquo; figure either.&lt;/p&gt;
 &lt;p&gt;If you&amp;rsquo;d like help with on-chain analysis, please 
 &lt;a href=&#34;https://twitter.com/paulapivat&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;get in touch&lt;/a&gt;.&lt;/p&gt;
 </description>

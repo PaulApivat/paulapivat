@@ -20,7 +20,7 @@ I wanted to explore deposits and withdraws from the [AAVE Theta Covered Call Vau
 
 ![aave vault frontend](./aave_vault_frontend.png)
 
-I am specifically trying to query the figures reported on their frontend (i.e., 5,725.12 AAVE as Current Vault Deposits).
+I am specifically trying to query the **Current Vault Deposits** number (5725.12 AAVE in the screenshot take above).
 
 Here was my workflow:
 
@@ -57,7 +57,7 @@ Because I would need **both** deposits and withdraws, and only "_call_deposit" i
 
 - `erc20."ERC20_evt_Transfer"`
 
-Since we are interested in deposits and withdrawals from the `Ribbon Aave Theta Vault` token, an **ERC20** token, the **erc20.ERC20_evt_Transfer** table can be filtered for transactions - "to"" (deposit) and "from" (withdrawal) - involving this token. 
+Since we are interested in deposits and withdrawals from the `Ribbon Aave Theta Vault` the **erc20.ERC20_evt_Transfer** table can be filtered for transactions "to"" (deposit) and "from" (withdrawal) the vault address.
 
 To recap, the addresses involved are: 
 
@@ -100,7 +100,9 @@ This [query](https://dune.xyz/queries/609486) yields the same number as Aave Tok
 
 ![aave vault wallet](./aave_vault_wallet.png)
 
-This is fine and all, but not what I'm looking for 😢 Rather than the amount of AAVE token in the contract's wallet (~254), I'm looking to see how many AAVE tokens users have *deposited* in the vault (~5725), so now I'm going to dig into the contract. 
+This is fine, but not what I'm looking for 😢 
+
+Rather than the amount of AAVE token in the contract's wallet (~254), I'm looking to see how many AAVE tokens users have *deposited* in the vault (~5725), so now I'm going to dig into the contract. 
 
 ### Exploring the Contract Code
 
@@ -111,15 +113,67 @@ I looked through two files in the [BaseVaults](https://github.com/ribbon-finance
 - RibbonThetaVault.sol
 - base/RibbonVault.sol 
 
-I start with `RibbonThetaVault.sol` as this matches the table name in Dune when checking if the contract address had been decoded. I ran a search for "deposit"
+I start with `RibbonThetaVault.sol` as this matches the table name in Dune when checking if the contract address had been decoded. I ran a search for "deposit" and "withdraw" and found the following:
+
+- OpenShort
+- CloseShort
+
+![aave vault open close short](./aave_vault_open_close_short.png)
+
+I created the following [query](https://dune.xyz/queries/609785) in Dune to see if this could get me closer to the desired "Current Vault Deposits":
+
+```{python}
+WITH deposit_withdraw AS (
+SELECT 
+    "depositAmount"/10^18 AS aave_amt,
+    contract_address,
+    evt_tx_hash,
+    evt_block_time
+FROM ribbon."RibbonThetaVault_evt_OpenShort"
+WHERE contract_address = '\xe63151A0Ed4e5fafdc951D877102cf0977Abd365'
+
+UNION ALL
+
+SELECT
+    -"withdrawAmount"/10^18 AS aave_amt,
+    contract_address,
+    evt_tx_hash,
+    evt_block_time
+FROM ribbon."RibbonThetaVault_evt_CloseShort"
+WHERE contract_address = '\xe63151A0Ed4e5fafdc951D877102cf0977Abd365'
+)
+SELECT
+    *
+FROM deposit_withdraw
+ORDER BY evt_block_time DESC
+
+```
+
+This query did manage to get **Vault Activity**:
+
+![aave_vault_activity.png](./aave_vault_activity.png)
+
+![aave_vault_activity2.png](./aave_vault_activity2.png)
 
 
+Getting closer, but not quite there yet. I did notice one interesting descriptor in the [RibbonThetaVault code](https://github.com/ribbon-finance/ribbon-v2/blob/master/contracts/vaults/BaseVaults/RibbonThetaVault.sol) on line 24:
 
-- Proxy Contracts: `AdminUpgradeabilityProxy`
-- reading smart contract function/events, on Github/Etherscan, and find it on 3 main ethereum tables
-- query optimization
-- Dune User generated views? 
-- Other abstractions: dex.trades, prices.usd, erc20._transfer, erc20._evt
+> RibbonThetaVault should not inherit from any other contract aside from RibbonVault, RibbonThetaVaultStorage
+
+Within the same directory, I'm now looking at `RibbonVault.sol` and I see a "Deposit & Withdraws" section,
+
+![ribbon_vault_deposit_withdraws](./ribbon_vault_deposit_withdraws.png)
+
+with the following events **emit**:
+
+- emit Deposit(creditor, amount, currentRound);
+- emit InitiateWithdraw(msg.sender, numShares, currentRound);
+- emit Withdraw(msg.sender, withdrawAmount, withdrawalShares);
+- emit Redeem(msg.sender, numShares, depositReceipt.round);
+
+This leads me back to where we started, both Deposit and Withdraw events did *not* yield results when filtering for the AAVE Theta Vault contract address, while InitiateWithdraw and Redeem did. 
+
+For context, I had [previously](https://dune.xyz/queries/537056/1010779) tried joining `erc20."ERC20_evt_Transfer"` and `ethereum."logs"` to produce a slower query, but *that* did not get me the desired 'Current Vault Deposit' figure either. 
 
 
 If you'd like help with on-chain analysis, please [get in touch](https://twitter.com/paulapivat).
