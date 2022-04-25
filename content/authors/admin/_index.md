@@ -58,7 +58,7 @@ I wrote about my journey to web3 data [here](https://paulapivat.com/post/before_
 - [GMI - Bankless DeFi Innovation Index overview](https://dune.xyz/paulapivat/dollarGMI)
 - [Ribbon Finance Vaults - $GMI Index](https://dune.xyz/paulapivat/Ribbon-Vaults)
 - [CultDAO Overview](https://dune.xyz/paulapivat/CultDAO)
-- [Bank Token Buy & Sell Volumne](https://dune.xyz/paulapivat/dollarBANK-Buy-and-Sell-Volume)
+- [Bank Token Buy & Sell Volume](https://dune.xyz/paulapivat/dollarBANK-Buy-and-Sell-Volume)
 
 
 **On-Chain Data**
