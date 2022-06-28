@@ -18,7 +18,7 @@ interests:
 organizations:
 - name: the internet
   url: ""
-role: data in web3 
+role: web3 data
 social:
 - icon: envelope
   icon_pack: fas
