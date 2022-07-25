@@ -45,6 +45,8 @@ Seeking full-time web3 data position for on-chain analysis and engineering.
 
 **Recent Projects**
 
+- [Frax Bribe ROI](https://dune.com/paulapivat/frax-bribe) | 🧵 [Thread](https://twitter.com/paulapivat/status/1551219246667022337?s=20&t=1jSRIhbVtjWKmqoFkOrzww)
+- [Curve v2 Pools](https://dune.com/paulapivat/curve-v2-pools) | 🧵 [Thread](https://twitter.com/paulapivat/status/1542780111589560322?s=20&t=1jSRIhbVtjWKmqoFkOrzww)
 - [Tokemak Liquidity Deployment](https://dune.com/paulapivat/Tokemak-2) | 🧵 [Thread](https://twitter.com/paulapivat/status/1529700733070716928?s=20&t=Pv9vtBm9VzlmZPXRTriuGA)
 - [Tokemak Overview](https://dune.com/paulapivat/Tokemak) | 🧵 [Thread](https://twitter.com/paulapivat/status/1522968493380890624?s=20&t=GzvGP9GZICiTovIYBJKwrQ)
 - [GMI - Bankless DeFi Innovation Index overview](https://dune.xyz/paulapivat/dollarGMI)
