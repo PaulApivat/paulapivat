@@ -41,14 +41,15 @@ user_groups:
 
 **Current**
 
-Seeking full-time web3 data position for on-chain analysis and engineering.
+Data @ [Exponent](https://exponent.cx/)
 
 **Recent Projects**
 
-- [Frax Bribe ROI](https://dune.com/paulapivat/frax-bribe) | 🧵 [Thread](https://twitter.com/paulapivat/status/1551219246667022337?s=20&t=1jSRIhbVtjWKmqoFkOrzww)
-- [Curve v2 Pools](https://dune.com/paulapivat/curve-v2-pools) | 🧵 [Thread](https://twitter.com/paulapivat/status/1542780111589560322?s=20&t=1jSRIhbVtjWKmqoFkOrzww)
-- [Tokemak Liquidity Deployment](https://dune.com/paulapivat/Tokemak-2) | 🧵 [Thread](https://twitter.com/paulapivat/status/1529700733070716928?s=20&t=Pv9vtBm9VzlmZPXRTriuGA)
-- [Tokemak Overview](https://dune.com/paulapivat/Tokemak) | 🧵 [Thread](https://twitter.com/paulapivat/status/1522968493380890624?s=20&t=GzvGP9GZICiTovIYBJKwrQ)
+- [Velodrome Emissions Per $1 Bribed](https://dune.com/paulapivat/velodrome-emissions-bribe) | 🧵 [Thread](https://twitter.com/paulapivat/status/1561752438981664768)
+- [Frax Bribe ROI](https://dune.com/paulapivat/frax-bribe) | 🧵 [Thread](https://twitter.com/paulapivat/status/1551219246667022337)
+- [Curve v2 Pools](https://dune.com/paulapivat/curve-v2-pools) | 🧵 [Thread](https://twitter.com/paulapivat/status/1542780111589560322)
+- [Tokemak Liquidity Deployment](https://dune.com/paulapivat/Tokemak-2) | 🧵 [Thread](https://twitter.com/paulapivat/status/1529700733070716928)
+- [Tokemak Overview](https://dune.com/paulapivat/Tokemak) | 🧵 [Thread](https://twitter.com/paulapivat/status/1522968493380890624)
 - [GMI - Bankless DeFi Innovation Index overview](https://dune.xyz/paulapivat/dollarGMI)
 - [Ribbon Finance Vaults - $GMI Index](https://dune.xyz/paulapivat/Ribbon-Vaults)
 - [CultDAO Overview](https://dune.xyz/paulapivat/CultDAO)
@@ -82,8 +83,8 @@ I wrote about my journey to web3 data [here](https://paulapivat.com/post/before_
 
 **Off-Chain Data**
 
-- [Bankless DAO Growth in Bytes: Season 3 Launch - Jan 21, 2022, ](https://docs.google.com/presentation/d/1CIUPeTDyRga9fOOnpsPjA6pS3nR6oZKHX6aUfRMmXbI/edit?usp=sharing) | 🧵 [Thread](https://twitter.com/paulapivat/status/1484455204137279490?s=20)
-- [Bankless DAO Community Growth, Season 2 Launch](https://docs.google.com/presentation/d/18DGuSTsLgU2C2iNNcvoo2-27uL2Tcb1jfMaMGa9Zeyc/edit?usp=sharing) | 🧵 [Thread](https://twitter.com/paulapivat/status/1446484367736328199?s=20)
+- [Bankless DAO Growth in Bytes: Season 3 Launch - Jan 21, 2022, ](https://docs.google.com/presentation/d/1CIUPeTDyRga9fOOnpsPjA6pS3nR6oZKHX6aUfRMmXbI/edit?usp=sharing) | 🧵 [Thread](https://twitter.com/paulapivat/status/1484455204137279490)
+- [Bankless DAO Community Growth, Season 2 Launch](https://docs.google.com/presentation/d/18DGuSTsLgU2C2iNNcvoo2-27uL2Tcb1jfMaMGa9Zeyc/edit?usp=sharing) | 🧵 [Thread](https://twitter.com/paulapivat/status/1446484367736328199)
 - [DAOs: The New Coordination Frontier (Gitcoin & BanklessDAO)](https://docs.google.com/presentation/d/1fLJvPOvibcCUpJ9ES44_cdoX5Hb7LpDaloGWz5FbUEM/edit#slide=id.gec41538503_0_399)
 - [Bankless DAO Twitter Analytics](https://forum.bankless.community/t/bankless-dao-twitter-analytics-june-2021-edition/1200)
 - [Exploring Discord Data: Bankless DAO Engagement](https://forum.bankless.community/t/exploring-discord-data-bankless-dao-engagement/1100)
