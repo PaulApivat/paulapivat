@@ -6,7 +6,7 @@ menu:
   example_tech:
     parent: Python Tips 
     weight: 1
-title: Setting up Conda Virtual Env and IPython
+title: Setting up Conda Virtual Env, Jupyer Notebooks and IPython
 image:
   caption: ""
   focal_point: ""
@@ -15,7 +15,36 @@ type: docs
 weight: 1
 ---
 
-## Virtual Environment Best Practices
+## Creating Virtual Environments with Anaconda
+
+Out of all the ways of accessing Python, Jupyter notebooks *and* virtual environments, using Anaconda Distribution is arguably the easiest.
+
+1. Install [Anaconda](https://www.anaconda.com/) as you would any other Mac software (currently for Python 3.9 MacOS)
+2. In Terminal: 
+3. check version `$ conda --version`
+4. create environment variable `$ conda create -n myenv` where `myenv` is any environment name.
+5. confirm environment location, e.g.: `/Users/username/opt/anaconda3/envs/defi`
+6. activate environment: `$ conda activate myenv`
+7. de-activate environment: `$ conda deactivate`
+
+Note: in terminal you'll notice differences between `(base)` and `(myenv)`
+
+8. list out all available environments: `$ conda env list`
+
+## Add Virtual Environment to Jupyter Notebook
+
+1. activate environment: `$ conda activate myenv`
+2. install ipykernel: `$ pip3 install --user ipykernel`
+3. install environment: `$ python3 -m ipykernel install --user --name=myenv`
+4. confirm location: `Installed kernelspec myenv in /Users/username/Library/Jupyter/kernels/myenv`
+
+Note: ipykernel is key
+
+5. **important**: When loading Anaconda Navigator, select `Environments`, and find `myenv` you should see list of "installed packages", including: pandas, numpy, ipython and jupyter among others.
+
+6. **Launch**: a new Jupyter notebook from `Python 3 (ipykernel)`
+
+## Ipython
 
 NOTE: This is from chapter 2 of Joel Grus' 'Data Science from Scratch'.
 
