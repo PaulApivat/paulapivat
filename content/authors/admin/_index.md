@@ -39,11 +39,16 @@ user_groups:
 - Visitors
 ---
 
-**Current**
 
-Data @ [Exponent](https://exponent.cx/)
 
-**Recent Projects**
+**Data @** [Exponent](https://exponent.cx/)
+
+**Current Projects**
+
+- [Gnosis Safe Holdings Analysis](https://dune.com/exponent/gnosis-safe-holdings-analysis) | [version 1.0](https://dune.com/paulapivat/gnosis-safe-factory): Examines Safe Proxies from factory contract v1.3.0. 🧵[Thread](https://twitter.com/Exponent_cx/status/1573327110852300800)
+- [Exponent Fennec Stash](https://dune.com/exponent/exponent-fennec-stash) | [version 1.0](https://dune.com/paulapivat/exponent-treasury-vault): Examines Exponent Treasury Vault with Pool & Safe Dollar Yield strategies. 🧵[Thread](https://twitter.com/paulapivat/status/1565621408478433281)
+
+**Past Projects**
 
 - [Velodrome Emissions Per $1 Bribed](https://dune.com/paulapivat/velodrome-emissions-bribe) | 🧵 [Thread](https://twitter.com/paulapivat/status/1561752438981664768)
 - [Frax Bribe ROI](https://dune.com/paulapivat/frax-bribe) | 🧵 [Thread](https://twitter.com/paulapivat/status/1551219246667022337)
