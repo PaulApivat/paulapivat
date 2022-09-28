@@ -31,6 +31,18 @@ Note: in terminal you'll notice differences between `(base)` and `(myenv)`
 
 8. list out all available environments: `$ conda env list`
 
+**NOTE**: Different virtual environments may have different version of python, a module, package or, in some cases, *not* have those things so they need to be re-installed within that virtual environment. 
+
+For example, opening `IPython` in base may be easier than in a virtual env:
+
+```
+$ python3 -m IPython  
+
+vs
+
+$ IPython
+```
+
 ## Add Virtual Environment to Jupyter Notebook
 
 1. activate environment: `$ conda activate myenv`

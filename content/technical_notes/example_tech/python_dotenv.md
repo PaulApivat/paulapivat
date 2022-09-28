@@ -150,3 +150,9 @@ You'll know you have something working when you run the following code in the co
 ```
 dotenv --version   # dotenv, version 0.19.2   (Nov 17, 2021)
 ```
+
+**NOTE**: Sometimes a virtual environment will have different `python-dotenv` installed:
+
+```
+pip3 show python-dotenv
+```
