@@ -12,8 +12,8 @@ lastMod: "2022-11-20T00:00:00Z"
 projects: []
 subtitle: A technical walk-through
 summary: Helping data analysts use the Credmark Model Framework
-tags: ["Python", "DeFi", "Credmark"]
-title: [Mirror] Onboarding to the Credmark Model Framework for Data Analyst
+tags: ["Python"]
+title: Mirror - Onboarding to the Credmark Model Framework for Data Analyst
 ---
 
 **Note**: This is a mirror of a post [originally posted](https://exponent.cx/blog/onboarding-to-the-credmark-model-framework-for-data-analysts) on Exponent's blog. 
