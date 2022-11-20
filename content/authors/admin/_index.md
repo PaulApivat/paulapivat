@@ -45,6 +45,8 @@ user_groups:
 
 **Current Projects**
 
+- [Dune Analytics walk-through @ Exponent](https://docs.google.com/presentation/d/1BF_jmlRwzOfz8eDsuNTDpaaH-ELxC4YcPE67-GE_4Io/edit#slide=id.p) | 🧵[Thread](https://twitter.com/paulapivat/status/1587656228649734146)
+- [Stablecoin Risk Dimensions](https://dune.com/paulapivat/stablecoin-risk-dimensions) | 🧵[Thread](https://twitter.com/paulapivat/status/1579057979974123521)
 - [Gnosis Safe Holdings Analysis](https://dune.com/exponent/gnosis-safe-holdings-analysis) | [version 1.0](https://dune.com/paulapivat/gnosis-safe-factory): Examines Safe Proxies from factory contract v1.3.0. 🧵[Thread](https://twitter.com/Exponent_cx/status/1573327110852300800)
 - [Exponent Fennec Stash](https://dune.com/exponent/exponent-fennec-stash) | [version 1.0](https://dune.com/paulapivat/exponent-treasury-vault): Examines Exponent Treasury Vault with Pool & Safe Dollar Yield strategies. 🧵[Thread](https://twitter.com/paulapivat/status/1565621408478433281)
 
