@@ -45,6 +45,7 @@ user_groups:
 
 **Current Projects**
 
+- [Curve StableSwap Invariant 101](https://colab.research.google.com/drive/1cpApTBso1zTBw2lsTHa93afsaQEV7aAe?usp=sharing) 💻 | [Accompanying PDF](https://drive.google.com/file/d/1mGceMdm1Va0_WPvKfSo2PHl-7STPcTkk/view?usp=sharing) | 🧵[Thread](https://twitter.com/paulapivat/status/1601389152750424066?s=20&t=huUM4HxrweLxZrl5xDqe8w)
 - [Dune Analytics walk-through @ Exponent](https://docs.google.com/presentation/d/1BF_jmlRwzOfz8eDsuNTDpaaH-ELxC4YcPE67-GE_4Io/edit#slide=id.p) | 🧵[Thread](https://twitter.com/paulapivat/status/1587656228649734146)
 - [Stablecoin Risk Dimensions](https://dune.com/paulapivat/stablecoin-risk-dimensions) | 🧵[Thread](https://twitter.com/paulapivat/status/1579057979974123521)
 - [Gnosis Safe Holdings Analysis](https://dune.com/exponent/gnosis-safe-holdings-analysis) | [version 1.0](https://dune.com/paulapivat/gnosis-safe-factory): Examines Safe Proxies from factory contract v1.3.0. 🧵[Thread](https://twitter.com/Exponent_cx/status/1573327110852300800)
@@ -104,8 +105,12 @@ I wrote about my journey to web3 data [here](https://paulapivat.com/post/before_
 
 See my past [data visualizations](https://paulapivat.com/#gallery) and writings on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat) and  [Hashnode](https://paulapivat.hashnode.dev/).
 
+**Social Media**
 
-Find me on [Twitter](https://twitter.com/paulapivat).
+- [Twitter](https://twitter.com/paulapivat)
+- [Farcaster](https://fcast.me/paulx)
+- [Lens Protocol](https://lenster.xyz/u/paulx)
+
 
 
 
