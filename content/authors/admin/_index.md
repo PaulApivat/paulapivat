@@ -46,6 +46,7 @@ user_groups:
 **Current Projects**
 
 - [Curve StableSwap Invariant 101](https://colab.research.google.com/drive/1cpApTBso1zTBw2lsTHa93afsaQEV7aAe?usp=sharing) 💻 | [Accompanying PDF](https://drive.google.com/file/d/1mGceMdm1Va0_WPvKfSo2PHl-7STPcTkk/view?usp=sharing) | 🧵[Thread](https://twitter.com/paulapivat/status/1601389152750424066?s=20&t=huUM4HxrweLxZrl5xDqe8w)
+- [Metrics Library @ Exponent](https://www.notion.so/exponent-cx/Metrics-Library-50b3ce4d69124075a3676f84787f695a) | 🧵[Thread](https://twitter.com/paulapivat/status/1601043087249539072)
 - [Dune Analytics walk-through @ Exponent](https://docs.google.com/presentation/d/1BF_jmlRwzOfz8eDsuNTDpaaH-ELxC4YcPE67-GE_4Io/edit#slide=id.p) | 🧵[Thread](https://twitter.com/paulapivat/status/1587656228649734146)
 - [Stablecoin Risk Dimensions](https://dune.com/paulapivat/stablecoin-risk-dimensions) | 🧵[Thread](https://twitter.com/paulapivat/status/1579057979974123521)
 - [Gnosis Safe Holdings Analysis](https://dune.com/exponent/gnosis-safe-holdings-analysis) | [version 1.0](https://dune.com/paulapivat/gnosis-safe-factory): Examines Safe Proxies from factory contract v1.3.0. 🧵[Thread](https://twitter.com/Exponent_cx/status/1573327110852300800)
