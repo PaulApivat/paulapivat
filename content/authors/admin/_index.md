@@ -41,10 +41,15 @@ user_groups:
 
 
 
-**Data @** [Exponent](https://exponent.cx/)
+**Current: Data @** [Exponent](https://exponent.cx/)
 
-**Current Projects**
+Developing risk frameworks for DeFi treasury strategies covering liquidity, liquidation and stablecoin risk. My work intersects analytics and data engineering. 
 
+**Works in Progress**
+
+- [Liquidity Risk on Aave v2](https://dune.com/paulapivat/aave-v2-utilization-and-liquidity-risk)
+- [Synthetic Data Vault (SDV), Enzyme demo](https://colab.research.google.com/drive/1C_de-7RVgd2to7niKIIjrGDRGOfyUsqf)💻
+- [Safe Proxies TVL & Deployment](https://dune.com/exponent/safe-proxies-tvl-and-deployment)
 - [Curve StableSwap Invariant 101](https://colab.research.google.com/drive/1cpApTBso1zTBw2lsTHa93afsaQEV7aAe?usp=sharing) 💻 | [Accompanying PDF](https://drive.google.com/file/d/1mGceMdm1Va0_WPvKfSo2PHl-7STPcTkk/view?usp=sharing) | 🧵[Thread](https://twitter.com/paulapivat/status/1601389152750424066?s=20&t=huUM4HxrweLxZrl5xDqe8w)
 - [Metrics Library @ Exponent](https://www.notion.so/exponent-cx/Metrics-Library-50b3ce4d69124075a3676f84787f695a) | 🧵[Thread](https://twitter.com/paulapivat/status/1601043087249539072)
 - [Dune Analytics walk-through @ Exponent](https://docs.google.com/presentation/d/1BF_jmlRwzOfz8eDsuNTDpaaH-ELxC4YcPE67-GE_4Io/edit#slide=id.p) | 🧵[Thread](https://twitter.com/paulapivat/status/1587656228649734146)
