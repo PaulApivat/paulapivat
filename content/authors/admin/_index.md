@@ -47,6 +47,8 @@ Developing risk frameworks for DeFi treasury strategies covering liquidity, liqu
 
 **Works in Progress**
 
+- [Risk Modeling with Monte Carlo simulation, pt.1](https://github.com/exponent-cx/analytics/blob/main/risk/monte_carlo/risk_mc.ipynb)
+- [Additional Liquidity Risk Metrics on Aave v2](https://dune.com/paulapivat/aave-liquidity-risk-metrics)
 - [Liquidity Risk on Aave v2](https://dune.com/paulapivat/aave-v2-utilization-and-liquidity-risk)
 - [Synthetic Data Vault (SDV), Enzyme demo](https://colab.research.google.com/drive/1C_de-7RVgd2to7niKIIjrGDRGOfyUsqf)💻
 - [Safe Proxies TVL & Deployment](https://dune.com/exponent/safe-proxies-tvl-and-deployment)
