@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: My interests include data science, machine learning and R/Python programming.
+bio: My interests include data science, machine learning and Python programming.
 awards:
   courses:
   - course: 
@@ -12,13 +12,13 @@ awards:
     year:
 email: ""
 interests:
-- Web3 Data, Analytics, Data Engineering
-- SQL, Python, Etherscan, Dune Analytics, R
-- Ethereum, Web3, Bitcoin 
+- Onchain Data, Analytics, Data Engineering
+- SQL, Python, Etherscan
+- Crypto, Ethereum, DeFi 
 organizations:
-- name: the internet
+- name: public blockchains
   url: ""
-role: web3 data
+role: onchain ⛓️ data
 social:
 - icon: envelope
   icon_pack: fas
