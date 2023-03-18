@@ -47,6 +47,7 @@ Developing risk frameworks for DeFi treasury strategies covering liquidity, liqu
 
 **Works in Progress**
 
+- [DeFi Risk Themes from @ LlamaRisk](https://twitter.com/paulapivat/status/1637067244021637121) 🧵
 - [Risk Modeling with Monte Carlo simulation, pt.1](https://github.com/exponent-cx/analytics/blob/main/risk/monte_carlo/risk_mc.ipynb)
 - [Additional Liquidity Risk Metrics on Aave v2](https://dune.com/paulapivat/aave-liquidity-risk-metrics)
 - [Liquidity Risk on Aave v2](https://dune.com/paulapivat/aave-v2-utilization-and-liquidity-risk)
