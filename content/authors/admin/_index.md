@@ -43,10 +43,15 @@ user_groups:
 
 **Current: Data @** [Exponent](https://exponent.cx/)
 
-Developing risk frameworks for DeFi treasury strategies covering liquidity, liquidation and stablecoin risk. My work intersects analytics and data engineering. 
+Making DeFi safer by allowing users to see contract interactions before signing. Illuminating  smart contract, centralization/custody, governance and economic risks. Hangouts: Dune, Llama Risk, MetricsDAO, Curve, Frax, Convex. 
+
+I explore onchain data. Not pivoting into AI, but seeking to integrate ML/DL into my work. 
+
 
 **Works in Progress**
 
+- [Dune Spellbook - Query Labels](https://github.com/duneanalytics/spellbook/pull/2945#issuecomment-1484124721) ️🧙
+- [MetricsDAO 101](https://opensea.io/assets/matic/0xe37c7468454e378e90dd0dda8d2ce1628b62a033/11) 🎓
 - [DeFi Risk Themes from @ LlamaRisk](https://twitter.com/paulapivat/status/1637067244021637121) 🧵
 - [Risk Modeling with Monte Carlo simulation, pt.1](https://github.com/exponent-cx/analytics/blob/main/risk/monte_carlo/risk_mc.ipynb)
 - [Additional Liquidity Risk Metrics on Aave v2](https://dune.com/paulapivat/aave-liquidity-risk-metrics)
