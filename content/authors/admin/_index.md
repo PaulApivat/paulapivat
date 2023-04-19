@@ -43,13 +43,13 @@ user_groups:
 
 **Current: Data @** [Exponent](https://exponent.cx/)
 
-Making DeFi safer by allowing users to see contract interactions before signing. Illuminating  smart contract, centralization/custody, governance and economic risks. Hangouts: Dune, Llama Risk, MetricsDAO, Curve, Frax, Convex. 
-
-I explore onchain data. Not pivoting into AI, but seeking to integrate ML/DL into my work. 
+Making DeFi safer by allowing users to see contract interactions before signing. Illuminating  smart contract, centralization/custody, governance and economic risks. Hangouts: [Dune](https://dune.com/paulapivat), [Llama Risk](https://cryptorisks.substack.com/), [MetricsDAO](https://metricsdao.xyz/), Curve, Frax, Convex. 
 
 
 **Works in Progress**
 
+
+- [LlamaRisk - Asset Risk Assessment: DeFi Franc](https://cryptorisks.substack.com/p/asset-risk-assessment-defi-franc)🦙|[Thread](https://twitter.com/LlamaRisk/status/1648584348923465728?s=20) 🧵
 - [Dune Spellbook - Query Labels](https://github.com/duneanalytics/spellbook/pull/2945#issuecomment-1484124721) ️🧙
 - [MetricsDAO 101](https://opensea.io/assets/matic/0xe37c7468454e378e90dd0dda8d2ce1628b62a033/11) 🎓
 - [DeFi Risk Themes from @ LlamaRisk](https://twitter.com/paulapivat/status/1637067244021637121) 🧵
