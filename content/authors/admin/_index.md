@@ -12,9 +12,9 @@ awards:
     year:
 email: ""
 interests:
-- Onchain Data, Analytics, Data Engineering
-- SQL, Python, Etherscan
-- Crypto, Ethereum, DeFi 
+- Onchain Data, DS/ML
+- Python, SQL 
+- Ethereum, DeFi 
 organizations:
 - name: public blockchains
   url: ""
@@ -43,7 +43,7 @@ user_groups:
 
 **Current: Data @** [Exponent](https://exponent.cx/)
 
-Making DeFi safer by allowing users to see contract interactions before signing. Illuminating  smart contract, centralization/custody, governance and economic risks. Hangouts: [Dune](https://dune.com/paulapivat), [Llama Risk](https://cryptorisks.substack.com/), [MetricsDAO](https://metricsdao.xyz/), Curve, Frax, Convex. 
+Helping crypto-natives separate signal from noise using large language models. As a contributor to LlamaRisk, I conduct risk analysis and investigations on protocols looking to integrate into Curve. Hangouts: [Dune](https://dune.com/paulapivat), [Llama Risk](https://cryptorisks.substack.com/), [MetricsDAO](https://metricsdao.xyz/), Curve, Frax, Convex. 
 
 
 **Works in Progress**
