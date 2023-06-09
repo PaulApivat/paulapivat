@@ -43,12 +43,13 @@ user_groups:
 
 **Current: Data @** [Exponent](https://exponent.cx/)
 
-Helping crypto-natives separate signal from noise using large language models. As a contributor to LlamaRisk, I conduct risk analysis and investigations on protocols looking to integrate into Curve. Hangouts: [Dune](https://dune.com/paulapivat), [Llama Risk](https://cryptorisks.substack.com/), [MetricsDAO](https://metricsdao.xyz/), Curve, Frax, Convex. 
+Helping crypto-natives separate signal from noise using Large Language Models. Contributor to LlamaRisk, I conduct risk analysis and investigations on protocols looking to integrate into the Curve ecosystem. Hangouts: [Dune](https://dune.com/paulapivat), [Llama Risk](https://cryptorisks.substack.com/), Curve, Frax, Convex. 
 
 
 **Works in Progress**
 
 
+- [LlamaRisk - Asset Risk Assessment: Reserve Protocol (eUSD)](https://cryptorisks.substack.com/p/asset-risk-assessment-reserve-protocol)🦙|[Thread](https://twitter.com/LlamaRisk/status/1667027094449328130?s=20) 🧵
 - [LlamaRisk - Asset Risk Assessment: DeFi Franc](https://cryptorisks.substack.com/p/asset-risk-assessment-defi-franc)🦙|[Thread](https://twitter.com/LlamaRisk/status/1648584348923465728?s=20) 🧵
 - [Dune Spellbook - Query Labels](https://github.com/duneanalytics/spellbook/pull/2945#issuecomment-1484124721) ️🧙
 - [MetricsDAO 101](https://opensea.io/assets/matic/0xe37c7468454e378e90dd0dda8d2ce1628b62a033/11) 🎓
