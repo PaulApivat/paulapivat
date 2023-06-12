@@ -8,7 +8,7 @@ featured: false
 image:
   caption: ""
   focal_point: ""
-lastMod: "2022-04-12T00:00:00Z"
+lastMod: "2023-06-12T00:00:00Z"
 projects: []
 subtitle: How I got crypto pilled
 summary: A brief history from 2012 - present day.
@@ -28,7 +28,7 @@ I came away with two key thoughts:
 2. Social enterprises might be more of a bandaid to a systemic problem of underfunding public goods. 
 
 
-By the 2017, I was looking for a change and bought BTC & ETH at the market top. I spent the next year absorbing white papers and attending conferences (Deconomy in Korea, Ethereum Community Conference in Toronto). Despite the market crash, I knew permissionless, censorship resistant, public networks were here to stay.
+By the 2017, I was looking for a change and bought BTC & ETH at the market top. I spent the next year absorbing white papers and attending conferences ([Deconomy in Korea](https://deconomy.com/deconomy-2018-recap/), [Community Ethereum Conference in Toronto](https://2018.edcon.io/)). Despite the market crash, I knew permissionless, censorship resistant, public networks were here to stay.
 
 Having skin in the game got me down the rabbit hole. The interdisciplinary nature of the industry kept me staying. Crypto appeared to have implications for multiple strands in my life from economics, to software and data, to organizing and coordination, the intellectual stimulation of was endless. 
 
@@ -36,9 +36,13 @@ Having skin in the game got me down the rabbit hole. The interdisciplinary natur
 
 Quick tangent. 
 
-My country has vacillated between democratically elected governments and autocratic military regimes since 1932. In the 70's, politically active college students (my parents' generation) protested military regime, resulting in a bloody clash. Fast foward 50 years and we *still* have people protesting. Several decades worth of empirical data suggest protesting to be headline grabbing, but ultimately unsustainable. 
+My country has vacillated between democratically elected governments and autocratic military regimes since 1932. In the 70's, politically active college students (my parents' generation) protested military regime, resulting in a bloody clash. Fast foward 50 years and we *still* have people protesting. For good reason. Look at how Move Foward's [resounding victory in 2023](https://en.wikipedia.org/wiki/2023_Thai_general_election) and subsequent shenanigans by the old guard. 
 
-The fact that crypto represents the chance at a new system is compelling for me. The alternative is to reform old decaying institutions from within or wait for old dinosaurs to die out. I've seen that story and don't have another 50 years to wait around for evolution. Crypto represents a *chance* at punctuated equilibrium and i'm here for it.
+Several decades worth of experience suggest protesting to be necessary, but ultimately insufficient - in my opinion. I've seen that story and don't have another 50 years to wait around for evolution.
+
+The fact that crypto represents the chance at a new system is compelling for me. Crypto represents a *chance* at punctuated equilibrium and I'm here for it. 
+
+I say this realizing crypto has a lot of regulatory headwinds and often times get in its own way. [Credible Neutrality](https://nakamoto.com/credible-neutrality/) should be the guiding principle for any system that wishes to make corruption difficult. But credibly neutral foundations are themselves, very difficult to build. 
 
 Insert "remind me in 20 years" tweet. 
 
@@ -54,8 +58,22 @@ I spent 2021 enabling capital and coordination through on- and off-chain data at
 
 I was a founding member at the [Analytics Guild](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f) where I shared insights with the community through [forum posts](https://forum.bankless.community/u/paulapivat/activity/topics). My colleagues and I built [DAO Dash](https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828), an in-house analytics platform to provide insights to guilds and projects at BanklessDAO. I also provided growth and usage metrics for the BanklessDAO [Bounty Board](https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90) project.
 
-I'm currently focused on leveling up my **smart contract sleuthing** skills to analyze DeFi protocols.
+I'm currently focused on leveling up my **smart contract sleuthing** skills to analyze DeFi protocols. I am a contributor to [LlamaRisk](https://cryptorisks.substack.com/), analyzing protocols looking to integrate into the Curve ecosystem. 
 
-I am working with the Bankless DeFi Innovation Index team to provide on-chain data overview of various projects that make up $GMI. 
+Additionally, since early 2023, as ChatGPT took the world by storm, I've been exploring how to leverage AI and language models for crypto data work. 
+
+I like the lightning round questions from the [Flywheel DeFi](https://twitter.com/FlywheelDeFi) podcasts so I'll pose them here:
+
+## What was your virgin blockchain experience and CEXes don't count? 
+
+I'd say September 20, 2019 was when I sent my first metamask transaction. I moved 1 ETH from a CEX to my metamask and subsequently made an approval to send $SAI - single collateral dai. Shortly after, I lent out SAI by minting cSAI on Compound.
+
+
+## Favorite off-chain touch grass activity.
+
+I am making a conscious effort to spend less time in front of screens so I get in my reps for weights, swimming, yoga and starting muay thai. 
+
+
+
 
 If you'd like help with on-chain analysis, please [get in touch](https://twitter.com/paulapivat).

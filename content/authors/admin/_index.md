@@ -43,7 +43,7 @@ user_groups:
 
 **Current: Data @** [Exponent](https://exponent.cx/)
 
-Helping crypto-natives separate signal from noise using Large Language Models. Contributor to LlamaRisk, I conduct risk analysis and investigations on protocols looking to integrate into the Curve ecosystem. Hangouts: [Dune](https://dune.com/paulapivat), [Llama Risk](https://cryptorisks.substack.com/), Curve, Frax, Convex. 
+Using large language models to explore onchain data. Contributor to LlamaRisk, I conduct risk analysis and investigations on protocols looking to integrate into the Curve ecosystem. Hangouts: [Dune](https://dune.com/paulapivat), [Llama Risk](https://cryptorisks.substack.com/), Curve, Frax, Convex. 
 
 
 **Works in Progress**
