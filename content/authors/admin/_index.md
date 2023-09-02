@@ -43,7 +43,8 @@ user_groups:
 
 **Data @** [Exponent](https://exponent.cx/)
 
-Feeding large language models with onchain and offchain data. Scaling pipelines and databases. Contributor to LlamaRisk; risk analysis and investigations on protocols looking to integrate into the Curve ecosystem. Hangouts: Data Engineering, [Dune](https://dune.com/paulapivat), [Llama Risk](https://cryptorisks.substack.com/), Curve, Frax, Convex. 
+Feeding large language models with onchain and offchain data. Scaling pipelines and databases. In the arena making [pull requests](https://github.com/PaulApivat). Other hangouts: [Dune](https://dune.com/paulapivat), 
+[Llama Risk](https://cryptorisks.substack.com/), Frax, Curve, Convex. 
 
 
 **Recent Works**
