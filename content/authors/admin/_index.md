@@ -43,13 +43,14 @@ user_groups:
 
 **Data @** [Exponent](https://exponent.cx/)
 
-Feeding large language models with onchain and offchain data. Scaling pipelines and databases. In the arena making [pull requests](https://github.com/PaulApivat). Other hangouts: [Dune](https://dune.com/paulapivat), 
-[Llama Risk](https://cryptorisks.substack.com/), Frax, Curve, Convex. 
+Feeding large language models with onchain and offchain data. Connecting pipelines to databases. In the arena making [pull requests](https://github.com/PaulApivat). Other hangouts: [Dune](https://dune.com/paulapivat), [CryptoDataBytes](https://twitter.com/cryptodatabytes), [DataTalksClub](https://twitter.com/DataTalksClub), Frax Finance.
+
 
 
 **Recent Works**
 
-
+- [Arbitrum Short Term Incentives Program (STIP), with Frax Finance](https://dune.com/paulapivat/arbitrum-stip-with-frax-finance) | 🃏[CryptoDataBytes Submission](https://jokerace.io/contest/optimism/0xBF07ff1007f0632a810172976b77f99c9EB03c9F/submission/83779953257751213502467755572983596681276944908866455761702746768565333668946)
+- [Frax Finance Incentivzer AMOs](https://dune.com/paulapivat/frax-finance-incentivizer-amos) |🃏 [CryptoDataBytes Submission](https://jokerace.io/contest/optimism/0xf9877d107aa83f1E3a48d99D4b43Fbff61E9d82c/submission/62290207048883345317895143567357964817530154046817466970812895629170079985927)
 - [LlamaRisk - Collateral Risk Assessment - Coinbase Wrapped Staked ETH (cbETH)](https://hackmd.io/@PrismaRisk/cbETH) 🦙| 🧵[Thread](https://twitter.com/LlamaRisk/status/1678221796787765249?s=20)
 - [LlamaRisk - Asset Risk Assessment: Reserve Protocol (eUSD)](https://cryptorisks.substack.com/p/asset-risk-assessment-reserve-protocol)🦙|[Thread](https://twitter.com/LlamaRisk/status/1667027094449328130?s=20) 🧵
 - [LlamaRisk - Asset Risk Assessment: DeFi Franc](https://cryptorisks.substack.com/p/asset-risk-assessment-defi-franc)🦙|[Thread](https://twitter.com/LlamaRisk/status/1648584348923465728?s=20) 🧵
