@@ -41,7 +41,7 @@ user_groups:
 
 
 
-**Data @** [Exponent](https://exponent.cx/)
+**Data @** [Exponent](https://twitter.com/Exponent_cx)
 
 Feeding large language models with onchain and offchain data. Connecting pipelines to databases. In the arena making [pull requests](https://github.com/PaulApivat). Other hangouts: [Dune](https://dune.com/paulapivat), [CryptoDataBytes](https://twitter.com/cryptodatabytes), [DataTalksClub](https://twitter.com/DataTalksClub), Frax Finance.
 
