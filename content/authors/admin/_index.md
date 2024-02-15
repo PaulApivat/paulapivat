@@ -126,7 +126,7 @@ See my past [data visualizations](https://paulapivat.com/#gallery) and writings 
 **Social Media**
 
 - [Twitter](https://twitter.com/paulapivat)
-- [Farcaster](https://fcast.me/paulx)
+- [Farcaster](https://warpcast.com/paulx.eth)
 - [Lens Protocol](https://lenster.xyz/u/paulx)
 
 
