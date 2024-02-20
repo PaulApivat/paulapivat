@@ -49,6 +49,8 @@ Feeding large language models with onchain and offchain data. Connecting pipelin
 
 **Recent Works**
 
+- [Frax Arbitrum Short-Term Incentive Program (STIP): Return on Incentives](https://dune.com/paulapivat/frax-arb-stip-return-on-incentives) | 🧵[Thread](https://x.com/paulapivat/status/1759239576533766199)
+- [veFXS lockers](https://dune.com/paulapivat/vefxs-lockers) | 🧵[Thread](https://x.com/paulapivat/status/1756702461782577383)
 - [Arbitrum Short Term Incentives Program (STIP), with Frax Finance](https://dune.com/paulapivat/arbitrum-stip-with-frax-finance) | 🃏[CryptoDataBytes Submission](https://jokerace.io/contest/optimism/0xBF07ff1007f0632a810172976b77f99c9EB03c9F/submission/83779953257751213502467755572983596681276944908866455761702746768565333668946)
 - [Frax Finance Incentivzer AMOs](https://dune.com/paulapivat/frax-finance-incentivizer-amos) |🃏 [CryptoDataBytes Submission](https://jokerace.io/contest/optimism/0xf9877d107aa83f1E3a48d99D4b43Fbff61E9d82c/submission/62290207048883345317895143567357964817530154046817466970812895629170079985927)
 - [LlamaRisk - Collateral Risk Assessment - Coinbase Wrapped Staked ETH (cbETH)](https://hackmd.io/@PrismaRisk/cbETH) 🦙| 🧵[Thread](https://twitter.com/LlamaRisk/status/1678221796787765249?s=20)
