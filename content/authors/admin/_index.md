@@ -28,7 +28,7 @@ social:
   link: https://twitter.com/paulapivat
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/in/paulapivat/
+  link: '#contact'
 - icon: github
   icon_pack: fab
   link: https://github.com/paulapivat
@@ -43,12 +43,13 @@ user_groups:
 
 **Data @** [Exponent](https://twitter.com/Exponent_cx)
 
-Feeding large language models with onchain and offchain data. Connecting pipelines to databases. In the arena making [pull requests](https://github.com/PaulApivat). Other hangouts: [Dune](https://dune.com/paulapivat), [CryptoDataBytes](https://twitter.com/cryptodatabytes), [DataTalksClub](https://twitter.com/DataTalksClub), Frax Finance.
+Feeding large language models with onchain and offchain data. Connecting pipelines to databases. In the arena making [pull requests](https://github.com/PaulApivat). Other hangouts: [Dune](https://dune.com/paulapivat), [Bytexplorers](https://dune.com/cryptodatabytes/bytexplorers)
 
 
 
 **Recent Works**
 
+- [DEX Comparisons: Fraxswap vs Curve vs Uniswap](https://dune.com/paulapivat/fraxswap-comparison) | 🧵[Thread](https://x.com/paulapivat/status/1764492703226818644)
 - [Frax Arbitrum Short-Term Incentive Program (STIP): Return on Incentives](https://dune.com/paulapivat/frax-arb-stip-return-on-incentives) | 🧵[Thread](https://x.com/paulapivat/status/1759239576533766199)
 - [veFXS lockers](https://dune.com/paulapivat/vefxs-lockers) | 🧵[Thread](https://x.com/paulapivat/status/1756702461782577383)
 - [Arbitrum Short Term Incentives Program (STIP), with Frax Finance](https://dune.com/paulapivat/arbitrum-stip-with-frax-finance) | 🃏[CryptoDataBytes Submission](https://jokerace.io/contest/optimism/0xBF07ff1007f0632a810172976b77f99c9EB03c9F/submission/83779953257751213502467755572983596681276944908866455761702746768565333668946)
