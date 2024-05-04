@@ -18,7 +18,7 @@ interests:
 organizations:
 - name: public blockchains
   url: ""
-role: onchain ⛓️ data
+role: CryptoData Analyst ⛓️ 
 social:
 - icon: envelope
   icon_pack: fas
@@ -43,12 +43,17 @@ user_groups:
 
 **Data @** [Exponent](https://twitter.com/Exponent_cx)
 
-Feeding large language models with onchain and offchain data. Connecting pipelines to databases. In the arena making [pull requests](https://github.com/PaulApivat). Other hangouts: [Dune](https://dune.com/paulapivat), [Bytexplorers](https://dune.com/cryptodatabytes/bytexplorers)
+**Onchain hangouts**: [Dune](https://dune.com/paulapivat), [Bytexplorers](https://dune.com/cryptodatabytes/bytexplorers); **Interests**: Ethereum Credit Guild, Fraxtal, Onchain Central Banks, Stablecoin Maximalism
+
+Using LLMs to answer crypto questions. Connecting pipelines to databases. In the arena making [pull requests](https://github.com/PaulApivat). 
 
 
 
-**Recent Works**
+**Recent**
 
+- [Optimism Airdrop 4: Claimer Impact on Governance](https://dune.com/paulapivat/op-airdrop-4-governance-activity) | 🧵[Thread](https://x.com/paulapivat/status/1784641866434216330)
+- [Optimism Airdrop 4: Creators Edition](https://dune.com/paulapivat/op-airdrop-4-creators-edition)
+- [Optimism Airdrop 4: Claimer segmentation](https://dune.com/paulapivat/op-airdrop-4)
 - [DEX Comparisons: Fraxswap vs Curve vs Uniswap](https://dune.com/paulapivat/fraxswap-comparison) | 🧵[Thread](https://x.com/paulapivat/status/1764492703226818644)
 - [Frax Arbitrum Short-Term Incentive Program (STIP): Return on Incentives](https://dune.com/paulapivat/frax-arb-stip-return-on-incentives) | 🧵[Thread](https://x.com/paulapivat/status/1759239576533766199)
 - [veFXS lockers](https://dune.com/paulapivat/vefxs-lockers) | 🧵[Thread](https://x.com/paulapivat/status/1756702461782577383)
