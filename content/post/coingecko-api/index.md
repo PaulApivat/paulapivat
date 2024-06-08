@@ -76,6 +76,41 @@ traverse_json(data)
 
 I'll go through each endpoint I need and make a note of the data structure (List of Dictionaries or a single Dictionary) that it returns. Time spent in the exploratory phase helps get a mental model of the data and begins informing data modeling you might do down the line. 
 
+### Example: Trending Search List
+
+The **Trending Search List** endpoint `https://api.coingecko.com/api/v3/search/trending` allows users to query trending searched coins, nfts and categories on CoinGecko in the last 24 hours ("categories" here are specific to labels/tags that CoinGecko has curated). Here is the output of the `traverse_json()` function to give you a feel for the response data from this endpoint. The key(s) returned in the dictionary are: coins, nfts and categories. The values are lists of dictionaries (i.e., the coins list had 14 dictionaries, the nfts list had six dictionaries, the categories value had five dictionaries.)
+
+```
+# Truncated for space
+
+# Fourteen coins searched in the last 24 hours
+
+coins -> 14 -> item -> id: jetton
+coins -> 14 -> item -> coin_id: 31360
+coins -> 14 -> item -> name: JetTon Games
+coins -> 14 -> item -> symbol: JETTON
+coins -> 14 -> item -> market_cap_rank: 745
+Working with List 
+
+# Six NFTs searched in the last 24 hours
+
+nfts -> 6 -> id: meebits
+nfts -> 6 -> name: Meebits
+nfts -> 6 -> symbol: ⚇
+nfts -> 6 -> thumb: https://coin-images.coingecko.com/nft_contracts/images/28/standard/meebits.png?1707287182
+nfts -> 6 -> nft_contract_id: 28
+Working with List 
+
+# Five Categories searched in the last 24 hours
+
+categories -> 5 -> id: 29
+categories -> 5 -> name: Smart Contract Platform
+categories -> 5 -> market_cap_1h_change: 0.03473537849426241
+categories -> 5 -> slug: smart-contract-platform
+categories -> 5 -> coins_count: 244
+Working with List 
+```
+
 ## Keep API Keys Secret
 
 You don't want to accidentally push your API keys to Github,  create an `.env` (store your API keys here) and `.gitignore` file at the root of your project folder. Finally, use **python-dotenv** to access your environment variables:
@@ -100,6 +135,9 @@ response = requests.get(url, headers=headers)
 
 print(response.text)
 ```
+
+## Load
+
 
 
 
