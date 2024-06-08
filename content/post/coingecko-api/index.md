@@ -2,18 +2,18 @@
 authors:
 - admin
 categories: []
-date: "2022-06-8T00:00:00Z"
+date: "2024-06-08T00:00:00Z"
 draft: false
 featured: false
 image:
   caption: ""
   focal_point: ""
-lastMod: "2024-06-8T00:00:00Z"
+lastMod: "2022-06-08T00:00:00Z"
 projects: []
-subtitle: A walk-through
-summary: Exploring CoinGecko's API
-tags: ["Python", "API", "pipeline", "data modeling"]
-title: CoinGecko API
+subtitle: Modeling data to build to build initial pipelines
+summary: Helping data analysts explore CoinGecko's API
+tags: ["Python", "API", "data modeling", "pipelines"]
+title: Exploring CoinGecko's API
 ---
 
 
