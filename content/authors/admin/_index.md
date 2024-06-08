@@ -43,7 +43,7 @@ user_groups:
 
 **Data @** [Exponent](https://twitter.com/Exponent_cx)
 
-**Onchain hangouts**: [Dune](https://dune.com/paulapivat), [Bytexplorers](https://dune.com/cryptodatabytes/bytexplorers); **Interests**: Ethereum Credit Guild, Fraxtal, Onchain Central Banks, Stablecoin Maximalism
+**Onchain hangouts**: [Dune](https://dune.com/paulapivat), [Bytexplorers](https://dune.com/cryptodatabytes/bytexplorers); **Interests**: Data science, DeFi, Language models
 
 Using LLMs to answer crypto questions. Connecting pipelines to databases. In the arena making [pull requests](https://github.com/PaulApivat). 
 
@@ -51,6 +51,8 @@ Using LLMs to answer crypto questions. Connecting pipelines to databases. In the
 
 **Recent**
 
+- [Ethereum's Onchain GDP](https://dune.com/paulapivat/onchain-gdp) 
+- [Ethereum Credit Guild: Lending Markets (WETH)](https://dune.com/paulapivat/credit-guild-lending-terms) | 🧵[Thread](https://x.com/paulapivat/status/1789670343671783906)
 - [Optimism Airdrop 4: Claimer Impact on Governance](https://dune.com/paulapivat/op-airdrop-4-governance-activity) | 🧵[Thread](https://x.com/paulapivat/status/1784641866434216330)
 - [Optimism Airdrop 4: Creators Edition](https://dune.com/paulapivat/op-airdrop-4-creators-edition)
 - [Optimism Airdrop 4: Claimer segmentation](https://dune.com/paulapivat/op-airdrop-4)
