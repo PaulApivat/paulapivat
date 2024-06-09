@@ -16,15 +16,15 @@ tags: ["Python", "API", "data modeling", "pipelines", "coingecko", "ETL/ELT"]
 title: ELT pipeline ingesting CoinGecko's data
 ---
 
-From a data analyst perspective, one major difference between Web2 and Web3 is the existence of "public" data infrastructure. In crypto, analysts are familiar with [Dune Analytics](https://dune.com/) or [FlipSide Crypto](https://flipsidecrypto.xyz/) among [other data providers](https://www.primodata.org/blockchain-data). Although many of these are private companies, the nature of **public blockchains** make such data more accessible than what you'll find on Google's BigQuery. 
+From a data analyst perspective, a significant  between Web2 and Web3 is the existence of "public" data infrastructure. In crypto, analysts are familiar with [Dune Analytics](https://dune.com/) or [FlipSide Crypto](https://flipsidecrypto.xyz/) among [other data providers](https://www.primodata.org/blockchain-data). Although these are private companies, the nature of **public blockchains** enhances data accessibility compared to platforms like Google’s BigQuery.
 
 Teams of data engineers, database and backend specialists have done the heavy lifting so analysts can simply "use SQL" right in the browser. This makes the [data workflow in crypto](https://read.cryptodatabytes.com/p/2022-guide-to-web3-data-thinking) unique (and arguably better).
 
-Nevertheless, if happen to be building data-intensive applications, you may not rely solely on public infrastructure. You might have to pull data from many sources. This post will explore [CoinGecko's API (demo tier)](https://www.coingecko.com/en/api) and describe a process of exploring the data, building an initial model as well as laying the foundation for building data pipelines.
+However, when building data-intensive applications, you cannot rely solely on public infrastructure. Often, you'll need to integrate data from various sources. This post will explore [CoinGecko's API (demo tier)](https://www.coingecko.com/en/api) and describe a process of exploring the data, building an initial model as well as laying the foundation for building data pipelines.
 
-> Analysts are like restaurant patrons, with forks and knives out, ready to dine. This post will guide you to the kitchen to see how that food is prepared. 
+> Imagine analysts as restaurant patrons, utensils in hand, ready to consume. This post invites you to the back kitchen to understand how the meal is prepared.
 
-I've written this post as a note to future self when I once again need to pull data from an API. I think the process is generalizable beyond CoinGecko.
+I wrote this as a note to my future self for when I need to fetch data from an API again, though the process is applicable beyond CoinGecko.
 
 ## Tools
 
@@ -42,7 +42,7 @@ Libraries:
 
 ## Exploratory Phase: Handling JSON data
 
-API providers will often provide a **Requests - Response** format for visually showing in what format data will come in once a request is made. JSON (javascript object notation) is the norm for text-based structured data delivered over the web. Translated to Python, that becomes **(nested) dictionaries** and **lists**. Depending on the endpoint, data may be nested two or three levels down. There will be in key-value pairs. Values can be strings (text), integers, float or additional lists or dictionaries. 
+API providers typically use a **Requests - Response** format to show how data is structured. JSON (javascript object notation) is the norm for text-based structured data delivered over the web, which translates into **nested dictionaries** and **lists** in Python. Depending on the endpoint, data might be nested several levels deep and organized in key-value pairs, with values being strings, integers, floats, or additional lists or dictionaries.
 
 I find it helpful to make calls to understand what the data looks like visually (in terminal). A simple loop helps iterating through a dictionary (or list):
 
@@ -52,9 +52,9 @@ for key, value in data.items():
     print("Keys: ", key)
 ```
 
-But what about **nested** data that is **messy**? You may be confronted with lists and/or dictionaries. 
+But what if the data is **nested** and **messy**, containing multiple lists and dictionaries?
 
-This **helper function** will navigate nested JSON data, print out the key-value pairs and  is generally flexible across a number of cases. It will print out the value as well as keep an index of how many instances of a data structure. For example, I might query a list of coins that's actually a list of dictionaries: 
+This helper function navigates through nested JSON data, prints key-value pairs, and maintains an index of data structure instances. For instance, querying a list of coins might return a list of dictionaries:: 
 
 ```
 def traverse_json(data, path=[]):
@@ -252,9 +252,9 @@ You can see the [whole load file](https://github.com/PaulApivat/RAG/blob/main/co
 
 ## Transform
 
-I store initial data load in a database I call `coingecko_load.db`, a sharable SQLite file. Then I query those tables and run various transformation functions to normalize the JSON data into flat tables before inserting all _transformed_ tables into a new database `coingecko_load_transform.db`. I find it cleaner to separate loaded data from transform data and SQLite is light-weight enough to keep these as two separate files. Your mileage may vary given the amount of data you're processing. 
+I store the initial data load in a database named `coingecko_load.db`, an SQLite file that can be easily shared. Afterward, I query these tables and apply various transformation functions to flatten the JSON data into table formats. These transformed tables are then inserted into a new database, `coingecko_load_transform.db`. I prefer to keep loaded and transformed data separate as SQLite is lightweight and efficient enough to manage them across two distinct files. However, the efficiency of this approach may differ based on the data volume you handle.
 
-You can see  the separation between **original** and **transformed** database:
+This approach highlights the clear distinction between the **original** and **transformed** databases::
 ```
 def main():
     conn_original = create_connection("coingecko_load.db")
@@ -280,7 +280,7 @@ You can check the [whole file](https://github.com/PaulApivat/RAG/blob/main/coing
 
 ## Conclusion
 
-There are other detailed operations required to get a final `coin_data_ids` table that is described in the project [README](https://github.com/PaulApivat/RAG/tree/main/coingecko). In summary we went over an end-to-end process of explorating data from an external API (CoinGecko). Then we modelled the data before implementing a light-weight ELT process. The physical data model and sharable SQLite files enable communication between data, product and engineering teams and this can serve as a starting point for implementing production-ready data pipelines. 
+The comprehensive steps needed to produce the final `coin_data_ids` table are detailed in the project [README](https://github.com/PaulApivat/RAG/tree/main/coingecko). In summary, this document covers the entire process from extracting data from an external API (CoinGecko) to modeling the data, followed by implementing a lightweight ELT process. The physical data model and the shareable SQLite files facilitate seamless communication among data, product, and engineering teams. This can serve as a starting point for implementing production-ready data pipelines. 
 
 
 
