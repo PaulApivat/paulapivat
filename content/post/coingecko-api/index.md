@@ -140,7 +140,7 @@ print(response.text)
 
 My goal is to facilitate communication between the data, product and engineering teams; having a visual model is immensely helpful here to get on the same page as to what data is needed and what data to ingest. This helps shape a necessarily exploratory conversation into implementation details. Here's our physical data model:
 
-![coingecko_data_model]("coingecko_data_model.png")
+![coingecko_data_model](./coingecko_data_model.png)
 
 
 
