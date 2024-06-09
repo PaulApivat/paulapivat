@@ -136,8 +136,20 @@ response = requests.get(url, headers=headers)
 print(response.text)
 ```
 
+## Physical Data Model
+
+My goal is to facilitate communication between the data, product and engineering teams; having a visual model is immensely helpful here to get on the same page as to what data is needed and what data to ingest. This helps shape a necessarily exploratory conversation into implementation details. Here's our physical data model:
+
+![coingecko_data_model]("coingecko_data_model.png")
+
+
+
 ## Load
 
+The rest of the article will focus on an **Extract, Load, Transform (ELT)** process for ingesting external data. The exact process is described in this [README](https://github.com/PaulApivat/RAG/blob/main/coingecko/README.md). I am using SQLite as my temporary data warehouse because its light weight, works well with python and, most importantly, can be shared with my teammates to facilitate communication. 
+
+The data pipeline process described in this article is **not** production ready and will undergo several adjustments after I hand-off to our engineers. 
+My goal is to create a visual database schema
 
 
 
