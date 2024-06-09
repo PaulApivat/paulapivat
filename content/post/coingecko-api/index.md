@@ -16,7 +16,7 @@ tags: ["Python", "API", "data modeling", "pipelines", "coingecko", "ETL/ELT"]
 title: ELT pipeline ingesting CoinGecko's data
 ---
 
-From a data analyst perspective, a significant  between Web2 and Web3 is the existence of "public" data infrastructure. In crypto, analysts are familiar with [Dune Analytics](https://dune.com/) or [FlipSide Crypto](https://flipsidecrypto.xyz/) among [other data providers](https://www.primodata.org/blockchain-data). Although these are private companies, the nature of **public blockchains** enhances data accessibility compared to platforms like Google’s BigQuery.
+From a data analyst perspective, a significant difference between Web2 and Web3 is the existence of "public" data infrastructure. In crypto, analysts are familiar with [Dune Analytics](https://dune.com/) or [FlipSide Crypto](https://flipsidecrypto.xyz/) among [other data providers](https://www.primodata.org/blockchain-data). Although these are private companies, the nature of **public blockchains** enhances data accessibility compared to platforms like Google’s BigQuery.
 
 Teams of data engineers, database and backend specialists have done the heavy lifting so analysts can simply "use SQL" right in the browser. This makes the [data workflow in crypto](https://read.cryptodatabytes.com/p/2022-guide-to-web3-data-thinking) unique (and arguably better).
 
