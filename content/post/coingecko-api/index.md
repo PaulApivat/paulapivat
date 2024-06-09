@@ -16,13 +16,15 @@ tags: ["Python", "API", "data modeling", "pipelines", "coingecko", "ETL/ELT"]
 title: ELT pipeline ingesting CoinGecko's data
 ---
 
-From a data analyst perspective, one major difference between Web2 and Web3 is the existence of "public" data infrastructure. In crypto, analysts are familiar with [Dune Analytics](https://dune.com/) or [FlipSide Crypto](https://flipsidecrypto.xyz/) among [other data providers](https://www.primodata.org/blockchain-data). Although many of these are private companies, the nature of **public blockchains** make such data more accessible than what you'll find on Google's BigQuery, for example. 
+From a data analyst perspective, one major difference between Web2 and Web3 is the existence of "public" data infrastructure. In crypto, analysts are familiar with [Dune Analytics](https://dune.com/) or [FlipSide Crypto](https://flipsidecrypto.xyz/) among [other data providers](https://www.primodata.org/blockchain-data). Although many of these are private companies, the nature of **public blockchains** make such data more accessible than what you'll find on Google's BigQuery. 
 
 Teams of data engineers, database and backend specialists have done the heavy lifting so analysts can simply "use SQL" right in the browser. This makes the [data workflow in crypto](https://read.cryptodatabytes.com/p/2022-guide-to-web3-data-thinking) unique (and arguably better).
 
-Nevertheless, if you work for a startup that happens to be building data-intensive applications, you may not be able to rely on public infrastructure. You might have to pull data from many sources. This post will explore [CoinGecko's API (demo tier)](https://www.coingecko.com/en/api) and describe a process of exploring the data, building an initial model as well as laying the foundation for building data pipelines. 
+Nevertheless, if happen to be building data-intensive applications, you may not rely solely on public infrastructure. You might have to pull data from many sources. This post will explore [CoinGecko's API (demo tier)](https://www.coingecko.com/en/api) and describe a process of exploring the data, building an initial model as well as laying the foundation for building data pipelines.
 
 > Analysts are like restaurant patrons, with forks and knives out, ready to dine. This post will guide you to the kitchen to see how that food is prepared. 
+
+I've written this post as a note to future self when I once again need to pull data from an API. I think the process is generalizable beyond CoinGecko.
 
 ## Tools
 
@@ -142,7 +144,7 @@ My goal is to facilitate communication between the data, product and engineering
 
 ![coingecko_data_model](./coingecko_data_model.png)
 
-This is drawn in Notion using the [Mermaid](https://mermaid.js.org/) language. After trying out several graphing and visualization tools, I found this to be the simplest, with the least dependencies. In my opinion, manually drawing out the chart should preceded installing any graphing library. Here's the code:
+This is drawn in Notion using the [Mermaid](https://mermaid.js.org/) language. After trying out several graphing and visualization tools, this option was the simplest, with the least dependencies. In my opinion, manually drawing out the chart should precede installing any graphing library. Here's the code you can try out in Notion:
 
 ```
 erDiagram
@@ -276,6 +278,10 @@ def main():
 
 You can check the [whole file](https://github.com/PaulApivat/RAG/blob/main/coingecko/coin_data_transform.py) here to see various transformation functions at work. 
 
+## Conclusion
+
+There are other detailed operations required to get a final `coin_data_ids` table that is described in the project [README](https://github.com/PaulApivat/RAG/tree/main/coingecko). In summary we went over an end-to-end process of explorating data from an external API (CoinGecko). Then we modelled the data before implementing a light-weight ELT process. The physical data model and sharable SQLite files enable communication between data, product and engineering teams and this can serve as a starting point for implementing production-ready data pipelines. 
 
 
-I'm always down to talk onchain data, [shoot me a DM](https://twitter.com/paulapivat).
+
+I'm always down to talk data, [shoot me a DM](https://twitter.com/paulapivat).
