@@ -11,7 +11,7 @@ image:
 lastMod: "2024-07-14T00:00:00Z"
 projects: []
 subtitle: Using the jsonschema library in Python
-summary: Validating JSON data
+summary: Using the jsonschema library in Python
 tags: ["Python", "API", "data validation", "data cleaning", "coingecko", "data quality"]
 title: Validating JSON Data
 ---
