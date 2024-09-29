@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: My interests include data science, machine learning and Python programming.
+bio: Onchain data, DeFi, pipelines.
 awards:
   courses:
   - course: 
@@ -12,7 +12,7 @@ awards:
     year:
 email: ""
 interests:
-- Onchain Data, DS/ML
+- Onchain Data, ML
 - Python, SQL 
 - Ethereum, DeFi 
 organizations:
@@ -41,7 +41,7 @@ user_groups:
 
 
 
-**Data @** [Exponent](https://twitter.com/Exponent_cx)
+**Data @** [Exponent](https://twitter.com/Exponent_AI)
 
 **Onchain hangouts**: [Dune](https://dune.com/paulapivat), [Bytexplorers](https://dune.com/cryptodatabytes/bytexplorers); **Interests**: Data science, DeFi, Language models
 
