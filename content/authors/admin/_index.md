@@ -12,9 +12,9 @@ awards:
     year:
 email: ""
 interests:
-- Onchain Data, ML
-- Python, SQL 
-- Ethereum, DeFi 
+- Internet Finance, Data
+- Meditation, Muay Thai
+- Math and Energy markets
 organizations:
 - name: public blockchains
   url: ""
@@ -41,16 +41,20 @@ user_groups:
 
 
 
-**Data @** [Exponent](https://twitter.com/Exponent_AI)
+### Current
 
-**Onchain hangouts**: [Dune](https://dune.com/paulapivat), [Bytexplorers](https://dune.com/cryptodatabytes/bytexplorers); **Interests**: Data science, DeFi, Language models
+Exploring Internet Finance and Internet Capital Markets (aka DeFi). 
 
-Using LLMs to answer crypto questions. Connecting pipelines to databases. In the arena making [pull requests](https://github.com/PaulApivat). 
+I'm interested in **automated market makers** and other key DeFi mechanisms (lending, stablecoins). Currently doing a deep dive into Uniswap V3 and V4 (Hooks!). Other interests include math, energy, and the data center economy.
+
+**Communities**: [Dune](https://dune.com/paulapivat), [Cyfrin](https://updraft.cyfrin.io/), [Math Academy](https://x.com/_MathAcademy_)
 
 
 
-**Recent**
 
+### 2024
+
+- [Uniswap V4 Growth by Hooks](https://dune.com/paulapivat/uniswap-v4-growth-by-hooks)
 - [Ethereum's Onchain GDP](https://dune.com/paulapivat/onchain-gdp) 
 - [Ethereum Credit Guild: Lending Markets (WETH)](https://dune.com/paulapivat/credit-guild-lending-terms) | 🧵[Thread](https://x.com/paulapivat/status/1789670343671783906)
 - [Optimism Airdrop 4: Claimer Impact on Governance](https://dune.com/paulapivat/op-airdrop-4-governance-activity) | 🧵[Thread](https://x.com/paulapivat/status/1784641866434216330)
@@ -79,7 +83,7 @@ Using LLMs to answer crypto questions. Connecting pipelines to databases. In the
 - [Gnosis Safe Holdings Analysis](https://dune.com/exponent/gnosis-safe-holdings-analysis) | [version 1.0](https://dune.com/paulapivat/gnosis-safe-factory): Examines Safe Proxies from factory contract v1.3.0. 🧵[Thread](https://twitter.com/Exponent_cx/status/1573327110852300800)
 - [Exponent Fennec Stash](https://dune.com/exponent/exponent-fennec-stash) | [version 1.0](https://dune.com/paulapivat/exponent-treasury-vault): Examines Exponent Treasury Vault with Pool & Safe Dollar Yield strategies. 🧵[Thread](https://twitter.com/paulapivat/status/1565621408478433281)
 
-**Past Projects**
+### 2023
 
 - [Velodrome Emissions Per $1 Bribed](https://dune.com/paulapivat/velodrome-emissions-bribe) | 🧵 [Thread](https://twitter.com/paulapivat/status/1561752438981664768)
 - [Frax Bribe ROI](https://dune.com/paulapivat/frax-bribe) | 🧵 [Thread](https://twitter.com/paulapivat/status/1551219246667022337)
@@ -92,7 +96,7 @@ Using LLMs to answer crypto questions. Connecting pipelines to databases. In the
 - [Bank Token Buy & Sell Volume](https://dune.xyz/paulapivat/dollarBANK-Buy-and-Sell-Volume)
 
 
-**2021**
+### 2021 - 2022
 
 Core contributor at [Bankless DAO](https://www.bankless.community/)  ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)), providing insights through on- and off-chain data (see below).
 
@@ -101,9 +105,6 @@ Founding member of our [Analytics Guild](https://www.notion.so/bankless/Bankless
 I contributed growth and usage metrics to the [BanklessDAO Bounty Board](https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90) while sharing insights with the broader community through [forum posts](https://forum.bankless.community/u/paulapivat/activity/topics). 
 
 I wrote about my journey to web3 data [here](https://paulapivat.com/post/before_crypto/).
-
-
-**On-Chain Data**
 
 - [Bankless DAO Membership Categories Dashboard](https://duneanalytics.com/paulapivat/dollarBANK-Members)
 - [Bankless DAO Membership Over Time](https://duneanalytics.com/paulapivat/dollarBANK-Members-Time-Series)
@@ -116,9 +117,6 @@ I wrote about my journey to web3 data [here](https://paulapivat.com/post/before_
 - [ForeFront Tipping Economy](https://dune.xyz/paulapivat/Fore-Front-Tipping-Economy)
 - [Learn Foundational Ethereum Topics with SQL](https://ethereum.org/en/developers/tutorials/learn-foundational-ethereum-topics-with-sql/)
 - [Grants Committee Dashboard](https://dune.xyz/paulapivat/Grants-Committee-Dashboard)
-
-**Off-Chain Data**
-
 - [Bankless DAO Growth in Bytes: Season 3 Launch - Jan 21, 2022, ](https://docs.google.com/presentation/d/1CIUPeTDyRga9fOOnpsPjA6pS3nR6oZKHX6aUfRMmXbI/edit?usp=sharing) | 🧵 [Thread](https://twitter.com/paulapivat/status/1484455204137279490)
 - [Bankless DAO Community Growth, Season 2 Launch](https://docs.google.com/presentation/d/18DGuSTsLgU2C2iNNcvoo2-27uL2Tcb1jfMaMGa9Zeyc/edit?usp=sharing) | 🧵 [Thread](https://twitter.com/paulapivat/status/1446484367736328199)
 - [DAOs: The New Coordination Frontier (Gitcoin & BanklessDAO)](https://docs.google.com/presentation/d/1fLJvPOvibcCUpJ9ES44_cdoX5Hb7LpDaloGWz5FbUEM/edit#slide=id.gec41538503_0_399)
