@@ -12,13 +12,12 @@ awards:
     year:
 email: ""
 interests:
-- Internet Finance, Data
+- Data, Crypto & Personal Finance
 - Meditation, Muay Thai
-- Math and Energy markets
 organizations:
-- name: public blockchains
+- name: Ethereum
   url: ""
-role: CryptoData Analyst ⛓️ 
+role: Data ⛓️ 
 social:
 - icon: envelope
   icon_pack: fas
@@ -43,12 +42,13 @@ user_groups:
 
 ### Current
 
-Exploring Internet Finance and Internet Capital Markets (aka DeFi). 
+Data Engineering and Analytics for Crypto Markets 
 
-I'm interested in **automated market makers** and other key DeFi mechanisms (lending, stablecoins). Currently doing a deep dive into Uniswap V3 and V4 (Hooks!). Other interests include math, energy, and the data center economy.
+I'm interested in building data products for crypto markets. Currently delivering datasets at [Uniswap Foundation](https://x.com/UniswapFND). Speeding running [Data Engineering Community Bootcamp](https://github.com/PaulApivat/data-engineer-handbook).
 
-**Communities**: [Dune](https://dune.com/paulapivat), [Cyfrin](https://updraft.cyfrin.io/), [Math Academy](https://x.com/_MathAcademy_)
+Spending time with my wife and kids; family, finances and health. 
 
+**Communities**: [Dune](https://dune.com/paulapivat), [Math Academy](https://x.com/_MathAcademy_)
 
 
 
