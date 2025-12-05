@@ -12,12 +12,13 @@ awards:
     year:
 email: ""
 interests:
-- Data, Crypto & Personal Finance
+- Trading, Investing, DeFi, Internet Markets
+- Parenting
 - Meditation, Muay Thai
 organizations:
-- name: Ethereum
+- name: Internet Capital Markets
   url: ""
-role: Data ⛓️ 
+role:  
 social:
 - icon: envelope
   icon_pack: fas
@@ -38,21 +39,12 @@ user_groups:
 - Visitors
 ---
 
+> Real feedback comes from free markets and nature. 
+
+Filling order books. Navigating price action, volume and market structure in perpetual markets. 
 
 
-### Current
-
-Data Engineering and Analytics for Crypto Markets 
-
-I'm interested in building data products for crypto markets. Currently delivering datasets at [Uniswap Foundation](https://x.com/UniswapFND). Speeding running [Data Engineering Community Bootcamp](https://github.com/PaulApivat/data-engineer-handbook).
-
-Spending time with my wife and kids; family, finances and health. 
-
-**Communities**: [Dune](https://dune.com/paulapivat), [Math Academy](https://x.com/_MathAcademy_)
-
-
-
-### 2024
+### 2021-2025 
 
 - [Uniswap V4 Growth by Hooks](https://dune.com/paulapivat/uniswap-v4-growth-by-hooks)
 - [Ethereum's Onchain GDP](https://dune.com/paulapivat/onchain-gdp) 
@@ -82,9 +74,6 @@ Spending time with my wife and kids; family, finances and health.
 - [Stablecoin Risk Dimensions](https://dune.com/paulapivat/stablecoin-risk-dimensions) | 🧵[Thread](https://twitter.com/paulapivat/status/1579057979974123521)
 - [Gnosis Safe Holdings Analysis](https://dune.com/exponent/gnosis-safe-holdings-analysis) | [version 1.0](https://dune.com/paulapivat/gnosis-safe-factory): Examines Safe Proxies from factory contract v1.3.0. 🧵[Thread](https://twitter.com/Exponent_cx/status/1573327110852300800)
 - [Exponent Fennec Stash](https://dune.com/exponent/exponent-fennec-stash) | [version 1.0](https://dune.com/paulapivat/exponent-treasury-vault): Examines Exponent Treasury Vault with Pool & Safe Dollar Yield strategies. 🧵[Thread](https://twitter.com/paulapivat/status/1565621408478433281)
-
-### 2023
-
 - [Velodrome Emissions Per $1 Bribed](https://dune.com/paulapivat/velodrome-emissions-bribe) | 🧵 [Thread](https://twitter.com/paulapivat/status/1561752438981664768)
 - [Frax Bribe ROI](https://dune.com/paulapivat/frax-bribe) | 🧵 [Thread](https://twitter.com/paulapivat/status/1551219246667022337)
 - [Curve v2 Pools](https://dune.com/paulapivat/curve-v2-pools) | 🧵 [Thread](https://twitter.com/paulapivat/status/1542780111589560322)
@@ -94,18 +83,6 @@ Spending time with my wife and kids; family, finances and health.
 - [Ribbon Finance Vaults - $GMI Index](https://dune.xyz/paulapivat/Ribbon-Vaults)
 - [CultDAO Overview](https://dune.xyz/paulapivat/CultDAO)
 - [Bank Token Buy & Sell Volume](https://dune.xyz/paulapivat/dollarBANK-Buy-and-Sell-Volume)
-
-
-### 2021 - 2022
-
-Core contributor at [Bankless DAO](https://www.bankless.community/)  ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781)), providing insights through on- and off-chain data (see below).
-
-Founding member of our [Analytics Guild](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f), helping secure initial funding and governance structures. My colleagues and I built an in-house analytics platform called [DAO Dash](https://www.notion.so/bankless/DAO-Dash-41a151ce8ef74fcd893cba3b47223828) to provide insights on engagement, community health and governance.
-
-I contributed growth and usage metrics to the [BanklessDAO Bounty Board](https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90) while sharing insights with the broader community through [forum posts](https://forum.bankless.community/u/paulapivat/activity/topics). 
-
-I wrote about my journey to web3 data [here](https://paulapivat.com/post/before_crypto/).
-
 - [Bankless DAO Membership Categories Dashboard](https://duneanalytics.com/paulapivat/dollarBANK-Members)
 - [Bankless DAO Membership Over Time](https://duneanalytics.com/paulapivat/dollarBANK-Members-Time-Series)
 - [Bankless DAO Treasury](https://duneanalytics.com/paulapivat/WIP-Bankless-DAO-Treasury)
@@ -124,14 +101,15 @@ I wrote about my journey to web3 data [here](https://paulapivat.com/post/before_
 - [Exploring Discord Data: Bankless DAO Engagement](https://forum.bankless.community/t/exploring-discord-data-bankless-dao-engagement/1100)
 - [Bankless DAO Onboard Survey Pt 1](https://forum.bankless.community/t/onboard-survey-exploratory-analysis/1048)
 - [Bankless DAO Onboard Survey Pt 2](https://forum.bankless.community/t/onboard-survey-exploratory-analysis-part-2/1067)
-
-**Data Pipelines**
 - [Bank Subgraph, Snapshot Proposal, Snapshot Votes](https://github.com/BanklessDAO/analytics/tree/main/daodash/etl_pipeline)
+- Core contributor at [Bankless DAO](https://www.bankless.community/)  ([POAPs](https://app.poap.xyz/scan/0xdfdf2d882d9ebce6c7eac3da9ab66cbfda263781))
+- Founding member of our [Analytics Guild](https://www.notion.so/bankless/BanklessDAO-Wiki-82ba81e7da1c42adb7c4ab67a4f22e8f)
+- growth and usage metrics [BanklessDAO Bounty Board](https://www.notion.so/bankless/Bounty-Board-318dc164cc5640cca17e0fb5f484fd90)
+- early journey to web3 data [here](https://paulapivat.com/post/before_crypto/).
+- past [data visualizations](https://paulapivat.com/#gallery) 
+- past writings on [Medium](https://paulapivat.medium.com/), [dev.to](https://dev.to/paulapivat) and  [Hashnode](https://paulapivat.hashnode.dev/).
 
-
-See my past [data visualizations](https://paulapivat.com/#gallery) and writings on [Medium](https://paulapivat.medium.com/), [Quora](https://www.quora.com/profile/Paul-Apivat-Hanvongse), [dev.to](https://dev.to/paulapivat) and  [Hashnode](https://paulapivat.hashnode.dev/).
-
-**Social Media**
+**Social**
 
 - [Twitter](https://twitter.com/paulapivat)
 - [Farcaster](https://warpcast.com/paulx.eth)
