@@ -16,7 +16,7 @@ interests:
 - Parenting
 - Meditation, Muay Thai
 organizations:
-- name: Discretionary Trading
+- name: Independent Trader | Adjunct Professor
   url: ""
 role:  
 social:
@@ -28,7 +28,7 @@ social:
   link: https://twitter.com/paulapivat
 - icon: linkedin
   icon_pack: fab
-  link: '#contact'
+  link: https://www.linkedin.com/in/paulapivat/
 - icon: github
   icon_pack: fab
   link: https://github.com/paulapivat
@@ -39,14 +39,20 @@ user_groups:
 - Visitors
 ---
 
-> Real feedback comes from free markets and nature. 
+> Real feedback comes from free markets and nature (Naval Ravikant)
 
-I’m a Bangkok-based independent trader and organizational psychologist (PhD, Columbia). After several years building analytics and measurement systems in crypto and early-stage startups, I’ve shifted my focus toward independence through systematic discretionary trading—consistency-first execution, disciplined testing, and data-driven feedback loops. I am building trading verification tool (journaling, market context, performance review), with a focus on: underwriting risk, improving decision quality under uncertainty, and compounding over time.
+I’m an independent trader and organizational psychologist (PhD, Columbia). After several years building analytics and measurement systems in crypto communities and early-stage startups, I’ve shifted my focus toward systematic discretionary trading. My approach is consistency-first execution, disciplined testing, and data-driven feedback loops. I am building trading tools (trading journals for performance review, position size calculators, market context dashboards), with a focus on: underwriting risk, improving decision quality under uncertainty, and compounding over time.
 
-Alongside trading, I’ve returned to Thammasat University to teach Sustainable Organization Management for the MA in Social Innovation & Sustainability, with a focus on capability-building, cross-sector coordination, and accountability systems that can be measured and verified. 
+Markets I'm most familiar with are crypto assets, but increasingly find myself trading onchain commodities, equities and indices. 
+
+Additionally, I work on organiational capability-building, cross-sector coordination, and accountability systems that can be measured and verified. I am returning to Thammasat University to teach Sustainable Organization Management for the MA in Social Innovation & Sustainability program (spring 2027) at the School of Global Studies.
+
+Alongside trading and teaching, I do AI bricolage, muay thai and meditation.
+
+I'm based in Bangkok with my wife and our six year old twins.
 
 
-### 2021-2025 
+### 2021-2025: Onchain Analyst Arc
 
 - [Uniswap V4 Growth by Hooks](https://dune.com/paulapivat/uniswap-v4-growth-by-hooks)
 - [Ethereum's Onchain GDP](https://dune.com/paulapivat/onchain-gdp) 
@@ -111,11 +117,7 @@ Alongside trading, I’ve returned to Thammasat University to teach Sustainable 
 - past [data visualizations](https://paulapivat.com/#gallery) 
 - past writings on [Medium](https://paulapivat.medium.com/), [dev.to](https://dev.to/paulapivat) and  [Hashnode](https://paulapivat.hashnode.dev/).
 
-**Social**
 
-- [Twitter](https://twitter.com/paulapivat)
-- [Farcaster](https://warpcast.com/paulx.eth)
-- [Lens Protocol](https://lenster.xyz/u/paulx)
 
 
 
