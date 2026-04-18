@@ -12,11 +12,11 @@ awards:
     year:
 email: ""
 interests:
-- Trading, Investing, DeFi, Internet Markets
+- Trading, Investing, Internet Finance
 - Parenting
 - Meditation, Muay Thai
 organizations:
-- name: Internet Capital Markets
+- name: Discretionary Trading
   url: ""
 role:  
 social:
@@ -41,7 +41,9 @@ user_groups:
 
 > Real feedback comes from free markets and nature. 
 
-Filling order books. Navigating price action, volume and market structure in perpetual markets. 
+I’m a Bangkok-based independent trader and organizational psychologist (PhD, Columbia). After several years building analytics and measurement systems in crypto and early-stage startups, I’ve shifted my focus toward independence through systematic discretionary trading—consistency-first execution, disciplined testing, and data-driven feedback loops. I am building trading verification tool (journaling, market context, performance review), with a focus on: underwriting risk, improving decision quality under uncertainty, and compounding over time.
+
+Alongside trading, I’ve returned to Thammasat University to teach Sustainable Organization Management for the MA in Social Innovation & Sustainability, with a focus on capability-building, cross-sector coordination, and accountability systems that can be measured and verified. 
 
 
 ### 2021-2025 
